@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CDOWin (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "CDOWin (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
