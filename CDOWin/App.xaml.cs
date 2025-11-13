@@ -43,7 +43,9 @@ namespace CDOWin
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            _window = new MainWindow();
+            // Here is where the Window is selected, we will do our check here if it is initialized or not and 
+            // show the login window if necissary
+            _window = new LoginWindow();
             _window.Activate();
         }
     }
