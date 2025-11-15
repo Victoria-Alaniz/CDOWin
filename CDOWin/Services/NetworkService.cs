@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.Diagnostics;
 
 namespace CDOWin.Services {
     public class NetworkService {
@@ -30,7 +31,7 @@ namespace CDOWin.Services {
             using var client = new HttpClient();
             client.DefaultRequestHeaders.Add("x-api-key", apiKey);
             client.BaseAddress = new Uri(address);
-            var response = await client.GetAsync("api/states");
+            var response = await client.GetAsync("api/");
             return response.IsSuccessStatusCode;
         }
 
