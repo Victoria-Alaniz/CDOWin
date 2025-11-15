@@ -11,13 +11,13 @@ public class ClientService : IClientService {
     }
 
     public async Task InitializeAsync() {
-        var data = await _network.GetAsync<List<Client>>("clients");
+        var data = await _network.GetAsync<List<Client>>("/api/clients/");
         if (data != null) {
             Clients = data;
         }
     }
 
     public Task<List<Client>?> GetAllClientsAsync() {
-        return _network.GetAsync<List<Client>>("clients");
+        return _network.GetAsync<List<Client>>("/api/clients/");
     }
 }
