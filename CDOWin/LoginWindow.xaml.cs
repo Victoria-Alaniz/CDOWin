@@ -1,32 +1,27 @@
+using CDOWin.Constants;
 using CDOWin.Services;
+using Meziantou.Framework.Win32;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using WinUIEx;
 
 namespace CDOWin {
     public sealed partial class LoginWindow : Window {
         private bool isTestSuccessful = false;
-        public string ServerAddress { get; private set; } = string.Empty;
-        public string ApiKey { get; private set; } = string.Empty;
+        public string ServerAddress { get; private set; }
+        public string ApiKey { get; private set; }
         public bool CredentialsSaved { get; private set; }
 
-        public LoginWindow() {
+        public LoginWindow(string address = "", string key = "") {
             InitializeComponent();
+
+            // Pre-fill text boxes if being credentials are already created.
+            ServerAddress = address;
+            ApiKey = key;
+
+            ServerAddressTextBox.Text = address;
+            ApiKeyPasswordBox.Password = key;
 
             // Set window size and center it
             SetupWindow();
@@ -115,12 +110,16 @@ namespace CDOWin {
             // Save the credentials
             ServerAddress = ServerAddressTextBox.Text.Trim();
             ApiKey = ApiKeyPasswordBox.Password;
+
+            CredentialManager.WriteCredential(
+                applicationName: AppConstants.AppName, 
+                userName: ServerAddress, 
+                secret: ApiKey, 
+                comment: "Server credentials for CDO Application",
+                persistence: CredentialPersistence.LocalMachine);
+
             CredentialsSaved = true;
 
-            // TODO: Implement your credential storage logic here
-            // For example: Save to secure storage, configuration file, etc.
-
-            // Close the window
             this.Close();
         }
     }

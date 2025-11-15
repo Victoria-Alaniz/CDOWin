@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using CDOWin.Constants;
+using CDOWin.Services;
+using Meziantou.Framework.Win32;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Shapes;
-using Windows.ApplicationModel;
-using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -43,10 +30,20 @@ namespace CDOWin
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            // Here is where the Window is selected, we will do our check here if it is initialized or not and 
-            // show the login window if necissary
-            _window = new LoginWindow();
+            if (CredentialManager.ReadCredential(AppConstants.AppName) is { } creds) {
+                NetworkService.Instance.Initialize(baseAddress: creds.UserName!, apiKey: creds.ApplicationName);
+                _window = new MainWindow();
+            } else {
+                _window = new LoginWindow();
+            }
+            
             _window.Activate();
+        }
+
+        private bool DoesHaveSavedCredentials() {
+            var credentials = CredentialManager.ReadCredential(
+                applicationName: AppConstants.AppName);
+            return credentials != null;
         }
     }
 }

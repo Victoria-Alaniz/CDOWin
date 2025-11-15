@@ -1,30 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text.Json;
 using System.Diagnostics;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace CDOWin.Services {
     public class NetworkService {
+        // Singleton instance
+        private static readonly Lazy<NetworkService> _instance = new(() => new NetworkService());
+        public static NetworkService Instance => _instance.Value;
+        
+        // Properties
         private readonly HttpClient _httpClient;
         private readonly JsonSerializerOptions _jsonOptions;
 
-        public NetworkService(string baseUrl, string apiKey) {
-            _httpClient = new HttpClient {
-                BaseAddress = new Uri(baseUrl)
-            };
-
-            if (!string.IsNullOrEmpty(apiKey)) {
-                _httpClient.DefaultRequestHeaders.Add("x-api-key", apiKey);
-            }
-
+        // Private constructor
+        private NetworkService() {
+            _httpClient = new HttpClient();
             _jsonOptions = new JsonSerializerOptions {
                 PropertyNameCaseInsensitive = true,
             };
+        }
+
+        // Initialize the service with API credentials
+        public void Initialize(string baseAddress, string apiKey) {
+            if (string.IsNullOrWhiteSpace(baseAddress))
+                throw new ArgumentException("Base address must be provided.");
+            if (string.IsNullOrWhiteSpace(apiKey))
+                throw new ArgumentException("API Key must be provided.");
+
+            Debug.WriteLine($"Base Address: {baseAddress}, API-Key: {apiKey}");
+
+            // Initialize HttpClient
+            _httpClient.BaseAddress = new Uri(baseAddress);
+            _httpClient.DefaultRequestHeaders.Clear();
+            _httpClient.DefaultRequestHeaders.Add("x-api-key", apiKey);
         }
 
         public static async Task<bool> IsAPIKeyValidAsync(string address, string apiKey) {
