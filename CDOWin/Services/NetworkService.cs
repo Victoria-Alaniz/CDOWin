@@ -9,7 +9,7 @@ namespace CDOWin.Services {
         // Singleton instance
         private static readonly Lazy<NetworkService> _instance = new(() => new NetworkService());
         public static NetworkService Instance => _instance.Value;
-        
+
         // Properties
         private readonly HttpClient _httpClient;
         private readonly JsonSerializerOptions _jsonOptions;
@@ -48,7 +48,7 @@ namespace CDOWin.Services {
         public async Task<T?> GetAsync<T>(string endpoint) {
             var response = await _httpClient.GetAsync(endpoint);
 
-            if(!response.IsSuccessStatusCode) {
+            if (!response.IsSuccessStatusCode) {
                 return default;
             }
 

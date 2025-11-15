@@ -32,7 +32,7 @@ namespace CDOWin {
             // Set up our fullscreen view
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(AppTitleBar);
-            
+
             // Set sizing and center the Window
             var manager = WindowManager.Get(this);
             manager.MinHeight = 430;
@@ -112,9 +112,9 @@ namespace CDOWin {
             ApiKey = ApiKeyPasswordBox.Password;
 
             CredentialManager.WriteCredential(
-                applicationName: AppConstants.AppName, 
-                userName: ServerAddress, 
-                secret: ApiKey, 
+                applicationName: AppConstants.AppName,
+                userName: ServerAddress,
+                secret: ApiKey,
                 comment: "Server credentials for CDO Application",
                 persistence: CredentialPersistence.LocalMachine);
 
