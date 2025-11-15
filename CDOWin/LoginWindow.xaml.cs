@@ -1,4 +1,3 @@
-using CDOWin.Models;
 using CDOWin.Services;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -22,25 +21,15 @@ using WinUIEx;
 namespace CDOWin {
     public sealed partial class LoginWindow : Window {
         private bool isTestSuccessful = false;
-        private readonly HttpClient httpClient;
-
         public string ServerAddress { get; private set; }
         public string ApiKey { get; private set; }
         public bool CredentialsSaved { get; private set; }
 
-        private NetworkService service = new NetworkService("http://api.jonalaniz.com", "WGTcxv4Dka0kt8OS6nTNOGdymArAZcoS");
-
         public LoginWindow() {
             InitializeComponent();
 
-            httpClient = new HttpClient();
-            httpClient.Timeout = TimeSpan.FromSeconds(10);
-
             // Set window size and center it
             SetupWindow();
-
-            // Subscribe to closed event for cleanup
-            this.Closed += OnWindowClosed;
         }
 
 
@@ -133,10 +122,6 @@ namespace CDOWin {
 
             // Close the window
             this.Close();
-        }
-
-        private void OnWindowClosed(object sender, WindowEventArgs args) {
-            httpClient?.Dispose();
         }
     }
 }
