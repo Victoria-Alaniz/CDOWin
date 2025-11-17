@@ -3,22 +3,22 @@ using CDO.Core.Models;
 
 namespace CDO.Core.Services;
 
-public class PoService : IPoService {
+public class POService : IPOService {
     private readonly INetworkService _network;
-    public List<Po> Pos { get; private set; } = new();
+    public List<PO> POs { get; private set; } = new();
 
-    public  PoService(INetworkService network) {
+    public  POService(INetworkService network) {
         _network = network;
     }
 
     public async Task InitializeAsync() {
-        var data = await _network.GetAsync<List<Po>>(Endpoints.PO);
+        var data = await _network.GetAsync<List<PO>>(Endpoints.POs);
         if (data != null) {
-            Pos = data;
+            POs = data;
         }
     }
 
-    public Task<List<Po>?> GetAllPosAsync() {
-        return _network.GetAsync<List<Po>>(Endpoints.PO);
+    public Task<List<PO>?> GetAllPOsAsync() {
+        return _network.GetAsync<List<PO>>(Endpoints.POs);
     }
 }
