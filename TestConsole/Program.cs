@@ -1,4 +1,5 @@
 ﻿using CDO.Core.Services;
+using TestConsole;
 
 // Get environment variables
 var apiKey = Environment.GetEnvironmentVariable("CDO_API_KEY");
