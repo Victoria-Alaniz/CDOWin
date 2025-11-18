@@ -10,10 +10,95 @@
     Title="CDOWin">
 
     <Window.SystemBackdrop>
-        <MicaBackdrop />
+        <MicaBackdrop/>
     </Window.SystemBackdrop>
 
     <Grid>
+        <!-- Rows -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <!-- Columns -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- Title Bar -->
+        <Grid Grid.Row="0"
+              Grid.Column="0"
+              Grid.ColumnSpan="2"
+              x:Name="AppTitleBar"
+              Height="32"
+              VerticalAlignment="Top"
+              Background="Transparent">
+            <TextBlock Text="CDO"
+                       VerticalAlignment="Center"
+                       Margin="12, 0, 0, 0"/>
+        </Grid>
+
+        <!-- Left Column: Sidebar -->
+        <StackPanel Grid.Row="1"
+                    Grid.Column="0"
+                    Padding="12">
+            <CalendarView SelectionMode="Single"
+                          IsGroupLabelVisible="True"
+                          IsOutOfScopeEnabled="True"
+                          Language="en"
+                          CalendarIdentifier="GregorianCalendar"/>
+        </StackPanel>
+
+        <!-- Right Column: Selector + Content -->
+        <Grid Grid.Row="1"
+              Grid.Column="1">
+
+            <!-- Right Column Rows -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Right Column Colums -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <SelectorBar x:Name="SelectorBar2"
+                         SelectionChanged="SelectorBar2_SelectionChanged"
+                         Grid.Column="0"
+                         Grid.Row="0"
+                         Margin="8, 0, 0, 8">
+                <SelectorBarItem x:Name="SelectorBarItemPage1" Text="Clients" IsSelected="True" />
+                <SelectorBarItem x:Name="SelectorBarItemPage2" Text="Counselors" />
+                <SelectorBarItem x:Name="SelectorBarItemPage3" Text="Employers" />
+                <SelectorBarItem x:Name="SelectorBarItemPage4" Text="POs" />
+                <SelectorBarItem x:Name="SelectorBarItemPage5" Text="Referrals" />
+            </SelectorBar>
+
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        Margin="0, 0, 8, 0">
+                <Button Style="{StaticResource SubtleButtonStyle}">
+                    <SymbolIcon Symbol="Add"/>
+                </Button>
+                <Button Style="{StaticResource SubtleButtonStyle}">
+                    <SymbolIcon Symbol="Setting"/>
+                </Button>
+            </StackPanel>
+
+            <Border Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    CornerRadius="8, 0, 0, 0"
+                    BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    Background="{ThemeResource LayerFillColorDefaultBrush}">
+                <Frame x:Name="ContentFrame" 
+                   IsNavigationStackEnabled="False"/>
+            </Border>
+        </Grid>
     </Grid>
 </Window>
