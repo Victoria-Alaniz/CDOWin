@@ -27,7 +27,7 @@ public sealed partial class ClientsPage : Page {
 
         switch (currentSelectedIndex) {
             case 0:
-                pageType = typeof(SamplePage);
+                pageType = typeof(Notes);
                 break;
             case 1:
                 pageType = typeof(SamplePage);
