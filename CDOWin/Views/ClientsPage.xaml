@@ -21,10 +21,12 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
         
         <!-- Left Column -->
-        <Grid BorderThickness="0, 0, 1, 0"
+        <Grid Grid.Column="0"
+              BorderThickness="0, 0, 1, 0"
               BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -91,8 +93,10 @@
         </Grid>
 
 
-        <!-- Right Column -->
-        <Grid Grid.Column="1">
+        <!-- Middle Column -->
+        <Grid Grid.Column="1"
+              BorderThickness="0, 0, 1, 0"
+              BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -107,12 +111,40 @@
 
 
             <TextBlock Grid.Row="0" 
-            Grid.Column="0"
-            Text="{Binding SelectedClient.name}"
-            FontSize="22"
-            FontWeight="Bold"
-            Margin="16,8,8,8"/>
+                       Grid.Column="0"
+                       Text="{Binding SelectedClient.name}"
+                       FontSize="22"
+                       FontWeight="Bold"
+                       Margin="16,8,8,8"/>
         </Grid>
+        
+        <!-- Right Column -->
+        <Grid Grid.Column="2">
+            <!-- Right Column Rows -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
+            <!-- Right Column Colums -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <SelectorBar x:Name="SelectionBar"
+                         SelectionChanged="SelectionChanged"
+                         Grid.Column="0"
+                         Grid.Row="0"
+                         Margin="8, 0, 0, 8">
+                <SelectorBarItem Text="Notes" IsSelected="True" />
+                <SelectorBarItem Text="Documents" />
+                <SelectorBarItem Text="Other" />
+            </SelectorBar>
+            
+            <Frame Grid.Column="0"
+                   Grid.Row="1"
+                   x:Name="ContentFrame" 
+                   IsNavigationStackEnabled="False"/>
+        </Grid>
     </Grid>
 </Page>
