@@ -2,6 +2,11 @@ using CDOWin.Views;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
+using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Security.AccessControl;
+using Windows.UI.Notifications;
 using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -36,9 +41,13 @@ public sealed partial class MainWindow : Window {
         manager.MinWidth = 800;
     }
 
-    private void SelectorBar2_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args) {
-        SelectorBarItem selectedItem = sender.SelectedItem;
-        int currentSelectedIndex = sender.Items.IndexOf(selectedItem);
+    private void NavigationLoaded(object sender, RoutedEventArgs e) {
+        NavigationBar.SelectedItem = NavigationBar.MenuItems[0];
+    }
+
+    private void NavigationSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
+        var selectedItem = (NavigationViewItem)args.SelectedItem;
+        var currentSelectedIndex = sender.MenuItems.IndexOf(selectedItem);
         System.Type pageType;
 
         switch (currentSelectedIndex) {

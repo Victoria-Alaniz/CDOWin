@@ -40,15 +40,32 @@
         </Grid>
 
         <!-- Left Column: Sidebar -->
-        <StackPanel Grid.Row="1"
-                    Grid.Column="0"
-                    Padding="12">
-            <CalendarView SelectionMode="Single"
+        <Grid Grid.Row="1"
+              Grid.Column="0"
+              Padding="12">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0"
+                       Text="Alamo City Employment"
+                       HorizontalAlignment="Center"
+                       FontSize="24"
+                       FontWeight="Bold"/>
+
+            <CalendarView Grid.Row="1"
+                          Grid.Column="0" 
+                          SelectionMode="Single"
                           IsGroupLabelVisible="True"
                           IsOutOfScopeEnabled="True"
                           Language="en"
                           CalendarIdentifier="GregorianCalendar"/>
-        </StackPanel>
+        </Grid>
+        
 
         <!-- Right Column: Selector + Content -->
         <Grid Grid.Row="1"
@@ -66,29 +83,21 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <SelectorBar x:Name="SelectorBar2"
-                         SelectionChanged="SelectorBar2_SelectionChanged"
-                         Grid.Column="0"
-                         Grid.Row="0"
-                         Margin="8, 0, 0, 8">
-                <SelectorBarItem x:Name="SelectorBarItemPage1" Text="Clients" IsSelected="True" />
-                <SelectorBarItem x:Name="SelectorBarItemPage2" Text="Counselors" />
-                <SelectorBarItem x:Name="SelectorBarItemPage3" Text="Employers" />
-                <SelectorBarItem x:Name="SelectorBarItemPage4" Text="POs" />
-                <SelectorBarItem x:Name="SelectorBarItemPage5" Text="Referrals" />
-            </SelectorBar>
-
-            <StackPanel Grid.Column="1"
-                        Orientation="Horizontal"
-                        VerticalAlignment="Center"
-                        Margin="0, 0, 8, 0">
-                <Button Style="{StaticResource SubtleButtonStyle}">
-                    <SymbolIcon Symbol="Add"/>
-                </Button>
-                <Button Style="{StaticResource SubtleButtonStyle}">
-                    <SymbolIcon Symbol="Setting"/>
-                </Button>
-            </StackPanel>
+            <NavigationView x:Name="NavigationBar"
+                            IsBackButtonVisible="Collapsed"
+                            Loaded="NavigationLoaded"
+                            SelectionChanged="NavigationSelectionChanged"
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            PaneDisplayMode="Top">
+                <NavigationView.MenuItems>
+                    <NavigationViewItem Content="Clients" Tag="ClientsPage"/>
+                    <NavigationViewItem Content="Counselors" Tag="CounselorsPage"/>
+                    <NavigationViewItem Content="Employers" Tag="EmployersPage"/>
+                    <NavigationViewItem Content="POs" Tag="POs"/>
+                    <NavigationViewItem Content="Referrals" Tag="Referrals"/>
+                </NavigationView.MenuItems>
+            </NavigationView>
 
             <Border Grid.Row="1"
                     Grid.ColumnSpan="2"
@@ -97,7 +106,7 @@
                     BorderThickness="1"
                     Background="{ThemeResource LayerFillColorDefaultBrush}">
                 <Frame x:Name="ContentFrame" 
-                   IsNavigationStackEnabled="False"/>
+                       IsNavigationStackEnabled="False"/>
             </Border>
         </Grid>
     </Grid>
