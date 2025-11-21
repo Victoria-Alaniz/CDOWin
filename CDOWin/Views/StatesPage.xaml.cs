@@ -1,4 +1,3 @@
-using CDO.Core.Services;
 using CDOWin.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 

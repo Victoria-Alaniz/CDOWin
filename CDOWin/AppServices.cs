@@ -1,11 +1,12 @@
-﻿using CDOWin.ViewModels;
+﻿using CDO.Core.Services;
+using CDOWin.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CDO.Core.Services;
+namespace CDOWin;
 
 public static class AppServices {
-    // Network Service singleton
+    // Network
     public static INetworkService? NetworkService { get; private set; }
 
     // Services
@@ -42,7 +43,6 @@ public static class AppServices {
             ClientsViewModel.LoadClientsAsync(),
             EmployersViewModel.LoadEmployersAsync(),
             StatesViewModel.LoadStatesAsync()
-            // Add other services `InitializeAsync()` calls here
         };
 
         await Task.WhenAll(tasks);
