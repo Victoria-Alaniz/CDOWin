@@ -30,7 +30,7 @@ public sealed partial class ClientsPage : Page {
                 pageType = typeof(Notes);
                 break;
             case 1:
-                pageType = typeof(SamplePage);
+                pageType = typeof(Documents);
                 break;
             default:
                 pageType = typeof(SamplePage);
@@ -39,6 +39,6 @@ public sealed partial class ClientsPage : Page {
 
         var slideNavigationTransitionEffect = SlideNavigationTransitionEffect.FromBottom;
 
-        ContentFrame.Navigate(pageType, null, new SlideNavigationTransitionInfo() { Effect = slideNavigationTransitionEffect });
+        ContentFrame.Navigate(pageType, ViewModel, new SlideNavigationTransitionInfo() { Effect = slideNavigationTransitionEffect });
     }
 }

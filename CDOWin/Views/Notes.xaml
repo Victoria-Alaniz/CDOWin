@@ -6,6 +6,9 @@
     xmlns:local="using:CDOWin.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:CDOWin.ViewModels" 
+    xmlns:local1="using:CDO.Core.Models"
+    d:DataContext="{d:DesignInstance Type=viewmodels:ClientsViewModel}"
     mc:Ignorable="d">
 
     <Grid>
@@ -17,6 +20,16 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+
+        <TextBox Grid.Row="0"
+                 Grid.Column="0"
+                 VerticalAlignment="Stretch"
+                 Margin="16,8,16,8"
+                 IsReadOnly="True"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap"
+                 SelectionHighlightColor="{ThemeResource SystemAccentColor}"
+                 Text="{x:Bind ViewModel.SelectedClient.clientNotes, Mode=OneWay}"/>
 
         <Button Grid.Row="1"
                 Grid.Column="0"
@@ -31,13 +44,5 @@
                       FontSize="16"
                       Foreground="{ThemeResource SystemAccentColor}"/>
         </Button>
-
-        <TextBox Grid.Row="0"
-                   Grid.Column="0"
-                   VerticalAlignment="Stretch"
-                   Margin="16,8,16,8"
-                   IsReadOnly="True"
-                   SelectionHighlightColor="{ThemeResource SystemAccentColor}"
-                   Text="Fick, poss, n shod"/>
     </Grid>
 </Page>

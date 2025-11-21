@@ -17,6 +17,7 @@ public static class AppServices {
     public static ClientsViewModel ClientsViewModel { get; private set; }
     public static EmployersViewModel EmployersViewModel { get; private set; }
     public static StatesViewModel StatesViewModel { get; private set; }
+
     // Initialize all services
     public static void InitializeServices(string baseAddress, string apiKey) {
         // Initialize network service
