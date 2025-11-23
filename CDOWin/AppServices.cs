@@ -1,6 +1,8 @@
 ﻿using CDO.Core.Services;
 using CDOWin.ViewModels;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace CDOWin;
@@ -13,10 +15,12 @@ public static class AppServices {
     public static IClientService? ClientService { get; private set; }
     public static IEmployerService? EmployerService { get; private set; }
     public static IStateService? StateService { get; private set; }
+    public static IReminderService? ReminderService { get; private set; }
 
     // ViewModels
     public static ClientsViewModel ClientsViewModel { get; private set; }
     public static EmployersViewModel EmployersViewModel { get; private set; }
+    public static RemindersViewModel RemindersViewModel { get; private set; }
     public static StatesViewModel StatesViewModel { get; private set; }
 
     // Initialize all services
@@ -29,22 +33,29 @@ public static class AppServices {
         // Initialize other services
         ClientService = new ClientService(NetworkService);
         EmployerService = new EmployerService(NetworkService);
+        ReminderService = new ReminderService(NetworkService);
         StateService = new StateService(NetworkService);
 
         // Initialize ViewModels
         ClientsViewModel = new ClientsViewModel(ClientService);
         EmployersViewModel = new EmployersViewModel(EmployerService);
+        RemindersViewModel = new RemindersViewModel(ReminderService);
         StatesViewModel = new StatesViewModel(StateService);
 
     }
 
     public static async Task LoadDataAsync() {
+        var sw = Stopwatch.StartNew();
+
         var tasks = new List<Task> {
             ClientsViewModel.LoadClientsAsync(),
             EmployersViewModel.LoadEmployersAsync(),
+            RemindersViewModel.LoadRemindersAsync(),
             StatesViewModel.LoadStatesAsync()
         };
 
         await Task.WhenAll(tasks);
+        sw.Stop();
+        Debug.WriteLine($"LoadDataAsync completed in {sw.ElapsedMilliseconds}");
     }
 }

@@ -29,8 +29,9 @@ public partial class RemindersViewModel : ObservableObject {
             _ = RefreshSelectedReminder(value.id);
     }
 
-    public async Task LoadPOAsync() {
+    public async Task LoadRemindersAsync() {
         var reminders = await _service.GetAllRemindersAsync();
+
         List<Reminder> SortedReminders = reminders.OrderBy(o => o.clientID).ToList();
         Reminders.Clear();
 

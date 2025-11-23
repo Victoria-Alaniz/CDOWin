@@ -3,6 +3,7 @@ using CDO.Core.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,6 +34,7 @@ public partial class ClientsViewModel : ObservableObject {
     // OnSelectedClientChanged - We are overriding the generated one to refresh our selected client
     partial void OnSelectedClientChanged(Client? value) {
         if (value != null)
+            Debug.WriteLine(SelectedClient.reminders);
             _ = RefreshSelectedClient(value.id);
     }
 
