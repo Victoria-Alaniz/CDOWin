@@ -100,30 +100,10 @@
 
 
         <!-- Middle Column -->
-        <Grid Grid.Column="1"
-              BorderThickness="0, 0, 1, 0"
-              BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}">
+        <Frame Grid.Column="1"
+               x:Name="ClientFrame" 
+               IsNavigationStackEnabled="False"/>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-
-            <TextBlock Grid.Row="0" 
-                       Grid.Column="0"
-                       Text="{Binding SelectedClient.name}"
-                       FontSize="22"
-                       FontWeight="Bold"
-                       Margin="16,8,8,8"/>
-        </Grid>
-        
         <!-- Right Column -->
         <Grid Grid.Column="2">
             <!-- Right Column Rows -->

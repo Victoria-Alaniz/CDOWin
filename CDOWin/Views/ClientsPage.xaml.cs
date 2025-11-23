@@ -17,6 +17,8 @@ public sealed partial class ClientsPage : Page {
 
         ViewModel = AppServices.ClientsViewModel;
         DataContext = ViewModel;
+
+        ClientFrame.Navigate(typeof(ClientViewPage), ViewModel);
     }
 
     private void SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args) {

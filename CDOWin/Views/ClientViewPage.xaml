@@ -6,10 +6,52 @@
     xmlns:local="using:CDOWin.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:toolkit="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:viewmodels="using:CDOWin.ViewModels" 
+    xmlns:local1="using:CDO.Core.Models"
+    d:DataContext="{d:DesignInstance Type=viewmodels:ClientsViewModel}"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid BorderThickness="0, 0, 1, 0"
+          BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}">
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" 
+                       Grid.Column="0"
+                       Text="{Binding SelectedClient.name}"
+                       FontSize="22"
+                       FontWeight="Bold"
+                       Margin="16,8,8,8"/>
+        <Button Grid.Row="0"
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Width="32"
+                Height="32"
+                Padding="0"
+                Margin="16,8,16,16"
+                Style="{StaticResource SubtleButtonStyle}">
+            <FontIcon Glyph="&#xE710;"
+                      FontSize="16"
+                      Foreground="{ThemeResource SystemAccentColor}"/>
+            <Button.Flyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Text="Edit" Icon="Edit"/>
+                    <MenuFlyoutItem Text="Delete" Icon="Delete">
+                        <MenuFlyoutItem.KeyboardAccelerators>
+                            <KeyboardAccelerator Key="Delete" />
+                        </MenuFlyoutItem.KeyboardAccelerators>
+                    </MenuFlyoutItem>
+                </MenuFlyout>
+            </Button.Flyout>
+        </Button>
     </Grid>
 </Page>
