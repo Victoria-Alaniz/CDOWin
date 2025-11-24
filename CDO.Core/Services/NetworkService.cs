@@ -47,7 +47,17 @@ public class NetworkService : INetworkService {
         }
 
         var stream = await response.Content.ReadAsStreamAsync();
-        return await JsonSerializer.DeserializeAsync<T>(stream, _jsonOptions);
+        try {
+            return await JsonSerializer.DeserializeAsync<T>(stream, _jsonOptions);
+        } catch (JsonException ex) {
+            Debug.WriteLine("JSON DESERIALIZATION ERROR:");
+            Debug.WriteLine($"Message: {ex.Message}");
+            Debug.WriteLine($"Path: {ex.Path}");
+            Debug.WriteLine($"LineNumber: {ex.LineNumber}");
+            Debug.WriteLine($"BytePositionInLine: {ex.BytePositionInLine}");
+
+            throw;
+        }
     }
 
     // -----------------------------
