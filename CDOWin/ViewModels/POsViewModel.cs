@@ -29,8 +29,8 @@ public partial class POsViewModel : ObservableObject {
             _ = RefreshSelectedPO(value.id);
     }
 
-    public async Task LoadPOAsync() {
-        var pos = await _service.GetAllPOsAsync();
+    public async Task LoadPOsAsync() {
+        var pos = await _service.LoadPOsAsync();
         List<PO> SortedPOs = pos.OrderBy(o => o.clientID).ToList();
         POs.Clear();
 
@@ -40,7 +40,7 @@ public partial class POsViewModel : ObservableObject {
     }
 
     public async Task RefreshSelectedPO(string id) {
-        var po = await _service.GetPOAsync(id);
+        var po = await _service.LoadPOAsync(id);
         if (SelectedPO != po) {
             SelectedPO = po;
 

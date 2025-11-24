@@ -4,7 +4,7 @@ namespace CDO.Core.Services;
 
 public interface IPOService {
     public Task InitializeAsync();
-    public Task<List<PO>?> GetAllPOsAsync();
+    public Task<List<PO>?> LoadPOsAsync();
 
-    public Task<PO?> GetPOAsync(string id);
+    public Task<PO?> LoadPOAsync(string id);
 }
