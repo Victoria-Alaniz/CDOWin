@@ -47,4 +47,11 @@ public class ClientService : IClientService {
     public Task<Client?> UpdateClientAsync(UpdateClientDTO dto, int id) {
         return _network.UpdateAsync<UpdateClientDTO, Client>(Endpoints.Client(id), dto);
     }
+
+    // -----------------------------
+    // DELETE Methods
+    // -----------------------------
+    public Task<bool> DeleteClientAsync(int id) {
+        return _network.DeleteAsync(Endpoints.Client(id));
+    }
 }
