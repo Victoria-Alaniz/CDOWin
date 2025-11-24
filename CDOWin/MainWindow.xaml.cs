@@ -32,8 +32,8 @@ public sealed partial class MainWindow : Window {
 
         // Set sizing and center the Window
         var manager = WindowManager.Get(this);
-        manager.MinHeight = 600;
-        manager.MinWidth = 800;
+        manager.MinHeight = 768;
+        manager.MinWidth = 1024;
 
         SidebarFrame.Navigate(typeof(RemindersPage));
     }
