@@ -25,11 +25,11 @@ public class POService : IPOService {
     // -----------------------------
     // GET
     // -----------------------------
-    public Task<List<PO>?> LoadPOsAsync() {
+    public Task<List<PO>?> GetAllPOsAsync() {
         return _network.GetAsync<List<PO>>(Endpoints.POs);
     }
 
-    public Task<PO?> LoadPOAsync(string id) {
+    public Task<PO?> GetPOAsync(string id) {
         return _network.GetAsync<PO>(Endpoints.PO(id));
     }
 

@@ -12,9 +12,9 @@ public interface IPOService {
     // -----------------------------
     // GET Methods
     // -----------------------------
-    public Task<List<PO>?> LoadPOsAsync();
+    public Task<List<PO>?> GetAllPOsAsync();
 
-    public Task<PO?> LoadPOAsync(string id);
+    public Task<PO?> GetPOAsync(string id);
 
     // -----------------------------
     // POST Methods
