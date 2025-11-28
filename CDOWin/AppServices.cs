@@ -48,7 +48,7 @@ public static class AppServices {
 
     }
 
-    public static async Task LoadDataAsync() {
+    public static async Task<bool> LoadDataAsync() {
         var sw = Stopwatch.StartNew();
 
         var tasks = new List<Task> {
@@ -62,5 +62,6 @@ public static class AppServices {
         await Task.WhenAll(tasks);
         sw.Stop();
         Debug.WriteLine($"LoadDataAsync completed in {sw.ElapsedMilliseconds}");
+        return true;
     }
 }
