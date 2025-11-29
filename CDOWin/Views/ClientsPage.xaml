@@ -48,7 +48,7 @@
                            Margin="16,8,16,1"/>
                 <TextBlock FontSize="12"
                            Margin="16,1,16,8"
-                           FontWeight="Light">
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}">
                     <Run Text="{x:Bind ViewModel.Clients.Count, Mode=OneWay}"/>
                     <Run Text="Clients"/>
                 </TextBlock>
@@ -89,10 +89,11 @@
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0"
                                        Text="{x:Bind name}"
-                                       FontWeight="Bold"/>
+                                       FontWeight="Bold"
+                                       Foreground="{ThemeResource TextFillColorPrimaryBrush}"/>
                             <TextBlock Grid.Row="1" 
                                        Text="{x:Bind address1}"
-                                       FontWeight="Light"/>
+                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

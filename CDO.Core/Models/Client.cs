@@ -1,4 +1,7 @@
-﻿namespace CDO.Core.Models;
+﻿using System.IO.Pipes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace CDO.Core.Models;
 
 public record class Client(
     int id,
@@ -54,8 +57,44 @@ public record class Client(
     string? fluentLanguages,
     string? premiums
     ) {
-    public DateTime? startDateLocal => startDate?.ToLocalTime();
-    public DateTime? doblocal => dob?.ToLocalTime();
+
     public string name => $"{lastName}, {firstName}";
+
     public string? documentsFolderPath => documentFolder?.Replace('#', ' ').Trim();
+
+    public string formattedAddress {
+        get {
+            if (address1 == null && address2 == null)
+                return "No address on file.";
+            else if (address2 == null) {
+                return address1;
+            } else {
+                return $"{address1} {address2}";
+            }
+        }
+    }
+
+    public string? formattedDOB => dob?.ToString(format: "MM/dd/yyyy");
+
+    public string formattedCityStateZip {
+        get {
+            if (zip != null)
+                return $"{city}, {state} {zip}";
+            else 
+                return $"{city}, {state}";
+        }
+    }
+
+    public string formattedSSN {
+        get {
+            if(ssn.ToString() is { } unwrappedSSN) {
+                if(unwrappedSSN.Length == 9) {
+                    return $"{unwrappedSSN.Substring(0,3)}-{unwrappedSSN.Substring(3,2)}-{unwrappedSSN.Substring(5,4)}";
+                }
+            }
+            return ssn.ToString();
+        }
+    }
+
+    public string? formattedStartDate => startDate?.ToString(format: "MM/dd/yyyy");
 }

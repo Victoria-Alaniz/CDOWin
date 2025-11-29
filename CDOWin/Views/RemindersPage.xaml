@@ -22,19 +22,13 @@
             <ColumnDefinition Width="316"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0"
-                    Grid.Column="0">
-            <TextBlock Text="Reminders"
-                       FontSize="22"
-                       FontWeight="Bold"
-                       Margin="16,0,16,1"/>
-            <TextBlock FontSize="12"
-                       Margin="16,1,16,8"
-                       FontWeight="Light">
-                    <Run Text="{x:Bind ViewModel.Reminders.Count, Mode=OneWay}"/>
-                    <Run Text="Reminders"/>
-            </TextBlock>
-        </StackPanel>
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   Text="Reminders"
+                   FontSize="22"
+                   FontWeight="Bold"
+                   Margin="8,3,8,1"
+                   HorizontalAlignment="Left"/>
 
         <CalendarView Grid.Row="1"
                       Grid.Column="0"
