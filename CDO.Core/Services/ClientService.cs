@@ -30,6 +30,10 @@ public class ClientService : IClientService {
         return _network.GetAsync<List<Client>>(Endpoints.Clients);
     }
 
+    public Task<List<ClientSummaryDTO>?> GetAllClientSummariesAsync() {
+        return _network.GetAsync<List<ClientSummaryDTO>>(Endpoints.ClientSummaries);
+    }
+
     public Task<Client?> GetClientAsync(int id) {
         return _network.GetAsync<Client>(Endpoints.Client(id));
     }

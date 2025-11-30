@@ -13,6 +13,8 @@ public interface IClientService {
     // -----------------------------
     // GET Methods
     // -----------------------------
+    public Task<List<ClientSummaryDTO>?> GetAllClientSummariesAsync();
+
     public Task<List<Client>?> GetAllClientsAsync();
 
     public Task<Client?> GetClientAsync(int id);
