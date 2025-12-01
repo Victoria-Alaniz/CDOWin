@@ -70,7 +70,7 @@
                 <!-- Personal Information Card-->
                 <Grid Width="300"
                       Height="320"
-                      CornerRadius="8"
+                      CornerRadius="4"
                       BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
                       BorderThickness="1"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
@@ -189,7 +189,7 @@
                 <!-- Case Information Card -->
                 <Grid Width="300"
                       Height="320"
-                      CornerRadius="8"
+                      CornerRadius="4"
                       BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
                       BorderThickness="1"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
@@ -307,7 +307,7 @@
                 <!-- Contact Information Card -->
                 <Grid Width="300"
                       Height="320"
-                      CornerRadius="8"
+                      CornerRadius="4"
                       BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
                       BorderThickness="1"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
@@ -413,7 +413,7 @@
                 <!-- Checklist Card-->
                 <Grid Width="300"
                       Height="320"
-                      CornerRadius="8"
+                      CornerRadius="4"
                       BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
                       BorderThickness="1"
                       Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
@@ -533,6 +533,7 @@
                                    FontWeight="Bold"/>
                         <CheckBox Grid.Row="8"
                                   Grid.Column="1"
+                                  Click="ElevatorSpeech_Clicked"
                                   HorizontalAlignment="Right"
                                   Content="Completed"
                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"

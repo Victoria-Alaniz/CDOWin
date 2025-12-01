@@ -59,7 +59,7 @@
                 <ItemsRepeater.ItemTemplate>
                     <DataTemplate x:DataType="local1:Reminder">
                         <Border Background="{ThemeResource SubtleFillColorSecondary}"
-                                CornerRadius="8"
+                                CornerRadius="4"
                                 Margin="8,6,8,6"
                                 Padding="14,12,14,12">
                             <Grid>
