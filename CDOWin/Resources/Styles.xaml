@@ -2,6 +2,14 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- Basic Card Container Border Style -->
+    <Style x:Key="BasicCardBorderStyle" TargetType="Border">
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="BorderBrush" Value="{ThemeResource DividerStrokeColorDefaultBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}"/>
+    </Style>
 
     <!-- Card Container Grid Style -->
     <Style x:Key="CardContainerGridStyle" TargetType="Grid">
