@@ -7,8 +7,9 @@
     xmlns:local="using:CDOWin">
     <Application.Resources>
         <ResourceDictionary>
+            <converters:NullOpacityConverter x:Key="NullOpacityConverter"/>
             <converters:StringNullVisibilityConverter x:Key="StringToVisability"/>
-            <converters:StringNullVisibilityConverter x:Key="NullToVisability"/>
+            <converters:NullVisibilityConverter x:Key="NullToVisability"/>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <ResourceDictionary Source="/Resources/Styles.xaml"/>

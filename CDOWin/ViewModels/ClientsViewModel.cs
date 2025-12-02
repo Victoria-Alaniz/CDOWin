@@ -16,15 +16,17 @@ public partial class ClientsViewModel : ObservableObject {
     private readonly IClientService _service;
 
     // Observable Properties
+    [ObservableProperty]
+    public partial ObservableCollection<ClientSummaryDTO> AllClientSummaries { get; private set; } = [];
 
     [ObservableProperty]
-    public partial ObservableCollection<ClientSummaryDTO> ClientSummaries { get; private set; } = [];
-
-    [ObservableProperty]
-    public partial ObservableCollection<Client> FilteredClients { get; private set; } = [];
+    public partial ObservableCollection<ClientSummaryDTO> FilteredClients { get; private set; } = [];
 
     [ObservableProperty]
     public partial Client? SelectedClient { get; set; }
+
+    [ObservableProperty]
+    public partial string SearchQuery { get; set; } = string.Empty;
 
 
     // Constructor
@@ -32,14 +34,35 @@ public partial class ClientsViewModel : ObservableObject {
         _service = service;
     }
 
-    // OnSelectedClientChanged - Testing: Pulling reminders
+    // Change tracking methods
+    partial void OnSearchQueryChanged(string value) {
+        ApplyFilter();
+    }
+
     partial void OnSelectedClientChanged(Client? value) {
         if (value != null)
             Debug.WriteLine(SelectedClient.reminders);
     }
 
-    // CRUD Methods
+    // Utility Methods
+    void ApplyFilter() {
+        if (string.IsNullOrWhiteSpace(SearchQuery)) {
+            FilteredClients = new ObservableCollection<ClientSummaryDTO>(AllClientSummaries);
+            return;
+        }
 
+        var query = SearchQuery.Trim().ToLower();
+
+        var result = AllClientSummaries.Where(c =>
+        (c.name?.ToLower().Contains(query) ?? false)
+        || (c.id.ToString()?.Contains(query) ?? false)
+        || (c.formattedAddress?.ToLower().Contains(query) ?? false)
+        );
+
+        FilteredClients = new ObservableCollection<ClientSummaryDTO>(result);
+    }
+
+    // CRUD Methods
     public async Task LoadClientSummariesAsync() {
         var clients = await _service.GetAllClientSummariesAsync();
 
@@ -47,12 +70,14 @@ public partial class ClientsViewModel : ObservableObject {
         List<ClientSummaryDTO> SortedClients = clients.OrderBy(o => o.name).ToList();
 
         // Clear the ViewModel's Clients variable
-        ClientSummaries.Clear();
+        AllClientSummaries.Clear();
 
         // Loop over and add all of the clients in the sorted clients list to the main Clients variable
         foreach (var client in SortedClients) {
-            ClientSummaries.Add(client);
+            AllClientSummaries.Add(client);
         }
+
+        FilteredClients = new ObservableCollection<ClientSummaryDTO>(AllClientSummaries);
     }
 
     public async Task ClientSelected(int id) {

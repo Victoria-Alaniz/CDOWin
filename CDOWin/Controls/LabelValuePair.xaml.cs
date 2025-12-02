@@ -12,6 +12,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using System.Diagnostics;
 
 namespace CDOWin.Controls;
 
@@ -34,5 +35,20 @@ public sealed partial class LabelValuePair : UserControl {
     }
 
     public static readonly DependencyProperty ValueProperty =
-        DependencyProperty.Register("Value", typeof(string), typeof(LabelValuePair), new PropertyMetadata(""));
+        DependencyProperty.Register("Value", typeof(string), typeof(LabelValuePair), new PropertyMetadata("", OnValueChanged));
+
+    private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        var control = (LabelValuePair)d;
+        control.UpdateOpacityBasedOnValue(e.NewValue);
+    }
+
+    private void UpdateOpacityBasedOnValue(object newValue) {
+        var value = (string)newValue;
+
+        if(string.IsNullOrWhiteSpace(value)) {
+            this.Opacity = 0.5;
+        } else {
+            this.Opacity = 1.0;
+        }
+    }
 }

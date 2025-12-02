@@ -23,7 +23,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="306"/>
         </Grid.ColumnDefinitions>
         
         <!-- Left Column -->
@@ -50,7 +50,7 @@
                 <TextBlock FontSize="12"
                            Margin="16,1,16,8"
                            Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                    <Run Text="{x:Bind ViewModel.ClientSummaries.Count, Mode=OneWay}"/>
+                    <Run Text="{x:Bind ViewModel.FilteredClients.Count, Mode=OneWay}"/>
                     <Run Text="Clients"/>
                 </TextBlock>
             </StackPanel>
@@ -72,12 +72,13 @@
                      Grid.Column="0"
                      Grid.ColumnSpan="2"
                      Margin="8, 0, 8, 8"
-                     PlaceholderText="Filter by name"/>
+                     PlaceholderText="Filter clients"
+                     Text="{Binding SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <ListView Grid.Row="2" 
                       Grid.Column="0"
                       Grid.ColumnSpan="2"
-                      ItemsSource="{Binding ClientSummaries}"
+                      ItemsSource="{Binding FilteredClients}"
                       IsItemClickEnabled="True"
                       ItemClick="ListView_ItemClick"
                       HorizontalAlignment="Left"
@@ -94,7 +95,8 @@
                                        FontWeight="Bold"
                                        Foreground="{ThemeResource TextFillColorPrimaryBrush}"/>
                             <TextBlock Grid.Row="1" 
-                                       Text="{x:Bind address1}"
+                                       Text="{x:Bind formattedAddress}"
+                                       TextWrapping="WrapWholeWords"
                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
                         </Grid>
                     </DataTemplate>
