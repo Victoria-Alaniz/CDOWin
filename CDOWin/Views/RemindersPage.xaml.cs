@@ -38,7 +38,7 @@ public sealed partial class RemindersPage : Page {
 
             if (hasReminder) {
                 // Mark the date (simple highlight)
-                Color accentColor = (Color)Application.Current.Resources["SystemAccentColor"];
+                Color accentColor = (Color)Application.Current.Resources["SystemAccentColorLight1"];
                 args.Item.Background = new SolidColorBrush(accentColor);
                 args.Item.FontWeight = FontWeights.Bold;
             } else {

@@ -1,6 +1,7 @@
 using CDOWin.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
+using System.Diagnostics;
 
 namespace CDOWin.Views;
 
@@ -15,7 +16,13 @@ public sealed partial class ClientViewPage : Page {
         DataContext = ViewModel;
     }
 
-    private void ElevatorSpeech_Clicked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
-        var checkbox = (CheckBox)sender;
+    private void Checkbox_Clicked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
+        if (sender is CheckBox checkBox) {
+            string? checkboxName = checkBox.Tag?.ToString();
+            if (string.IsNullOrEmpty(checkboxName))
+                return;
+            Debug.WriteLine($"Checkbox: {checkboxName} was checked with value: {checkBox.IsChecked}");
+            // here we ask the viewmodel nicely to do our update
+        }
     }
 }

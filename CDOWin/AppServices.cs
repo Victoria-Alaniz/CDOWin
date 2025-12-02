@@ -19,11 +19,11 @@ public static class AppServices {
     public static IReminderService? ReminderService { get; private set; }
 
     // ViewModels
-    public static ClientsViewModel ClientsViewModel { get; private set; }
-    public static EmployersViewModel EmployersViewModel { get; private set; }
-    public static POsViewModel POsViewModel { get; private set; }
-    public static RemindersViewModel RemindersViewModel { get; private set; }
-    public static StatesViewModel StatesViewModel { get; private set; }
+    public static ClientsViewModel? ClientsViewModel { get; private set; }
+    public static EmployersViewModel? EmployersViewModel { get; private set; }
+    public static POsViewModel? POsViewModel { get; private set; }
+    public static RemindersViewModel? RemindersViewModel { get; private set; }
+    public static StatesViewModel? StatesViewModel { get; private set; }
 
     // Initialize all services
     public static void InitializeServices(string baseAddress, string apiKey) {

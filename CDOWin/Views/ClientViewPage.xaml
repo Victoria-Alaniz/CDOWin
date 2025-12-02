@@ -258,6 +258,7 @@
 
                         <!-- Phone 1 -->
                         <FontIcon Grid.Row="1" Grid.Column="0"
+                                  Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                                   Glyph="&#xE717;"
                                   Visibility="{Binding SelectedClient.phone1, Converter={StaticResource StringToVisability}}"/>
                         <usercontrols:LabelValuePair Grid.Row="1" Grid.Column="1"
@@ -266,6 +267,7 @@
 
                         <!-- Phone 2 -->
                         <FontIcon Grid.Row="2" Grid.Column="0"
+                                  Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                                   Glyph="&#xE717;"
                                   Visibility="{Binding SelectedClient.phone2, Converter={StaticResource StringToVisability}}"/>
 
@@ -275,6 +277,7 @@
 
                         <!-- Phone 3 -->
                         <FontIcon Grid.Row="3" Grid.Column="0"
+                                  Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                                   Glyph="&#xE717;"
                                   Visibility="{Binding SelectedClient.phone3, Converter={StaticResource StringToVisability}}"/>
 
@@ -284,6 +287,7 @@
 
                         <!-- Email 1 -->
                         <FontIcon Grid.Row="4" Grid.Column="0"
+                                  Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                                   Glyph="&#xE715;"
                                   Visibility="{Binding SelectedClient.email, Converter={StaticResource StringToVisability}}"/>
 
@@ -293,6 +297,7 @@
 
                         <!-- Email 2 -->
                         <FontIcon Grid.Row="5" Grid.Column="0"
+                                  Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                                   Glyph="&#xE715;"
                                   Visibility="{Binding SelectedClient.email2, Converter={StaticResource StringToVisability}}"/>
 
@@ -339,11 +344,15 @@
                         <CheckBox Grid.Row="2" Grid.Column="0"
                                   Style="{StaticResource LeftCheckboxStyle}"
                                   Content="Required"
-                                  IsChecked="{Binding SelectedClient.resumeRequired}"/>
+                                  Tag="resumeRequired"
+                                  IsChecked="{Binding SelectedClient.resumeRequired}"
+                                  Click="Checkbox_Clicked"/>
                         <CheckBox Grid.Row="2" Grid.Column="1"
                                   Style="{StaticResource RightCheckboxStyle}"
                                   Content="Completed"
-                                  IsChecked="{Binding SelectedClient.resumeCompleted}"/>
+                                  Tag="resumeCompleted"
+                                  IsChecked="{Binding SelectedClient.resumeCompleted}"
+                                  Click="Checkbox_Clicked"/>
 
                         <!-- Video Interviews Section -->
                         <TextBlock Grid.Row="3" Grid.Column="0"
@@ -352,12 +361,16 @@
                         <CheckBox Grid.Row="4" Grid.Column="0"
                                   Style="{StaticResource LeftCheckboxStyle}"
                                   Content="Required"
+                                  Tag="videoInterviewRequired"
                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                  IsChecked="{Binding SelectedClient.videoInterviewRequired}"/>
+                                  IsChecked="{Binding SelectedClient.videoInterviewRequired}"
+                                  Click="Checkbox_Clicked"/>
                         <CheckBox Grid.Row="4" Grid.Column="1"
                                   Style="{StaticResource RightCheckboxStyle}"
                                   Content="Completed"
-                                  IsChecked="{Binding SelectedClient.videoInterviewCompleted}"/>
+                                  Tag="videoInterviewCompleted"
+                                  IsChecked="{Binding SelectedClient.videoInterviewCompleted}"
+                                  Click="Checkbox_Clicked"/>
 
                         <!-- Releases Section -->
                         <TextBlock Grid.Row="5" Grid.Column="0"
@@ -367,7 +380,9 @@
                         <CheckBox Grid.Row="5" Grid.Column="1"
                                   Style="{StaticResource RightCheckboxStyle}"
                                   Content="Completed"
-                                  IsChecked="{Binding SelectedClient.releasesCompleted}"/>
+                                  Tag="releasesCompleted"
+                                  IsChecked="{Binding SelectedClient.releasesCompleted}"
+                                  Click="Checkbox_Clicked"/>
 
                         <!-- Orientation Section -->
                         <TextBlock Grid.Row="6" Grid.Column="0"
@@ -377,7 +392,9 @@
                         <CheckBox Grid.Row="6" Grid.Column="1"
                                   Style="{StaticResource RightCheckboxStyle}"
                                   Content="Completed"
-                                  IsChecked="{Binding SelectedClient.orientationCompleted}"/>
+                                  Tag="orientationCompleted"
+                                  IsChecked="{Binding SelectedClient.orientationCompleted}"
+                                  Click="Checkbox_Clicked"/>
 
                         <!-- 1850 Data Sheet Section -->
                         <TextBlock Grid.Row="7"  Grid.Column="0"
@@ -387,7 +404,9 @@
                         <CheckBox Grid.Row="7"  Grid.Column="1"
                                   Style="{StaticResource RightCheckboxStyle}"
                                   Content="Completed"
-                                  IsChecked="{Binding SelectedClient.dataSheetCompleted}"/>
+                                  Tag="dataSheetCompleted"
+                                  IsChecked="{Binding SelectedClient.dataSheetCompleted}"
+                                  Click="Checkbox_Clicked"/>
 
                         <!-- Elevator Speech Section -->
                         <TextBlock Grid.Row="8" Grid.Column="0"
@@ -395,10 +414,11 @@
                                    Text="Elevator Speech"
                                    FontWeight="Bold"/>
                         <CheckBox Grid.Row="8" Grid.Column="1"
-                                  Click="ElevatorSpeech_Clicked"
                                   Style="{StaticResource RightCheckboxStyle}"
                                   Content="Completed"
-                                  IsChecked="{Binding SelectedClient.elevatorSpeechCompleted}"/>
+                                  Tag="elevatorSpeechCompleted"
+                                  IsChecked="{Binding SelectedClient.elevatorSpeechCompleted}"
+                                  Click="Checkbox_Clicked"/>
                     </Grid>
                 </Grid>
             </controls:WrapPanel>

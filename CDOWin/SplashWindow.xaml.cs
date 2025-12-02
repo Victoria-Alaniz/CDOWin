@@ -19,8 +19,8 @@ public sealed partial class SplashWindow : WinUIEx.WindowEx {
         var manager = WindowManager.Get(this);
         manager.MinWidth = 400;
         manager.MaxWidth = 400;
-        manager.MinHeight = 300;
-        manager.MaxHeight = 300;
+        manager.MinHeight = 250;
+        manager.MaxHeight = 250;
 
 
         this.CenterOnScreen();

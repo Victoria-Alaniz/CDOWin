@@ -11,15 +11,40 @@
     Title="Loading...">
 
     <winex:WindowEx.SystemBackdrop>
-        <MicaBackdrop />
+        <MicaBackdrop Kind="BaseAlt"/>
     </winex:WindowEx.SystemBackdrop>
 
-    <StackPanel HorizontalAlignment="Center"
-                VerticalAlignment="Center">
-        <TextBlock Text="Loading data, please wait..."
-                   FontSize="18"/>
-        <ProgressBar IsIndeterminate="True"
-                     Width="200"
-                     Margin="10"/>
-    </StackPanel>
+    <Grid>
+        <!-- Bottom layer: accent color -->
+        <Grid.Background>
+            <SolidColorBrush Color="{ThemeResource SystemAccentColorDark1}"/>
+        </Grid.Background>
+
+        <!-- Top: image as brush -->
+        <Rectangle>
+            <Rectangle.Fill>
+                <ThemeResource ResourceKey="SplashBackgroundBrush"/>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="1"
+                       HorizontalAlignment="Right"
+                       Text=""
+                       FontFamily="Cascadia Mono"
+                       FontWeight="Normal"
+                       FontSize="18"
+                       Margin="8,8,8,2"
+                       Foreground="{ThemeResource SystemAccentColor}"/>
+            <ProgressBar Grid.Row="2"
+                         VerticalAlignment="Bottom"
+                         Foreground="{ThemeResource SystemAltHighColor}"
+                         IsIndeterminate="True"/>
+        </Grid>
+    </Grid>
 </winex:WindowEx>
