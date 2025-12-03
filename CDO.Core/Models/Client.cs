@@ -55,9 +55,10 @@ public record class Client(
     bool? elevatorSpeechCompleted,
     string? race,
     string? fluentLanguages,
-    string? premiums
+    string? premiums,
+    Counselor? counselorReference
     ) {
-    public string name => $"{firstName} {lastName}";
+    public string name => $"{firstName} {lastName} ({id})";
 
     public string? documentsFolderPath => documentFolder?.Replace('#', ' ').Trim();
 
