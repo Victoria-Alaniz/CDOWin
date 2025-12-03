@@ -6,7 +6,7 @@ using System.Diagnostics;
 namespace CDOWin.Views;
 
 public sealed partial class ClientViewPage : Page {
-    public ClientsViewModel ViewModel { get; private set; }
+    public ClientsViewModel? ViewModel { get; private set; }
     public ClientViewPage() {
         InitializeComponent();
     }

@@ -186,7 +186,9 @@
                             <TextBlock Style="{StaticResource LabelTextBlockStyle}"
                                        Text="Secretary"/>
                             <TextBlock Style="{StaticResource ValueTextBlockStyle}"
-                                       Text="{Binding SelectedClient.counselor}"/>
+                                       Text="{Binding SelectedClient.counselorReference.secretaryName}"/>
+                            <TextBlock Style="{StaticResource ValueTextBlockStyle}"
+                                       Text="{Binding SelectedClient.counselorReference.secretaryEmail}"/>
                         </StackPanel>
                     </Grid>
                 </Grid>
