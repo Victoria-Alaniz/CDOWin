@@ -71,7 +71,7 @@
                     <NavigationViewItem Content="Clients" Tag="ClientsPage"/>
                     <NavigationViewItem Content="Counselors" Tag="CounselorsPage"/>
                     <NavigationViewItem Content="Employers" Tag="EmployersPage"/>
-                    <NavigationViewItem Content="POs" Tag="POs"/>
+                    <NavigationViewItem Content="Service Authorizations" Tag="POs"/>
                     <NavigationViewItem Content="Referrals" Tag="Referrals"/>
                 </NavigationView.MenuItems>
             </NavigationView>
