@@ -129,7 +129,6 @@
                          Grid.Row="0"
                          Margin="8, 0, 0, 8">
                 <SelectorBarItem Text="Notes" IsSelected="True" />
-                <SelectorBarItem Text="Documents" />
                 <SelectorBarItem Text="Other" />
             </SelectorBar>
             

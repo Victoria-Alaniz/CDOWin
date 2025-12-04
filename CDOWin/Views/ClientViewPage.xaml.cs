@@ -25,4 +25,8 @@ public sealed partial class ClientViewPage : Page {
             // here we ask the viewmodel nicely to do our update
         }
     }
+    private void OpenDocuments_Clicked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
+        Debug.WriteLine($"Open {ViewModel.SelectedClient?.documentsFolderPath}");
+        Process.Start("explorer.exe", $"{ViewModel.SelectedClient?.documentsFolderPath}");
+    }
 }

@@ -32,7 +32,7 @@ public sealed partial class ClientsPage : Page {
                 pageType = typeof(Notes);
                 break;
             case 1:
-                pageType = typeof(Documents);
+                pageType = typeof(SamplePage);
                 break;
             default:
                 pageType = typeof(SamplePage);
