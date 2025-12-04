@@ -5,7 +5,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace CDOWin.Views;
 
@@ -65,7 +64,7 @@ public sealed partial class ClientViewPage : Page {
             }
 
             var result = await dialog.ShowAsync();
-            
+
         }
         // personalInformation
         // caseInformation
