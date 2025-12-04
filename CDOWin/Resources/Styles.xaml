@@ -58,4 +58,10 @@
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}"/>
     </Style>
+    
+    <!-- Multi-Line TextBox (Notes, etc.) -->
+    <Style x:Key="MultiLineCheckboxStyle" TargetType="TextBox">
+        <Setter Property="AcceptsReturn" Value="True"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
 </ResourceDictionary>

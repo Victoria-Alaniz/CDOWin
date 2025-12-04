@@ -16,12 +16,16 @@
   <ItemGroup>
     <None Remove="Assets\CDO_Dark.png" />
     <None Remove="Assets\CDO_Light.png" />
+    <None Remove="Controls\LabelMultiLineTextBoxPair.xaml" />
     <None Remove="Controls\LabelTextBoxPair.xaml" />
     <None Remove="Controls\LabelValuePAir.xaml" />
     <None Remove="Resources\Styles.xaml" />
     <None Remove="SplashWindow.xaml" />
     <None Remove="Views\ClientViewPage.xaml" />
-    <None Remove="Views\Dialogs\UpdateContact.xaml" />
+    <None Remove="Views\Dialogs\UpdateArrangements.xaml" />
+    <None Remove="Views\Dialogs\UpdateCaseInformation.xaml" />
+    <None Remove="Views\Dialogs\UpdateContacts.xaml" />
+    <None Remove="Views\Dialogs\UpdateEmploymentProfile.xaml" />
     <None Remove="Views\Notes.xaml" />
     <None Remove="Views\POsPage.xaml" />
     <None Remove="Views\RemindersPage.xaml" />
@@ -73,6 +77,31 @@
     <Content Update="Assets\CDO_Light.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\LabelMultiLineTextBoxPair.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Dialogs\UpdateContacts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Dialogs\UpdateArrangements.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Dialogs\UpdateEmploymentProfile.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Dialogs\UpdateCaseInformation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\LabelTextBoxPair.xaml">
@@ -135,7 +164,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\Dialogs\UpdateContact.xaml">
+    <Page Update="Views\Dialogs\UpdatePersonalInformation.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

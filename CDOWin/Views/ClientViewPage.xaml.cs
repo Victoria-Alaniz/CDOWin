@@ -54,22 +54,34 @@ public sealed partial class ClientViewPage : Page {
             dialog.PrimaryButtonText = "Save";
             dialog.CloseButtonText = "Cancel";
             dialog.DefaultButton = ContentDialogButton.Primary;
-
+            Debug.WriteLine(ViewModel.SelectedClient.employmentGoal);
             switch (editType) {
                 case "personalInformation":
                     dialog.Title = "Edit Personal Information";
-                    dialog.Content = new UpdateContact(ViewModel.SelectedClient);
+                    dialog.Content = new UpdatePersonalInformation(ViewModel.SelectedClient);
                     break;
+                case "caseInformation":
+                    dialog.Title = "Edit Case Information";
+                    dialog.Content = new UpdateCaseInformation(ViewModel.SelectedClient);
+                    break;
+                case "employmentProfile":
+                    dialog.Title = "Edit Employment Profile";
+                    dialog.Content = new UpdateEmploymentProfile(ViewModel.SelectedClient);
+                    break;
+                case "arrangements":
+                    dialog.Title = "Edit Arrangements";
+                    dialog.Content = new UpdateArrangements(ViewModel.SelectedClient);
+                    break;
+                case "contactInformation":
+                    dialog.Title = "Edit Contact Information";
+                    dialog.Content = new UpdateContacts(ViewModel.SelectedClient);
+                    break;
+
                 default: break;
             }
 
             var result = await dialog.ShowAsync();
 
         }
-        // personalInformation
-        // caseInformation
-        // employmentProfile
-        // arrangements
-        // contactInformation
     }
 }
