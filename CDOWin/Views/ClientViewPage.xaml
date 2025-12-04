@@ -63,7 +63,6 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
@@ -76,9 +75,18 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- Header -->
-                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"
-                                   Text="Personal Information"
-                                   Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <TextBlock Grid.Column="0" Text="Personal Information"
+                                       Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <Button Grid.Column="1" Style="{StaticResource SubtleButtonStyle}">
+                                <FontIcon Glyph="&#xE70F;" FontSize="16" Foreground="{ThemeResource SystemAccentColor}"/>
+                            </Button>
+                        </Grid>
 
                         <!-- Date of Birth/DL/SSN -->
                         <usercontrols:LabelValuePair Grid.Row ="1" Grid.Column="0" Grid.ColumnSpan="2" 
@@ -118,7 +126,6 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
@@ -131,9 +138,18 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- Header -->
-                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"
-                                   Text="Case Information"
-                                   Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="Case Information"
+                                       Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <Button Grid.Column="1" Style="{StaticResource SubtleButtonStyle}">
+                                <FontIcon Glyph="&#xE70F;" FontSize="16" Foreground="{ThemeResource SystemAccentColor}"/>
+                            </Button>
+                        </Grid>
 
                         <!-- Start Date/Case ID/Status Section -->
                         <usercontrols:LabelValuePair Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
@@ -188,14 +204,21 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
                         <!-- Header -->
-                        <TextBlock Grid.Row="0" Grid.Column="0"
-                                   Text="Employment Profile"
-                                   Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
+                            <TextBlock Grid.Column="0" Text="Employment Profile"
+                                       Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <Button Grid.Column="1" Style="{StaticResource SubtleButtonStyle}">
+                                <FontIcon Glyph="&#xE70F;" FontSize="16" Foreground="{ThemeResource SystemAccentColor}"/>
+                            </Button>
+                        </Grid>
                         <!-- Start Date/Case ID/Status Section -->
                         <usercontrols:LabelValuePair Grid.Row="1" Grid.Column="0"
                                                      Label="Disability" Value="{Binding SelectedClient.disability}"/>
@@ -216,13 +239,21 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
                         <!-- Header -->
-                        <TextBlock Grid.Row="0" Grid.Column="0"
-                                   Text="Arrangements"
-                                   Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="Arrangements"
+                                       Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <Button Grid.Column="1" Style="{StaticResource SubtleButtonStyle}">
+                                <FontIcon Glyph="&#xE70F;" FontSize="16" Foreground="{ThemeResource SystemAccentColor}"/>
+                            </Button>
+                        </Grid>
 
                         <!-- Start Date/Case ID/Status Section -->
                         <usercontrols:LabelValuePair Grid.Row="1" Grid.Column="0"
@@ -245,7 +276,6 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
@@ -254,9 +284,18 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- Header -->
-                        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                                   Text="Contact Information"
-                                   Style="{StaticResource SubtitleTextBlockStyle}"/>
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="Contact Information"
+                                       Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <Button Grid.Column="1" Style="{StaticResource SubtleButtonStyle}">
+                                <FontIcon Glyph="&#xE70F;" FontSize="16" Foreground="{ThemeResource SystemAccentColor}"/>
+                            </Button>
+                        </Grid>
 
                         <!-- Phone 1 -->
                         <FontIcon Grid.Row="1" Grid.Column="0"
@@ -325,7 +364,6 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
