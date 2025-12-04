@@ -19,7 +19,6 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -44,7 +43,7 @@
         </StackPanel>
 
         <!-- Scroll Viewwer Content -->
-        <ScrollViewer Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             
             <!-- Wrap Panel -->
             <controls:WrapPanel Orientation="Horizontal"
@@ -298,49 +297,39 @@
                         </Grid>
 
                         <!-- Phone 1 -->
-                        <FontIcon Grid.Row="1" Grid.Column="0"
-                                  Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                  Glyph="&#xE717;"
-                                  Visibility="{Binding SelectedClient.phone1, Converter={StaticResource StringToVisability}}"/>
+                        <FontIcon Grid.Row="1" Grid.Column="0" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                  Glyph="&#xE717;" Visibility="{Binding SelectedClient.phone1, Converter={StaticResource StringToVisability}}"/>
                         <usercontrols:LabelValuePair Grid.Row="1" Grid.Column="1"
                                                      Label="{Binding SelectedClient.phone1Identity}" Value="{Binding SelectedClient.phone1}"
                                                      Visibility="{Binding SelectedClient.phone1, Converter={StaticResource StringToVisability}}"/>
 
                         <!-- Phone 2 -->
-                        <FontIcon Grid.Row="2" Grid.Column="0"
-                                  Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                  Glyph="&#xE717;"
-                                  Visibility="{Binding SelectedClient.phone2, Converter={StaticResource StringToVisability}}"/>
+                        <FontIcon Grid.Row="2" Grid.Column="0" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                  Glyph="&#xE717;" Visibility="{Binding SelectedClient.phone2, Converter={StaticResource StringToVisability}}"/>
 
                         <usercontrols:LabelValuePair Grid.Row="2" Grid.Column="1"
                                                      Label="{Binding SelectedClient.phone2Identity}" Value="{Binding SelectedClient.phone2}"
                                                      Visibility="{Binding SelectedClient.phone2, Converter={StaticResource StringToVisability}}"/>
 
                         <!-- Phone 3 -->
-                        <FontIcon Grid.Row="3" Grid.Column="0"
-                                  Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                  Glyph="&#xE717;"
-                                  Visibility="{Binding SelectedClient.phone3, Converter={StaticResource StringToVisability}}"/>
+                        <FontIcon Grid.Row="3" Grid.Column="0" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                  Glyph="&#xE717;" Visibility="{Binding SelectedClient.phone3, Converter={StaticResource StringToVisability}}"/>
 
                         <usercontrols:LabelValuePair Grid.Row="3" Grid.Column="1"
                                                      Label="{Binding SelectedClient.phone3Identity}" Value="{Binding SelectedClient.phone3}"
                                                      Visibility="{Binding SelectedClient.phone3, Converter={StaticResource StringToVisability}}"/>
 
                         <!-- Email 1 -->
-                        <FontIcon Grid.Row="4" Grid.Column="0"
-                                  Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                  Glyph="&#xE715;"
-                                  Visibility="{Binding SelectedClient.email, Converter={StaticResource StringToVisability}}"/>
+                        <FontIcon Grid.Row="4" Grid.Column="0" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                  Glyph="&#xE715;" Visibility="{Binding SelectedClient.email, Converter={StaticResource StringToVisability}}"/>
 
                         <usercontrols:LabelValuePair Grid.Row="4" Grid.Column="1"
                                                      Label="{Binding SelectedClient.emailIdentity}" Value="{Binding SelectedClient.email}"
                                                      Visibility="{Binding SelectedClient.email, Converter={StaticResource StringToVisability}}"/>
 
                         <!-- Email 2 -->
-                        <FontIcon Grid.Row="5" Grid.Column="0"
-                                  Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                  Glyph="&#xE715;"
-                                  Visibility="{Binding SelectedClient.email2, Converter={StaticResource StringToVisability}}"/>
+                        <FontIcon Grid.Row="5" Grid.Column="0" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                  Glyph="&#xE715;" Visibility="{Binding SelectedClient.email2, Converter={StaticResource StringToVisability}}"/>
 
                         <usercontrols:LabelValuePair Grid.Row="5" Grid.Column="1"
                                                      Label="{Binding SelectedClient.email2Identity}" Value="{Binding SelectedClient.email2}"
@@ -379,18 +368,13 @@
                         
                         <!-- Resume Section -->
                         <TextBlock Grid.Row="1" Grid.Column="0"
-                                   Text="Resume"
-                                   FontWeight="Bold"/>
-                        <CheckBox Grid.Row="2" Grid.Column="0"
-                                  Style="{StaticResource LeftCheckboxStyle}"
-                                  Content="Required"
-                                  Tag="resumeRequired"
+                                   Text="Resume" FontWeight="Bold"/>
+                        <CheckBox Grid.Row="2" Grid.Column="0" Style="{StaticResource LeftCheckboxStyle}"
+                                  Content="Required" Tag="resumeRequired"
                                   IsChecked="{Binding SelectedClient.resumeRequired}"
                                   Click="Checkbox_Clicked"/>
-                        <CheckBox Grid.Row="2" Grid.Column="1"
-                                  Style="{StaticResource RightCheckboxStyle}"
-                                  Content="Completed"
-                                  Tag="resumeCompleted"
+                        <CheckBox Grid.Row="2" Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
+                                  Content="Completed" Tag="resumeCompleted"
                                   IsChecked="{Binding SelectedClient.resumeCompleted}"
                                   Click="Checkbox_Clicked"/>
 
@@ -398,65 +382,44 @@
                         <TextBlock Grid.Row="3" Grid.Column="0"
                                    Text="Video Interviews"
                                    FontWeight="Bold"/>
-                        <CheckBox Grid.Row="4" Grid.Column="0"
-                                  Style="{StaticResource LeftCheckboxStyle}"
-                                  Content="Required"
-                                  Tag="videoInterviewRequired"
-                                  Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        <CheckBox Grid.Row="4" Grid.Column="0" Style="{StaticResource LeftCheckboxStyle}"
+                                  Content="Required" Tag="videoInterviewRequired"
                                   IsChecked="{Binding SelectedClient.videoInterviewRequired}"
                                   Click="Checkbox_Clicked"/>
-                        <CheckBox Grid.Row="4" Grid.Column="1"
-                                  Style="{StaticResource RightCheckboxStyle}"
-                                  Content="Completed"
-                                  Tag="videoInterviewCompleted"
+                        <CheckBox Grid.Row="4" Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
+                                  Content="Completed" Tag="videoInterviewCompleted"
                                   IsChecked="{Binding SelectedClient.videoInterviewCompleted}"
                                   Click="Checkbox_Clicked"/>
 
                         <!-- Releases Section -->
-                        <TextBlock Grid.Row="5" Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   Text="Releases"
-                                   FontWeight="Bold"/>
-                        <CheckBox Grid.Row="5" Grid.Column="1"
-                                  Style="{StaticResource RightCheckboxStyle}"
-                                  Content="Completed"
-                                  Tag="releasesCompleted"
+                        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"
+                                   Text="Releases" FontWeight="Bold"/>
+                        <CheckBox Grid.Row="5" Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
+                                  Content="Completed"  Tag="releasesCompleted"
                                   IsChecked="{Binding SelectedClient.releasesCompleted}"
                                   Click="Checkbox_Clicked"/>
 
                         <!-- Orientation Section -->
-                        <TextBlock Grid.Row="6" Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   Text="Orientation"
-                                   FontWeight="Bold"/>
-                        <CheckBox Grid.Row="6" Grid.Column="1"
-                                  Style="{StaticResource RightCheckboxStyle}"
-                                  Content="Completed"
-                                  Tag="orientationCompleted"
+                        <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center"
+                                   Text="Orientation" FontWeight="Bold"/>
+                        <CheckBox Grid.Row="6" Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
+                                  Content="Completed" Tag="orientationCompleted"
                                   IsChecked="{Binding SelectedClient.orientationCompleted}"
                                   Click="Checkbox_Clicked"/>
 
                         <!-- 1850 Data Sheet Section -->
-                        <TextBlock Grid.Row="7"  Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   Text="1850 Data Sheet"
-                                   FontWeight="Bold"/>
-                        <CheckBox Grid.Row="7"  Grid.Column="1"
-                                  Style="{StaticResource RightCheckboxStyle}"
-                                  Content="Completed"
-                                  Tag="dataSheetCompleted"
+                        <TextBlock Grid.Row="7"  Grid.Column="0" VerticalAlignment="Center"
+                                   Text="1850 Data Sheet" FontWeight="Bold"/>
+                        <CheckBox Grid.Row="7"  Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
+                                  Content="Completed" Tag="dataSheetCompleted"
                                   IsChecked="{Binding SelectedClient.dataSheetCompleted}"
                                   Click="Checkbox_Clicked"/>
 
                         <!-- Elevator Speech Section -->
-                        <TextBlock Grid.Row="8" Grid.Column="0"
-                                   VerticalAlignment="Center"
-                                   Text="Elevator Speech"
-                                   FontWeight="Bold"/>
-                        <CheckBox Grid.Row="8" Grid.Column="1"
-                                  Style="{StaticResource RightCheckboxStyle}"
-                                  Content="Completed"
-                                  Tag="elevatorSpeechCompleted"
+                        <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center"
+                                   Text="Elevator Speech" FontWeight="Bold"/>
+                        <CheckBox Grid.Row="8" Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
+                                  Content="Completed" Tag="elevatorSpeechCompleted"
                                   IsChecked="{Binding SelectedClient.elevatorSpeechCompleted}"
                                   Click="Checkbox_Clicked"/>
                     </Grid>

@@ -15,6 +15,10 @@ public sealed partial class ClientViewPage : Page {
         ViewModel = (ClientsViewModel)e.Parameter;
         DataContext = ViewModel;
     }
+    private void OpenDocuments_Clicked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
+        Debug.WriteLine($"Open {ViewModel.SelectedClient?.documentsFolderPath}");
+        Process.Start("explorer.exe", $"{ViewModel.SelectedClient?.documentsFolderPath}");
+    }
 
     private void Checkbox_Clicked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
         if (sender is CheckBox checkBox) {
@@ -25,8 +29,8 @@ public sealed partial class ClientViewPage : Page {
             // here we ask the viewmodel nicely to do our update
         }
     }
-    private void OpenDocuments_Clicked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
-        Debug.WriteLine($"Open {ViewModel.SelectedClient?.documentsFolderPath}");
-        Process.Start("explorer.exe", $"{ViewModel.SelectedClient?.documentsFolderPath}");
+
+    private void EditButton_Clicked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
+
     }
 }
