@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Opacity="0.5">
+    Opacity="0.4">
 
     <StackPanel>
         <TextBlock Text="{x:Bind Label, Mode=OneWay}" 

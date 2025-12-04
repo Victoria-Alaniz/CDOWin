@@ -33,7 +33,7 @@ public sealed partial class LabelValuePair : UserControl {
         var value = (string)newValue;
 
         if (string.IsNullOrEmpty(value)) {
-            this.Opacity = 0.5;
+            this.Opacity = 0.4;
         } else {
             this.Opacity = 1.0;
         }
