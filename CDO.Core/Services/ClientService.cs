@@ -14,16 +14,6 @@ public class ClientService : IClientService {
     }
 
     // -----------------------------
-    // Service Initialization Tasks
-    // -----------------------------
-    public async Task InitializeAsync() {
-        var data = await _network.GetAsync<List<Client>>(Endpoints.Clients);
-        if (data != null) {
-            Clients = data;
-        }
-    }
-
-    // -----------------------------
     // GET
     // -----------------------------
     public Task<List<Client>?> GetAllClientsAsync() {

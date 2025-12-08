@@ -6,11 +6,6 @@ namespace CDO.Core.Interfaces;
 public interface IReminderService {
 
     // -----------------------------
-    // Service Initialization Tasks
-    // -----------------------------
-    public Task InitializeAsync();
-
-    // -----------------------------
     // GET Methods
     // -----------------------------
     public Task<List<Reminder>?> GetAllRemindersAsync();
@@ -25,7 +20,7 @@ public interface IReminderService {
     // -----------------------------
     // PATCH Methods
     // -----------------------------
-    public Task<Reminder?> UpdateReminderAsync(UpdateReminderDTO dto, int id);
+    public Task<Reminder?> UpdateReminderAsync(int id, UpdateReminderDTO dto);
 
     // -----------------------------
     // DELETE Methods

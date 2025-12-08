@@ -14,16 +14,6 @@ public class POService : IPOService {
     }
 
     // -----------------------------
-    // Service Initialization Tasks
-    // -----------------------------
-    public async Task InitializeAsync() {
-        var data = await _network.GetAsync<List<PO>>(Endpoints.POs);
-        if (data != null) {
-            POs = data;
-        }
-    }
-
-    // -----------------------------
     // GET
     // -----------------------------
     public Task<List<PO>?> GetAllPOsAsync() {
@@ -44,7 +34,7 @@ public class POService : IPOService {
     // -----------------------------
     // PATCH Methods
     // -----------------------------
-    public Task<PO?> UpdatePOAsync(UpdatePODTO dto, string id) {
+    public Task<PO?> UpdatePOAsync(string id, UpdatePODTO dto) {
         return _network.UpdateAsync<UpdatePODTO, PO>(Endpoints.PO(id), dto);
     }
 

@@ -5,11 +5,6 @@ namespace CDO.Core.Interfaces {
     public interface ICounselorService {
 
         // -----------------------------
-        // Service Initialization Tasks
-        // -----------------------------
-        public Task InitializeAsync();
-
-        // -----------------------------
         // GET Methods
         // -----------------------------
         public Task<List<Counselor>?> GetAllCounselorsAsync();
@@ -24,7 +19,7 @@ namespace CDO.Core.Interfaces {
         // -----------------------------
         // PATCH Methods
         // -----------------------------
-        public Task<Counselor?> UpdateCounselorAsync(UpdateCounselorDTO dto, int id);
+        public Task<Counselor?> UpdateCounselorAsync(int id, UpdateCounselorDTO dto);
 
         // -----------------------------
         // DELETE Methods

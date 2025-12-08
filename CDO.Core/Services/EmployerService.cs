@@ -14,16 +14,6 @@ public class EmployerService : IEmployerService {
     }
 
     // -----------------------------
-    // Service Initialization Tasks
-    // -----------------------------
-    public async Task InitializeAsync() {
-        var data = await _network.GetAsync<List<Employer>>(Endpoints.Employers);
-        if (data != null) {
-            Employers = data;
-        }
-    }
-
-    // -----------------------------
     // GET
     // -----------------------------
     public Task<List<Employer>?> GetAllEmployersAsync() {
@@ -44,7 +34,7 @@ public class EmployerService : IEmployerService {
     // -----------------------------
     // PATCH Methods
     // -----------------------------
-    public Task<Employer?> UpdateEmployerAsync(EmployerDTO dto, int id) {
+    public Task<Employer?> UpdateEmployerAsync(int id, EmployerDTO dto) {
         return _network.UpdateAsync<EmployerDTO, Employer>(Endpoints.Employer(id), dto);
     }
 
