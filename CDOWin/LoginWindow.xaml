@@ -15,8 +15,7 @@
 
     <Grid>
         <!-- Title Bar -->
-        <Grid x:Name="AppTitleBar"
-              Height="32"
+        <Grid x:Name="AppTitleBar" Height="32"
               VerticalAlignment="Top"
               Background="Transparent" />
 
@@ -31,60 +30,44 @@
             </Grid.RowDefinitions>
 
             <!-- Header -->
-            <TextBlock Grid.Row="0"
-                       Text="Server Configuration"
-                       FontSize="20"
-                       FontWeight="SemiBold"
-                       Margin="0,12,0,8"/>
-
-            <TextBlock Grid.Row="1"
+            <TextBlock Grid.Row="0" Margin="0,12,0,8"
+                       FontSize="20" FontWeight="SemiBold"
+                       Text="Server Configuration"/>
+            <TextBlock Grid.Row="1" Margin="0,0,0,24"
                        Text="Please enter your server credentials to continue."
                        TextWrapping="Wrap"
-                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                       Margin="0,0,0,24"/>
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"/>
 
             <!-- Server Address -->
-            <StackPanel Grid.Row="2" 
-                        Margin="0,0,0,16">
-                <TextBlock Text="Server Address"
-                           Margin="0,0,0,4"/>
+            <StackPanel Grid.Row="2" Margin="0,0,0,16">
+                <TextBlock Text="Server Address" Margin="0,0,0,4"/>
                 <TextBox x:Name="ServerAddressTextBox"
                          PlaceholderText="https://example.com"
                          TextChanged="OnCredentialsChanged"/>
             </StackPanel>
 
             <!-- API Key -->
-            <StackPanel Grid.Row="3" 
-                        Margin="0,0,0,16">
-                <TextBlock Text="API Key"
-                           Margin="0,0,0,4"/>
+            <StackPanel Grid.Row="3" Margin="0,0,0,16">
+                <TextBlock Text="API Key" Margin="0,0,0,4"/>
                 <PasswordBox x:Name="ApiKeyPasswordBox"
                              PlaceholderText="Enter your API key"
                              PasswordChanged="OnCredentialsChanged"/>
             </StackPanel>
 
             <!-- Status Message -->
-            <InfoBar x:Name="StatusInfoBar"
-                     Grid.Row="4"
-                     IsOpen="False"
-                     IsClosable="False"
-                     Margin="0,0,0,16"
-                     VerticalAlignment="Top"/>
+            <InfoBar Grid.Row="4" Margin="0,0,0,16"
+                     x:Name="StatusInfoBar" IsOpen="False"
+                     IsClosable="False" VerticalAlignment="Top"/>
 
             <!-- Buttons -->
-            <StackPanel Grid.Row="5"
+            <StackPanel Grid.Row="5" Spacing="8"
                         Orientation="Horizontal"
-                        HorizontalAlignment="Right"
-                        Spacing="8">
-                <Button x:Name="TestButton"
-                        Content="Test Connection"
-                        Click="TestButton_Click"
-                        IsEnabled="False"
+                        HorizontalAlignment="Right">
+                <Button x:Name="TestButton" Content="Test Connection"
+                        Click="TestButton_Click" IsEnabled="False"
                         Style="{StaticResource AccentButtonStyle}"/>
-                <Button x:Name="SaveButton"
-                        Content="Save"
-                        Click="SaveButton_Click"
-                        IsEnabled="False"/>
+                <Button x:Name="SaveButton" Content="Save"
+                        Click="SaveButton_Click" IsEnabled="False"/>
             </StackPanel>
         </Grid>
     </Grid>

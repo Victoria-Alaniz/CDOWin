@@ -33,16 +33,12 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="1"
+            <TextBlock Grid.Row="1" Margin="8,8,8,2"
                        HorizontalAlignment="Right"
-                       Text=""
-                       FontFamily="Cascadia Mono"
-                       FontWeight="Normal"
-                       FontSize="18"
-                       Margin="8,8,8,2"
+                       Text="" FontFamily="Cascadia Mono"
+                       FontWeight="Normal" FontSize="18"
                        Foreground="{ThemeResource SystemAccentColor}"/>
-            <ProgressBar Grid.Row="2"
-                         VerticalAlignment="Bottom"
+            <ProgressBar Grid.Row="2" VerticalAlignment="Bottom"
                          Foreground="{ThemeResource SystemAltHighColor}"
                          IsIndeterminate="True"/>
         </Grid>

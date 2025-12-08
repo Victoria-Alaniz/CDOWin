@@ -27,25 +27,17 @@
         </Grid.ColumnDefinitions>
         
         <!-- Title Bar -->
-        <TitleBar Grid.Row="0" 
-                  Grid.Column="0" 
-                  Grid.ColumnSpan="2"
-                  Title="CDO Win"
-                  Subtitle="Beta"
+        <TitleBar Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                  Title="CDO Win" Subtitle="Beta"
                   IsBackButtonVisible="False"
                   IsPaneToggleButtonVisible="False"/>
 
         <!-- Left Column: Sidebar -->
-        <Frame Grid.Row="1"
-               Grid.Column="0"
-               Padding="4,0,4,0"
-               x:Name="SidebarFrame" 
-               IsNavigationStackEnabled="False"/>
-
+        <Frame Grid.Row="1" Grid.Column="0" Padding="4,0,4,0"
+               x:Name="SidebarFrame" IsNavigationStackEnabled="False"/>
 
         <!-- Right Column: Selector + Content -->
-        <Grid Grid.Row="1"
-              Grid.Column="1">
+        <Grid Grid.Row="1" Grid.Column="1">
 
             <!-- Right Column Rows -->
             <Grid.RowDefinitions>
@@ -59,14 +51,10 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <NavigationView x:Name="NavigationBar"
-                            IsBackButtonVisible="Collapsed"
-                            Loaded="NavigationLoaded"
-                            SelectionChanged="NavigationSelectionChanged"
-                            Grid.Column="0"
-                            Grid.Row="0"
-                            PaneDisplayMode="Top"
-                            Margin="0,0,0,-2">
+            <NavigationView Grid.Column="0" Grid.Row="0" Margin="0,0,0,-2"
+                            x:Name="NavigationBar" IsBackButtonVisible="Collapsed"
+                            PaneDisplayMode="Top" Loaded="NavigationLoaded"
+                            SelectionChanged="NavigationSelectionChanged">
                 <NavigationView.MenuItems>
                     <NavigationViewItem Content="Clients" Tag="ClientsPage"/>
                     <NavigationViewItem Content="Counselors" Tag="CounselorsPage"/>
@@ -76,14 +64,11 @@
                 </NavigationView.MenuItems>
             </NavigationView>
 
-            <Border Grid.Row="1"
-                    Grid.ColumnSpan="2"
-                    CornerRadius="8, 0, 0, 0"
+            <Border Grid.Row="1" Grid.ColumnSpan="2"
                     BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
-                    BorderThickness="1"
+                    BorderThickness="1" CornerRadius="8, 0, 0, 0"
                     Background="{ThemeResource LayerFillColorDefaultBrush}">
-                <Frame x:Name="ContentFrame" 
-                       IsNavigationStackEnabled="False"/>
+                <Frame x:Name="ContentFrame" IsNavigationStackEnabled="False"/>
             </Border>
         </Grid>
     </Grid>
