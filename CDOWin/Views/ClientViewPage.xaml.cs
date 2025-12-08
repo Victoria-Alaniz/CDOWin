@@ -19,24 +19,16 @@ public sealed partial class ClientViewPage : Page {
         ViewModel = (ClientsViewModel)e.Parameter;
         DataContext = ViewModel;
     }
+
+    // Click Events
     private void OpenDocuments_Clicked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
         Process.Start("explorer.exe", $"{ViewModel.SelectedClient?.documentsFolderPath}");
     }
 
     private void Checkbox_Clicked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
-        if (sender is CheckBox checkBox) {
-            string? checkboxName = checkBox.Tag?.ToString();
-            if (string.IsNullOrEmpty(checkboxName))
-                return;
-            Debug.WriteLine($"Checkbox: {checkboxName} was checked with value: {checkBox.IsChecked}");
-            // resumeRequired
-            // resumeCompleted
-            // videoInterviewRequired
-            // videoInterviewCompleted
-            // releasesCompleted
-            // orientationCompleted
-            // dataSheetCompleted
-            // elevatorSpeechCompleted
+        if (sender is CheckBox checkBox && checkBox.Tag is CheckboxTag tag) {
+            var isChecked = checkBox.IsChecked;
+            Debug.WriteLine($"Checkbox: {tag}");
         }
     }
 
@@ -86,6 +78,14 @@ public sealed partial class ClientViewPage : Page {
                 updateClient(updateVM.UpdatedClient);
             }
         }
+    }
+
+    // Utility Methods
+
+    private void UpdateCheckbox(CheckboxTag tag, bool isChecked) {
+        var updateVM = new ClientUpdateViewModel(ViewModel.SelectedClient);
+        updateVM.UpdateCheckbox(tag, isChecked);
+        updateClient(updateVM.UpdatedClient);
     }
 
     private void updateClient(UpdateClientDTO update) {

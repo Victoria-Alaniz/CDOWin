@@ -9,6 +9,7 @@
     xmlns:viewmodels="using:CDOWin.ViewModels" 
     xmlns:models="using:CDO.Core.Models"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:dialogs="using:CDOWin.Views.Dialogs"
     xmlns:usercontrols="using:CDOWin.Controls"
     d:DataContext="{d:DesignInstance Type=viewmodels:ClientsViewModel}"
     mc:Ignorable="d">
@@ -377,11 +378,11 @@
                         <TextBlock Grid.Row="1" Grid.Column="0"
                                    Text="Resume" FontWeight="Bold"/>
                         <CheckBox Grid.Row="2" Grid.Column="0" Style="{StaticResource LeftCheckboxStyle}"
-                                  Content="Required" Tag="resumeRequired"
+                                  Content="Required" Tag="{x:Bind dialogs:CheckboxTag.ResumeRequired}"
                                   IsChecked="{Binding SelectedClient.resumeRequired}"
                                   Click="Checkbox_Clicked"/>
                         <CheckBox Grid.Row="2" Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
-                                  Content="Completed" Tag="resumeCompleted"
+                                  Content="Completed" Tag="{x:Bind dialogs:CheckboxTag.ResumeCompleted}"
                                   IsChecked="{Binding SelectedClient.resumeCompleted}"
                                   Click="Checkbox_Clicked"/>
 
@@ -390,11 +391,11 @@
                                    Text="Video Interviews"
                                    FontWeight="Bold"/>
                         <CheckBox Grid.Row="4" Grid.Column="0" Style="{StaticResource LeftCheckboxStyle}"
-                                  Content="Required" Tag="videoInterviewRequired"
+                                  Content="Required" Tag="{x:Bind dialogs:CheckboxTag.VideoInterviewRequired}"
                                   IsChecked="{Binding SelectedClient.videoInterviewRequired}"
                                   Click="Checkbox_Clicked"/>
                         <CheckBox Grid.Row="4" Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
-                                  Content="Completed" Tag="videoInterviewCompleted"
+                                  Content="Completed" Tag="{x:Bind dialogs:CheckboxTag.VideoInterviewCompleted}"
                                   IsChecked="{Binding SelectedClient.videoInterviewCompleted}"
                                   Click="Checkbox_Clicked"/>
 
@@ -402,7 +403,7 @@
                         <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"
                                    Text="Releases" FontWeight="Bold"/>
                         <CheckBox Grid.Row="5" Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
-                                  Content="Completed" Tag="releasesCompleted"
+                                  Content="Completed" Tag="{x:Bind dialogs:CheckboxTag.ReleasesCompleted}"
                                   IsChecked="{Binding SelectedClient.releasesCompleted}"
                                   Click="Checkbox_Clicked"/>
 
@@ -410,7 +411,7 @@
                         <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center"
                                    Text="Orientation" FontWeight="Bold"/>
                         <CheckBox Grid.Row="6" Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
-                                  Content="Completed" Tag="orientationCompleted"
+                                  Content="Completed" Tag="{x:Bind dialogs:CheckboxTag.OrientationCompleted}"
                                   IsChecked="{Binding SelectedClient.orientationCompleted}"
                                   Click="Checkbox_Clicked"/>
 
@@ -418,7 +419,7 @@
                         <TextBlock Grid.Row="7"  Grid.Column="0" VerticalAlignment="Center"
                                    Text="1850 Data Sheet" FontWeight="Bold"/>
                         <CheckBox Grid.Row="7"  Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
-                                  Content="Completed" Tag="dataSheetCompleted"
+                                  Content="Completed" Tag="{x:Bind dialogs:CheckboxTag.DataSheetCompleted}"
                                   IsChecked="{Binding SelectedClient.dataSheetCompleted}"
                                   Click="Checkbox_Clicked"/>
 
@@ -426,7 +427,7 @@
                         <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Center"
                                    Text="Elevator Speech" FontWeight="Bold"/>
                         <CheckBox Grid.Row="8" Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
-                                  Content="Completed" Tag="elevatorSpeechCompleted"
+                                  Content="Completed" Tag="{x:Bind dialogs:CheckboxTag.ElevatorSpeechCompleted}"
                                   IsChecked="{Binding SelectedClient.elevatorSpeechCompleted}"
                                   Click="Checkbox_Clicked"/>
                     </Grid>
