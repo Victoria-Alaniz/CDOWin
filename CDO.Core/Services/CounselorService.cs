@@ -14,17 +14,6 @@ public class CounselorService : ICounselorService {
     }
 
     // -----------------------------
-    // Service Initialization Tasks
-    // -----------------------------
-    public async Task InitializeAsync() {
-        var data = await _network.GetAsync<List<Counselor>>(Endpoints.Counselors
-        );
-        if (data != null) {
-            Counselors = data;
-        }
-    }
-
-    // -----------------------------
     // GET
     // -----------------------------
     public Task<List<Counselor>?> GetAllCounselorsAsync() {
@@ -45,7 +34,7 @@ public class CounselorService : ICounselorService {
     // -----------------------------
     // PATCH Methods
     // -----------------------------
-    public Task<Counselor?> UpdateCounselorAsync(UpdateCounselorDTO dto, int id) {
+    public Task<Counselor?> UpdateCounselorAsync(int id, UpdateCounselorDTO dto) {
         return _network.UpdateAsync<UpdateCounselorDTO, Counselor>(Endpoints.Counselors, dto);
     }
 

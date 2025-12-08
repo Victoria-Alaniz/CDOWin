@@ -30,7 +30,7 @@ public class StateService : IStateService {
     // -----------------------------
     // PATCH Methods
     // -----------------------------
-    public Task<State?> UpdateStateAsync(UpdateStateDTO dto, int id) {
+    public Task<State?> UpdateStateAsync(int id, UpdateStateDTO dto) {
         return _network.UpdateAsync<UpdateStateDTO, State>(Endpoints.State(id), dto);
     }
 

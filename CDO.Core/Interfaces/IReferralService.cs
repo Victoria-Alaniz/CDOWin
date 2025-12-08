@@ -6,11 +6,6 @@ namespace CDO.Core.Interfaces;
 public interface IReferralService {
 
     // -----------------------------
-    // Service Initialization Tasks
-    // -----------------------------
-    public Task InitializeAsync();
-
-    // -----------------------------
     // GET Methods
     // -----------------------------
     public Task<List<Referral>?> GetAllReferralsAsync();
@@ -25,7 +20,7 @@ public interface IReferralService {
     // -----------------------------
     // PATCH Methods
     // -----------------------------
-    public Task<Referral?> UpdateReferralAsync(ReferralDTO dto, string id);
+    public Task<Referral?> UpdateReferralAsync(string id, ReferralDTO dto);
 
     // -----------------------------
     // DELETE Methods

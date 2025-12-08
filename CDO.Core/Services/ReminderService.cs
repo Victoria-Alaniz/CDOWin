@@ -14,16 +14,6 @@ public class ReminderService : IReminderService {
     }
 
     // -----------------------------
-    // Service Initialization Tasks
-    // -----------------------------
-    public async Task InitializeAsync() {
-        var data = await _network.GetAsync<List<Reminder>>(Endpoints.Reminders);
-        if (data != null) {
-            Reminders = data;
-        }
-    }
-
-    // -----------------------------
     // GET
     // -----------------------------
     public Task<List<Reminder>?> GetAllRemindersAsync() {
@@ -46,7 +36,7 @@ public class ReminderService : IReminderService {
     // -----------------------------
     // PATCH Methods
     // -----------------------------
-    public Task<Reminder?> UpdateReminderAsync(UpdateReminderDTO dto, int id) {
+    public Task<Reminder?> UpdateReminderAsync(int id, UpdateReminderDTO dto) {
         return _network.UpdateAsync<UpdateReminderDTO, Reminder>(Endpoints.Reminder(id), dto);
     }
 

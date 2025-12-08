@@ -6,11 +6,6 @@ namespace CDO.Core.Interfaces;
 public interface IPOService {
 
     // -----------------------------
-    // Service Initialization Tasks
-    // -----------------------------
-    public Task InitializeAsync();
-
-    // -----------------------------
     // GET Methods
     // -----------------------------
     public Task<List<PO>?> GetAllPOsAsync();
@@ -25,7 +20,7 @@ public interface IPOService {
     // -----------------------------
     // PATCH Methods
     // -----------------------------
-    public Task<PO?> UpdatePOAsync(UpdatePODTO dto, string id);
+    public Task<PO?> UpdatePOAsync(string id, UpdatePODTO dto);
 
     // -----------------------------
     // DELETE Methods

@@ -5,11 +5,6 @@ namespace CDO.Core.Interfaces {
     public interface IEmployerService {
 
         // -----------------------------
-        // Service Initialization Tasks
-        // -----------------------------
-        public Task InitializeAsync();
-
-        // -----------------------------
         // GET Methods
         // -----------------------------
         public Task<List<Employer>?> GetAllEmployersAsync();
@@ -24,7 +19,7 @@ namespace CDO.Core.Interfaces {
         // -----------------------------
         // PATCH Methods
         // -----------------------------
-        public Task<Employer?> UpdateEmployerAsync(EmployerDTO dto, int id);
+        public Task<Employer?> UpdateEmployerAsync(int id, EmployerDTO dto);
 
         // -----------------------------
         // DELETE Methods

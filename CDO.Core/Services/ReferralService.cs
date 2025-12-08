@@ -14,16 +14,6 @@ public class ReferralService : IReferralService {
     }
 
     // -----------------------------
-    // Service Initialization Tasks
-    // -----------------------------
-    public async Task InitializeAsync() {
-        var data = await _network.GetAsync<List<Referral>>(Endpoints.Referrals);
-        if (data != null) {
-            Referrals = data;
-        }
-    }
-
-    // -----------------------------
     // GET
     // -----------------------------
     public Task<List<Referral>?> GetAllReferralsAsync() {
@@ -44,7 +34,7 @@ public class ReferralService : IReferralService {
     // -----------------------------
     // PATCH Methods
     // -----------------------------
-    public Task<Referral?> UpdateReferralAsync(ReferralDTO dto, string id) {
+    public Task<Referral?> UpdateReferralAsync(string id, ReferralDTO dto) {
         return _network.UpdateAsync<ReferralDTO, Referral>(Endpoints.Referral(id), dto);
     }
 
