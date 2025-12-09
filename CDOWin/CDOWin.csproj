@@ -23,6 +23,7 @@
     <None Remove="Views\Dialogs\UpdateCaseInformation.xaml" />
     <None Remove="Views\Dialogs\UpdateContacts.xaml" />
     <None Remove="Views\Dialogs\UpdateEmploymentProfile.xaml" />
+    <None Remove="Views\Dialogs\UpdateNotes.xaml" />
     <None Remove="Views\Inspectors\Placements.xaml" />
     <None Remove="Views\Notes.xaml" />
     <None Remove="Views\POsPage.xaml" />
@@ -75,6 +76,11 @@
     <Content Update="Assets\CDO_Light.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Dialogs\UpdateNotes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\LabeledMultiLinePair.xaml">

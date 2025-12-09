@@ -4,7 +4,6 @@ using CDOWin.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -59,7 +58,7 @@ public sealed partial class UpdateCaseInformation : Page {
 
     private MenuFlyout BuildFlyout(IEnumerable<dynamic> items) {
         var flyout = new MenuFlyout();
-        foreach(var obj in items) {
+        foreach (var obj in items) {
             var item = new MenuFlyoutItem {
                 Text = obj.Value,
                 Tag = obj
@@ -73,7 +72,7 @@ public sealed partial class UpdateCaseInformation : Page {
     }
 
     private void SetupDatePicker() {
-        if(ViewModel.OriginalClient.startDate is DateTime startDate)
+        if (ViewModel.OriginalClient.startDate is DateTime startDate)
             StartDatePicker.Date = startDate;
     }
 
@@ -84,7 +83,7 @@ public sealed partial class UpdateCaseInformation : Page {
             if (startDate == StartDatePicker.Date)
                 return;
 
-            if(sender is CalendarDatePicker picker && picker.Date is DateTimeOffset offset) {
+            if (sender is CalendarDatePicker picker && picker.Date is DateTimeOffset offset) {
                 // We call DateTime.Date to get the date with the time zeroed out then
                 // .ToUniversalTime to ensure it si in the correct format for the API
                 ViewModel.UpdatedClient.startDate = offset.DateTime.Date.ToUniversalTime();

@@ -35,7 +35,7 @@ public sealed partial class ClientViewPage : Page {
     private async void EditButton_Clicked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
         if (sender is Button button && button.Tag is ClientEditType tag) {
 
-            ContentDialog dialog = new ContentDialog();
+            ContentDialog dialog = new();
             dialog.XamlRoot = this.XamlRoot;
             dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
             dialog.PrimaryButtonText = "Save";
