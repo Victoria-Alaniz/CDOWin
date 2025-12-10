@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="CDOWin.Views.CounselorsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CDOWin.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tv="using:WinUI.TableView"
+    xmlns:viewmodels="using:CDOWin.ViewModels"
+    xmlns:models="using:CDO.Core.Models"
+    d:DataContext="{d:DesignInstance Type=viewmodels:CounselorsViewModel}"
+    mc:Ignorable="d">
+
+    <Grid>
+        <tv:TableView x:Name="tableView" ItemsSource="{x:Bind ViewModel.Counselors}" AutoGenerateColumns="False"
+                      BorderThickness="0" CornerButtonMode="Options"
+                      SelectionMode="Extended" SelectionUnit="Row" IsReadOnly="True"
+                      ExportAllContent="OnExportAllContent" ExportSelectedContent="OnExportSelectedContent"
+                      HeaderGridLinesVisibility="None" GridLinesVisibility="None"
+                      SelectedItem="{x:Bind ViewModel.SelectedCounselor}" ShowExportOptions="True"
+                      d:DataContext="{d:DesignInstance Type=models:Counselor}">
+
+            <tv:TableView.Columns>
+                <tv:TableViewTextColumn Header="Name" Binding="{Binding name}" MinWidth="210" MaxWidth="300"/>
+                <tv:TableViewTextColumn Header="Email" Binding="{Binding email}" MinWidth="210" MaxWidth="300"/>
+                <tv:TableViewTextColumn Header="Phone" Binding="{Binding phone}" Width="120"/>
+                <tv:TableViewTextColumn Header="Fax" Binding="{Binding fax}" Width="120"/>
+                <tv:TableViewTextColumn Header="Secretary" Binding="{Binding secretaryName}" Width="210"/>
+                <tv:TableViewTextColumn Header="Secretary Email" Binding="{Binding secretaryEmail}" MinWidth="210" MaxWidth="300"/>
+            </tv:TableView.Columns>
+        </tv:TableView>
+    </Grid>
+</Page>

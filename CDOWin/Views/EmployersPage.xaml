@@ -5,29 +5,21 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
     xmlns:viewmodels="using:CDOWin.ViewModels"
     xmlns:models="using:CDO.Core.Models"
-    xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
-    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     d:DataContext="{d:DesignInstance Type=viewmodels:EmployersViewModel}"
     mc:Ignorable="d">
 
     <Grid>
-        <!-- Rows -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <!-- Columns -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="350"/>
         </Grid.ColumnDefinitions>
 
         <!-- Left Column -->
-        <Grid BorderThickness="0, 0, 1, 0"
-           BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}">
+        <Grid BorderThickness="0,0,1,0" BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -45,73 +37,100 @@
             <Button Grid.Row="0" Grid.Column="1" Margin="8,8,8,8" Padding="0"
                     Width="32" Height="32" VerticalAlignment="Center"
                     Style="{StaticResource SubtleButtonStyle}">
-                <FontIcon Glyph="&#xE710;" FontSize="16"
-                          Foreground="{ThemeResource SystemAccentColor}"/>
+                <FontIcon Glyph="&#xE710;" FontSize="16" Foreground="{ThemeResource SystemAccentColor}"/>
             </Button>
 
             <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                     Margin="8, 0, 8, 8" PlaceholderText="Filter by name"/>
+                     Margin="8,0,8,8" PlaceholderText="Filter by name"/>
 
-            <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
-                      ScrollViewer.HorizontalScrollMode="Enabled" 
+            <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                      ItemsSource="{Binding Employers}"
+                      SelectedItem="{Binding SelectedEmployer, Mode=TwoWay}"
+                      SelectionMode="Single" ScrollViewer.HorizontalScrollMode="Auto"
+                      ScrollViewer.IsHorizontalRailEnabled="True"
                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                      ScrollViewer.IsHorizontalScrollChainingEnabled="True"
-                      HorizontalAlignment="Left" ItemsSource="{Binding Employers}"
-                      SelectedItem="{Binding SelectedEmployer, Mode=TwoWay}">
+                      ScrollViewer.VerticalScrollMode="Auto"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto">
+
                 <ListView.Header>
-                    <Border>
+                    <Grid Background="{ThemeResource SolidBackgroundFillColorTertiaryBrush}"
+                          BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                          BorderThickness="0,0,0,1" Padding="12,8">
+
                         <interactivity:Interaction.Behaviors>
                             <behaviors:StickyHeaderBehavior/>
                         </interactivity:Interaction.Behaviors>
+                        
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="140"/>
+                        </Grid.ColumnDefinitions>
 
-                        <controls:DataTable Margin="12,0,0,0">
-                            <controls:DataColumn Content="Employer" DesiredWidth="160"/>
-                            <controls:DataColumn Content="Address" DesiredWidth="180" CanResize="True"/>
-                            <controls:DataColumn Content="Phone" DesiredWidth="100"/>
-                            <controls:DataColumn Content="Fax" DesiredWidth="100"/>
-                            <controls:DataColumn Content="Email" DesiredWidth="140"/>
-                            <controls:DataColumn Content="Supervisor" DesiredWidth="140"/>
-                            <controls:DataColumn Content="Supervisor Phone" DesiredWidth="140"/>
-                            <controls:DataColumn Content="Supervior Email" DesiredWidth="140"/>
-                        </controls:DataTable>
-                    </Border>
+                        <TextBlock Grid.Column="0" Text="Employer" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="1" Text="Address" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="2" Text="Phone" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="3" Text="Fax" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="4" Text="Email" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="5" Text="Supervisor" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="6" Text="Supervisor Phone" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="7" Text="Supervisor Email" FontWeight="SemiBold"/>
+                    </Grid>
                 </ListView.Header>
+
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:Employer">
-                        <controls:DataRow Margin="0,8,0,8">
-                            <TextBlock VerticalAlignment="Center" FontWeight="Bold" TextWrapping="WrapWholeWords" Text="{x:Bind name}"/>
-                            <TextBlock Text="{x:Bind address1}"/>
-                            <TextBlock VerticalAlignment="Center" Text="{x:Bind phone}"/>
-                            <TextBlock Text="{x:Bind fax}"/>
-                            <TextBlock VerticalAlignment="Center" Text="{x:Bind email}"/>
-                            <TextBlock Text="{x:Bind supervisor}"/>
-                            <TextBlock VerticalAlignment="Center" Text="{x:Bind supervisorPhone}"/>
-                            <TextBlock Text="{x:Bind supervisorEmail}"/>
-                        </controls:DataRow>
+                        <Grid Padding="12,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="160"/>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="140"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="{x:Bind name}" TextWrapping="WrapWholeWords" 
+                                       FontWeight="Bold" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="1" Text="{x:Bind formattedAddress}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="2" Text="{x:Bind phone}" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="3" Text="{x:Bind fax}" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="4" Text="{x:Bind email}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="5" Text="{x:Bind supervisor}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="6" Text="{x:Bind supervisorPhone}" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="7" Text="{x:Bind supervisorEmail}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Padding" Value="0"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
             </ListView>
         </Grid>
 
         <!-- Right Column -->
         <Grid Grid.Column="1">
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-
-            <TextBlock Grid.Row="0" Grid.Column="0" Margin="16,8,8,8"
+            <TextBlock Grid.Row="0" Margin="16,8,8,8"
                        FontSize="22" FontWeight="Bold"
+                       TextWrapping="WrapWholeWords"
                        Text="{Binding SelectedEmployer.name}"/>
         </Grid>
-
     </Grid>
 </Page>

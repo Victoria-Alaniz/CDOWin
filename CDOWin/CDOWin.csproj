@@ -19,11 +19,6 @@
     <None Remove="Resources\Styles.xaml" />
     <None Remove="SplashWindow.xaml" />
     <None Remove="Views\ClientViewPage.xaml" />
-    <None Remove="Views\Dialogs\UpdateArrangements.xaml" />
-    <None Remove="Views\Dialogs\UpdateCaseInformation.xaml" />
-    <None Remove="Views\Dialogs\UpdateContacts.xaml" />
-    <None Remove="Views\Dialogs\UpdateEmploymentProfile.xaml" />
-    <None Remove="Views\Dialogs\UpdateNotes.xaml" />
     <None Remove="Views\Inspectors\Placements.xaml" />
     <None Remove="Views\Notes.xaml" />
     <None Remove="Views\POsPage.xaml" />
@@ -62,6 +57,7 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7175" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.251106002" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="3.0.0" />
+    <PackageReference Include="WinUI.TableView" Version="1.4.0-preview1" />
     <PackageReference Include="WinUIEx" Version="2.9.0" />
   </ItemGroup>
   <ItemGroup>
@@ -78,32 +74,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\Dialogs\UpdateNotes.xaml">
+    <Page Update="Views\CounselorsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\LabeledMultiLinePair.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\Dialogs\UpdateContacts.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\Dialogs\UpdateArrangements.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\Dialogs\UpdateEmploymentProfile.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\Dialogs\UpdateCaseInformation.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
@@ -168,14 +144,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\Dialogs\UpdatePersonalInformation.xaml">
+    <Page Update="Views\Inspectors\Placements.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\Inspectors\Placements.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Folder Include="Views\Clients\ClientInspectors\" />
   </ItemGroup>
 
   <!--
@@ -192,7 +166,7 @@
     <PublishReadyToRun Condition="'$(Configuration)' == 'Debug'">False</PublishReadyToRun>
     <PublishReadyToRun Condition="'$(Configuration)' != 'Debug'">True</PublishReadyToRun>
     <PublishTrimmed Condition="'$(Configuration)' == 'Debug'">False</PublishTrimmed>
-    <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
+    <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">False</PublishTrimmed>
     <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <PackageCertificateThumbprint>7A9448D2CCE2C03FDAACD51C3FB1D2883B850F19</PackageCertificateThumbprint>
