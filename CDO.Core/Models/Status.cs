@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CDO.Core.Models;
+﻿namespace CDO.Core.Models;
 
 public sealed class Status {
     public string Value { get; }
