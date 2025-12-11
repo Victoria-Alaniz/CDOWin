@@ -119,9 +119,9 @@
 
                             <TextBlock Grid.Column="0" Text="{x:Bind id}" TextWrapping="WrapWholeWords"
                                        FontWeight="Bold"/>
-                            <TextBlock Grid.Column="1" Text="{x:Bind id}" TextTrimming="CharacterEllipsis"/>
-                            <TextBlock Grid.Column="2" Text="{x:Bind id}"/>
-                            <TextBlock Grid.Column="3" Text="{x:Bind id}"/>
+                            <TextBlock Grid.Column="1" Text="{x:Bind client.name}" TextWrapping="WrapWholeWords"/>
+                            <TextBlock Grid.Column="2" Text="{x:Bind client.caseID}"/>
+                            <TextBlock Grid.Column="3" Text="{x:Bind client.counselorReference.name}"/>
                             <TextBlock Grid.Column="4" Text="{x:Bind formattedStartDate}" TextWrapping="WrapWholeWords"
                                        FontWeight="SemiBold"/>
                             <TextBlock Grid.Column="5" Text="{x:Bind formattedEndDate}" TextTrimming="CharacterEllipsis"/>
