@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="CDOWin.Views.Referrals.ReferralsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CDOWin.Views.Referrals"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
+    xmlns:viewmodels="using:CDOWin.ViewModels"
+    xmlns:models="using:CDO.Core.Models"
+    d:DataContext="{d:DesignInstance Type=viewmodels:ReferralsViewModel}"
+    mc:Ignorable="d">
+
+    <Grid>
+        <!-- Columns -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="380"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Column -->
+        <Grid BorderThickness="0,0,1,0" BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}">
+
+            <!-- Rows -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Columns -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Title + Button -->
+            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Title -->
+                    <TextBlock Grid.Column="0" Margin="16,8,16,0" 
+                               FontSize="22" FontWeight="Bold" Text="Referrals"/>
+
+                    <!-- Add Button -->
+                    <Button Grid.Column="1" Margin="16,8,12,0" Width="32" Height="32"
+                            Padding="0" VerticalAlignment="Center" Style="{StaticResource SubtleButtonStyle}">
+                        <FontIcon Glyph="&#xE710;" FontSize="16" Foreground="{ThemeResource SystemAccentColor}"/>
+                    </Button>
+                </Grid>
+
+                <!-- Subtitle -->
+                <TextBlock Margin="16,0,16,8" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                    <Run Text="{x:Bind ViewModel.Referrals.Count, Mode=OneWay}"/>
+                    <Run Text="Referrals"/>
+                </TextBlock>
+            </StackPanel>
+
+            <!-- Search Bar -->
+            <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                     Margin="8,0,8,8" PlaceholderText="Filter"/>
+
+            <!-- Referrals Table -->
+            <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                      ItemsSource="{Binding Referrals}" SelectedItem="{Binding SelectedReferral, Mode=TwoWay}"
+                      SelectionMode="Single" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.IsHorizontalRailEnabled="True"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+                <!-- Header -->
+                <ListView.Header>
+                    <Grid Background="{ThemeResource SolidBackgroundFillColorTertiaryBrush}"
+                          BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                          BorderThickness="0,0,0,1" Padding="12,8">
+
+                        <interactivity:Interaction.Behaviors>
+                            <behaviors:StickyHeaderBehavior/>
+                        </interactivity:Interaction.Behaviors>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Placement" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="1" Text="Active" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="2" Text="Client" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="3" Text="Employer" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="4" Text="Counselor" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="5" Text="PO Number" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="6" Text="Supervisor" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="7" Text="Supervisor Telephone" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="8" Text="Employer ID" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="9" Text="Position" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="10" Text="Salary" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="11" Text="Hire Date" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="12" Text="End Date" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="13" Text="Days on Job" FontWeight="SemiBold"/>
+                    </Grid>
+                </ListView.Header>
+
+                <!-- Content -->
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Referral">
+                        <Grid Padding="12,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="{x:Bind placementNumber}" TextWrapping="WrapWholeWords"
+                       FontWeight="Bold"/>
+                            <TextBlock Grid.Column="1" Text="{x:Bind active}"/>
+                            <TextBlock Grid.Column="2" Text="{x:Bind clientName}" TextWrapping="WrapWholeWords"
+                       FontWeight="Bold"/>
+                            <TextBlock Grid.Column="3" Text="{x:Bind employerID}" TextWrapping="WrapWholeWords"
+                       FontWeight="Bold"/>
+                            <TextBlock Grid.Column="4" Text="{x:Bind counselorName}" TextWrapping="WrapWholeWords"
+                       FontWeight="Bold"/>
+                            <TextBlock Grid.Column="5" Text="{x:Bind poNumber}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="6" Text="{x:Bind supervisor}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="7" Text="{x:Bind supervisorPhone}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="8" Text="{x:Bind employerID}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="9" Text="{x:Bind position}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="10" Text="{x:Bind formattedSalary}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="11" Text="{x:Bind formattedHireDate}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="12" Text="{x:Bind formattedEndDate}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="13" Text="{x:Bind daysOnJob}" TextTrimming="CharacterEllipsis"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+                <!-- Container Style -->
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="CornerRadius" Value="4"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </Grid>
+
+        <!-- Right Column -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Margin="16,8,8,8"
+                       FontSize="22" FontWeight="Bold"
+                       TextWrapping="WrapWholeWords"
+                       Text="{Binding SelectedReferral.active}"/>
+        </Grid>
+    </Grid>
+</Page>

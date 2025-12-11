@@ -29,7 +29,7 @@ public partial class ReferralsViewModel : ObservableObject {
             _ = RefreshSelectedReferral(value.id);
     }
 
-    public async Task LoadPOAsync() {
+    public async Task LoadReferralsAsync() {
         var referrals = await _service.GetAllReferralsAsync();
         List<Referral> SortedReferrals = referrals.OrderBy(o => o.clientID).ToList();
         Referrals.Clear();

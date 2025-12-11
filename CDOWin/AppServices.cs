@@ -18,6 +18,7 @@ public static class AppServices {
     public static IPOService? POsService { get; private set; }
     public static IStateService? StateService { get; private set; }
     public static IReminderService? ReminderService { get; private set; }
+    public static IReferralService? ReferralService { get; private set; }
 
     // ViewModels
     public static ClientsViewModel? ClientsViewModel { get; private set; }
@@ -26,6 +27,7 @@ public static class AppServices {
     public static POsViewModel? POsViewModel { get; private set; }
     public static RemindersViewModel? RemindersViewModel { get; private set; }
     public static StatesViewModel? StatesViewModel { get; private set; }
+    public static ReferralsViewModel? ReferralsViewModel { get; private set; }
 
     // Initialize all services
     public static void InitializeServices(string baseAddress, string apiKey) {
@@ -41,6 +43,7 @@ public static class AppServices {
         POsService = new POService(NetworkService);
         ReminderService = new ReminderService(NetworkService);
         StateService = new StateService(NetworkService);
+        ReferralService = new ReferralService(NetworkService);
 
         // Initialize ViewModels
         ClientsViewModel = new ClientsViewModel(ClientService);
@@ -49,6 +52,7 @@ public static class AppServices {
         POsViewModel = new POsViewModel(POsService);
         RemindersViewModel = new RemindersViewModel(ReminderService);
         StatesViewModel = new StatesViewModel(StateService);
+        ReferralsViewModel = new ReferralsViewModel(ReferralService);
 
     }
 
@@ -61,7 +65,8 @@ public static class AppServices {
             EmployersViewModel.LoadEmployersAsync(),
             POsViewModel.LoadPOsAsync(),
             RemindersViewModel.LoadRemindersAsync(),
-            StatesViewModel.LoadStatesAsync()
+            StatesViewModel.LoadStatesAsync(),
+            ReferralsViewModel.LoadReferralsAsync()
         };
 
         await Task.WhenAll(tasks);

@@ -1,4 +1,5 @@
 using CDOWin.Views;
+using CDOWin.Views.Referrals;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
@@ -58,6 +59,9 @@ public sealed partial class MainWindow : Window {
                 break;
             case 3:
                 pageType = typeof(POsPage);
+                break;
+            case 4:
+                pageType = typeof(ReferralsPage);
                 break;
             default:
                 pageType = typeof(SamplePage);
