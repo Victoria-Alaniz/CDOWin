@@ -17,6 +17,15 @@ public record class Employer(
     string? supervisorPhone,
     string? supervisorEmail
     ) {
+
+    public string? formattedSuperviror {
+        get {
+            var text = $"{supervisor}\n{supervisorPhone}\n{supervisorEmail}";
+            if(string.IsNullOrWhiteSpace(text)) { return null; }
+            return text;
+        }
+    }
+
     public string formattedAddress {
         get {
             if (address1 == null && address2 == null)
