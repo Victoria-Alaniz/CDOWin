@@ -36,4 +36,6 @@ public record class Referral(
     ) {
     public string? formattedHireDate => hireDate?.ToString(format: "MM/dd/yyyy");
     public string? formattedEndDate => endDate?.ToString(format: "MM/dd/yyyy");
+
+    public string? formattedSalary => $"${salary}";
 }

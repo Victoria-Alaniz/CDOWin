@@ -66,7 +66,7 @@
             <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                      Margin="8,0,8,8" PlaceholderText="Filter"/>
 
-            <!-- Counselors Table -->
+            <!-- POs Table -->
             <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                       ItemsSource="{Binding POs}" SelectedItem="{Binding SelectedPO, Mode=TwoWay}"
                       SelectionMode="Single" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.IsHorizontalRailEnabled="True"

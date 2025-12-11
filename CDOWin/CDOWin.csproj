@@ -23,6 +23,7 @@
     <None Remove="Views\Inspectors\Placements.xaml" />
     <None Remove="Views\Notes.xaml" />
     <None Remove="Views\POsPage.xaml" />
+    <None Remove="Views\Referrals\ReferralsPage.xaml" />
     <None Remove="Views\RemindersPage.xaml" />
     <None Remove="Views\StatesPage.xaml" />
   </ItemGroup>
@@ -151,6 +152,11 @@
   <ItemGroup>
     <Folder Include="Views\Clients\ClientInspectors\" />
     <Folder Include="Views\Employers\Dialogs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Referrals\ReferralsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Employers\Inspectors\EmployerInspector.xaml">
