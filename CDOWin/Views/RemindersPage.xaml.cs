@@ -1,10 +1,12 @@
 using CDOWin.Services;
 using CDOWin.ViewModels;
+using CDOWin.Views.Reminders;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System;
+using System.Collections.Specialized;
 using System.Linq;
 using Windows.UI;
 
@@ -14,10 +16,20 @@ public sealed partial class RemindersPage : Page {
     public RemindersViewModel ViewModel { get; }
 
     public RemindersPage() {
-        InitializeComponent();
-
         ViewModel = AppServices.RemindersViewModel;
         DataContext = ViewModel;
+        ViewModel.ClientReminders.CollectionChanged += ClientRemindersChanged;
+        InitializeComponent();
+    }
+
+    private void ClientRemindersChanged(object? sender, NotifyCollectionChangedEventArgs e) {
+        if (ViewModel.ClientReminders != null) {
+            SelectionBar.Items.Last().IsEnabled = true;
+        }
+
+        if (SelectionBar.Items.Last().IsSelected)
+            return;
+        SelectionBar.SelectedItem = SelectionBar.Items.Last();
     }
 
     private void RemindersCalendar_CalendarViewDayItemChanging(CalendarView sender, CalendarViewDayItemChangingEventArgs args) {
@@ -29,7 +41,7 @@ public sealed partial class RemindersPage : Page {
             DateTime day = args.Item.Date.Date;
 
             // Does any reminder match this date?
-            bool hasReminder = ViewModel.Reminders.Any(r => r.date.Date == day);
+            bool hasReminder = ViewModel.AllReminders.Any(r => r.date.Date == day);
 
             if (hasReminder) {
                 // Mark the date (simple highlight)
@@ -42,5 +54,13 @@ public sealed partial class RemindersPage : Page {
                 args.Item.FontWeight = FontWeights.Normal;
             }
         }
+    }
+
+    private void SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args) {
+        SelectorBarItem selectedItem = sender.SelectedItem;
+        if(selectedItem.Tag is RemindersFilter filter) {
+            ViewModel.filter = filter;
+        }
+        
     }
 }

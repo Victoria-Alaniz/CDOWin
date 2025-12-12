@@ -7,7 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="using:CDOWin.ViewModels" 
-    xmlns:local1="using:CDO.Core.Models"
+    xmlns:models="using:CDO.Core.Models"
+    xmlns:reminders="using:CDOWin.Views.Reminders"
     d:DataContext="{d:DesignInstance Type=viewmodels:RemindersViewModel}"
     mc:Ignorable="d">
 
@@ -23,18 +24,11 @@
             <ColumnDefinition Width="318"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0"
-                   Grid.Column="0"
-                   Text="Reminders"
-                   FontSize="22"
-                   FontWeight="Bold"
-                   Margin="8,8,8,4"
-                   HorizontalAlignment="Left"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Margin="8,8,8,4"
+                   HorizontalAlignment="Left" FontSize="22" FontWeight="Bold"
+                   Text="Reminders"/>
 
-
-        <CalendarView Grid.Row="1"
-                      Grid.Column="0"
-                      Margin="0,6,0,0"
+        <CalendarView Grid.Row="1" Grid.Column="0" Margin="0,6,0,0"
                       HorizontalAlignment="Center"
                       x:Name="RemindersCalendar"
                       CalendarViewDayItemChanging="RemindersCalendar_CalendarViewDayItemChanging"
@@ -44,51 +38,39 @@
                       Language="en"
                       CalendarIdentifier="GregorianCalendar"/>
 
-        <SelectorBar x:Name="SelectionBar"
-                     Grid.Row="2"
-                     Grid.Column="0">
-            <SelectorBarItem Text="All" IsSelected="True" />
-            <SelectorBarItem Text="Upcoming" />
-            <SelectorBarItem Text="Client" IsEnabled="False"/>
+        <SelectorBar Grid.Row="2" Grid.Column="0" x:Name="SelectionBar" SelectionChanged="SelectionChanged">
+            <SelectorBarItem Text="All" IsSelected="True" Tag="{x:Bind reminders:RemindersFilter.All}"/>
+            <SelectorBarItem Text="Upcoming" Tag="{x:Bind reminders:RemindersFilter.Upcoming}"/>
+            <SelectorBarItem Text="Client" IsEnabled="False" Tag="{x:Bind reminders:RemindersFilter.Client}"/>
         </SelectorBar>
 
-        <ScrollViewer Grid.Row="3"
-                      Grid.Column="0">
-            <ItemsRepeater ItemsSource="{Binding Reminders}"
-                           HorizontalAlignment="Stretch">
+        <ScrollViewer Grid.Row="3" Grid.Column="0">
+            <ItemsRepeater ItemsSource="{Binding FilteredReminders}" HorizontalAlignment="Stretch">
                 <ItemsRepeater.ItemTemplate>
-                    <DataTemplate x:DataType="local1:Reminder">
-                        <Border Style="{StaticResource BasicCardBorderStyle}"
-                                Margin="8,6,8,6"
-                                Padding="14,10,14,10">
+                    <DataTemplate x:DataType="models:Reminder">
+                        <Border Margin="8,6,8,6" Padding="14,10,14,10"
+                                Style="{StaticResource BasicCardBorderStyle}">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
 
-                                <Grid Grid.Row="0"
-                                      Margin="0,0,0,6">
+                                <Grid Grid.Row="0" Margin="0,0,0,6">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Grid.Column="0"
-                                               Text="{x:Bind clientName}"
-                                               FontSize="14"
-                                               FontWeight="Bold" />
-                                    <TextBlock Grid.Column="1"
-                                               Text="{x:Bind localDate}"
-                                               FontSize="14"
-                                               FontWeight="Normal"/>
+                                    <TextBlock Grid.Column="0" FontSize="14" FontWeight="Bold"
+                                               Text="{x:Bind clientName}"/>
+                                    <TextBlock Grid.Column="1" FontSize="14" FontWeight="Normal"
+                                               Text="{x:Bind localDate}"/>
                                 </Grid>
 
-                                <TextBlock Grid.Row="1" 
+                                <TextBlock Grid.Row="1" FontWeight="Normal" TextWrapping="WrapWholeWords"
                                            Text="{x:Bind description}"
-                                           TextWrapping="WrapWholeWords"
-                                           Foreground="{StaticResource TextFillColorSecondaryBrush}"
-                                           FontWeight="Normal"/>
+                                           Foreground="{StaticResource TextFillColorSecondaryBrush}"/>
                             </Grid>
                         </Border>
                     </DataTemplate>

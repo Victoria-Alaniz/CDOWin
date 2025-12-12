@@ -1,6 +1,7 @@
 ﻿using CDO.Core.DTOs;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
+using CDOWin.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +15,7 @@ public partial class ClientsViewModel : ObservableObject {
 
     // Private service, used to make network calls.
     private readonly IClientService _service;
+    private readonly ClientSelectionService _selectionService;
 
     // Observable Properties
     [ObservableProperty]
@@ -32,6 +34,7 @@ public partial class ClientsViewModel : ObservableObject {
     // Constructor
     public ClientsViewModel(IClientService service, Services.ClientSelectionService clientSelectionService) {
         _service = service;
+        _selectionService = clientSelectionService;
     }
 
     // Change tracking methods
@@ -39,9 +42,11 @@ public partial class ClientsViewModel : ObservableObject {
         ApplyFilter();
     }
 
-    partial void OnSelectedClientChanged(Client? value) {
-        if (value != null)
+    partial void OnSelectedClientChanged(Client? client) {
+        if (client != null)
             Debug.WriteLine(SelectedClient.reminders);
+
+        _selectionService.SelectedClient = client;
     }
 
     // Utility Methods

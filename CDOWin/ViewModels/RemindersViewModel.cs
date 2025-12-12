@@ -1,6 +1,7 @@
 ﻿using CDO.Core.Interfaces;
 using CDO.Core.Models;
 using CDOWin.Services;
+using CDOWin.Views.Reminders;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,8 +14,17 @@ public partial class RemindersViewModel : ObservableObject {
     private readonly IReminderService _service;
     private readonly ClientSelectionService _selectionService;
 
+    private RemindersFilter _filter = RemindersFilter.All;
+    public RemindersFilter filter {
+        get => _filter;
+        set {
+            _filter = value;
+            ApplyFilter();
+        }
+    }
+
     [ObservableProperty]
-    public partial ObservableCollection<Reminder> Reminders { get; private set; } = [];
+    public partial ObservableCollection<Reminder> AllReminders { get; private set; } = [];
 
     [ObservableProperty]
     public partial ObservableCollection<Reminder> FilteredReminders { get; private set; } = [];
@@ -46,14 +56,27 @@ public partial class RemindersViewModel : ObservableObject {
             _ = RefreshSelectedReminder(value.id);
     }
 
+    private void ApplyFilter() {
+        switch (filter) {
+            case RemindersFilter.All:
+                FilteredReminders = AllReminders;
+                break;
+            case RemindersFilter.Upcoming:
+                break;
+            case RemindersFilter.Client:
+                FilteredReminders = ClientReminders;
+                break;
+        }
+    }
+
     public async Task LoadRemindersAsync() {
         var reminders = await _service.GetAllRemindersAsync();
 
         List<Reminder> SortedReminders = reminders.OrderBy(o => o.date).ToList();
-        Reminders.Clear();
+        AllReminders.Clear();
 
         foreach (var reminder in SortedReminders) {
-            Reminders.Add(reminder);
+            AllReminders.Add(reminder);
         }
     }
 
@@ -62,8 +85,8 @@ public partial class RemindersViewModel : ObservableObject {
         if (SelectedReminder != reminder) {
             SelectedReminder = reminder;
 
-            var index = Reminders.IndexOf(Reminders.First(r => r.id == id));
-            Reminders[index] = reminder;
+            var index = AllReminders.IndexOf(AllReminders.First(r => r.id == id));
+            AllReminders[index] = reminder;
         }
     }
 }
