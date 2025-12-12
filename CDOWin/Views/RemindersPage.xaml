@@ -45,37 +45,47 @@
         </SelectorBar>
 
         <ScrollViewer Grid.Row="3" Grid.Column="0">
-            <ItemsRepeater ItemsSource="{Binding FilteredReminders}" HorizontalAlignment="Stretch">
-                <ItemsRepeater.ItemTemplate>
-                    <DataTemplate x:DataType="models:Reminder">
-                        <Border Margin="8,6,8,6" Padding="14,10,14,10"
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ItemsRepeater Grid.Row="0" ItemsSource="{Binding Filtered}" HorizontalAlignment="Stretch">
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="models:Reminder">
+                            <Border Margin="8,6,8,6" Padding="14,10,14,10"
                                 Style="{StaticResource BasicCardBorderStyle}">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
 
-                                <Grid Grid.Row="0" Margin="0,0,0,6">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
+                                    <Grid Grid.Row="0" Margin="0,0,0,6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
 
-                                    <TextBlock Grid.Column="0" FontSize="14" FontWeight="Bold"
+                                        <TextBlock Grid.Column="0" FontSize="14" FontWeight="Bold"
                                                Text="{x:Bind clientName}"/>
-                                    <TextBlock Grid.Column="1" FontSize="14" FontWeight="Normal"
+                                        <TextBlock Grid.Column="1" FontSize="14" FontWeight="Normal"
                                                Text="{x:Bind localDate}"/>
-                                </Grid>
+                                    </Grid>
 
-                                <TextBlock Grid.Row="1" FontWeight="Normal" TextWrapping="WrapWholeWords"
+                                    <TextBlock Grid.Row="1" FontWeight="Normal" TextWrapping="WrapWholeWords"
                                            Text="{x:Bind description}"
                                            Foreground="{StaticResource TextFillColorSecondaryBrush}"/>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ItemsRepeater.ItemTemplate>
-            </ItemsRepeater>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+                <TextBlock Grid.Row="1" Margin="8,8,8,24" HorizontalAlignment="Center"
+                           x:Name="EndTextField"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           Text="{x:Bind ViewModel.EndText, Mode=OneWay}"/>
+            </Grid>
         </ScrollViewer>
     </Grid>
 </Page>

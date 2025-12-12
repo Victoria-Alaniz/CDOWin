@@ -3,6 +3,7 @@ using CDO.Core.Models;
 using CDOWin.Services;
 using CDOWin.Views.Reminders;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -15,7 +16,7 @@ public partial class RemindersViewModel : ObservableObject {
     private readonly ClientSelectionService _selectionService;
 
     private RemindersFilter _filter = RemindersFilter.All;
-    public RemindersFilter filter {
+    public RemindersFilter Filter {
         get => _filter;
         set {
             _filter = value;
@@ -24,13 +25,13 @@ public partial class RemindersViewModel : ObservableObject {
     }
 
     [ObservableProperty]
-    public partial ObservableCollection<Reminder> AllReminders { get; private set; } = [];
+    public partial ObservableCollection<Reminder> All { get; private set; } = [];
 
     [ObservableProperty]
-    public partial ObservableCollection<Reminder> FilteredReminders { get; private set; } = [];
+    public partial ObservableCollection<Reminder> Filtered { get; private set; } = [];
 
     [ObservableProperty]
-    public partial ObservableCollection<Reminder> ClientReminders { get; private set; } = [];
+    public partial ObservableCollection<Reminder> ClientSpecific { get; private set; } = [];
 
     [ObservableProperty]
     public partial Reminder? SelectedReminder { get; set; }
@@ -41,52 +42,81 @@ public partial class RemindersViewModel : ObservableObject {
         _selectionService.SelectedClientChanged += OnClientChanged;
     }
 
+    [ObservableProperty]
+    public string endText = "";
+
     private void OnClientChanged(Client? client) {
-        if (client != null && client.reminders != null) {
-            List<Reminder> SortedReminders = client.reminders.OrderBy(o => o.date).ToList();
-            ClientReminders.Clear();
-            foreach (var reminder in SortedReminders) {
-                ClientReminders.Add(reminder);
+        ClientSpecific.Clear();
+        if (client?.reminders != null) {
+            foreach (var reminder in client.reminders.OrderBy(o => o.date)) {
+                ClientSpecific.Add(reminder);
+            }
+
+            if (Filter == RemindersFilter.Client) {
+            ReplaceFiltered(ClientSpecific);
+                UpdateEndText();
             }
         }
     }
 
     partial void OnSelectedReminderChanged(Reminder? value) {
         if (value != null)
-            _ = RefreshSelectedReminder(value.id);
+            _ = RefreshSelectedReminderAsync(value.id);
     }
 
     private void ApplyFilter() {
-        switch (filter) {
+        switch (Filter) {
             case RemindersFilter.All:
-                FilteredReminders = AllReminders;
+                ReplaceFiltered(All);
                 break;
             case RemindersFilter.Upcoming:
+                SetUpcomingReminders();
                 break;
             case RemindersFilter.Client:
-                FilteredReminders = ClientReminders;
+                ReplaceFiltered(ClientSpecific);
                 break;
+        }
+        UpdateEndText();
+    }
+
+    private void ReplaceFiltered(IEnumerable<Reminder> source) {
+        Filtered.Clear();
+        foreach (var reminder in source)
+            Filtered.Add(reminder);
+    }
+
+    private void SetUpcomingReminders() {
+        Filtered.Clear();
+        foreach(var reminder in All) {
+            if (reminder.date > DateTime.Now)
+                Filtered.Add(reminder);
+        }
+    }
+
+    private void UpdateEndText() {
+        if (Filtered.Count == 0) {
+            EndText = "There are no reminders 静か";
+        } else {
+            EndText = "We have reached the end of the list 和";
         }
     }
 
     public async Task LoadRemindersAsync() {
         var reminders = await _service.GetAllRemindersAsync();
 
-        List<Reminder> SortedReminders = reminders.OrderBy(o => o.date).ToList();
-        AllReminders.Clear();
-
-        foreach (var reminder in SortedReminders) {
-            AllReminders.Add(reminder);
+        All.Clear();
+        foreach (var reminder in reminders.OrderBy(o => o.date)) {
+            All.Add(reminder);
         }
     }
 
-    public async Task RefreshSelectedReminder(int id) {
+    public async Task RefreshSelectedReminderAsync(int id) {
         var reminder = await _service.GetReminderAsync(id);
         if (SelectedReminder != reminder) {
             SelectedReminder = reminder;
 
-            var index = AllReminders.IndexOf(AllReminders.First(r => r.id == id));
-            AllReminders[index] = reminder;
+            var index = All.IndexOf(All.First(r => r.id == id));
+            All[index] = reminder;
         }
     }
 }

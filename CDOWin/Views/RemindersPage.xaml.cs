@@ -1,4 +1,4 @@
-using CDOWin.Services;
+﻿using CDOWin.Services;
 using CDOWin.ViewModels;
 using CDOWin.Views.Reminders;
 using Microsoft.UI.Text;
@@ -18,18 +18,20 @@ public sealed partial class RemindersPage : Page {
     public RemindersPage() {
         ViewModel = AppServices.RemindersViewModel;
         DataContext = ViewModel;
-        ViewModel.ClientReminders.CollectionChanged += ClientRemindersChanged;
+        ViewModel.ClientSpecific.CollectionChanged += ClientRemindersChanged;
         InitializeComponent();
     }
 
     private void ClientRemindersChanged(object? sender, NotifyCollectionChangedEventArgs e) {
-        if (ViewModel.ClientReminders != null) {
+        if (ViewModel.ClientSpecific != null) {
             SelectionBar.Items.Last().IsEnabled = true;
         }
 
         if (SelectionBar.Items.Last().IsSelected)
             return;
+
         SelectionBar.SelectedItem = SelectionBar.Items.Last();
+
     }
 
     private void RemindersCalendar_CalendarViewDayItemChanging(CalendarView sender, CalendarViewDayItemChangingEventArgs args) {
@@ -41,7 +43,7 @@ public sealed partial class RemindersPage : Page {
             DateTime day = args.Item.Date.Date;
 
             // Does any reminder match this date?
-            bool hasReminder = ViewModel.AllReminders.Any(r => r.date.Date == day);
+            bool hasReminder = ViewModel.All.Any(r => r.date.Date == day);
 
             if (hasReminder) {
                 // Mark the date (simple highlight)
@@ -58,9 +60,7 @@ public sealed partial class RemindersPage : Page {
 
     private void SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args) {
         SelectorBarItem selectedItem = sender.SelectedItem;
-        if(selectedItem.Tag is RemindersFilter filter) {
-            ViewModel.filter = filter;
-        }
-        
+        if(selectedItem.Tag is RemindersFilter filter)
+            ViewModel.Filter = filter;
     }
 }
