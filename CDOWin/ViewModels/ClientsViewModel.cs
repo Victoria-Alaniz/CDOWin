@@ -82,7 +82,7 @@ public partial class ClientsViewModel : ObservableObject {
             AllClientSummaries.Add(client);
         }
 
-        FilteredClients = new ObservableCollection<ClientSummaryDTO>(AllClientSummaries);
+        ApplyFilter();
     }
 
     public async Task ClientSelected(int id) {

@@ -58,7 +58,6 @@ public partial class CounselorsViewModel : ObservableObject {
         }
 
         ApplyFilter();
-        // FilteredCounselors = new ObservableCollection<Counselor>(AllCounselors);
     }
 
     public async Task RefreshSelectedCounselor(int id) {
