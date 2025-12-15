@@ -29,6 +29,7 @@
     <None Remove="Resources\Styles.xaml" />
     <None Remove="SplashWindow.xaml" />
     <None Remove="Views\ClientViewPage.xaml" />
+    <None Remove="Views\Counselors\Dialogs\UpdateCounselor.xaml" />
     <None Remove="Views\Counselors\Inspectors\CounselorInspector.xaml" />
     <None Remove="Views\Employers\Inspectors\EmployerInspector.xaml" />
     <None Remove="Views\Inspectors\Placements.xaml" />
@@ -162,7 +163,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Counselors\Dialogs\" />
     <Folder Include="Views\Employers\Dialogs\" />
     <Folder Include="Views\Referrals\Dialogs\" />
     <Folder Include="Views\Reminders\Inspectors\" />
@@ -212,6 +212,11 @@
   </ItemGroup>
   <ItemGroup>
     <PRIResource Remove="Views\Service Authorizations\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Counselors\Dialogs\UpdateCounselor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\ServiceAuthorizations\Inspectors\ServiceAuthorizationInspector.xaml">
