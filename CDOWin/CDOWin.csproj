@@ -15,9 +15,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Views\Clients\ClientInspectors\**" />
+    <Compile Remove="Views\Service Authorizations\**" />
     <EmbeddedResource Remove="Views\Clients\ClientInspectors\**" />
+    <EmbeddedResource Remove="Views\Service Authorizations\**" />
     <None Remove="Views\Clients\ClientInspectors\**" />
+    <None Remove="Views\Service Authorizations\**" />
     <Page Remove="Views\Clients\ClientInspectors\**" />
+    <Page Remove="Views\Service Authorizations\**" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\CDO_Dark.png" />
@@ -156,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Employers\Dialogs\" />
+    <Folder Include="Views\Counselors\" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Referrals\ReferralsPage.xaml">
@@ -197,5 +202,8 @@
   </PropertyGroup>
   <ItemGroup>
     <PRIResource Remove="Views\Clients\ClientInspectors\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Remove="Views\Service Authorizations\**" />
   </ItemGroup>
 </Project>

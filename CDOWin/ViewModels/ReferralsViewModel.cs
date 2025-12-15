@@ -24,11 +24,6 @@ public partial class ReferralsViewModel : ObservableObject {
         _service = service;
     }
 
-    partial void OnSelectedReferralChanged(Referral? value) {
-        if (value != null)
-            _ = RefreshSelectedReferral(value.id);
-    }
-
     public async Task LoadReferralsAsync() {
         var referrals = await _service.GetAllReferralsAsync();
         List<Referral> SortedReferrals = referrals.OrderBy(o => o.clientID).ToList();
@@ -41,11 +36,8 @@ public partial class ReferralsViewModel : ObservableObject {
 
     public async Task RefreshSelectedReferral(string id) {
         var referral = await _service.GetReferralAsync(id);
-        if (SelectedReferral != referral) {
-            SelectedReferral = referral;
-
-            var index = Referrals.IndexOf(Referrals.First(r => r.id == id));
-            Referrals[index] = referral;
-        }
+        var index = Referrals.IndexOf(Referrals.First(r => r.id == referral.id));
+        Referrals[index] = referral;
+        SelectedReferral = referral;
     }
 }

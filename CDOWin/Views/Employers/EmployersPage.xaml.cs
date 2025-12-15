@@ -1,3 +1,4 @@
+using CDO.Core.Models;
 using CDOWin.Services;
 using CDOWin.ViewModels;
 using CDOWin.Views.Employers.Inspectors;
@@ -13,5 +14,11 @@ public sealed partial class EmployersPage : Page {
         ViewModel = AppServices.EmployersViewModel;
         DataContext = ViewModel;
         InspectorFrame.Navigate(typeof(EmployerInspector), ViewModel);
+    }
+
+    private void ListView_ItemClick(object sender, ItemClickEventArgs e) {
+        if(e.ClickedItem is Employer employer) {
+            ViewModel.RefreshSelectedEmployer(employer.id);
+        }
     }
 }

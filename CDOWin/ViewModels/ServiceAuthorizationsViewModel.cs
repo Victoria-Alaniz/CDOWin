@@ -24,11 +24,6 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
         _service = service;
     }
 
-    partial void OnSelectedServiceAuthorizationChanged(ServiceAuthorization? value) {
-        if (value != null)
-            _ = RefreshSelectedServiceAuthorization(value.id);
-    }
-
     public async Task LoadServiceAuthorizationsAsync() {
         var serviceAuthorizations = await _service.GetAllServiceAuthorizationsAsync();
         List<ServiceAuthorization> SortedServiceAuthorizations = serviceAuthorizations.OrderBy(o => o.clientID).ToList();
@@ -41,11 +36,8 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
 
     public async Task RefreshSelectedServiceAuthorization(string id) {
         var po = await _service.GetServiceAuthorizationAsync(id);
-        if (SelectedServiceAuthorization != po) {
-            SelectedServiceAuthorization = po;
-
-            var index = ServiceAuthorizations.IndexOf(ServiceAuthorizations.First(p => p.id == id));
-            ServiceAuthorizations[index] = po;
-        }
+        var index = ServiceAuthorizations.IndexOf(ServiceAuthorizations.First(p => p.id == id));
+        ServiceAuthorizations[index] = po;
+        SelectedServiceAuthorization = po;
     }
 }

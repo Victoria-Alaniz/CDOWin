@@ -68,6 +68,7 @@
             <!-- Employers Table -->
             <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                       ItemsSource="{Binding Employers}" SelectedItem="{Binding SelectedEmployer, Mode=TwoWay}"
+                      IsItemClickEnabled="True" ItemClick="ListView_ItemClick"
                       SelectionMode="Single" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.IsHorizontalRailEnabled="True"
                       ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto"
                       ScrollViewer.VerticalScrollBarVisibility="Auto">

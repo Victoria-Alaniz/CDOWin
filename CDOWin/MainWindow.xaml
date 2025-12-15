@@ -6,6 +6,7 @@
     xmlns:local="using:CDOWin"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="using:CDOWin.Views"
     mc:Ignorable="d"
     Title="CDOWin">
 
@@ -56,11 +57,11 @@
                             PaneDisplayMode="Top" Loaded="NavigationLoaded"
                             SelectionChanged="NavigationSelectionChanged">
                 <NavigationView.MenuItems>
-                    <NavigationViewItem Content="Clients" Tag="ClientsPage"/>
-                    <NavigationViewItem Content="Counselors" Tag="CounselorsPage"/>
-                    <NavigationViewItem Content="Employers" Tag="EmployersPage"/>
-                    <NavigationViewItem Content="Service Authorizations" Tag="POs"/>
-                    <NavigationViewItem Content="Referrals" Tag="Referrals"/>
+                    <NavigationViewItem Content="Clients" Tag="{x:Bind views:CDOFrame.Clients}"/>
+                    <NavigationViewItem Content="Counselors" Tag="{x:Bind views:CDOFrame.Counselors}"/>
+                    <NavigationViewItem Content="Employers" Tag="{x:Bind views:CDOFrame.Employers}"/>
+                    <NavigationViewItem Content="Service Authorizations" Tag="{x:Bind views:CDOFrame.ServiceAuthorizations}"/>
+                    <NavigationViewItem Content="Referrals" Tag="{x:Bind views:CDOFrame.Placements}"/>
                 </NavigationView.MenuItems>
             </NavigationView>
 

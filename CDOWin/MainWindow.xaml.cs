@@ -1,20 +1,17 @@
 using CDOWin.Views;
 using CDOWin.Views.Clients;
+using CDOWin.Views.Counselors;
 using CDOWin.Views.Employers;
 using CDOWin.Views.Referrals;
+using CDOWin.Views.ServiceAuthorizations;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
+using System;
 using WinUIEx;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace CDOWin;
 
-/// <summary>
-/// An empty window that can be used on its own or navigated to within a Frame.
-/// </summary>
 public sealed partial class MainWindow : Window {
     int previousSelectedIndex = 0;
 
@@ -45,35 +42,33 @@ public sealed partial class MainWindow : Window {
     }
 
     private void NavigationSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
-        var selectedItem = (NavigationViewItem)args.SelectedItem;
-        var currentSelectedIndex = sender.MenuItems.IndexOf(selectedItem);
-        System.Type pageType;
+        if(args.SelectedItem is NavigationViewItem selectedItem && selectedItem.Tag is CDOFrame frame) {
+            var currentSelectedIndex = sender.MenuItems.IndexOf(selectedItem);
+            System.Type pageType;
 
-        switch (currentSelectedIndex) {
-            case 0:
-                pageType = typeof(ClientsPage);
-                break;
-            case 1:
-                pageType = typeof(CounselorsPage);
-                break;
-            case 2:
-                pageType = typeof(EmployersPage);
-                break;
-            case 3:
-                pageType = typeof(ServiceAuthorizationsPage);
-                break;
-            case 4:
-                pageType = typeof(ReferralsPage);
-                break;
-            default:
-                pageType = typeof(SamplePage);
-                break;
+            switch (frame) {
+                case CDOFrame.Clients:
+                    pageType = typeof(ClientsPage);
+                    break;
+                case CDOFrame.Counselors:
+                    pageType = typeof(CounselorsPage);
+                    break;
+                case CDOFrame.Employers:
+                    pageType = typeof(EmployersPage);
+                    break;
+                case CDOFrame.ServiceAuthorizations:
+                    pageType = typeof(ServiceAuthorizationsPage);
+                    break;
+                case CDOFrame.Placements:
+                    pageType = typeof(ReferralsPage);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(frame), frame, null);
+            }
+
+            var slideNavigationTransitionEffect = currentSelectedIndex - previousSelectedIndex > 0 ? SlideNavigationTransitionEffect.FromRight : SlideNavigationTransitionEffect.FromLeft;
+            ContentFrame.Navigate(pageType, null, new SlideNavigationTransitionInfo() { Effect = slideNavigationTransitionEffect });
+            previousSelectedIndex = currentSelectedIndex;
         }
-
-        var slideNavigationTransitionEffect = currentSelectedIndex - previousSelectedIndex > 0 ? SlideNavigationTransitionEffect.FromRight : SlideNavigationTransitionEffect.FromLeft;
-
-        ContentFrame.Navigate(pageType, null, new SlideNavigationTransitionInfo() { Effect = slideNavigationTransitionEffect });
-
-        previousSelectedIndex = currentSelectedIndex;
     }
 }

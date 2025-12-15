@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="CDOWin.Views.CounselorsPage"
+    x:Class="CDOWin.Views.Counselors.CounselorsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CDOWin.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
@@ -69,6 +68,7 @@
             <!-- Counselors Table -->
             <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                       ItemsSource="{Binding Counselors}" SelectedItem="{Binding SelectedCounselor, Mode=TwoWay}"
+                      IsItemClickEnabled="True" ItemClick="ListView_ItemClick"
                       SelectionMode="Single" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.IsHorizontalRailEnabled="True"
                       ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto"
                       ScrollViewer.VerticalScrollBarVisibility="Auto">
@@ -120,7 +120,7 @@
                             <TextBlock Grid.Column="2" Text="{x:Bind phone}"/>
                             <TextBlock Grid.Column="3" Text="{x:Bind fax}"/>
                             <TextBlock Grid.Column="4" Text="{x:Bind secretaryName}" TextWrapping="WrapWholeWords"
-                                       FontWeight="SemiBold"/>
+                                       FontWeight="Bold"/>
                             <TextBlock Grid.Column="5" Text="{x:Bind secretaryEmail}" TextTrimming="CharacterEllipsis"/>
                         </Grid>
                     </DataTemplate>

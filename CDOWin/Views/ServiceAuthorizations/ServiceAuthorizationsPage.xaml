@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="CDOWin.Views.ServiceAuthorizationsPage"
+    x:Class="CDOWin.Views.ServiceAuthorizations.ServiceAuthorizationsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CDOWin.Views"
@@ -69,6 +69,7 @@
             <!-- ServiceAuthorizations Table -->
             <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                       ItemsSource="{Binding ServiceAuthorizations}" SelectedItem="{Binding SelectedServiceAuthorization, Mode=TwoWay}"
+                      IsItemClickEnabled="True" ItemClick="ListView_ItemClick"
                       SelectionMode="Single" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.IsHorizontalRailEnabled="True"
                       ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto"
                       ScrollViewer.VerticalScrollBarVisibility="Auto">

@@ -24,11 +24,6 @@ public partial class CounselorsViewModel : ObservableObject {
         _service = service;
     }
 
-    partial void OnSelectedCounselorChanged(Counselor? value) {
-        if (value != null)
-            _ = RefreshSelectedCounselor(value.id);
-    }
-
     public async Task LoadCounselorsAsync() {
         var counselors = await _service.GetAllCounselorsAsync();
         List<Counselor> SortedCounselors = counselors.OrderBy(o => o.name).ToList();
@@ -41,11 +36,8 @@ public partial class CounselorsViewModel : ObservableObject {
 
     public async Task RefreshSelectedCounselor(int id) {
         var counselor = await _service.GetCounselorAsync(id);
-        if (SelectedCounselor != counselor) {
-            SelectedCounselor = counselor;
-
-            var index = Counselors.IndexOf(Counselors.First(c => c.id == id));
-            Counselors[index] = counselor;
-        }
+        var index = Counselors.IndexOf(Counselors.First(c => c.id == id));
+        Counselors[index] = counselor;
+        SelectedCounselor = counselor;
     }
 }

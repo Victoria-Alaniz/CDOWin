@@ -1,3 +1,4 @@
+using CDO.Core.Models;
 using CDOWin.Services;
 using CDOWin.ViewModels;
 using Microsoft.UI.Xaml.Controls;
@@ -13,5 +14,11 @@ public sealed partial class ReferralsPage : Page {
         ViewModel = AppServices.ReferralsViewModel;
         Debug.WriteLine(ViewModel.Referrals.Count);
         DataContext = ViewModel;
+    }
+
+    private void ListView_ItemClick(object sender, ItemClickEventArgs e) {
+        if(e.ClickedItem is Referral referral) {
+            ViewModel.RefreshSelectedReferral(referral.id);
+        }
     }
 }

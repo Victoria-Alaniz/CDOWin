@@ -3,6 +3,7 @@ using CDO.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,11 +25,6 @@ public partial class EmployersViewModel : ObservableObject {
         _service = service;
     }
 
-    partial void OnSelectedEmployerChanged(Employer? value) {
-        if (value != null)
-            _ = RefreshSelectedEmployer(value.id);
-    }
-
     public async Task LoadEmployersAsync() {
         var employers = await _service.GetAllEmployersAsync();
         List<Employer> SortedEmployers = employers.OrderBy(o => o.name).ToList();
@@ -41,12 +37,8 @@ public partial class EmployersViewModel : ObservableObject {
 
     public async Task RefreshSelectedEmployer(int id) {
         var employer = await _service.GetEmployerAsync(id);
-
-        if (SelectedEmployer != employer) {
-            SelectedEmployer = employer;
-
-            var index = Employers.IndexOf(Employers.First(e => e.id == id));
-            Employers[index] = employer;
-        }
+        var index = Employers.IndexOf(Employers.First(e => e.id == id));
+        Employers[index] = employer;
+        SelectedEmployer = employer;
     }
 }
