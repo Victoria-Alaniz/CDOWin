@@ -1,12 +1,10 @@
 using CDO.Core.DTOs;
 using CDOWin.ViewModels;
 using CDOWin.Views.Counselors.Dialogs;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace CDOWin.Views.Counselors.Inspectors;
 
