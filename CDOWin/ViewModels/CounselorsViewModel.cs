@@ -1,4 +1,5 @@
-﻿using CDO.Core.Interfaces;
+﻿using CDO.Core.DTOs;
+using CDO.Core.Interfaces;
 using CDO.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.Generic;
@@ -65,5 +66,12 @@ public partial class CounselorsViewModel : ObservableObject {
         var index = All.IndexOf(All.First(c => c.id == id));
         All[index] = counselor;
         Selected = counselor;
+    }
+
+    public async Task UpdateCounselor(UpdateCounselorDTO update) {
+        if (Selected == null)
+            return;
+        var updatedCounselor = await _service.UpdateCounselorAsync(Selected.id, update);
+        Selected = updatedCounselor;
     }
 }

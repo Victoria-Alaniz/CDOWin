@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:CDOWin.Controls"
     xmlns:models="using:CDO.Core.Models"
-    xmlns:dialogs="using:CDOWin.Views.Clients.Dialogs"
+    xmlns:dialogs="using:CDOWin.Views.Counselors.Dialogs"
     d:DataContext="{d:DesignInstance Type=models:Counselor}"
     mc:Ignorable="d">
 
@@ -27,27 +27,36 @@
         
         <!-- Row 0: Name -->
         <controls:LabeledTextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                                 Label="Name" Value="{Binding name}"/>
+                                 Label="Name" Value="{Binding name}" 
+                                 Tag="{x:Bind dialogs:UpdateFields.Name}"/>
 
         <!-- Row 1: Email -->
         <controls:LabeledTextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                                 Label="Email" Value="{Binding email}"/>
+                                 Label="Email" Value="{Binding email}"
+                                 Tag="{x:Bind dialogs:UpdateFields.Email}"/>
 
         <!-- Row 2: Phone + Fax -->
-        <controls:LabeledTextBox Grid.Row="2" Grid.Column="0" Label="Phone" Value="{Binding phone}"/>
-        <controls:LabeledTextBox Grid.Row="2" Grid.Column="2" Label="Fax" Value="{Binding fax}"/>
+        <controls:LabeledTextBox Grid.Row="2" Grid.Column="0" 
+                                 Label="Phone" Value="{Binding phone}"
+                                 Tag="{x:Bind dialogs:UpdateFields.Phone}"/>
+        <controls:LabeledTextBox Grid.Row="2" Grid.Column="2" 
+                                 Label="Fax" Value="{Binding fax}"
+                                 Tag="{x:Bind dialogs:UpdateFields.Fax}"/>
 
         <!--Row 3:  Notes -->
         <controls:LabeledMultiLinePair Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
-                                       Label="Notes" Value="{Binding notes}"/>
+                                       Label="Notes" Value="{Binding notes}"
+                                       Tag="{x:Bind dialogs:UpdateFields.Notes}"/>
 
         <!-- Row 4: Secretary -->
         <controls:LabeledTextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
-                                 Label="Secretary" Value="{Binding secretaryName}"/>
+                                 Label="Secretary" Value="{Binding secretaryName}"
+                                 Tag="{x:Bind dialogs:UpdateFields.Secretary}"/>
 
         <!-- Row 5: Secretary Email-->
         <controls:LabeledTextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" 
-                                 Label="Secretray Email" Value="{Binding secretaryEmail}"/>
+                                 Label="Secretray Email" Value="{Binding secretaryEmail}"
+                                 Tag="{x:Bind dialogs:UpdateFields.SecretaryEmail}"/>
 
     </Grid>
 </Page>
