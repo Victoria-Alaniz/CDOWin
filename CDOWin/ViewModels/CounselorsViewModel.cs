@@ -2,7 +2,6 @@
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -64,9 +63,16 @@ public partial class CounselorsViewModel : ObservableObject {
 
     public async Task RefreshSelectedCounselor(int id) {
         var counselor = await _service.GetCounselorAsync(id);
-        var index = All.IndexOf(All.First(c => c.id == counselor.id));
-        All[index] = counselor;
+        Replace(All, counselor);
+        Replace(Filtered, counselor);
+
         Selected = counselor;
+    }
+
+    private void Replace(ObservableCollection<Counselor> list, Counselor updated) {
+        var index = list.IndexOf(list.First(c => c.id == updated.id));
+        if (index >= 0)
+            list[index] = updated;
     }
 
     public async Task UpdateCounselor(UpdateCounselorDTO update) {
@@ -74,7 +80,5 @@ public partial class CounselorsViewModel : ObservableObject {
             return;
         var updatedCounselor = await _service.UpdateCounselorAsync(Selected.id, update);
         await RefreshSelectedCounselor(Selected.id);
-        ApplyFilter();
-        Selected = updatedCounselor;
     }
 }
