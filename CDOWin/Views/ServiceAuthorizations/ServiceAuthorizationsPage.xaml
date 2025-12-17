@@ -95,10 +95,10 @@
                             <ColumnDefinition Width="110"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="ID" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="0" Text="SA Number" FontWeight="SemiBold"/>
                         <TextBlock Grid.Column="1" Text="Client" FontWeight="SemiBold"/>
                         <TextBlock Grid.Column="2" Text="Case ID" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="3" Text="Counselor" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="3" Text="Issued By" FontWeight="SemiBold"/>
                         <TextBlock Grid.Column="4" Text="Start Date" FontWeight="SemiBold"/>
                         <TextBlock Grid.Column="5" Text="End Date" FontWeight="SemiBold"/>
                         <TextBlock Grid.Column="6" Text="Unit Cost" FontWeight="SemiBold"/>

@@ -60,8 +60,8 @@
                     <NavigationViewItem Content="Clients" Tag="{x:Bind views:CDOFrame.Clients}"/>
                     <NavigationViewItem Content="Counselors" Tag="{x:Bind views:CDOFrame.Counselors}"/>
                     <NavigationViewItem Content="Employers" Tag="{x:Bind views:CDOFrame.Employers}"/>
-                    <NavigationViewItem Content="Service Authorizations" Tag="{x:Bind views:CDOFrame.ServiceAuthorizations}"/>
                     <NavigationViewItem Content="Referrals" Tag="{x:Bind views:CDOFrame.Placements}"/>
+                    <NavigationViewItem Content="Service Authorizations" Tag="{x:Bind views:CDOFrame.ServiceAuthorizations}"/>
                 </NavigationView.MenuItems>
             </NavigationView>
 

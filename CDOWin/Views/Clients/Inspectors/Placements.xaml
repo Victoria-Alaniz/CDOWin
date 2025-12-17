@@ -60,6 +60,7 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Spacing="2">
                             <TextBlock FontWeight="Bold" Text="{x:Bind id, Mode=OneWay}"/>
+                            <TextBlock Text="{x:Bind description, Mode=OneWay}"/>
                             <TextBlock FontWeight="SemiBold" Text="{x:Bind formattedStartDate, Mode=OneWay}"/>
                             <TextBlock TextWrapping="WrapWholeWords" Text="{x:Bind formattedEndDate, Mode=OneWay}"/>
                         </StackPanel>

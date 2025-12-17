@@ -17,6 +17,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -90,6 +91,30 @@
             <!-- Row 7: Hire Date + End Date -->
             <control:LabelPair Grid.Row="7" Grid.Column="0" Label="Hire Date" Value="{Binding Selected.formattedHireDate}"/>
             <control:LabelPair Grid.Row="7" Grid.Column="1" Label="End Date" Value="{Binding Selected.formattedEndDate}"/>
+        </Grid>
+
+        <!-- Row 5: Button Row -->
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Margin="12,8,0,0" HorizontalAlignment="Stretch" 
+                    Style="{StaticResource AccentButtonStyle}">
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <SymbolIcon Symbol="Page"/>
+                    <TextBlock Text="Export to Form"/>
+                </StackPanel>
+            </Button>
+
+            <Button Grid.Column="1" Margin="0,8,12,0" HorizontalAlignment="Stretch" 
+                    Foreground="{StaticResource SystemFillColorCritical}">
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <SymbolIcon Symbol="Delete"/>
+                    <TextBlock Text="Delete"/>
+                </StackPanel>
+            </Button>
         </Grid>
     </Grid>
 </Page>

@@ -16,6 +16,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -56,23 +57,49 @@
             </Grid.ColumnDefinitions>
 
             <!-- Row 0: PO Number + Case ID-->
-            <control:LabelPair Grid.Row="0" Grid.Column="0" Label="SA ID" Value="{Binding Selected.id}"/>
+            <control:LabelPair Grid.Row="0" Grid.Column="0" Label="SA Number" Value="{Binding Selected.id}"/>
             <control:LabelPair Grid.Row="0" Grid.Column="1" Label="Case ID" Value="{Binding Selected.clientID}"/>
 
             <!-- Row 1: Counselor -->
             <control:LabelPair Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                               Label="Counselor" Value="{Binding Selected.client.counselorReference.name}"/>
+                               Label="Issued By" Value="{Binding Selected.client.counselorReference.name}"/>
 
             <!-- Row 2: Start Date + End Date -->
             <control:LabelPair Grid.Row="2" Grid.Column="0" Label="Start Date" Value="{Binding Selected.formattedStartDate}"/>
             <control:LabelPair Grid.Row="2" Grid.Column="1" Label="End Date" Value="{Binding Selected.formattedEndDate}"/>
 
             <!-- Row 3: Unit Cost -->
-            <control:LabelPair Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+            <control:LabelPair Grid.Row="3" Grid.Column="0"
                                Label="Unit Cost" Value="{Binding Selected.formattedCost}"/>
+            <control:LabelPair Grid.Row="3" Grid.Column="1"
+                               Label="U/M" Value="{Binding Selected.unitOfMeasurement}"/>
             <!-- Row 4: Description -->
             <control:LabelPair Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
                                Label="Description" Value="{Binding Selected.description}"/>
+        </Grid>
+
+        <!-- Row 5: Button Row -->
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Margin="12,8,0,0" HorizontalAlignment="Stretch" 
+                    Style="{StaticResource AccentButtonStyle}">
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <SymbolIcon Symbol="Page"/>
+                    <TextBlock Text="Invoice"/>
+                </StackPanel>
+            </Button>
+
+            <Button Grid.Column="1" Margin="0,8,12,0" HorizontalAlignment="Stretch" 
+                    Foreground="{StaticResource SystemFillColorCritical}">
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <SymbolIcon Symbol="Delete"/>
+                    <TextBlock Text="Delete"/>
+                </StackPanel>
+            </Button>
         </Grid>
     </Grid>
 </Page>
