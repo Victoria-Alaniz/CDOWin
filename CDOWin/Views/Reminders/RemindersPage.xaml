@@ -41,10 +41,10 @@
             <SelectorBarItem Text="Client" IsEnabled="False" Tag="{x:Bind reminders:RemindersFilter.Client}"/>
         </SelectorBar>
 
-        <Button Grid.Row="2" Grid.Column="2" Margin="16,6,12,0"
-                Width="32" Height="32" Padding="0" Click="NewReminder_Clicked"
-                Style="{StaticResource SubtleButtonStyle}">
-            <FontIcon Glyph="&#xE710;" FontSize="16" Foreground="{ThemeResource SystemAccentColor}"/>
+        <Button Grid.Row="2" Grid.Column="2" Margin="8,4,8,0"
+                Style="{StaticResource SingleIconButtonStyle}"
+                Click="NewReminder_Clicked">
+            <FontIcon Glyph="&#xE710;" Style="{StaticResource SingleIconFontStyle}"/>
         </Button>
 
         <ScrollViewer Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">

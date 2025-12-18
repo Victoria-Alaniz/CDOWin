@@ -35,11 +35,9 @@
                    Margin="16,8,8,8"/>
         <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,0,0,12"
                     Orientation="Horizontal">
-            <Button Width="32" Height="32" Padding="0" Margin="2,8,16,0"
-                    Click="OpenDocuments_Clicked"
-                    Style="{StaticResource SubtleButtonStyle}">
-                <FontIcon Glyph="&#xE838;" FontSize="16"
-                      Foreground="{ThemeResource SystemAccentColor}"/>
+            <Button Margin="2,8,16,0" Style="{StaticResource SingleIconButtonStyle}"
+                    Click="OpenDocuments_Clicked">
+                <FontIcon Glyph="&#xE838;" Style="{StaticResource SingleIconFontStyle}"/>
             </Button>
         </StackPanel>
 
@@ -351,7 +349,7 @@
                 <Grid Style="{StaticResource CardContainerGridStyle}">
                     
                     <!-- Inner Grid -->
-                    <Grid Style="{StaticResource Checklists CardInnerGridStyle}">
+                    <Grid Style="{StaticResource ChecklistsCardInnerGridStyle}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>

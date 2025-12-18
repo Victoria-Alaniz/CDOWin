@@ -25,25 +25,24 @@
         </Grid.ColumnDefinitions>
 
         <!-- Header -->
-        <TextBlock Grid.Row="0" Margin="16,8,8,8" FontSize="22" 
-                   FontWeight="Bold" TextWrapping="WrapWholeWords"
+        <TextBlock Grid.Row="0" Grid.Column="0"
+                   Style="{StaticResource InspectorHeaderStyle}"
                    Text="{Binding Selected.name}"/>
         
         <!-- Edit Button -->
-        <Button Grid.Row="0" Grid.Column="2" Margin="16,8,12,0" 
-                Width="32" Height="32" Padding="0"
-                Click="Button_Click" VerticalAlignment="Top" 
-                Style="{StaticResource SubtleButtonStyle}">
-            <FontIcon Glyph="&#xE70F;" FontSize="16" Foreground="{ThemeResource SystemAccentColor}"/>
+        <Button Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" 
+                Style="{StaticResource SingleIconButtonStyle}"
+                Click="Button_Click">
+            <FontIcon Glyph="&#xE70F;" Style="{StaticResource SingleIconFontStyle}"/>
         </Button>
 
         <!-- Details Caption-->
-        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="16,8,8,8" Style="{StaticResource CaptionTextBlockStyle}" Text="Details"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                   Style="{StaticResource InspectorCaptionStyle}" Text="Details"/>
 
         <!-- Details Grid -->
         <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
-              Margin="12,0,12,8" RowSpacing="12" Padding="12,8,16,12"
-              Style="{StaticResource BasicCardContainerGridStyle}">
+              Style="{StaticResource InspectorDetialsGridStyle}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -79,13 +78,14 @@
         </Grid>
 
         <!-- Row 3: Button -->
-        <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
-                    Margin="12,8,12,0" HorizontalAlignment="Stretch" 
-                    Foreground="{StaticResource SystemFillColorCritical}">
-            <StackPanel Orientation="Horizontal" Spacing="5">
-                <SymbolIcon Symbol="Delete"/>
-                <TextBlock Text="Delete"/>
-            </StackPanel>
-        </Button>
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+              Style="{StaticResource InspectorButtonGridStyle}">
+            <Button Style="{StaticResource InspectorCriticalStyle}">
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <SymbolIcon Symbol="Delete"/>
+                    <TextBlock Text="Delete"/>
+                </StackPanel>
+            </Button>
+        </Grid>
     </Grid>
 </Page>

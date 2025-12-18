@@ -26,12 +26,10 @@
                  Text="{x:Bind ViewModel.SelectedClient.clientNotes, Mode=OneWay}"/>
 
         <Button Grid.Row="1" Grid.Column="0" Margin="16,8,16,16"
-                Width="32" Height="32" Padding="0"
                 HorizontalAlignment="Right" VerticalAlignment="Center"
-                Click="Button_Click"
-                Style="{StaticResource SubtleButtonStyle}">
-            <FontIcon Glyph="&#xE710;" FontSize="16"
-                      Foreground="{ThemeResource SystemAccentColor}"/>
+                Style="{StaticResource SingleIconButtonStyle}"
+                Click="Button_Click">
+            <FontIcon Glyph="&#xE710;" Style="{StaticResource SingleIconFontStyle}"/>
         </Button>
     </Grid>
 </Page>

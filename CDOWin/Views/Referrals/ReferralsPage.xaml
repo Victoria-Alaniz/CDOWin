@@ -16,11 +16,11 @@
         <!-- Columns -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="340"/>
+            <ColumnDefinition Width="344"/>
         </Grid.ColumnDefinitions>
 
         <!-- Left Column -->
-        <Grid BorderThickness="0,0,1,0" BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}">
+        <Grid Style="{StaticResource ContentRightBorderStyle}">
 
             <!-- Rows -->
             <Grid.RowDefinitions>
@@ -44,18 +44,18 @@
                     </Grid.ColumnDefinitions>
 
                     <!-- Title -->
-                    <TextBlock Grid.Column="0" Margin="16,8,16,0" 
-                               FontSize="22" FontWeight="Bold" Text="Referrals"/>
+                    <TextBlock Grid.Column="0" Style="{StaticResource PageTitleStyle}"
+                               Text="Referrals"/>
 
                     <!-- Add Button -->
-                    <Button Grid.Column="1" Margin="16,8,12,0" Width="32" Height="32"
-                            Padding="0" VerticalAlignment="Center" Style="{StaticResource SubtleButtonStyle}">
-                        <FontIcon Glyph="&#xE710;" FontSize="16" Foreground="{ThemeResource SystemAccentColor}"/>
+                    <Button Grid.Column="1" VerticalAlignment="Center" 
+                            Style="{StaticResource SingleIconButtonStyle}">
+                        <FontIcon Glyph="&#xE710;" Style="{StaticResource SingleIconFontStyle}"/>
                     </Button>
                 </Grid>
 
                 <!-- Subtitle -->
-                <TextBlock Margin="16,0,16,8" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                <TextBlock Style="{StaticResource PageSubtitleStyle}">
                     <Run Text="{x:Bind ViewModel.Filtered.Count, Mode=OneWay}"/>
                     <Run Text="Referrals"/>
                 </TextBlock>
@@ -67,18 +67,13 @@
                      Text="{Binding SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <!-- Referrals Table -->
-            <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                      ItemsSource="{Binding Filtered}" SelectedItem="{Binding Selected, Mode=TwoWay}" 
-                      IsItemClickEnabled="True" ItemClick="ListView_ItemClick"
-                      SelectionMode="Single" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.IsHorizontalRailEnabled="True"
-                      ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollMode="Auto"
-                      ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ListView"
+                      Style="{StaticResource DataTableStyle}" ItemsSource="{Binding Filtered}"
+                      SelectedItem="{Binding Selected, Mode=TwoWay}" ItemClick="ListView_ItemClick">
 
                 <!-- Header -->
                 <ListView.Header>
-                    <Grid Background="{ThemeResource SolidBackgroundFillColorTertiaryBrush}"
-                          BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
-                          BorderThickness="0,0,0,1" Padding="12,8">
+                    <Grid Style="{StaticResource DataTableHeaderStyle}">
 
                         <interactivity:Interaction.Behaviors>
                             <behaviors:StickyHeaderBehavior/>
@@ -136,15 +131,11 @@
                                 <ColumnDefinition Width="100"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" Text="{x:Bind placementNumber}" 
-                                       TextWrapping="WrapWholeWords" FontWeight="Bold"/>
+                            <TextBlock Grid.Column="0" Text="{x:Bind placementNumber}" TextWrapping="WrapWholeWords" FontWeight="Bold"/>
                             <TextBlock Grid.Column="1" Text="{x:Bind active}"/>
-                            <TextBlock Grid.Column="2" Text="{x:Bind clientName}" 
-                                       TextWrapping="WrapWholeWords" FontWeight="Bold"/>
-                            <TextBlock Grid.Column="3" Text="{x:Bind employer.name}" 
-                                       TextWrapping="WrapWholeWords" FontWeight="Bold"/>
-                            <TextBlock Grid.Column="4" Text="{x:Bind counselorName}" 
-                                       TextWrapping="WrapWholeWords" FontWeight="Bold"/>
+                            <TextBlock Grid.Column="2" Text="{x:Bind clientName}"  TextWrapping="WrapWholeWords" FontWeight="Bold"/>
+                            <TextBlock Grid.Column="3" Text="{x:Bind employer.name}" TextWrapping="WrapWholeWords" FontWeight="Bold"/>
+                            <TextBlock Grid.Column="4" Text="{x:Bind counselorName}" TextWrapping="WrapWholeWords" FontWeight="Bold"/>
                             <TextBlock Grid.Column="5" Text="{x:Bind poNumber}" TextTrimming="CharacterEllipsis"/>
                             <TextBlock Grid.Column="6" Text="{x:Bind supervisor}" TextTrimming="CharacterEllipsis"/>
                             <TextBlock Grid.Column="7" Text="{x:Bind supervisorPhone}" TextTrimming="CharacterEllipsis"/>
@@ -156,15 +147,6 @@
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-
-                <!-- Container Style -->
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        <Setter Property="Padding" Value="0"/>
-                        <Setter Property="CornerRadius" Value="4"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
             </ListView>
         </Grid>
 
