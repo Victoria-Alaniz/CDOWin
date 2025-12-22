@@ -29,7 +29,7 @@ public sealed partial class EmployerInspector : Page {
 
         var result = await dialog.ShowAsync();
 
-        if(result == ContentDialogResult.Primary) {
+        if (result == ContentDialogResult.Primary) {
             updateEmployer(updateVM.Updated);
         }
     }

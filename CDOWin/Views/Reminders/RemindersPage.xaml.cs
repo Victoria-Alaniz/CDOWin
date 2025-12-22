@@ -1,6 +1,5 @@
 ﻿using CDOWin.Services;
 using CDOWin.ViewModels;
-using CDOWin.Views.Reminders;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -9,7 +8,6 @@ using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
-using Windows.UI;
 
 namespace CDOWin.Views.Reminders;
 
@@ -96,7 +94,7 @@ public sealed partial class RemindersPage : Page {
     }
 
     private void Reminder_Click(SplitButton sender, SplitButtonClickEventArgs args) {
-        if(sender.Tag is Int32 clientID) {
+        if (sender.Tag is Int32 clientID) {
             // here we need to select the client with that name
             Debug.WriteLine($"Client: {clientID} selected.");
         }

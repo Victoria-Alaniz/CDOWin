@@ -3,9 +3,13 @@ using System;
 
 namespace CDOWin.Converters;
 
-class NullOpacityConverter : IValueConverter {
+class BoolOpacityConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, string language) {
-        return value == null ? 0.5 : 1.0;
+        if (value is bool b) {
+            return b == false ? 0.4 : 1.0;
+        }
+
+        return 1.0;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, string language) {

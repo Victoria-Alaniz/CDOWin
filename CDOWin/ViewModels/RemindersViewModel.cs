@@ -84,7 +84,7 @@ public partial class RemindersViewModel : ObservableObject {
     public void ApplyDateFilter(DateTime date) {
         Filter = RemindersFilter.Date;
         Filtered.Clear();
-        foreach(var reminder in All) {
+        foreach (var reminder in All) {
             if (reminder.date.Date == date.Date)
                 Filtered.Add(reminder);
         }

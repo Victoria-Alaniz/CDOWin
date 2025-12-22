@@ -64,7 +64,7 @@
                                          HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                          BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
                                          Tag="{x:Bind clientID}">
-                                <Grid>
+                                <Grid Opacity="{x:Bind complete, Converter={StaticResource BoolOpacityConverter}}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
                                         <RowDefinition />

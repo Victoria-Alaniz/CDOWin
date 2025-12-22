@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace CDOWin.Views.Clients;
+﻿namespace CDOWin.Views.Clients;
 
 public class ReminderMenuItem {
     private ReminderMenuItem(string value) { Value = value; }

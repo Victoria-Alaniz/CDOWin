@@ -7,6 +7,7 @@
     xmlns:local="using:CDOWin">
     <Application.Resources>
         <ResourceDictionary>
+            <converters:BoolOpacityConverter x:Key="BoolOpacityConverter"/>
             <converters:NullOpacityConverter x:Key="NullOpacityConverter"/>
             <converters:StringNullVisibilityConverter x:Key="StringToVisability"/>
             <converters:NullVisibilityConverter x:Key="NullToVisability"/>
