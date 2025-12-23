@@ -65,6 +65,9 @@ public partial class RemindersViewModel : ObservableObject {
     }
 
     // Public Methods
+    public void requestClient(int clientID) {
+        _selectionService.RequestSelectedClient(clientID);
+    }
 
     private void ApplyFilter() {
         switch (Filter) {

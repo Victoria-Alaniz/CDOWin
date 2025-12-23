@@ -108,4 +108,10 @@ public sealed partial class RemindersPage : Page {
             }
         }
     }
+
+    private void ViewClient_Click(object sender, RoutedEventArgs e) {
+        if(sender is MenuFlyoutItem flyoutItem && flyoutItem.Tag is int clientId) {
+            ViewModel.requestClient(clientId);
+        }
+    }
 }

@@ -89,10 +89,9 @@
 
                                 <SplitButton.Flyout>
                                     <MenuFlyout Placement="Right">
-                                        <MenuFlyoutItem Text="Mark Completed"/>
-                                        <MenuFlyoutItem Text="Edit"/>
-                                        <MenuFlyoutItem Text="View Client"/>
-                                        <MenuFlyoutItem Text="Delete"/>
+                                        <MenuFlyoutItem Text="Mark Completed" Tag="{x:Bind id}"/>
+                                        <MenuFlyoutItem Text="View Client" Click="ViewClient_Click" Tag="{x:Bind clientID}"/>
+                                        <MenuFlyoutItem Text="Delete" Tag="{x:Bind id}"/>
                                     </MenuFlyout>
                                 </SplitButton.Flyout>
                             </SplitButton>

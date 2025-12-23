@@ -4,6 +4,7 @@ using System;
 namespace CDOWin.Services {
     public class ClientSelectionService {
         public event Action<Client?> SelectedClientChanged;
+        public event Action<int> ClientSelectionRequested;
         private Client? _selectedClient;
 
         public Client? SelectedClient {
@@ -14,6 +15,10 @@ namespace CDOWin.Services {
                     SelectedClientChanged?.Invoke(value);
                 }
             }
+        }
+
+        public void RequestSelectedClient(int clientId) {
+            ClientSelectionRequested?.Invoke(clientId);
         }
     }
 }

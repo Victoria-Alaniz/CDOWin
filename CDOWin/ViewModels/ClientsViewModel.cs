@@ -35,11 +35,21 @@ public partial class ClientsViewModel : ObservableObject {
     public ClientsViewModel(IClientService service, Services.ClientSelectionService clientSelectionService) {
         _service = service;
         _selectionService = clientSelectionService;
+        _selectionService.ClientSelectionRequested += OnRequestSelectedClientChange;
     }
 
     // Change tracking methods
     partial void OnSearchQueryChanged(string value) {
         ApplyFilter();
+    }
+
+    private void OnRequestSelectedClientChange(int clientId) {
+        if (SelectedClient != null && SelectedClient.id == clientId)
+            return;
+
+        SearchQuery = string.Empty;
+        ApplyFilter();
+        _ = ClientSelected(clientId);
     }
 
     partial void OnSelectedClientChanged(Client? client) {
