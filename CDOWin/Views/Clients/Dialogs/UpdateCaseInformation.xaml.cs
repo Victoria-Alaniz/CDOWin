@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace CDOWin.Views.Clients.Dialogs;
@@ -87,6 +88,7 @@ public sealed partial class UpdateCaseInformation : Page {
             if (sender is CalendarDatePicker picker && picker.Date is DateTimeOffset offset) {
                 // We call DateTime.Date to get the date with the time zeroed out then
                 // .ToUniversalTime to ensure it si in the correct format for the API
+                Debug.WriteLine(offset.Date.ToUniversalTime());
                 ViewModel.UpdatedClient.startDate = offset.DateTime.Date.ToUniversalTime();
             }
         }

@@ -97,8 +97,8 @@ public sealed partial class RemindersPage : Page {
 
     private async void Reminder_Click(SplitButton sender, SplitButtonClickEventArgs args) {
         if (sender.Tag is Int32 id) {
-            var dialog = DialogFactory.UpdateDialog(this.XamlRoot, "Edit Reminder");
             var updateVM = new ReminderUpdateViewModel(ViewModel.GetReminderByID(id));
+            var dialog = DialogFactory.UpdateDialog(this.XamlRoot, $"Reminder for {updateVM.Original.clientName}");
             dialog.Content = new UpdateReminderPage(updateVM);
 
             var result = await dialog.ShowAsync();
