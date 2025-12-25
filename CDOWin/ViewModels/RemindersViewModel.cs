@@ -66,8 +66,17 @@ public partial class RemindersViewModel : ObservableObject {
     }
 
     // Public Methods
-    public void requestClient(int clientID) {
+    public void RequestClient(int clientID) {
         _selectionService.RequestSelectedClient(clientID);
+    }
+
+    public void ToggleCompleted(int id) {
+        var reminder = Filtered.First(r => r.id == id);
+        if(reminder != null) {
+            var update = new UpdateReminderDTO();
+            update.complete = !reminder.complete;
+            _ = UpdateReminder(id, update);
+        }
     }
 
     private void ApplyFilter() {

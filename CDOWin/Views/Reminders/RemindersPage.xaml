@@ -45,8 +45,7 @@
         </SelectorBar>
 
         <Button Grid.Row="2" Grid.Column="2" Margin="8,4,8,0"
-                Style="{StaticResource SingleIconButtonStyle}"
-                Click="NewReminder_Clicked">
+                Style="{StaticResource SingleIconButtonStyle}">
             <FontIcon Glyph="&#xF763;" Style="{StaticResource SingleIconFontStyle}"/>
         </Button>
 
@@ -89,7 +88,7 @@
 
                                 <SplitButton.Flyout>
                                     <MenuFlyout Placement="Right">
-                                        <MenuFlyoutItem Text="Mark Completed" Tag="{x:Bind id}"/>
+                                        <MenuFlyoutItem Text="{x:Bind complete, Converter={StaticResource BoolCompletedConverter}}" Click="ToggleCompleted_Click" Tag="{x:Bind id}"/>
                                         <MenuFlyoutItem Text="View Client" Click="ViewClient_Click" Tag="{x:Bind clientID}"/>
                                         <MenuFlyoutItem Text="Delete" Tag="{x:Bind id}"/>
                                     </MenuFlyout>

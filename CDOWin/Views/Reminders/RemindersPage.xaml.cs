@@ -105,9 +105,15 @@ public sealed partial class RemindersPage : Page {
         }
     }
 
+    private void ToggleCompleted_Click(object sender, RoutedEventArgs e) {
+        if (sender is MenuFlyoutItem flyoutItem && flyoutItem.Tag is int id) {
+            ViewModel.ToggleCompleted(id);
+        }
+    }
+
     private void ViewClient_Click(object sender, RoutedEventArgs e) {
         if(sender is MenuFlyoutItem flyoutItem && flyoutItem.Tag is int clientId) {
-            ViewModel.requestClient(clientId);
+            ViewModel.RequestClient(clientId);
         }
     }
 }

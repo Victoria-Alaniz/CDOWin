@@ -2,14 +2,13 @@
 using System;
 
 namespace CDOWin.Converters;
-
-class BoolOpacityConverter : IValueConverter {
+class BoolCompletedConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, string language) {
         if (value is bool b) {
-            return b == true ? 0.4 : 1.0;
+            return b == true ? "Mark Incomplete" : "Mark Complete";
         }
 
-        return 1.0;
+        return string.Empty;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, string language) {
