@@ -116,4 +116,10 @@ public sealed partial class RemindersPage : Page {
             ViewModel.RequestClient(clientId);
         }
     }
+
+    private void Delete_Click(object sender, RoutedEventArgs e) {
+        if(sender is MenuFlyoutItem flyoutItem && flyoutItem.Tag is int id) {
+            // Here we show a scaare sheet and delete
+        }
+    }
 }

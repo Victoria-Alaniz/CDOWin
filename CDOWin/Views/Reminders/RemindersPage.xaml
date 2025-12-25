@@ -88,9 +88,17 @@
 
                                 <SplitButton.Flyout>
                                     <MenuFlyout Placement="Right">
-                                        <MenuFlyoutItem Text="{x:Bind complete, Converter={StaticResource BoolCompletedConverter}}" Click="ToggleCompleted_Click" Tag="{x:Bind id}"/>
-                                        <MenuFlyoutItem Text="View Client" Click="ViewClient_Click" Tag="{x:Bind clientID}"/>
-                                        <MenuFlyoutItem Text="Delete" Tag="{x:Bind id}"/>
+                                        <MenuFlyoutItem Text="{x:Bind complete, Converter={StaticResource BoolCompletedConverter}}" 
+                                                        Click="ToggleCompleted_Click" Tag="{x:Bind id}">
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon Glyph="&#xF0B5;" />
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+                                        <MenuFlyoutItem Text="Go To Client" Icon="Contact" 
+                                                        Click="ViewClient_Click" Tag="{x:Bind clientID}"/>
+                                        <MenuFlyoutSeparator/>
+                                        <MenuFlyoutItem Text="Delete..." Icon="Delete"
+                                                        Click="Delete_Click" Tag="{x:Bind id}"/>
                                     </MenuFlyout>
                                 </SplitButton.Flyout>
                             </SplitButton>

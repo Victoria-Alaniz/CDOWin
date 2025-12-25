@@ -164,6 +164,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\Shared\Dialogs\" />
     <Folder Include="Windows\" />
     <Folder Include="Views\Reminders\Inspectors\" />
   </ItemGroup>
