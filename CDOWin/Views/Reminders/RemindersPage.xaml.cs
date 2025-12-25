@@ -91,10 +91,6 @@ public sealed partial class RemindersPage : Page {
         }
     }
 
-    private void NewReminder_Clicked(object sender, RoutedEventArgs e) {
-        // Here we open a new reminder window
-    }
-
     private async void Reminder_Click(SplitButton sender, SplitButtonClickEventArgs args) {
         if (sender.Tag is Int32 id) {
             var updateVM = new ReminderUpdateViewModel(ViewModel.GetReminderByID(id));
@@ -104,7 +100,7 @@ public sealed partial class RemindersPage : Page {
             var result = await dialog.ShowAsync();
 
             if(result == ContentDialogResult.Primary) {
-                // do some shit
+                _ = ViewModel.UpdateReminder(id, updateVM.Updated);
             }
         }
     }

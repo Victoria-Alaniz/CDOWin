@@ -1,4 +1,5 @@
-﻿using CDO.Core.Interfaces;
+﻿using CDO.Core.DTOs;
+using CDO.Core.Interfaces;
 using CDO.Core.Models;
 using CDOWin.Services;
 using CDOWin.Views.Reminders;
@@ -142,5 +143,18 @@ public partial class RemindersViewModel : ObservableObject {
             var index = All.IndexOf(All.First(r => r.id == id));
             All[index] = reminder;
         }
+    }
+
+    public async Task UpdateReminder(int id, UpdateReminderDTO update) {
+        var updatedReminder = await _service.UpdateReminderAsync(id, update);
+        Replace(All, updatedReminder);
+        Replace(Filtered, updatedReminder);
+        Replace(ClientSpecific, updatedReminder);
+    }
+
+    private void Replace(ObservableCollection<Reminder> list, Reminder updated) {
+        var index = list.IndexOf(list.First(r => r.id == updated.id));
+        if (index >= 0)
+            list[index] = updated;
     }
 }
