@@ -82,7 +82,7 @@ public class NetworkService : INetworkService {
     // PATCH
     // -----------------------------
     public async Task<TResponse?> UpdateAsync<TRequest, TResponse>(string endpoint, TRequest body) {
-        var options = _jsonDeserializerOptions
+        var options = _jsonDeserializerOptions;
         var json = JsonSerializer.Serialize(body, options);
         var content = new StringContent(json, encoding: Encoding.UTF8, "application/json");
 

@@ -31,7 +31,7 @@ public sealed partial class ClientViewPage : Page {
         foreach (var reminderItem in ReminderMenuItem.AllItems()) {
             var item = new MenuFlyoutItem {
                 Text = reminderItem.ToString(),
-                Tag = reminderItem.Value
+                Tag = reminderItem
             };
 
             item.Click += ReminderFlyoutItem_Click;
@@ -75,9 +75,18 @@ public sealed partial class ClientViewPage : Page {
 
     }
 
-    private void ReminderFlyoutItem_Click(object sender, RoutedEventArgs e) {
-        if (sender is MenuFlyoutItem item) {
-            Debug.WriteLine($"Item: {item.Tag.ToString()} clicked");
+    private async void ReminderFlyoutItem_Click(object sender, RoutedEventArgs e) {
+        if (sender is MenuFlyoutItem item 
+            && item.Tag is ReminderMenuItem reminderItem
+            && ViewModel.SelectedClient != null) {
+            var newReminderVM = AppServices.CreateNewReminderViewModel(ViewModel.SelectedClient.id);
+            newReminderVM.Description = reminderItem.Description;
+
+            var dateOffset = DateTimeOffset.Now.AddDays(reminderItem.Days);
+            newReminderVM.Date = dateOffset.Date.ToUniversalTime();
+
+            await newReminderVM.CreateNewReminderAsync();
+            _ = ViewModel.ReloadClientAsync();
         }
     }
 
