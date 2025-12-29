@@ -61,8 +61,8 @@
                     <NavigationViewItem Content="Counselors" Tag="{x:Bind views:CDOFrame.Counselors}"/>
                     <NavigationViewItem Content="Employers" Tag="{x:Bind views:CDOFrame.Employers}"/>
                     <NavigationViewItemSeparator/>
-                    <NavigationViewItem Content="Placements" Tag="{x:Bind views:CDOFrame.Placements}"/>
                     <NavigationViewItem Content="Service Authorizations" Tag="{x:Bind views:CDOFrame.ServiceAuthorizations}"/>
+                    <NavigationViewItem Content="Placements" Tag="{x:Bind views:CDOFrame.Placements}"/>
                 </NavigationView.MenuItems>
             </NavigationView>
 

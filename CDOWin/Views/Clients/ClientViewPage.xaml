@@ -277,6 +277,52 @@
                     </Grid>
                 </Grid>
 
+                <!-- Service Authorizations Card -->
+                <Grid Style="{StaticResource CardContainerGridStyle}">
+                    <!-- Inner Grid -->
+                    <Grid Style="{StaticResource CardInnerGridStyle}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Header -->
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="Service Authorizations"
+                                        Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <Button Grid.Column="1" Style="{StaticResource SubtleButtonStyle}">
+                                <FontIcon Glyph="&#xE710;" FontSize="16" Foreground="{ThemeResource SystemAccentColor}"/>
+                            </Button>
+                        </Grid>
+
+                        <ListView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,8,0"
+                                  Style="{StaticResource InspectorListViewStyle}"
+                                  ItemsSource="{x:Bind ViewModel.SelectedClient.pos, Mode=OneWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="models:ServiceAuthorization">
+                                    <Grid RowSpacing="4" Margin="0,8,0,8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Spacing="2">
+                                            <TextBlock FontWeight="Bold" Text="{x:Bind id}"/>
+                                            <TextBlock Text="{x:Bind description}"/>
+                                            <TextBlock FontWeight="SemiBold" Text="{x:Bind formattedStartDate}"/>
+                                            <TextBlock TextWrapping="WrapWholeWords" Text="{x:Bind formattedEndDate}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
+                
                 <!-- Placements Card -->
                 <Grid Style="{StaticResource CardContainerGridStyle}">
                     <!-- Inner Grid -->
@@ -323,53 +369,7 @@
                     </Grid>
                 </Grid>
 
-                <!-- Service Authorizations Card -->
-                <Grid Style="{StaticResource CardContainerGridStyle}">
-                    <!-- Inner Grid -->
-                    <Grid Style="{StaticResource CardInnerGridStyle}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <!-- Header -->
-                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Grid.Column="0" Text="Service Authorizations"
-                                        Style="{StaticResource SubtitleTextBlockStyle}"/>
-                            <Button Grid.Column="1" Style="{StaticResource SubtleButtonStyle}">
-                                <FontIcon Glyph="&#xE710;" FontSize="16" Foreground="{ThemeResource SystemAccentColor}"/>
-                            </Button>
-                        </Grid>
-
-                        <ListView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,8,0"
-                                  Style="{StaticResource InspectorListViewStyle}"
-                                  ItemsSource="{x:Bind ViewModel.SelectedClient.pos, Mode=OneWay}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="models:ServiceAuthorization">
-                                    <Grid RowSpacing="4" Margin="0,8,0,8">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Spacing="2">
-                                            <TextBlock FontWeight="Bold" Text="{x:Bind id}"/>
-                                            <TextBlock Text="{x:Bind description}"/>
-                                            <TextBlock FontWeight="SemiBold" Text="{x:Bind formattedStartDate}"/>
-                                            <TextBlock TextWrapping="WrapWholeWords" Text="{x:Bind formattedEndDate}"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
-                </Grid>
-
-                    <!-- Arrangements Card -->
+                <!-- Arrangements Card -->
                 <Grid Style="{StaticResource CardContainerGridStyle}">
 
                     <!-- Inner Grid -->
