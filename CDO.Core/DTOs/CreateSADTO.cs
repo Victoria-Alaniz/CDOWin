@@ -9,7 +9,7 @@ public class CreateSADTO {
 
     // Optional fields
     public string? office { get; set; }
-    public int? employerID { get; set; }
+    public int? counselorrID { get; set; }
     public double? unitCost { get; set; }
     public string? unitOfMeasurement { get; set; }
 }

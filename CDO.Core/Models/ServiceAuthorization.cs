@@ -5,7 +5,7 @@ public record class ServiceAuthorization(
     int clientID,
     string description,
     string? office,
-    int? employerID,
+    int? counselorID,
     double? unitCost,
     string? unitOfMeasurement,
     Client? client,

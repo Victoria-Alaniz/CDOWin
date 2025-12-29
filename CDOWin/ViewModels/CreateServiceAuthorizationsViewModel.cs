@@ -68,7 +68,7 @@ public partial class CreateServiceAuthorizationsViewModel : ObservableObject {
     public async Task CreateSAAsync() {
         var sa = new CreateSADTO {
             clientID = _clientID,
-            employerID = _client.counselorID,
+            counselorrID = _client.counselorID,
             description = Description,
             startDate = StartDate,
             endDate = EndDate,

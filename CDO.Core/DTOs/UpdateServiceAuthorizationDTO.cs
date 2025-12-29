@@ -6,7 +6,7 @@ public class UpdateServiceAuthorizationDTO {
     public DateTime? startDate { get; set; }
     public DateTime? endDate { get; set; }
     public string? office { get; set; }
-    public int? employerID { get; set; }
+    public int? counselorID { get; set; }
     public double? unitCost { get; set; }
     public string? unitOfMeasurement { get; set; }
 }
