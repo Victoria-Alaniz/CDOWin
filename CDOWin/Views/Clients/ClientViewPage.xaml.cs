@@ -108,6 +108,7 @@ public sealed partial class ClientViewPage : Page {
     private void Checkbox_Clicked(object sender, RoutedEventArgs e) {
         if (sender is CheckBox checkBox && checkBox.Tag is CheckboxTag tag) {
             var isChecked = checkBox.IsChecked;
+            UpdateCheckbox(tag, isChecked ?? false);
         }
     }
 
