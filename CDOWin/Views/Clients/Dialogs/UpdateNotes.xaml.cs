@@ -15,7 +15,7 @@ public sealed partial class UpdateNotes : Page {
     }
 
     private void LabeledMultiLinePair_TextChanged(object sender, TextChangedEventArgs e) {
-        if (sender is not TextBox textbox || textbox.Tag is not EmploymentField field)
+        if (sender is not TextBox textbox)
             return;
 
         var text = textbox.Text.NormalizeString();
