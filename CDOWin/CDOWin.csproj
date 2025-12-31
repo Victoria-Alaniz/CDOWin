@@ -147,7 +147,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Windows\" />
     <Folder Include="Views\Reminders\Inspectors\" />
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +192,11 @@
   </ItemGroup>
   <ItemGroup>
     <PRIResource Remove="Views\Service Authorizations\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Windows\CalendarWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\ServiceAuthorizations\Dialogs\CreateServiceAuthorization.xaml">

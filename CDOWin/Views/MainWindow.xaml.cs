@@ -1,4 +1,3 @@
-using CDOWin.Views;
 using CDOWin.Views.Clients;
 using CDOWin.Views.Counselors;
 using CDOWin.Views.Employers;
@@ -11,7 +10,7 @@ using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using WinUIEx;
 
-namespace CDOWin;
+namespace CDOWin.Views;
 
 public sealed partial class MainWindow : Window {
     int previousSelectedIndex = 0;

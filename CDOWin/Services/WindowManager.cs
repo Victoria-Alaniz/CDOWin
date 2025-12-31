@@ -1,0 +1,49 @@
+﻿using CDOWin.Views;
+
+namespace CDOWin.Services;
+
+public sealed class WindowManager {
+    public static WindowManager Instance { get; } = new();
+
+    private CalendarWindow? _calendarWindow;
+    private LoginWindow? _loginWindow;
+    private MainWindow? _mainWindow;
+    private SplashWindow? _splashWindow;
+
+    private WindowManager() { }
+
+    public void ShowCalendar() {
+        if (_calendarWindow == null) {
+            _calendarWindow = new CalendarWindow();
+            _calendarWindow.Closed += (_, _) => _calendarWindow = null;
+            _calendarWindow.Activate();
+        } else {
+            _calendarWindow.Activate();
+        }
+    }
+
+    public void ShowSplash() {
+        if (_splashWindow == null) {
+            _splashWindow = new SplashWindow();
+            _splashWindow.Closed += (_, _) => _splashWindow = null;
+            _splashWindow.Activate();
+        } else {
+            _splashWindow.Activate();
+        }
+    }
+
+    public void ShowMainWindow() {
+        if (_mainWindow == null) {
+            _mainWindow = new MainWindow();
+            _mainWindow.Closed += (_, _) => _mainWindow = null;
+            _mainWindow.Activate();
+        } else {
+            _mainWindow.Activate();
+        }
+    }
+
+    public void CloseSplash() {
+        _splashWindow?.Close();
+        _splashWindow = null;
+    }
+}

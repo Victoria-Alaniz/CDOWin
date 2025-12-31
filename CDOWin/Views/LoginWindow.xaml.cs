@@ -7,7 +7,7 @@ using Microsoft.Windows.AppLifecycle;
 using System;
 using WinUIEx;
 
-namespace CDOWin;
+namespace CDOWin.Views;
 
 public sealed partial class LoginWindow : Window {
     private bool isTestSuccessful = false;
