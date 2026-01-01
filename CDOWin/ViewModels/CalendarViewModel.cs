@@ -1,9 +1,8 @@
 ﻿using CDO.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CDOWin.ViewModels;
 
@@ -25,30 +24,16 @@ public partial class CalendarViewModel : ObservableObject {
         DateTime firstOfMonth = new(CurrentMonth.Year, CurrentMonth.Month, 1);
         int dayOfWeekOffset = (int)firstOfMonth.DayOfWeek;
         DateTime firstVisibleDay = firstOfMonth.AddDays(-dayOfWeekOffset);
-        var reminders = _remindersViewModel.GetRemindersForMonth(firstOfMonth);
+        var remindersByDate = _remindersViewModel.GetRemindersByMonth(firstOfMonth);
 
         for (int i = 0; i < 42; i++) {
             DateTime date = firstVisibleDay.AddDays(i);
             bool isCurrentMonth = date.Month == CurrentMonth.Month;
             var calendarDay = new CalendarDay(date, isCurrentMonth);
-            if (isCurrentMonth)
-                calendarDay.Reminders = FilterByDate(reminders, date);
+            calendarDay.Reminders = new ObservableCollection<Reminder>(
+                remindersByDate.GetValueOrDefault(date.Date) ?? []
+                );
             Days.Add(calendarDay);
         }
-    }
-
-    private ObservableCollection<Reminder> FilterByDate(ObservableCollection<Reminder> reminders, DateTime date) {
-        var filteredReminders = new ObservableCollection<Reminder>();
-        foreach (Reminder reminder in reminders) {
-            if (reminder.date.Day == date.Day) {
-                filteredReminders.Add(reminder);
-            }
-        }
-
-        foreach(Reminder reminder in filteredReminders) {
-            reminders.Remove(reminder);
-        }
-
-        return filteredReminders;
     }
 }

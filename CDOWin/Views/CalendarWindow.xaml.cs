@@ -3,8 +3,6 @@ using CDOWin.Services;
 using CDOWin.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System;
-using WinUIEx;
 
 
 namespace CDOWin.Views;
@@ -12,9 +10,9 @@ namespace CDOWin.Views;
 public sealed partial class CalendarWindow : Window {
     private CalendarViewModel ViewModel { get; }
     public CalendarWindow() {
+        InitializeComponent();
         ViewModel = AppServices.CalendarViewModel;
         ViewModel.BuildCalendarDays();
-        InitializeComponent();
         SetupWindow();
         BuildCalendar();
     }
@@ -35,7 +33,7 @@ public sealed partial class CalendarWindow : Window {
     void BuildCalendar() {
         CalendarGrid.Children.Clear();
 
-        for(int i = 0; i < ViewModel.Days.Count;  i++) {
+        for (int i = 0; i < ViewModel.Days.Count; i++) {
             var day = ViewModel.Days[i];
             var dayView = new CalendarDayView {
                 Date = day.Date,

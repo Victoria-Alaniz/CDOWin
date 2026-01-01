@@ -7,7 +7,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -80,13 +79,15 @@ public partial class RemindersViewModel : ObservableObject {
     // Public Methods
     // =========================
 
-    public ObservableCollection<Reminder> GetRemindersForMonth(DateTime date) {
-        var RemindersForMonth = new ObservableCollection<Reminder>();
-        foreach (var reminder in All) {
-            if (reminder.date.Month == date.Month)
-                RemindersForMonth.Add(reminder);
-        }
-        return RemindersForMonth;
+    public IReadOnlyDictionary<DateTime, IReadOnlyList<Reminder>> GetRemindersByMonth(DateTime month) {
+        return All
+            .Where(r => r.date.Month == month.Month)
+            .GroupBy(r => r.date.Date)
+            .OrderBy(g => g.Key)
+            .ToDictionary(
+                g => g.Key,
+                g => (IReadOnlyList<Reminder>)g.ToList()
+            );
     }
 
     public void RequestClient(int clientID) {
