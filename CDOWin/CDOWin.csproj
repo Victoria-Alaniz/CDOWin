@@ -31,6 +31,7 @@
     <None Remove="Assets\CDO_Dark.png" />
     <None Remove="Assets\CDO_Light.png" />
     <None Remove="Controls\CalendarDayView.xaml" />
+    <None Remove="Controls\EmptyCalendarDay.xaml" />
     <None Remove="Resources\Grids.xaml" />
     <None Remove="Resources\Styles.xaml" />
     <None Remove="SplashWindow.xaml" />
@@ -270,6 +271,11 @@
   </ItemGroup>
   <ItemGroup>
     <PRIResource Remove="Views\Calendar\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\EmptyCalendarDay.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Controls\CalendarDayView.xaml">

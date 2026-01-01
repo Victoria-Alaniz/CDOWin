@@ -35,6 +35,15 @@ public sealed partial class CalendarWindow : Window {
         CalendarGrid.Children.Clear();
 
         for (int i = 0; i < ViewModel.Days.Count; i++) {
+            if (!ViewModel.Days[i].IsCurrentMonth) {
+                var emptyDayView = new EmptyCalendarDay();
+                Grid.SetRow(emptyDayView, i / 7);
+                Grid.SetColumn(emptyDayView, i % 7);
+
+                CalendarGrid.Children.Add(emptyDayView);
+                continue;
+            }
+
             var day = ViewModel.Days[i];
             var dayView = new CalendarDayView {
                 Date = day.Date,

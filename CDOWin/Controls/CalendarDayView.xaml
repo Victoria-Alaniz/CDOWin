@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Border Padding="6" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1">
+    <Border Padding="6" BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}" BorderThickness="1">
         <Grid>
             <TextBlock Margin="0,0,-6,-20" Text="{x:Bind Date.Day}" FontSize="82" FontWeight="SemiBold"
                        Opacity="0.2" Foreground="{ThemeResource TextFillColorPrimaryBrush}"
@@ -20,7 +20,7 @@
                         <DataTemplate x:DataType="models:Reminder">
                             
                             <!-- Button -->
-                            <Button HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" 
+                            <Button Margin="0,0,0,4" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" 
                                     Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
                                 <Grid Opacity="{x:Bind complete, Converter={StaticResource BoolOpacityConverter}}">
                                     <Grid.RowDefinitions>
