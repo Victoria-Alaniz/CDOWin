@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -78,6 +79,16 @@ public partial class RemindersViewModel : ObservableObject {
     // =========================
     // Public Methods
     // =========================
+
+    public ObservableCollection<Reminder> GetRemindersForMonth(DateTime date) {
+        var RemindersForMonth = new ObservableCollection<Reminder>();
+        foreach (var reminder in All) {
+            Debug.WriteLine($"Building for date: {date.ToString()}");
+            if (reminder.date.Month == date.Month)
+                RemindersForMonth.Add(reminder);
+        }
+        return RemindersForMonth;
+    }
     public void RequestClient(int clientID) {
         _selectionService.RequestSelectedClient(clientID);
     }

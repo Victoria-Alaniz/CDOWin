@@ -1,6 +1,5 @@
 ﻿using CDO.Core.Constants;
 using CDOWin.Services;
-using CDOWin.Views;
 using Meziantou.Framework.Win32;
 using Microsoft.UI.Xaml;
 
@@ -8,7 +7,6 @@ namespace CDOWin;
 
 public partial class App : Application {
     private WindowManager _windowManager;
-    private Window? _window;
 
     public App() {
         _windowManager = WindowManager.Instance;
@@ -34,8 +32,7 @@ public partial class App : Application {
                 // here we need to add an error window
             }
         } else {
-            _window = new LoginWindow();
-            _window.Activate();
+            _windowManager.ShowLogin();
         }
     }
 }

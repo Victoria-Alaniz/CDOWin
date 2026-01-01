@@ -6,14 +6,58 @@
     xmlns:local="using:CDOWin.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:CDOWin.ViewModels"
+    xmlns:models="using:CDO.Core.Models"
+    d:DataContext="{d:DesignInstance Type=viewmodels:CalendarViewModel}"
     mc:Ignorable="d"
     Title="Calendar">
 
     <Window.SystemBackdrop>
-        <MicaBackdrop />
+        <MicaBackdrop Kind="BaseAlt"/>
     </Window.SystemBackdrop>
 
     <Grid>
+        <!-- Rows -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <!-- Columns -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Title Bar -->
+        <TitleBar Grid.Row="0" Grid.Column="0"
+                  Title="CDO Win" Subtitle="Calendar"
+                  IsBackButtonVisible="False"
+                  IsPaneToggleButtonVisible="False"/>
+
+
+        <Border Grid.Row="1" CornerRadius="8, 8, 8, 8" Margin="12" BorderThickness="1" 
+                BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"    
+                Background="{ThemeResource LayerFillColorDefaultBrush}">
+            <Grid x:Name="CalendarGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </Border>
     </Grid>
 </Window>

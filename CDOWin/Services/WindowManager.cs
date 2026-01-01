@@ -22,6 +22,16 @@ public sealed class WindowManager {
         }
     }
 
+    public void ShowLogin() {
+        if (_loginWindow == null) {
+            _loginWindow = new LoginWindow();
+            _loginWindow.Closed += (_, _) => _loginWindow = null;
+            _loginWindow.Activate();
+        } else {
+            _loginWindow.Activate();
+        }
+    }
+
     public void ShowSplash() {
         if (_splashWindow == null) {
             _splashWindow = new SplashWindow();

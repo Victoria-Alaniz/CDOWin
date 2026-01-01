@@ -24,6 +24,7 @@ public static class AppServices {
     private static ClientSelectionService? _clientSelectionService;
 
     // ViewModels
+    public static CalendarViewModel CalendarViewModel { get; private set; } = null;
     public static ClientsViewModel ClientsViewModel { get; private set; } = null!;
     public static CounselorsViewModel CounselorsViewModel { get; private set; } = null!;
     public static EmployersViewModel EmployersViewModel { get; private set; } = null!;
@@ -58,6 +59,7 @@ public static class AppServices {
         RemindersViewModel = new RemindersViewModel(ReminderService, _clientSelectionService);
         StatesViewModel = new StatesViewModel(StateService);
         PlacementsViewModel = new PlacementsViewModel(PlacementService);
+        CalendarViewModel = new CalendarViewModel(RemindersViewModel);
 
     }
 

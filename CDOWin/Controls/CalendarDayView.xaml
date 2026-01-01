@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="CDOWin.Controls.CalendarDayView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CDOWin.Controls"
+    xmlns:models="using:CDO.Core.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Border Padding="6" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="1">
+        <Grid>
+            <TextBlock Margin="0,0,-6,-20" Text="{x:Bind Date.Day}" FontSize="82" FontWeight="SemiBold"
+                       Opacity="0.2" Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                       HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+            <ScrollViewer>
+                <ItemsRepeater ItemsSource="{x:Bind Reminders}">
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="models:Reminder">
+                            
+                            <!-- Button -->
+                            <SplitButton HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+                                <Grid Opacity="{x:Bind complete, Converter={StaticResource BoolOpacityConverter}}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0" Margin="0,0,0,6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Column="0" FontSize="14" 
+                                                   FontWeight="Bold" Text="{x:Bind clientName}"/>
+                                    </Grid>
+
+                                    <TextBlock Grid.Row="1" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                               FontWeight="Normal" TextWrapping="WrapWholeWords" 
+                                               Text="{x:Bind description}"/>
+                                </Grid>
+                            </SplitButton>
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</UserControl>

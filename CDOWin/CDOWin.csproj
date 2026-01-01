@@ -14,18 +14,23 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Views\Calendar\**" />
     <Compile Remove="Views\Clients\ClientInspectors\**" />
     <Compile Remove="Views\Service Authorizations\**" />
+    <EmbeddedResource Remove="Views\Calendar\**" />
     <EmbeddedResource Remove="Views\Clients\ClientInspectors\**" />
     <EmbeddedResource Remove="Views\Service Authorizations\**" />
+    <None Remove="Views\Calendar\**" />
     <None Remove="Views\Clients\ClientInspectors\**" />
     <None Remove="Views\Service Authorizations\**" />
+    <Page Remove="Views\Calendar\**" />
     <Page Remove="Views\Clients\ClientInspectors\**" />
     <Page Remove="Views\Service Authorizations\**" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\CDO_Dark.png" />
     <None Remove="Assets\CDO_Light.png" />
+    <None Remove="Controls\CalendarDayView.xaml" />
     <None Remove="Resources\Grids.xaml" />
     <None Remove="Resources\Styles.xaml" />
     <None Remove="SplashWindow.xaml" />
@@ -260,6 +265,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\Counselors\Inspectors\CounselorInspector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Remove="Views\Calendar\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\CalendarDayView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
