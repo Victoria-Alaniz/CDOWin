@@ -36,11 +36,11 @@
                   IsPaneToggleButtonVisible="False"/>
 
         <!-- Header Text -->
-        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="8,8,8,4"
-                   Style="{StaticResource PageTitleStyle}"
-                   Text="{x:Bind ViewModel.CurrentMonth.Month}"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Margin="16,8,8,4"
+                   x:Name="MonthHeader"
+                   Style="{StaticResource PageTitleStyle}"/>
 
-        <Border Grid.Row="2" CornerRadius="8, 8, 8, 8" Margin="12" BorderThickness="1" 
+        <Border Grid.Row="2" CornerRadius="8" Margin="12" BorderThickness="1" 
                 BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"    
                 Background="{ThemeResource LayerFillColorDefaultBrush}">
             <Grid x:Name="CalendarGrid">

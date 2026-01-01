@@ -31,6 +31,7 @@ public sealed partial class CalendarWindow : Window {
     }
 
     void BuildCalendar() {
+        MonthHeader.Text = ViewModel.CurrentMonth.ToString("MMMM");
         CalendarGrid.Children.Clear();
 
         for (int i = 0; i < ViewModel.Days.Count; i++) {
