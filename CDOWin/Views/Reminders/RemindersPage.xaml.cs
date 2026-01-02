@@ -33,10 +33,6 @@ public sealed partial class RemindersPage : Page {
     // Property Change Methods
     // =========================
     private void ClientRemindersChanged(object? sender, NotifyCollectionChangedEventArgs e) {
-        if (ViewModel.ClientSpecific != null) {
-            SelectionBar.Items[2].IsEnabled = true;
-        }
-
         if (SelectionBar.Items[2].IsSelected)
             return;
 
@@ -59,7 +55,7 @@ public sealed partial class RemindersPage : Page {
             DateTime day = args.Item.Date.Date;
 
             // Does any reminder match this date?
-            bool hasReminder = ViewModel.All.Any(r => r.date.Date == day);
+            bool hasReminder = ViewModel.DateHasReminders(day);
 
             if (hasReminder) {
                 // Mark the date (simple highlight)

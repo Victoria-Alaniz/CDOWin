@@ -3,6 +3,7 @@ using CDOWin.Services;
 using CDOWin.ViewModels;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System.Diagnostics;
 
 
 namespace CDOWin.Views;
@@ -31,7 +32,7 @@ public sealed partial class CalendarWindow : Window {
     }
 
     void BuildCalendar() {
-        MonthHeader.Text = ViewModel.CurrentMonth.ToString("MMMM");
+        MonthHeader.Text = ViewModel.CurrentMonth.ToString("MMMM yyyy");
         CalendarGrid.Children.Clear();
 
         for (int i = 0; i < ViewModel.Days.Count; i++) {
@@ -54,6 +55,19 @@ public sealed partial class CalendarWindow : Window {
             Grid.SetColumn(dayView, i % 7);
 
             CalendarGrid.Children.Add(dayView);
+        }
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e) {
+        if(sender is Button button && button.Tag is string tag) {
+            Debug.WriteLine("BUTTON CLICKED");
+            if (tag == "0") {
+                ViewModel.DecrementMonth();
+                BuildCalendar();
+            } else {
+                ViewModel.IncrementMonth();
+                BuildCalendar();
+            }
         }
     }
 }

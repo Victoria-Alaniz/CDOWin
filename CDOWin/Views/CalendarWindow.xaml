@@ -21,6 +21,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -36,11 +37,57 @@
                   IsPaneToggleButtonVisible="False"/>
 
         <!-- Header Text -->
-        <TextBlock Grid.Row="1" Grid.Column="0" Margin="16,8,8,4"
-                   x:Name="MonthHeader"
-                   Style="{StaticResource PageTitleStyle}"/>
+        <Grid Grid.Row="1" Grid.Column="0" Margin="8,4">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <Border Grid.Row="2" CornerRadius="8" Margin="12" BorderThickness="1" 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" x:Name="MonthHeader" Margin="8,2,8,0" Style="{StaticResource PageTitleStyle}"/>
+            
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="0">
+                <!-- Decrement Button -->
+                <Button Click="Button_Click" Tag="0" Margin="0" Style="{StaticResource SingleIconButtonStyle}">
+                    <FontIcon Glyph="&#xE76B;" Style="{StaticResource SingleIconFontStyle}"/>
+                </Button>
+
+                <!-- Increment Button -->
+                <Button Click="Button_Click" Tag="1" Margin="0" Style="{StaticResource SingleIconButtonStyle}">
+                    <FontIcon Glyph="&#xE76C;" Style="{StaticResource SingleIconFontStyle}"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        
+        
+        <!-- Calendar Header -->
+        <Grid Grid.Row="2" Grid.Column="0" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" Margin="8,0" FontWeight="SemiBold" Text="Sunday"/>
+            <TextBlock Grid.Column="1" Grid.Row="0" Margin="8,0" FontWeight="SemiBold" Text="Monday"/>
+            <TextBlock Grid.Column="2" Grid.Row="0" Margin="8,0" FontWeight="SemiBold" Text="Tuesday"/>
+            <TextBlock Grid.Column="3" Grid.Row="0" Margin="8,0" FontWeight="SemiBold" Text="Wednesday"/>
+            <TextBlock Grid.Column="4" Grid.Row="0" Margin="8,0" FontWeight="SemiBold" Text="Thursday"/>
+            <TextBlock Grid.Column="5" Grid.Row="0" Margin="8,0" FontWeight="SemiBold" Text="Friday"/>
+            <TextBlock Grid.Column="6" Grid.Row="0" Margin="8,0" FontWeight="SemiBold" Text="Saturday"/>
+        </Grid>
+
+        <Border Grid.Row="3" CornerRadius="8" Margin="12,8,12,12" BorderThickness="1" 
                 BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"    
                 Background="{ThemeResource LayerFillColorDefaultBrush}">
             <Grid x:Name="CalendarGrid">

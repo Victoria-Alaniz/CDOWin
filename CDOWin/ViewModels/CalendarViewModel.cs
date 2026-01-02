@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace CDOWin.ViewModels;
 
@@ -20,20 +21,36 @@ public partial class CalendarViewModel : ObservableObject {
     public void BuildCalendarDays() {
         Days.Clear();
 
-        // Get the first Sunday of the Calendar
-        DateTime firstOfMonth = new(CurrentMonth.Year, CurrentMonth.Month, 1);
-        int dayOfWeekOffset = (int)firstOfMonth.DayOfWeek;
-        DateTime firstVisibleDay = firstOfMonth.AddDays(-dayOfWeekOffset);
+        var firstOfMonth = new DateTime(CurrentMonth.Year, CurrentMonth.Month, 1);
+        var firstVisibleDay = firstOfMonth.AddDays(-(int)firstOfMonth.DayOfWeek);
+
         var remindersByDate = _remindersViewModel.GetRemindersByMonth(firstOfMonth);
 
         for (int i = 0; i < 42; i++) {
-            DateTime date = firstVisibleDay.AddDays(i);
-            bool isCurrentMonth = date.Month == CurrentMonth.Month;
-            var calendarDay = new CalendarDay(date, isCurrentMonth);
-            calendarDay.Reminders = new ObservableCollection<Reminder>(
-                remindersByDate.GetValueOrDefault(date.Date) ?? []
-                );
-            Days.Add(calendarDay);
+            var date = firstVisibleDay.AddDays(i);
+
+            Days.Add(new CalendarDay(date, date.Month == CurrentMonth.Month) {
+                Reminders = new ObservableCollection<Reminder>(
+                    remindersByDate.GetValueOrDefault(date.Date) ?? []
+                    )
+            });
         }
+    }
+
+    public void SetCurrentMonth() {
+        if (CurrentMonth.Month == DateTime.Now.Month) return;
+        CurrentMonth = DateTime.Now;
+        BuildCalendarDays();
+    }
+
+    public void IncrementMonth() {
+        Debug.WriteLine($"Incrementing Date");
+        CurrentMonth = CurrentMonth.AddMonths(1);
+        BuildCalendarDays();
+    }
+
+    public void DecrementMonth() {
+        CurrentMonth = CurrentMonth.AddMonths(-1);
+        BuildCalendarDays();
     }
 }
