@@ -64,7 +64,7 @@
                 
                 <!-- Subtitle -->
                 <TextBlock Style="{StaticResource PageSubtitleStyle}">
-                    <Run Text="{x:Bind ViewModel.FilteredClients.Count, Mode=OneWay}"/>
+                    <Run Text="{x:Bind ViewModel.Filtered.Count, Mode=OneWay}"/>
                     <Run Text="Clients"/>
                 </TextBlock>
             </StackPanel>
@@ -77,7 +77,7 @@
             <!-- Clients List -->
             <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                       HorizontalAlignment="Left"
-                      ItemsSource="{Binding FilteredClients}"
+                      ItemsSource="{Binding Filtered}"
                       IsItemClickEnabled="True"
                       ItemClick="ListView_ItemClick">
                 <ListView.ItemTemplate>

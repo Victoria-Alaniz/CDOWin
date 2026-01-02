@@ -25,13 +25,12 @@ public partial class RemindersViewModel : ObservableObject {
     // =========================
     // Private Backing Fields
     // =========================
-    private IReadOnlyList<Reminder> _allReminders = Array.Empty<Reminder>();
+    private IReadOnlyList<Reminder> _allReminders = [];
     private RemindersFilter _filter = RemindersFilter.All;
 
     // =========================
     // Public Properties / State
     // =========================
-
     [ObservableProperty]
     public partial ObservableCollection<Reminder> Filtered { get; private set; } = [];
 
