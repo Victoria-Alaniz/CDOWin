@@ -56,7 +56,6 @@ public partial class ClientsViewModel : ObservableObject {
     // Property Change Methods
     // =========================
     partial void OnSearchQueryChanged(string value) {
-        _dispatcher.TryEnqueue(() )
         ApplyFilter();
     }
 
