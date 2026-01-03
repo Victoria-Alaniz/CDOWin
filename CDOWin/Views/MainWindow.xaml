@@ -54,7 +54,7 @@
 
             <NavigationView Grid.Column="0" Grid.Row="0" Margin="0,0,0,-2"
                             x:Name="NavigationBar" IsBackButtonVisible="Collapsed" IsSettingsVisible="False"
-                            PaneDisplayMode="Top" Loaded="NavigationLoaded"
+                            PaneDisplayMode="Top" 
                             SelectionChanged="NavigationSelectionChanged">
                 <NavigationView.MenuItems>
                     <NavigationViewItem Content="Clients" Tag="{x:Bind views:CDOFrame.Clients}"/>
