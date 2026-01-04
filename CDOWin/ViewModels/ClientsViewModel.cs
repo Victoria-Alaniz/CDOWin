@@ -62,7 +62,7 @@ public partial class ClientsViewModel : ObservableObject {
     }
 
     private void OnRequestSelectedClientChange(int clientId) {
-        if (SelectedClient != null && SelectedClient.id == clientId)
+        if (SelectedClient != null && SelectedClient.Id == clientId)
             return;
 
         SearchQuery = string.Empty;
@@ -98,7 +98,7 @@ public partial class ClientsViewModel : ObservableObject {
     }
 
     public async Task LoadSelectedClientAsync(int id) {
-        if (SelectedClient != null && SelectedClient.id == id) return;
+        if (SelectedClient != null && SelectedClient.Id == id) return;
 
         var selectedClient = await _service.GetClientAsync(id);
         SelectedClient = selectedClient;
@@ -106,12 +106,12 @@ public partial class ClientsViewModel : ObservableObject {
 
     public async Task ReloadClientAsync() {
         if (SelectedClient == null) return;
-        SelectedClient = await _service.GetClientAsync(SelectedClient.id);
+        SelectedClient = await _service.GetClientAsync(SelectedClient.Id);
     }
 
     public async Task UpdateClientAsync(UpdateClientDTO update) {
         if (SelectedClient == null) return;
-        var updatedClient = await _service.UpdateClientAsync(SelectedClient.id, update);
+        var updatedClient = await _service.UpdateClientAsync(SelectedClient.Id, update);
         SelectedClient = updatedClient;
     }
 

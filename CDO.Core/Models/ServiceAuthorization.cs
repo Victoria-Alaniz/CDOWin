@@ -1,18 +1,18 @@
 ﻿namespace CDO.Core.Models;
 
 public record class ServiceAuthorization(
-    string id,
-    int clientID,
-    string description,
-    string? office,
-    int? counselorID,
-    double? unitCost,
-    string? unitOfMeasurement,
-    Client? client,
-    DateTime startDate,
-    DateTime endDate
+    string Id,
+    int ClientID,
+    string Description,
+    string? Office,
+    int? CounselorID,
+    double? UnitCost,
+    string? UnitOfMeasurement,
+    Client? Client,
+    DateTime StartDate,
+    DateTime EndDate
     ) {
-    public string? formattedStartDate => startDate.ToString(format: "MM/dd/yyyy");
-    public string? formattedEndDate => endDate.ToString(format: "MM/dd/yyyy");
-    public string? formattedCost => $"{unitCost:C2}";
+    public string? FormattedStartDate => StartDate.ToString(format: "MM/dd/yyyy");
+    public string? FormattedEndDate => EndDate.ToString(format: "MM/dd/yyyy");
+    public string? FormattedCost => $"{UnitCost:C2}";
 }

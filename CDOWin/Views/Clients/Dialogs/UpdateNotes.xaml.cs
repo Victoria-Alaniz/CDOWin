@@ -30,6 +30,6 @@ public sealed partial class UpdateNotes : Page {
         var date = DateTime.Now;
         var end = "++++++++++++++++++++++++";
         var newNote = $"{date.ToString()}\n\n{note}\n\n{end}\n\n";
-        return newNote + ViewModel.OriginalClient.clientNotes;
+        return newNote + ViewModel.OriginalClient.ClientNotes;
     }
 }

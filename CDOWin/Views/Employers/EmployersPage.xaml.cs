@@ -50,7 +50,7 @@ public sealed partial class EmployersPage : Page {
 
     private void ListView_ItemClick(object sender, ItemClickEventArgs e) {
         if (e.ClickedItem is Employer employer) {
-            _ = ViewModel.ReloadEmployerAsync(employer.id);
+            _ = ViewModel.ReloadEmployerAsync(employer.Id);
         }
     }
 }

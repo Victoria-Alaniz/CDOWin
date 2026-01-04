@@ -26,13 +26,13 @@ public partial class StatesViewModel : ObservableObject {
 
     partial void OnSelectedStateChanged(State? value) {
         if (value == null) return;
-        _ = RefreshSelectedState(value.id);
+        _ = RefreshSelectedState(value.Id);
     }
 
     public async Task LoadStatesAsync() {
         var states = await _service.GetAllStatesAsync();
         if (states == null) return;
-        List<State> SortedStates = states.OrderBy(o => o.name).ToList();
+        List<State> SortedStates = states.OrderBy(o => o.Name).ToList();
         States.Clear();
 
         foreach (var state in SortedStates) {
@@ -46,7 +46,7 @@ public partial class StatesViewModel : ObservableObject {
         if (SelectedState != state) {
             SelectedState = state;
 
-            var index = States.IndexOf(States.First(s => s.id == id));
+            var index = States.IndexOf(States.First(s => s.Id == id));
             States[index] = state;
         }
     }

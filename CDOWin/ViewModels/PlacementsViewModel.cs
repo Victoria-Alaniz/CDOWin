@@ -61,7 +61,7 @@ public partial class PlacementsViewModel : ObservableObject {
         var placements = await _service.GetAllPlacementsAsync();
         if (placements == null) return;
 
-        var snapshot = placements.OrderBy(o => o.id).ToList().AsReadOnly();
+        var snapshot = placements.OrderBy(o => o.Id).ToList().AsReadOnly();
         _allPlacements = snapshot;
 
         _dispatcher.TryEnqueue(() => {
@@ -74,7 +74,7 @@ public partial class PlacementsViewModel : ObservableObject {
         if (placement == null) return;
 
         var updated = _allPlacements
-            .Select(p => p.id == id ? placement : p)
+            .Select(p => p.Id == id ? placement : p)
             .ToList()
             .AsReadOnly();
 
@@ -98,10 +98,10 @@ public partial class PlacementsViewModel : ObservableObject {
 
         var query = SearchQuery.Trim().ToLower();
         var result = _allPlacements.Where(r =>
-        (r.clientName?.ToLower().Contains(query) ?? false)
-        || (r.employer.name?.ToLower().Contains(query) ?? false)
-        || (r.supervisor?.ToLower().Contains(query) ?? false)
-        || (r.position?.ToLower().Contains(query) ?? false)
+        (r.ClientName?.ToLower().Contains(query) ?? false)
+        || (r.Employer.name?.ToLower().Contains(query) ?? false)
+        || (r.Supervisor?.ToLower().Contains(query) ?? false)
+        || (r.Position?.ToLower().Contains(query) ?? false)
         );
 
         Filtered = new ObservableCollection<Placement>(result);

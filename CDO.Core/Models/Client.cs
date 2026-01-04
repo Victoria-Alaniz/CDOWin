@@ -3,99 +3,99 @@
 namespace CDO.Core.Models;
 
 public record class Client(
-    int id,
-    string firstName,
-    string lastName,
-    string counselor,
-    Reminder[] reminders,
-    Placement[]? placements,
-    ServiceAuthorization[]? pos,
-    DateTime? startDate,
-    int? ssn,
-    string? caseID,
-    string? address1,
-    string? address2,
-    string city,
-    string state,
-    string? zip,
-    DateTime? dob,
-    string? driversLicense,
-    string? phone1,
-    string? phone1Identity,
-    string? phone2,
-    string? phone2Identity,
-    string? phone3,
-    string? phone3Identity,
-    string? email,
-    string? emailIdentity,
-    string? email2,
-    string? email2Identity,
-    string disability,
-    int? counselorID,
-    string? counselorEmail,
-    string? counselorPhone,
-    string? counselorFax,
-    string? clientNotes,
-    string? conditions,
-    string? documentFolder,
-    bool? active,
-    string? employmentGoal,
-    int? employerID,
-    string? status,
-    string? benefits,
-    string? criminalCharge,
-    string? education,
-    string? transportation,
-    bool? resumeRequired,
-    bool? resumeCompleted,
-    bool? videoInterviewRequired,
-    bool? videoInterviewCompleted,
-    bool? releasesCompleted,
-    bool? orientationCompleted,
-    bool? dataSheetCompleted,
-    bool? elevatorSpeechCompleted,
-    string? race,
-    string? fluentLanguages,
-    string? premiums,
-    UpdateCounselorDTO? counselorReference
+    int Id,
+    string FirstName,
+    string LastName,
+    string Counselor,
+    Reminder[] Reminders,
+    Placement[]? Placements,
+    ServiceAuthorization[]? Pos,
+    DateTime? StartDate,
+    int? Ssn,
+    string? CaseID,
+    string? Address1,
+    string? Address2,
+    string City,
+    string State,
+    string? Zip,
+    DateTime? Dob,
+    string? DriversLicense,
+    string? Phone1,
+    string? Phone1Identity,
+    string? Phone2,
+    string? Phone2Identity,
+    string? Phone3,
+    string? Phone3Identity,
+    string? Email,
+    string? EmailIdentity,
+    string? Email2,
+    string? Email2Identity,
+    string Disability,
+    int? CounselorID,
+    string? CounselorEmail,
+    string? CounselorPhone,
+    string? CounselorFax,
+    string? ClientNotes,
+    string? Conditions,
+    string? DocumentFolder,
+    bool? Active,
+    string? EmploymentGoal,
+    int? EmployerID,
+    string? Status,
+    string? Benefits,
+    string? CriminalCharge,
+    string? Education,
+    string? Transportation,
+    bool? ResumeRequired,
+    bool? ResumeCompleted,
+    bool? VideoInterviewRequired,
+    bool? VideoInterviewCompleted,
+    bool? ReleasesCompleted,
+    bool? OrientationCompleted,
+    bool? DataSheetCompleted,
+    bool? ElevatorSpeechCompleted,
+    string? Race,
+    string? FluentLanguages,
+    string? Premiums,
+    UpdateCounselorDTO? CounselorReference
     ) {
-    public string name => $"{firstName} {lastName} ({id})";
+    public string Name => $"{FirstName} {LastName} ({Id})";
 
-    public string? documentsFolderPath => documentFolder?.Replace('#', ' ').Trim();
+    public string? DocumentsFolderPath => DocumentFolder?.Replace('#', ' ').Trim();
 
-    public string formattedAddress {
+    public string FormattedAddress {
         get {
-            if (address1 == null && address2 == null)
+            if (Address1 == null && Address2 == null)
                 return "No address on file.";
-            else if (address2 == null) {
-                return $"{address1}\n{formattedCityStateZip}";
+            else if (Address2 == null) {
+                return $"{Address1}\n{FormattedCityStateZip}";
             } else {
-                return $"{address1} {address2}\n{formattedCityStateZip}";
+                return $"{Address1} {Address2}\n{FormattedCityStateZip}";
             }
         }
     }
 
-    public string? formattedDOB => dob?.ToString(format: "MM/dd/yyyy");
+    public string? FormattedDOB => Dob?.ToString(format: "MM/dd/yyyy");
 
-    public string formattedCityStateZip {
+    public string FormattedCityStateZip {
         get {
-            if (zip != null)
-                return $"{city}, {state} {zip}";
+            if (Zip != null)
+                return $"{City}, {State} {Zip}";
             else
-                return $"{city}, {state}";
+                return $"{City}, {State}";
         }
     }
 
-    public string formattedSSN {
+    public string FormattedSSN {
         get {
-            if (ssn.ToString() is { } unwrappedSSN) {
+            if (Ssn.ToString() is { } unwrappedSSN) {
                 if (unwrappedSSN.Length == 9) {
                     return $"{unwrappedSSN.Substring(0, 3)}-{unwrappedSSN.Substring(3, 2)}-{unwrappedSSN.Substring(5, 4)}";
                 }
             }
-            return ssn.ToString();
+            return Ssn.ToString();
         }
     }
 
-    public string? formattedStartDate => startDate?.ToString(format: "MM/dd/yyyy");
+    public string? FormattedStartDate => StartDate?.ToString(format: "MM/dd/yyyy");
 }

@@ -125,19 +125,19 @@
                                 <ColumnDefinition Width="100"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" Text="{x:Bind placementNumber}"/>
-                            <TextBlock Grid.Column="1" Text="{x:Bind active}"/>
-                            <TextBlock Grid.Column="2" Text="{x:Bind clientName}"  TextWrapping="WrapWholeWords" FontWeight="Bold"/>
-                            <TextBlock Grid.Column="3" Text="{x:Bind employer.name}" TextWrapping="WrapWholeWords" FontWeight="Bold"/>
-                            <TextBlock Grid.Column="4" Text="{x:Bind counselorName}" TextWrapping="WrapWholeWords" FontWeight="Bold"/>
-                            <TextBlock Grid.Column="5" Text="{x:Bind poNumber}" TextTrimming="CharacterEllipsis"/>
-                            <TextBlock Grid.Column="6" Text="{x:Bind supervisor}" TextTrimming="CharacterEllipsis"/>
-                            <TextBlock Grid.Column="7" Text="{x:Bind supervisorPhone}" TextTrimming="CharacterEllipsis"/>
-                            <TextBlock Grid.Column="8" Text="{x:Bind position}" TextTrimming="CharacterEllipsis"/>
-                            <TextBlock Grid.Column="9" Text="{x:Bind formattedSalary}" TextTrimming="CharacterEllipsis"/>
-                            <TextBlock Grid.Column="10" Text="{x:Bind formattedHireDate}" TextTrimming="CharacterEllipsis"/>
-                            <TextBlock Grid.Column="11" Text="{x:Bind formattedEndDate}" TextTrimming="CharacterEllipsis"/>
-                            <TextBlock Grid.Column="12" Text="{x:Bind daysOnJob}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="0" Text="{x:Bind PlacementNumber}"/>
+                            <TextBlock Grid.Column="1" Text="{x:Bind Active}"/>
+                            <TextBlock Grid.Column="2" Text="{x:Bind ClientName}"  TextWrapping="WrapWholeWords" FontWeight="Bold"/>
+                            <TextBlock Grid.Column="3" Text="{x:Bind Employer.name}" TextWrapping="WrapWholeWords" FontWeight="Bold"/>
+                            <TextBlock Grid.Column="4" Text="{x:Bind CounselorName}" TextWrapping="WrapWholeWords" FontWeight="Bold"/>
+                            <TextBlock Grid.Column="5" Text="{x:Bind PoNumber}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="6" Text="{x:Bind Supervisor}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="7" Text="{x:Bind SupervisorPhone}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="8" Text="{x:Bind Position}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="9" Text="{x:Bind FormattedSalary}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="10" Text="{x:Bind FormattedHireDate}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="11" Text="{x:Bind FormattedEndDate}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="12" Text="{x:Bind DaysOnJob}" TextTrimming="CharacterEllipsis"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

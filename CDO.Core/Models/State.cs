@@ -1,8 +1,8 @@
 ﻿namespace CDO.Core.Models;
 
 public record class State(
-    int id,
-    string name,
-    int? countryID,
-    string? shortName
+    int Id,
+    string Name,
+    int? CountryID,
+    string? ShortName
     );

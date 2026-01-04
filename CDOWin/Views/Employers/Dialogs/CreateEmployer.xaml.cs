@@ -34,8 +34,8 @@ public sealed partial class CreateEmployer : Page {
 
         foreach (var state in _states) {
             var item = new MenuFlyoutItem {
-                Text = state.shortName,
-                Tag = state.shortName
+                Text = state.ShortName,
+                Tag = state.ShortName
             };
 
             item.Click += StateSelected;

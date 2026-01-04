@@ -113,14 +113,14 @@
                                 <ColumnDefinition Width="210"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" Text="{x:Bind name}" TextWrapping="WrapWholeWords"
+                            <TextBlock Grid.Column="0" Text="{x:Bind Name}" TextWrapping="WrapWholeWords"
                                        FontWeight="Bold"/>
-                            <TextBlock Grid.Column="1" Text="{x:Bind email}" TextTrimming="CharacterEllipsis"/>
-                            <TextBlock Grid.Column="2" Text="{x:Bind phone}"/>
-                            <TextBlock Grid.Column="3" Text="{x:Bind fax}"/>
-                            <TextBlock Grid.Column="4" Text="{x:Bind secretaryName}" TextWrapping="WrapWholeWords"
+                            <TextBlock Grid.Column="1" Text="{x:Bind Email}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="2" Text="{x:Bind Phone}"/>
+                            <TextBlock Grid.Column="3" Text="{x:Bind Fax}"/>
+                            <TextBlock Grid.Column="4" Text="{x:Bind SecretaryName}" TextWrapping="WrapWholeWords"
                                        FontWeight="Bold"/>
-                            <TextBlock Grid.Column="5" Text="{x:Bind secretaryEmail}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="5" Text="{x:Bind SecretaryEmail}" TextTrimming="CharacterEllipsis"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

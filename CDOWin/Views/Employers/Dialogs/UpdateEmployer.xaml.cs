@@ -29,8 +29,8 @@ public sealed partial class UpdateEmployer : Page {
 
         foreach (var state in _states) {
             var item = new MenuFlyoutItem {
-                Text = state.shortName,
-                Tag = state.shortName
+                Text = state.ShortName,
+                Tag = state.ShortName
             };
 
             item.Click += StateSelected;
@@ -63,55 +63,55 @@ public sealed partial class UpdateEmployer : Page {
     private void UpdateModel(string value, Field field) {
         switch (field) {
             case Field.Name:
-                if (value != ViewModel.Original.name)
+                if (value != ViewModel.Original.Name)
                     ViewModel.Updated.name = value;
                 break;
             case Field.Address1:
-                if (value != ViewModel.Original.address1)
+                if (value != ViewModel.Original.Address1)
                     ViewModel.Updated.address1 = value;
                 break;
             case Field.Address2:
-                if (value != ViewModel.Original.address2)
+                if (value != ViewModel.Original.Address2)
                     ViewModel.Updated.address2 = value;
                 break;
             case Field.City:
-                if (value != ViewModel.Original.city)
+                if (value != ViewModel.Original.City)
                     ViewModel.Updated.city = value;
                 break;
             case Field.State:
-                if (value != ViewModel.Original.state)
+                if (value != ViewModel.Original.State)
                     ViewModel.Updated.state = value;
                 break;
             case Field.Zip:
-                if (value != ViewModel.Original.zip)
+                if (value != ViewModel.Original.Zip)
                     ViewModel.Updated.zip = value;
                 break;
             case Field.Phone:
-                if (value != ViewModel.Original.phone)
+                if (value != ViewModel.Original.Phone)
                     ViewModel.Updated.phone = value;
                 break;
             case Field.Fax:
-                if (value != ViewModel.Original.fax)
+                if (value != ViewModel.Original.Fax)
                     ViewModel.Updated.fax = value;
                 break;
             case Field.Email:
-                if (value != ViewModel.Original.email)
+                if (value != ViewModel.Original.Email)
                     ViewModel.Updated.email = value;
                 break;
             case Field.Supervisor:
-                if (value != ViewModel.Original.supervisor)
+                if (value != ViewModel.Original.Supervisor)
                     ViewModel.Updated.supervisor = value;
                 break;
             case Field.SupervisorPhone:
-                if (value != ViewModel.Original.supervisorPhone)
+                if (value != ViewModel.Original.SupervisorPhone)
                     ViewModel.Updated.supervisorPhone = value;
                 break;
             case Field.SupervisorEmail:
-                if (value != ViewModel.Original.supervisorEmail)
+                if (value != ViewModel.Original.SupervisorEmail)
                     ViewModel.Updated.supervisorEmail = value;
                 break;
             case Field.Notes:
-                if (value != ViewModel.Original.notes)
+                if (value != ViewModel.Original.Notes)
                     ViewModel.Updated.notes = value;
                 break;
         }

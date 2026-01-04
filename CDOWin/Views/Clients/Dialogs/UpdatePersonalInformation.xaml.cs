@@ -32,8 +32,8 @@ public sealed partial class UpdatePersonalInformation : Page {
 
         foreach (var state in _states) {
             var item = new MenuFlyoutItem {
-                Text = state.shortName,
-                Tag = state.shortName
+                Text = state.ShortName,
+                Tag = state.ShortName
             };
 
             item.Click += StateSelected;
@@ -44,14 +44,14 @@ public sealed partial class UpdatePersonalInformation : Page {
     }
 
     private void SetupDatePicker() {
-        if (ViewModel.OriginalClient.dob is DateTime dob)
+        if (ViewModel.OriginalClient.Dob is DateTime dob)
             DOBPicker.Date = dob;
     }
 
     // Data Updates
 
     private void DOBPicker_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args) {
-        if (ViewModel.OriginalClient.dob is DateTime dob) {
+        if (ViewModel.OriginalClient.Dob is DateTime dob) {
             if (dob == DOBPicker.Date)
                 return;
         }

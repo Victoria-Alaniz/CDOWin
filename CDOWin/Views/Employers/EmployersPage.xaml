@@ -118,15 +118,15 @@
                                 <ColumnDefinition Width="210"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" Text="{x:Bind name}" TextWrapping="WrapWholeWords" 
+                            <TextBlock Grid.Column="0" Text="{x:Bind Name}" TextWrapping="WrapWholeWords" 
                                        FontWeight="Bold"/>
-                            <TextBlock Grid.Column="1" Text="{x:Bind formattedAddress}" TextTrimming="CharacterEllipsis"/>
-                            <TextBlock Grid.Column="2" Text="{x:Bind phone}"/>
-                            <TextBlock Grid.Column="3" Text="{x:Bind fax}"/>
-                            <TextBlock Grid.Column="4" Text="{x:Bind email}" TextTrimming="CharacterEllipsis"/>
-                            <TextBlock Grid.Column="5" Text="{x:Bind supervisor}" FontWeight="SemiBold" TextWrapping="WrapWholeWords"/>
-                            <TextBlock Grid.Column="6" Text="{x:Bind supervisorPhone}"/>
-                            <TextBlock Grid.Column="7" Text="{x:Bind supervisorEmail}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="1" Text="{x:Bind FormattedAddress}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="2" Text="{x:Bind Phone}"/>
+                            <TextBlock Grid.Column="3" Text="{x:Bind Fax}"/>
+                            <TextBlock Grid.Column="4" Text="{x:Bind Email}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="5" Text="{x:Bind Supervisor}" FontWeight="SemiBold" TextWrapping="WrapWholeWords"/>
+                            <TextBlock Grid.Column="6" Text="{x:Bind SupervisorPhone}"/>
+                            <TextBlock Grid.Column="7" Text="{x:Bind SupervisorEmail}" TextTrimming="CharacterEllipsis"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
