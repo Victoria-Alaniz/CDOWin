@@ -51,7 +51,7 @@ public partial class CalendarViewModel(RemindersViewModel viewModel) : Observabl
         BuildCalendarDays();
     }
 
-    public Reminder GetReminderByID(int id) => _remindersViewModel.GetReminderByID(id);
+    public Reminder? GetReminderByID(int id) => _remindersViewModel.GetReminderByID(id);
 
     public async Task UpdateReminderAsync(int id, UpdateReminderDTO update) {
         await _remindersViewModel.UpdateReminderAsync(id, update);

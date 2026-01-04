@@ -1,4 +1,5 @@
-﻿using CDOWin.Services;
+﻿using CDO.Core.Models;
+using CDOWin.Services;
 using CDOWin.ViewModels;
 using CDOWin.Views.Reminders.Dialogs;
 using CDOWin.Views.Shared.Dialogs;
@@ -95,8 +96,8 @@ public sealed partial class RemindersPage : Page {
     }
 
     private async void Reminder_Click(SplitButton sender, SplitButtonClickEventArgs args) {
-        if (sender.Tag is Int32 id) {
-            var updateVM = new ReminderUpdateViewModel(ViewModel.GetReminderByID(id));
+        if (sender.Tag is Int32 id && ViewModel.GetReminderByID(id) is Reminder reminder) {
+            var updateVM = new ReminderUpdateViewModel(reminder);
             var dialog = DialogFactory.UpdateDialog(this.XamlRoot, $"Edit Reminder for {updateVM.Original.clientName}");
             dialog.Content = new UpdateReminderPage(updateVM);
 

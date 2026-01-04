@@ -2,6 +2,7 @@
 using CDO.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Dispatching;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -98,10 +99,10 @@ public partial class PlacementsViewModel : ObservableObject {
 
         var query = SearchQuery.Trim().ToLower();
         var result = _allPlacements.Where(r =>
-        (r.ClientName?.ToLower().Contains(query) ?? false)
-        || (r.Employer.Name?.ToLower().Contains(query) ?? false)
-        || (r.Supervisor?.ToLower().Contains(query) ?? false)
-        || (r.Position?.ToLower().Contains(query) ?? false)
+        (r.ClientName ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (r.Employer?.name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (r.Supervisor ?? "").ToLower().Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (r.Position ?? "").ToLower().Contains(query, StringComparison.CurrentCultureIgnoreCase)
         );
 
         Filtered = new ObservableCollection<Placement>(result);

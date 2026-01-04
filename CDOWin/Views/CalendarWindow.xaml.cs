@@ -1,3 +1,4 @@
+using CDO.Core.Models;
 using CDOWin.Controls;
 using CDOWin.Services;
 using CDOWin.ViewModels;
@@ -5,6 +6,7 @@ using CDOWin.Views.Reminders.Dialogs;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 
 
@@ -90,7 +92,10 @@ public sealed partial class CalendarWindow : Window {
     }
 
     private async void OnReminderClickedAsync(object? sender, int id) {
-        var updateVM = new ReminderUpdateViewModel(ViewModel.GetReminderByID(id));
+        if (ViewModel.GetReminderByID(id) is not Reminder reminder)
+            return;
+
+        var updateVM = new ReminderUpdateViewModel(reminder);
         var dialog = DialogFactory.UpdateDialog(this.Content.XamlRoot, $"Edit Reminder for {updateVM.Original.clientName}");
         dialog.Content = new UpdateReminderPage(updateVM);
 

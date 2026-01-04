@@ -2,6 +2,7 @@
 using CDO.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Dispatching;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -97,10 +98,10 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
 
         var query = SearchQuery.Trim().ToLower();
         var result = _allServiceAuthorizations.Where(s =>
-        (s.Client?.Name?.ToLower().Contains(query) ?? false)
-        || (s.Client?.CounselorReference?.Name?.ToLower().Contains(query) ?? false)
-        || (s.Id?.ToLower().Contains(query) ?? false)
-        || (s.Description?.ToLower().Contains(query) ?? false)
+        (s.Client?.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (s.Client?.CounselorReference?.name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (s.Id ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (s.Description ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase)
         );
 
         Filtered = new ObservableCollection<ServiceAuthorization>(result);

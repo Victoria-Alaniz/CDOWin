@@ -95,7 +95,7 @@ public partial class RemindersViewModel : ObservableObject {
         }
     }
 
-    public Reminder GetReminderByID(int id) => Filtered.FirstOrDefault(r => r.id == id);
+    public Reminder? GetReminderByID(int id) => Filtered.FirstOrDefault(r => r.id == id);
 
     public bool DateHasReminders(DateTime date) => _allReminders.Any(r => r.date.Date == date.Date);
 
@@ -166,6 +166,9 @@ public partial class RemindersViewModel : ObservableObject {
             .OrderBy(r => r.date)
             .ToList()
             .AsReadOnly();
+
+        if (source == null)  return;
+
         _dispatcher.TryEnqueue(() => {
             ClientSpecific.Clear();
             foreach (var reminder in source)

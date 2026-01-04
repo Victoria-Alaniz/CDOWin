@@ -3,6 +3,7 @@ using CDO.Core.Interfaces;
 using CDO.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Dispatching;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -106,12 +107,12 @@ public partial class EmployersViewModel : ObservableObject {
 
         var query = SearchQuery.Trim().ToLower();
         var result = _allEmployers.Where(e =>
-        (e.Name?.ToLower().Contains(query) ?? false)
-        || (e.FormattedAddress?.ToLower().Contains(query) ?? false)
-        || (e.Email?.ToLower().Contains(query) ?? false)
-        || (e.Supervisor?.ToLower().Contains(query) ?? false)
-        || (e.SupervisorEmail?.ToLower().Contains(query) ?? false)
-        || (e.Notes?.ToLower().Contains(query) ?? false)
+        (e.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (e.FormattedAddress ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (e.Email ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (e.Supervisor ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+        (e.SupervisorEmail ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (e.Notes ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase)
         );
 
         Filtered = new ObservableCollection<Employer>(result);

@@ -88,12 +88,12 @@ public record class Client(
 
     public string FormattedSSN {
         get {
-            if (Ssn.ToString() is { } unwrappedSSN) {
+            if (Ssn.ToString() is string unwrappedSSN) {
                 if (unwrappedSSN.Length == 9) {
                     return $"{unwrappedSSN.Substring(0, 3)}-{unwrappedSSN.Substring(3, 2)}-{unwrappedSSN.Substring(5, 4)}";
                 }
             }
-            return Ssn.ToString();
+            return "";
         }
     }
 

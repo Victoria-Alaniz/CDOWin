@@ -3,6 +3,7 @@ using CDO.Core.Interfaces;
 using CDO.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Dispatching;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -111,10 +112,10 @@ public partial class CounselorsViewModel : ObservableObject {
 
         var query = SearchQuery.Trim().ToLower();
         var result = _allCounselors.Where(c =>
-        (c.Name?.ToLower().Contains(query) ?? false)
-        || (c.SecretaryName?.ToLower().Contains(query) ?? false)
-        || (c.Email?.ToLower().Contains(query) ?? false)
-        || (c.SecretaryEmail?.ToLower().Contains(query) ?? false)
+        (c.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (c.SecretaryName ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (c.Email ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (c.SecretaryEmail ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase)
         );
 
         Filtered = new ObservableCollection<Counselor>(result);
