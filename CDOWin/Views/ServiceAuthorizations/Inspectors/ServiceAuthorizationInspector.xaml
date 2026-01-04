@@ -26,7 +26,7 @@
         
         <!-- Header -->
         <TextBlock Grid.Row="0" Style="{StaticResource InspectorHeaderStyle}"
-                   Text="{Binding Selected.client.name}"/>
+                   Text="{Binding Selected.Client.Name}"/>
 
         <!-- Edit Button -->
         <Button Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" 
@@ -56,29 +56,29 @@
             </Grid.ColumnDefinitions>
 
             <!-- Row 0: PO Number + Case ID-->
-            <control:LabelPair Grid.Row="0" Grid.Column="0" Label="SA Number" Value="{Binding Selected.id}"/>
-            <control:LabelPair Grid.Row="0" Grid.Column="1" Label="Case ID" Value="{Binding Selected.client.caseID}"/>
+            <control:LabelPair Grid.Row="0" Grid.Column="0" Label="SA Number" Value="{Binding Selected.Id}"/>
+            <control:LabelPair Grid.Row="0" Grid.Column="1" Label="Case ID" Value="{Binding Selected.Client.CaseID}"/>
 
             <!-- Row 1: Counselor -->
             <control:LabelPair Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                               Label="Issued By" Value="{Binding Selected.client.counselorReference.name}"/>
+                               Label="Issued By" Value="{Binding Selected.Client.CounselorReference.name}"/>
 
             <!-- Row 2: Counselor -->
             <control:LabelPair Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                               Label="Office" Value="{Binding Selected.office}"/>
+                               Label="Office" Value="{Binding Selected.Office}"/>
             
             <!-- Row 3: Start Date + End Date -->
-            <control:LabelPair Grid.Row="3" Grid.Column="0" Label="Start Date" Value="{Binding Selected.formattedStartDate}"/>
-            <control:LabelPair Grid.Row="3" Grid.Column="1" Label="End Date" Value="{Binding Selected.formattedEndDate}"/>
+            <control:LabelPair Grid.Row="3" Grid.Column="0" Label="Start Date" Value="{Binding Selected.FormattedStartDate}"/>
+            <control:LabelPair Grid.Row="3" Grid.Column="1" Label="End Date" Value="{Binding Selected.FormattedEndDate}"/>
 
             <!-- Row 4: Unit Cost -->
             <control:LabelPair Grid.Row="4" Grid.Column="0"
-                               Label="Unit Cost" Value="{Binding Selected.formattedCost}"/>
+                               Label="Unit Cost" Value="{Binding Selected.FormattedCost}"/>
             <control:LabelPair Grid.Row="4" Grid.Column="1"
-                               Label="U/M" Value="{Binding Selected.unitOfMeasurement}"/>
+                               Label="U/M" Value="{Binding Selected.UnitOfMeasurement}"/>
             <!-- Row 5: Description -->
             <control:LabelPair Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
-                               Label="Description" Value="{Binding Selected.description}"/>
+                               Label="Description" Value="{Binding Selected.Description}"/>
         </Grid>
 
         <!-- Row 5: Button Row -->

@@ -67,7 +67,7 @@ public partial class CounselorsViewModel : ObservableObject {
         var counselors = await _service.GetAllCounselorsAsync();
         if (counselors == null) return;
 
-        var snapshot = counselors.OrderBy(o => o.name).ToList().AsReadOnly();
+        var snapshot = counselors.OrderBy(o => o.Name).ToList().AsReadOnly();
         _allCounselors = snapshot;
 
         _dispatcher.TryEnqueue(() => {
@@ -80,7 +80,7 @@ public partial class CounselorsViewModel : ObservableObject {
         if (counselor == null) return;
 
         var updated = _allCounselors
-            .Select(c => c.id == id ? counselor : c)
+            .Select(c => c.Id == id ? counselor : c)
             .ToList()
             .AsReadOnly();
 
@@ -95,8 +95,8 @@ public partial class CounselorsViewModel : ObservableObject {
 
     public async Task UpdateCounselorAsync(UpdateCounselorDTO update) {
         if (Selected == null) return;
-        var updatedCounselor = await _service.UpdateCounselorAsync(Selected.id, update);
-        await ReloadCounselorAsync(Selected.id);
+        var updatedCounselor = await _service.UpdateCounselorAsync(Selected.Id, update);
+        await ReloadCounselorAsync(Selected.Id);
     }
 
     // =========================
@@ -111,10 +111,10 @@ public partial class CounselorsViewModel : ObservableObject {
 
         var query = SearchQuery.Trim().ToLower();
         var result = _allCounselors.Where(c =>
-        (c.name?.ToLower().Contains(query) ?? false)
-        || (c.secretaryName?.ToLower().Contains(query) ?? false)
-        || (c.email?.ToLower().Contains(query) ?? false)
-        || (c.secretaryEmail?.ToLower().Contains(query) ?? false)
+        (c.Name?.ToLower().Contains(query) ?? false)
+        || (c.SecretaryName?.ToLower().Contains(query) ?? false)
+        || (c.Email?.ToLower().Contains(query) ?? false)
+        || (c.SecretaryEmail?.ToLower().Contains(query) ?? false)
         );
 
         Filtered = new ObservableCollection<Counselor>(result);

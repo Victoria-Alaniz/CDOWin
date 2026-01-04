@@ -57,15 +57,15 @@ public sealed partial class ClientViewPage : Page {
     // Click Handlers
     // =========================
     private void OpenDocuments_Clicked(object sender, RoutedEventArgs e) {
-        Process.Start("explorer.exe", $"{ViewModel.SelectedClient?.documentsFolderPath}");
+        Process.Start("explorer.exe", $"{ViewModel.SelectedClient?.DocumentsFolderPath}");
     }
 
     private async void CreateReminder_ClickAsync(SplitButton sender, SplitButtonClickEventArgs e) {
         if (ViewModel.SelectedClient == null) return;
 
         // Initialize our dialog/vm/page
-        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"Create Reminder for {ViewModel.SelectedClient.name}");
-        var createReminderVM = AppServices.CreateReminderViewModel(ViewModel.SelectedClient.id);
+        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"Create Reminder for {ViewModel.SelectedClient.Name}");
+        var createReminderVM = AppServices.CreateReminderViewModel(ViewModel.SelectedClient.Id);
         var createReminderPage = new CreateReminder(createReminderVM);
 
         // Set the content
@@ -93,7 +93,7 @@ public sealed partial class ClientViewPage : Page {
     private async void CreateSA_Click(object sender, RoutedEventArgs e) {
         if (ViewModel.SelectedClient == null) return;
 
-        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"New Service Authorization for {ViewModel.SelectedClient.name}");
+        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"New Service Authorization for {ViewModel.SelectedClient.Name}");
         var createSAVM = AppServices.CreateServiceAuthorizationsViewModel(ViewModel.SelectedClient);
         var createSAPage = new CreateServiceAuthorization(createSAVM);
         dialog.Content = createSAPage;
@@ -105,7 +105,7 @@ public sealed partial class ClientViewPage : Page {
         if (sender is MenuFlyoutItem item
             && item.Tag is ReminderMenuItem reminderItem
             && ViewModel.SelectedClient != null) {
-            var newReminderVM = AppServices.CreateReminderViewModel(ViewModel.SelectedClient.id);
+            var newReminderVM = AppServices.CreateReminderViewModel(ViewModel.SelectedClient.Id);
             newReminderVM.Description = reminderItem.Description;
 
             var dateOffset = DateTimeOffset.Now.AddDays(reminderItem.Days);

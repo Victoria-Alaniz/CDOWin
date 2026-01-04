@@ -28,7 +28,7 @@
         <!-- Header -->
         <TextBlock Grid.Row="0" Grid.Column="0" 
                    Style="{StaticResource InspectorHeaderStyle}"
-                   Text="{Binding Selected.clientName}"/>
+                   Text="{Binding Selected.ClientName}"/>
         
         <!-- Edit Button -->
         <Button Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" 
@@ -60,36 +60,36 @@
             </Grid.ColumnDefinitions>
 
             <!-- Row 0: Placement + Active -->
-            <control:LabelPair Grid.Row="0" Grid.Column="0" Label="Placement" Value="{Binding Selected.placementNumber}"/>
-            <control:LabelPair Grid.Row="0" Grid.Column="1" Label="Active" Value="{Binding Selected.active}"/>
+            <control:LabelPair Grid.Row="0" Grid.Column="0" Label="Placement" Value="{Binding Selected.PlacementNumber}"/>
+            <control:LabelPair Grid.Row="0" Grid.Column="1" Label="Active" Value="{Binding Selected.Active}"/>
 
             <!-- Row 1: Employer -->
             <control:LabelPair Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                               Label="Employer" Value="{Binding Selected.employer.name}"/>
+                               Label="Employer" Value="{Binding Selected.Employer.name}"/>
             
             <!-- Row 2: Counselor -->
             <control:LabelPair Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                               Label="Counselor" Value="{Binding Selected.counselorName}"/>
+                               Label="Counselor" Value="{Binding Selected.CounselorName}"/>
 
             <!-- Row 3: PO number + Employer ID -->
-            <control:LabelPair Grid.Row="3" Grid.Column="0" Label="SA ID" Value="{Binding Selected.poNumber}"/>
-            <control:LabelPair Grid.Row="3" Grid.Column="1" Label="Employer ID" Value="{Binding Selected.employerID}"/>
+            <control:LabelPair Grid.Row="3" Grid.Column="0" Label="SA ID" Value="{Binding Selected.PoNumber}"/>
+            <control:LabelPair Grid.Row="3" Grid.Column="1" Label="Employer ID" Value="{Binding Selected.EmployerID}"/>
 
             <!-- Row 4: Supervisor -->
             <control:LabelPair Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
-                               Label="Supervisor" Value="{Binding Selected.formattedSupervisor}"/>
+                               Label="Supervisor" Value="{Binding Selected.FormattedSupervisor}"/>
             
             <!-- Row 5: Position -->
             <control:LabelPair Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
-                               Label="Position" Value="{Binding Selected.position}"/>
+                               Label="Position" Value="{Binding Selected.Position}"/>
 
             <!-- Row 6: Salary + Days on Job -->
-            <control:LabelPair Grid.Row="6" Grid.Column="0" Label="Salary" Value="{Binding Selected.formattedSalary}"/>
-            <control:LabelPair Grid.Row="6" Grid.Column="1" Label="Days on Job" Value="{Binding Selected.daysOnJob}"/>
+            <control:LabelPair Grid.Row="6" Grid.Column="0" Label="Salary" Value="{Binding Selected.FormattedSalary}"/>
+            <control:LabelPair Grid.Row="6" Grid.Column="1" Label="Days on Job" Value="{Binding Selected.DaysOnJob}"/>
 
             <!-- Row 7: Hire Date + End Date -->
-            <control:LabelPair Grid.Row="7" Grid.Column="0" Label="Hire Date" Value="{Binding Selected.formattedHireDate}"/>
-            <control:LabelPair Grid.Row="7" Grid.Column="1" Label="End Date" Value="{Binding Selected.formattedEndDate}"/>
+            <control:LabelPair Grid.Row="7" Grid.Column="0" Label="Hire Date" Value="{Binding Selected.FormattedHireDate}"/>
+            <control:LabelPair Grid.Row="7" Grid.Column="1" Label="End Date" Value="{Binding Selected.FormattedEndDate}"/>
         </Grid>
 
         <!-- Row 5: Button Row -->

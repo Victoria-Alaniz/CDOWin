@@ -162,7 +162,7 @@ public partial class RemindersViewModel : ObservableObject {
     // =========================
     private void OnClientChanged(Client? client) {
         Debug.WriteLine("On client changed");
-        var source = client?.reminders?
+        var source = client?.Reminders?
             .OrderBy(r => r.date)
             .ToList()
             .AsReadOnly();
@@ -200,7 +200,7 @@ public partial class RemindersViewModel : ObservableObject {
 
     private void UpdateEndText() {
         EndText = Filtered.Count == 0
-            ? "There are no reminders 静か"
+            ? "There are no Reminders 静か"
             : "We have reached the end of the list 和";
     }
 }

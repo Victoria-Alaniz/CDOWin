@@ -29,7 +29,7 @@
 
         <!-- Row 0: Title + Buttons -->
         <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTitleStyle}"
-                   Text="{Binding SelectedClient.name}"/>
+                   Text="{Binding SelectedClient.Name}"/>
         
         <!-- Button Row -->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
@@ -94,28 +94,28 @@
 
                         <!-- Date of Birth/DL/SSN -->
                         <usercontrols:LabelPair Grid.Row ="1" Grid.Column="0" Grid.ColumnSpan="2" 
-                                                Label="DOB" Value="{Binding SelectedClient.formattedDOB}"/>
+                                                Label="DOB" Value="{Binding SelectedClient.FormattedDOB}"/>
 
                         <usercontrols:LabelPair Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
-                                                Label="DL/ID" Value="{Binding SelectedClient.driversLicense}"/>
+                                                Label="DL/ID" Value="{Binding SelectedClient.DriversLicense}"/>
 
                         <usercontrols:LabelPair Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2"
-                                                Label="SSN" Value="{Binding SelectedClient.formattedSSN}"/>
+                                                Label="SSN" Value="{Binding SelectedClient.FormattedSSN}"/>
 
                         <!-- Fluent Languages/Race -->
                         <usercontrols:LabelPair Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
-                                                Label="Fluent Languages" Value="{Binding SelectedClient.fluentLanguages}"/>
+                                                Label="Fluent Languages" Value="{Binding SelectedClient.FluentLanguages}"/>
 
                         <usercontrols:LabelPair Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3"
-                                                Label="Race" Value="{Binding SelectedClient.race}"/>
+                                                Label="Race" Value="{Binding SelectedClient.Race}"/>
 
                         <!-- Address Section -->
                         <usercontrols:LabelPair Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6"
-                                                Label="Address" Value="{Binding SelectedClient.formattedAddress}"/>
+                                                Label="Address" Value="{Binding SelectedClient.FormattedAddress}"/>
 
                         <!-- Education Section -->
                         <usercontrols:LabelPair Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6"
-                                                Label="Education" Value="{Binding SelectedClient.education}"/>
+                                                Label="Education" Value="{Binding SelectedClient.Education}"/>
                     </Grid>
                 </Grid>
 
@@ -157,42 +157,42 @@
 
                         <!-- Phone 1 -->
                         <FontIcon Grid.Row="1" Grid.Column="0" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                  Glyph="&#xE717;" Visibility="{Binding SelectedClient.phone1, Converter={StaticResource StringToVisability}}"/>
+                                  Glyph="&#xE717;" Visibility="{Binding SelectedClient.Phone1, Converter={StaticResource StringToVisability}}"/>
                         <usercontrols:LabelPair Grid.Row="1" Grid.Column="1"
-                                                Label="{Binding SelectedClient.phone1Identity}" Value="{Binding SelectedClient.phone1}"
-                                                Visibility="{Binding SelectedClient.phone1, Converter={StaticResource StringToVisability}}"/>
+                                                Label="{Binding SelectedClient.Phone1Identity}" Value="{Binding SelectedClient.Phone1}"
+                                                Visibility="{Binding SelectedClient.Phone1, Converter={StaticResource StringToVisability}}"/>
 
                         <!-- Phone 2 -->
                         <FontIcon Grid.Row="2" Grid.Column="0" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                  Glyph="&#xE717;" Visibility="{Binding SelectedClient.phone2, Converter={StaticResource StringToVisability}}"/>
+                                  Glyph="&#xE717;" Visibility="{Binding SelectedClient.Phone2, Converter={StaticResource StringToVisability}}"/>
 
                         <usercontrols:LabelPair Grid.Row="2" Grid.Column="1"
-                                                Label="{Binding SelectedClient.phone2Identity}" Value="{Binding SelectedClient.phone2}"
-                                                Visibility="{Binding SelectedClient.phone2, Converter={StaticResource StringToVisability}}"/>
+                                                Label="{Binding SelectedClient.Phone2Identity}" Value="{Binding SelectedClient.Phone2}"
+                                                Visibility="{Binding SelectedClient.Phone2, Converter={StaticResource StringToVisability}}"/>
 
                         <!-- Phone 3 -->
                         <FontIcon Grid.Row="3" Grid.Column="0" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                  Glyph="&#xE717;" Visibility="{Binding SelectedClient.phone3, Converter={StaticResource StringToVisability}}"/>
+                                  Glyph="&#xE717;" Visibility="{Binding SelectedClient.Phone3, Converter={StaticResource StringToVisability}}"/>
 
                         <usercontrols:LabelPair Grid.Row="3" Grid.Column="1"
-                                                Label="{Binding SelectedClient.phone3Identity}" Value="{Binding SelectedClient.phone3}"
-                                                Visibility="{Binding SelectedClient.phone3, Converter={StaticResource StringToVisability}}"/>
+                                                Label="{Binding SelectedClient.Phone3Identity}" Value="{Binding SelectedClient.Phone3}"
+                                                Visibility="{Binding SelectedClient.Phone3, Converter={StaticResource StringToVisability}}"/>
 
                         <!-- Email 1 -->
                         <FontIcon Grid.Row="4" Grid.Column="0" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                  Glyph="&#xE715;" Visibility="{Binding SelectedClient.email, Converter={StaticResource StringToVisability}}"/>
+                                  Glyph="&#xE715;" Visibility="{Binding SelectedClient.Email, Converter={StaticResource StringToVisability}}"/>
 
                         <usercontrols:LabelPair Grid.Row="4" Grid.Column="1"
-                                                Label="{Binding SelectedClient.emailIdentity}" Value="{Binding SelectedClient.email}"
-                                                Visibility="{Binding SelectedClient.email, Converter={StaticResource StringToVisability}}"/>
+                                                Label="{Binding SelectedClient.EmailIdentity}" Value="{Binding SelectedClient.Email}"
+                                                Visibility="{Binding SelectedClient.Email, Converter={StaticResource StringToVisability}}"/>
 
                         <!-- Email 2 -->
                         <FontIcon Grid.Row="5" Grid.Column="0" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                  Glyph="&#xE715;" Visibility="{Binding SelectedClient.email2, Converter={StaticResource StringToVisability}}"/>
+                                  Glyph="&#xE715;" Visibility="{Binding SelectedClient.Email2, Converter={StaticResource StringToVisability}}"/>
 
                         <usercontrols:LabelPair Grid.Row="5" Grid.Column="1"
-                                                Label="{Binding SelectedClient.email2Identity}" Value="{Binding SelectedClient.email2}"
-                                                Visibility="{Binding SelectedClient.email2, Converter={StaticResource StringToVisability}}"/>
+                                                Label="{Binding SelectedClient.Email2Identity}" Value="{Binding SelectedClient.Email2}"
+                                                Visibility="{Binding SelectedClient.Email2, Converter={StaticResource StringToVisability}}"/>
                     </Grid>
                 </Grid>
 
@@ -235,34 +235,34 @@
 
                         <!-- Start Date/Case ID/Status Section -->
                         <usercontrols:LabelPair Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                                                Label="Start Date" Value="{Binding SelectedClient.formattedStartDate}"/>
+                                                Label="Start Date" Value="{Binding SelectedClient.FormattedStartDate}"/>
 
                         <usercontrols:LabelPair Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
-                                                Label="Case ID" Value="{Binding SelectedClient.caseID}"/>
+                                                Label="Case ID" Value="{Binding SelectedClient.CaseID}"/>
 
                         <usercontrols:LabelPair Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2"
-                                                Label="Status" Value="{Binding SelectedClient.status}"/>
+                                                Label="Status" Value="{Binding SelectedClient.Status}"/>
 
                         <!-- Benefits/Premiums Section -->
                         <usercontrols:LabelPair Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
-                                                Label="Benefits" Value="{Binding SelectedClient.benefits}"/>
+                                                Label="Benefits" Value="{Binding SelectedClient.Benefits}"/>
 
                         <usercontrols:LabelPair Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4"
-                                                Label="Premiums" Value="{Binding SelectedClient.premiums}"/>
+                                                Label="Premiums" Value="{Binding SelectedClient.Premiums}"/>
 
                         <!-- Counselor Section -->
                         <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6">
                             <TextBlock Style="{StaticResource LabelTextBlockStyle}"
                                        Text="Counselor"/>
                             <TextBlock Style="{StaticResource ValueTextBlockStyle}"
-                                       Text="{Binding SelectedClient.counselor}"
-                                       Visibility="{Binding SelectedClient.counselor, Converter={StaticResource StringToVisability}}"/>
+                                       Text="{Binding SelectedClient.Counselor}"
+                                       Visibility="{Binding SelectedClient.Counselor, Converter={StaticResource StringToVisability}}"/>
                             <TextBlock Style="{StaticResource ValueTextBlockStyle}"
-                                       Text="{Binding SelectedClient.counselorPhone}"
-                                       Visibility="{Binding SelectedClient.counselorPhone, Converter={StaticResource StringToVisability}}"/>
+                                       Text="{Binding SelectedClient.CounselorPhone}"
+                                       Visibility="{Binding SelectedClient.CounselorPhone, Converter={StaticResource StringToVisability}}"/>
                             <TextBlock Style="{StaticResource ValueTextBlockStyle}"
-                                       Text="{Binding SelectedClient.counselorEmail}"
-                                       Visibility="{Binding SelectedClient.counselorEmail, Converter={StaticResource StringToVisability}}"/>
+                                       Text="{Binding SelectedClient.CounselorEmail}"
+                                       Visibility="{Binding SelectedClient.CounselorEmail, Converter={StaticResource StringToVisability}}"/>
                         </StackPanel>
 
                         <!-- Secretary Section -->
@@ -270,9 +270,9 @@
                             <TextBlock Style="{StaticResource LabelTextBlockStyle}"
                                        Text="Secretary"/>
                             <TextBlock Style="{StaticResource ValueTextBlockStyle}"
-                                       Text="{Binding SelectedClient.counselorReference.secretaryName}"/>
+                                       Text="{Binding SelectedClient.CounselorReference.secretaryName}"/>
                             <TextBlock Style="{StaticResource ValueTextBlockStyle}"
-                                       Text="{Binding SelectedClient.counselorReference.secretaryEmail}"/>
+                                       Text="{Binding SelectedClient.CounselorReference.secretaryEmail}"/>
                         </StackPanel>
                     </Grid>
                 </Grid>
@@ -303,7 +303,7 @@
 
                         <ListView Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,8,0"
                                   Style="{StaticResource InspectorListViewStyle}"
-                                  ItemsSource="{x:Bind ViewModel.SelectedClient.pos, Mode=OneWay}">
+                                  ItemsSource="{x:Bind ViewModel.SelectedClient.Pos, Mode=OneWay}">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="models:ServiceAuthorization">
                                     <Grid RowSpacing="4" Margin="0,8,0,8">
@@ -312,10 +312,10 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Spacing="2">
-                                            <TextBlock FontWeight="Bold" Text="{x:Bind id}"/>
-                                            <TextBlock Text="{x:Bind description}"/>
-                                            <TextBlock FontWeight="SemiBold" Text="{x:Bind formattedStartDate}"/>
-                                            <TextBlock TextWrapping="WrapWholeWords" Text="{x:Bind formattedEndDate}"/>
+                                            <TextBlock FontWeight="Bold" Text="{x:Bind Id}"/>
+                                            <TextBlock Text="{x:Bind Description}"/>
+                                            <TextBlock FontWeight="SemiBold" Text="{x:Bind FormattedStartDate}"/>
+                                            <TextBlock TextWrapping="WrapWholeWords" Text="{x:Bind FormattedEndDate}"/>
                                         </StackPanel>
                                     </Grid>
                                 </DataTemplate>
@@ -350,7 +350,7 @@
                         <!-- List View -->
                         <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,8,0" VerticalAlignment="Stretch"
                                   Style="{StaticResource InspectorListViewStyle}"
-                                  ItemsSource="{x:Bind ViewModel.SelectedClient.placements, Mode=OneWay}">
+                                  ItemsSource="{x:Bind ViewModel.SelectedClient.Placements, Mode=OneWay}">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="models:Placement">
                                     <Grid RowSpacing="4" Margin="0,8,0,8">
@@ -359,9 +359,9 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Spacing="2">
-                                            <TextBlock FontWeight="Bold" Text="{x:Bind employer.name}"/>
-                                            <TextBlock FontWeight="SemiBold" Text="{x:Bind formattedHireDate}"/>
-                                            <TextBlock TextWrapping="WrapWholeWords" Text="{x:Bind position}"/>
+                                            <TextBlock FontWeight="Bold" Text="{x:Bind Employer.name}"/>
+                                            <TextBlock FontWeight="SemiBold" Text="{x:Bind FormattedHireDate}"/>
+                                            <TextBlock TextWrapping="WrapWholeWords" Text="{x:Bind Position}"/>
                                         </StackPanel>
                                     </Grid>
                                 </DataTemplate>
@@ -398,10 +398,10 @@
 
                         <!-- Start Date/Case ID/Status Section -->
                         <usercontrols:LabelPair Grid.Row="1" Grid.Column="0"
-                                                Label="Employment Goals" Value="{Binding SelectedClient.employmentGoal}"/>
+                                                Label="Employment Goals" Value="{Binding SelectedClient.EmploymentGoal}"/>
 
                         <usercontrols:LabelPair Grid.Row="2" Grid.Column="0"
-                                                Label="Conditions" Value="{Binding SelectedClient.conditions}"/>
+                                                Label="Conditions" Value="{Binding SelectedClient.Conditions}"/>
                     </Grid>
                 </Grid>
 
@@ -433,13 +433,13 @@
                         </Grid>
                         <!-- Start Date/Case ID/Status Section -->
                         <usercontrols:LabelPair Grid.Row="1" Grid.Column="0"
-                                                Label="Disability" Value="{Binding SelectedClient.disability}"/>
+                                                Label="Disability" Value="{Binding SelectedClient.Disability}"/>
 
                         <usercontrols:LabelPair Grid.Row="2" Grid.Column="0"
-                                                Label="Criminal Charges" Value="{Binding SelectedClient.criminalCharge}"/>
+                                                Label="Criminal Charges" Value="{Binding SelectedClient.CriminalCharge}"/>
 
                         <usercontrols:LabelPair Grid.Row="3" Grid.Column="0"
-                                                Label="Transportation" Value="{Binding SelectedClient.transportation}"/>
+                                                Label="Transportation" Value="{Binding SelectedClient.Transportation}"/>
                     </Grid>
                 </Grid>
 
@@ -475,11 +475,11 @@
                                    Text="Resume" FontWeight="Bold"/>
                         <CheckBox Grid.Row="2" Grid.Column="0" Style="{StaticResource LeftCheckboxStyle}"
                                   Content="Required" Tag="{x:Bind dialogs:CheckboxTag.ResumeRequired}"
-                                  IsChecked="{Binding SelectedClient.resumeRequired}"
+                                  IsChecked="{Binding SelectedClient.ResumeRequired}"
                                   Click="Checkbox_Clicked"/>
                         <CheckBox Grid.Row="2" Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
                                   Content="Completed" Tag="{x:Bind dialogs:CheckboxTag.ResumeCompleted}"
-                                  IsChecked="{Binding SelectedClient.resumeCompleted}"
+                                  IsChecked="{Binding SelectedClient.ResumeCompleted}"
                                   Click="Checkbox_Clicked"/>
 
                         <!-- Video Interviews Section -->
@@ -488,11 +488,11 @@
                                    FontWeight="Bold"/>
                         <CheckBox Grid.Row="4" Grid.Column="0" Style="{StaticResource LeftCheckboxStyle}"
                                   Content="Required" Tag="{x:Bind dialogs:CheckboxTag.VideoInterviewRequired}"
-                                  IsChecked="{Binding SelectedClient.videoInterviewRequired}"
+                                  IsChecked="{Binding SelectedClient.VideoInterviewRequired}"
                                   Click="Checkbox_Clicked"/>
                         <CheckBox Grid.Row="4" Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
                                   Content="Completed" Tag="{x:Bind dialogs:CheckboxTag.VideoInterviewCompleted}"
-                                  IsChecked="{Binding SelectedClient.videoInterviewCompleted}"
+                                  IsChecked="{Binding SelectedClient.VideoInterviewCompleted}"
                                   Click="Checkbox_Clicked"/>
 
                         <!-- Releases Section -->
@@ -500,7 +500,7 @@
                                    Text="Releases" FontWeight="Bold"/>
                         <CheckBox Grid.Row="5" Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
                                   Content="Completed" Tag="{x:Bind dialogs:CheckboxTag.ReleasesCompleted}"
-                                  IsChecked="{Binding SelectedClient.releasesCompleted}"
+                                  IsChecked="{Binding SelectedClient.ReleasesCompleted}"
                                   Click="Checkbox_Clicked"/>
 
                         <!-- Orientation Section -->
@@ -508,7 +508,7 @@
                                    Text="Orientation" FontWeight="Bold"/>
                         <CheckBox Grid.Row="6" Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
                                   Content="Completed" Tag="{x:Bind dialogs:CheckboxTag.OrientationCompleted}"
-                                  IsChecked="{Binding SelectedClient.orientationCompleted}"
+                                  IsChecked="{Binding SelectedClient.OrientationCompleted}"
                                   Click="Checkbox_Clicked"/>
 
                         <!-- 1850 Data Sheet Section -->
@@ -516,7 +516,7 @@
                                    Text="1850 Data Sheet" FontWeight="Bold"/>
                         <CheckBox Grid.Row="7"  Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
                                   Content="Completed" Tag="{x:Bind dialogs:CheckboxTag.DataSheetCompleted}"
-                                  IsChecked="{Binding SelectedClient.dataSheetCompleted}"
+                                  IsChecked="{Binding SelectedClient.DataSheetCompleted}"
                                   Click="Checkbox_Clicked"/>
 
                         <!-- Elevator Speech Section -->
@@ -524,7 +524,7 @@
                                    Text="Elevator Speech" FontWeight="Bold"/>
                         <CheckBox Grid.Row="8" Grid.Column="1" Style="{StaticResource RightCheckboxStyle}"
                                   Content="Completed" Tag="{x:Bind dialogs:CheckboxTag.ElevatorSpeechCompleted}"
-                                  IsChecked="{Binding SelectedClient.elevatorSpeechCompleted}"
+                                  IsChecked="{Binding SelectedClient.ElevatorSpeechCompleted}"
                                   Click="Checkbox_Clicked"/>
                     </Grid>
                 </Grid>

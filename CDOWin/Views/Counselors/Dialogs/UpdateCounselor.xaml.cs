@@ -29,31 +29,31 @@ public sealed partial class UpdateCounselor : Page {
     private void UpdateModel(string value, Field field) {
         switch (field) {
             case Field.Name:
-                if (value != ViewModel.Original.name)
+                if (value != ViewModel.Original.Name)
                     ViewModel.Updated.name = value;
                 break;
             case Field.Email:
-                if (value != ViewModel.Original.email)
+                if (value != ViewModel.Original.Email)
                     ViewModel.Updated.email = value;
                 break;
             case Field.Phone:
-                if (value != ViewModel.Original.phone)
+                if (value != ViewModel.Original.Phone)
                     ViewModel.Updated.phone = value;
                 break;
             case Field.Fax:
-                if (value != ViewModel.Original.fax)
+                if (value != ViewModel.Original.Fax)
                     ViewModel.Updated.fax = value;
                 break;
             case Field.Notes:
-                if (value != ViewModel.Original.notes)
+                if (value != ViewModel.Original.Notes)
                     ViewModel.Updated.notes = value;
                 break;
             case Field.Secretary:
-                if (value != ViewModel.Original.secretaryName)
+                if (value != ViewModel.Original.SecretaryName)
                     ViewModel.Updated.secretaryName = value;
                 break;
             case Field.SecretaryEmail:
-                if (value != ViewModel.Original.secretaryEmail)
+                if (value != ViewModel.Original.SecretaryEmail)
                     ViewModel.Updated.secretaryEmail = value;
                 break;
         }

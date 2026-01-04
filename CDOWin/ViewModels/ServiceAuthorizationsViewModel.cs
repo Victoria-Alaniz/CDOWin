@@ -60,7 +60,7 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
         var serviceAuthorizations = await _service.GetAllServiceAuthorizationsAsync();
         if (serviceAuthorizations == null) return;
 
-        var snapshot = serviceAuthorizations.OrderBy(o => o.id).ToList().AsReadOnly();
+        var snapshot = serviceAuthorizations.OrderBy(o => o.Id).ToList().AsReadOnly();
         _allServiceAuthorizations = snapshot;
 
         _dispatcher.TryEnqueue(() => {
@@ -73,7 +73,7 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
         if (serviceAuthorization == null) return;
 
         var updated = _allServiceAuthorizations
-            .Select(s => s.id == id ? serviceAuthorization : s)
+            .Select(s => s.Id == id ? serviceAuthorization : s)
             .ToList()
             .AsReadOnly();
 
@@ -97,10 +97,10 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
 
         var query = SearchQuery.Trim().ToLower();
         var result = _allServiceAuthorizations.Where(s =>
-        (s.client?.name?.ToLower().Contains(query) ?? false)
-        || (s.client?.counselorReference?.name?.ToLower().Contains(query) ?? false)
-        || (s.id?.ToLower().Contains(query) ?? false)
-        || (s.description?.ToLower().Contains(query) ?? false)
+        (s.Client?.Name?.ToLower().Contains(query) ?? false)
+        || (s.Client?.CounselorReference?.name?.ToLower().Contains(query) ?? false)
+        || (s.Id?.ToLower().Contains(query) ?? false)
+        || (s.Description?.ToLower().Contains(query) ?? false)
         );
 
         Filtered = new ObservableCollection<ServiceAuthorization>(result);

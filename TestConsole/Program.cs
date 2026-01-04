@@ -40,8 +40,8 @@ IClientService clientService = new ClientService(network);
 //Console.WriteLine();
 //foreach (var placement in client.placements) {
 //    Console.WriteLine(placement.id);
-//    Console.WriteLine(placement.employer.name);
-//    Console.WriteLine(placement.formattedHireDate);
+//    Console.WriteLine(placement.employer.Name);
+//    Console.WriteLine(placement.FormattedHireDate);
 //    Console.WriteLine(placement.position);
 //}
 
@@ -55,8 +55,8 @@ IClientService clientService = new ClientService(network);
 //}
 
 //foreach (var client in clients) {
-//    Console.WriteLine($"Client: {client.name}");
-//    Console.WriteLine($"Printed Counselor name: {client.counselorName}");
+//    Console.WriteLine($"Client: {client.Name}");
+//    Console.WriteLine($"Printed Counselor Name: {client.counselorName}");
 //}
 
 //var newClient = await clientService.CreateClientAsync(client);
@@ -71,7 +71,7 @@ IClientService clientService = new ClientService(network);
 
 //var clientWasDeleted = await clientService.DeleteClientAsync(newClient.id);
 //if (clientWasDeleted == true) {
-//    Console.WriteLine($"Client: {newClient.name} was deleted");
+//    Console.WriteLine($"Client: {newClient.Name} was deleted");
 //}
 
 //var llama = new Llama();

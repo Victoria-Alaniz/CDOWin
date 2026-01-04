@@ -1,49 +1,49 @@
 ﻿namespace CDO.Core.Models;
 
 public record class Employer(
-    int id,
-    string? name,
-    string? address1,
-    string? address2,
-    string? city,
-    string? state,
-    string? zip,
-    string? phone,
-    string? fax,
-    string? email,
-    string? website,
-    string? notes,
-    string? supervisor,
-    string? supervisorPhone,
-    string? supervisorEmail
+    int Id,
+    string? Name,
+    string? Address1,
+    string? Address2,
+    string? City,
+    string? State,
+    string? Zip,
+    string? Phone,
+    string? Fax,
+    string? Email,
+    string? Website,
+    string? Notes,
+    string? Supervisor,
+    string? SupervisorPhone,
+    string? SupervisorEmail
     ) {
 
-    public string? formattedSuperviror {
+    public string? FormattedSuperviror {
         get {
-            var text = $"{supervisor}\n{supervisorPhone}\n{supervisorEmail}";
+            var text = $"{Supervisor}\n{SupervisorPhone}\n{SupervisorEmail}";
             if (string.IsNullOrWhiteSpace(text)) { return null; }
             return text;
         }
     }
 
-    public string formattedAddress {
+    public string FormattedAddress {
         get {
-            if (address1 == null && address2 == null)
+            if (Address1 == null && Address2 == null)
                 return "No address on file.";
-            else if (address2 == null) {
-                return $"{address1}\n{formattedCityStateZip}";
+            else if (Address2 == null) {
+                return $"{Address1}\n{FormattedCityStateZip}";
             } else {
-                return $"{address1} {address2}\n{formattedCityStateZip}";
+                return $"{Address1} {Address2}\n{FormattedCityStateZip}";
             }
         }
     }
 
-    public string formattedCityStateZip {
+    public string FormattedCityStateZip {
         get {
-            if (zip != null)
-                return $"{city}, {state} {zip}";
+            if (Zip != null)
+                return $"{City}, {State} {Zip}";
             else
-                return $"{city}, {state}";
+                return $"{City}, {State}";
         }
     }
 }

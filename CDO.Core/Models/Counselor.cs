@@ -1,12 +1,12 @@
 ﻿namespace CDO.Core.Models;
 
 public record class Counselor(
-    int id,
-    string name,
-    string? email,
-    string? phone,
-    string? fax,
-    string? notes,
-    string? secretaryName,
-    string? secretaryEmail
+    int Id,
+    string Name,
+    string? Email,
+    string? Phone,
+    string? Fax,
+    string? Notes,
+    string? SecretaryName,
+    string? SecretaryEmail
     );

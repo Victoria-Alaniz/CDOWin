@@ -3,45 +3,45 @@
 namespace CDO.Core.Models;
 
 public record class Placement(
-    string id,
-    int? placementNumber,
-    string? employerID,
-    int? clientID,
-    int? counselorID,
-    string? poNumber,
-    string? supervisor,
-    string? supervisorEmail,
-    string? supervisorPhone,
-    string? position,
-    string? salary,
-    float? daysOnJob,
-    string? clientName,
-    string? counselorName,
-    bool? active,
-    string? website,
-    string? descriptionOfDuties,
-    string? numbersOfHoursWorking,
-    string? firstFiveDays1,
-    string? firstFiveDays2,
-    string? firstFiveDays3,
-    string? firstFiveDays4,
-    string? firstFiveDays5,
-    string? descriptionOfWorkSchedule,
-    string? hourlyOrMonthlyWages,
-    DateTime? hireDate,
-    DateTime? endDate,
+    string Id,
+    int? PlacementNumber,
+    string? EmployerID,
+    int? ClientID,
+    int? CounselorID,
+    string? PoNumber,
+    string? Supervisor,
+    string? SupervisorEmail,
+    string? SupervisorPhone,
+    string? Position,
+    string? Salary,
+    float? DaysOnJob,
+    string? ClientName,
+    string? CounselorName,
+    bool? Active,
+    string? Website,
+    string? DescriptionOfDuties,
+    string? NumbersOfHoursWorking,
+    string? FirstFiveDays1,
+    string? FirstFiveDays2,
+    string? FirstFiveDays3,
+    string? FirstFiveDays4,
+    string? FirstFiveDays5,
+    string? DescriptionOfWorkSchedule,
+    string? HourlyOrMonthlyWages,
+    DateTime? HireDate,
+    DateTime? EndDate,
 
     // Optional Parents
-    EmployerDTO? employer
+    EmployerDTO? Employer
     ) {
-    public string? formattedHireDate => hireDate?.ToString(format: "MM/dd/yyyy");
-    public string? formattedEndDate => endDate?.ToString(format: "MM/dd/yyyy");
+    public string? FormattedHireDate => HireDate?.ToString(format: "MM/dd/yyyy");
+    public string? FormattedEndDate => EndDate?.ToString(format: "MM/dd/yyyy");
 
-    public string? formattedSalary => $"${salary}";
+    public string? FormattedSalary => $"${Salary}";
 
-    public string? formattedSupervisor {
+    public string? FormattedSupervisor {
         get {
-            var text = $"{supervisor}\n{supervisorPhone}\n{supervisorEmail}";
+            var text = $"{Supervisor}\n{SupervisorPhone}\n{SupervisorEmail}";
             if (string.IsNullOrWhiteSpace(text)) { return null; }
             return text;
         }

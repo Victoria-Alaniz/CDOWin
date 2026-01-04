@@ -61,7 +61,7 @@ public partial class EmployersViewModel : ObservableObject {
         var employers = await _service.GetAllEmployersAsync();
         if (employers == null) return;
 
-        var snapshot = employers.OrderBy(e => e.id).ToList().AsReadOnly();
+        var snapshot = employers.OrderBy(e => e.Id).ToList().AsReadOnly();
         _allEmployers = snapshot;
 
         _dispatcher.TryEnqueue(() => {
@@ -74,7 +74,7 @@ public partial class EmployersViewModel : ObservableObject {
         if (employer == null) return;
 
         var updated = _allEmployers
-            .Select(e => e.id == id ? employer : e)
+            .Select(e => e.Id == id ? employer : e)
             .ToList()
             .AsReadOnly();
 
@@ -90,8 +90,8 @@ public partial class EmployersViewModel : ObservableObject {
     public async Task UpdateEmployerAsync(EmployerDTO update) {
         if (Selected == null)
             return;
-        var updatedEmployer = await _service.UpdateEmployerAsync(Selected.id, update);
-        await ReloadEmployerAsync(Selected.id);
+        var updatedEmployer = await _service.UpdateEmployerAsync(Selected.Id, update);
+        await ReloadEmployerAsync(Selected.Id);
     }
 
     // =========================
@@ -106,12 +106,12 @@ public partial class EmployersViewModel : ObservableObject {
 
         var query = SearchQuery.Trim().ToLower();
         var result = _allEmployers.Where(e =>
-        (e.name?.ToLower().Contains(query) ?? false)
-        || (e.formattedAddress?.ToLower().Contains(query) ?? false)
-        || (e.email?.ToLower().Contains(query) ?? false)
-        || (e.supervisor?.ToLower().Contains(query) ?? false)
-        || (e.supervisorEmail?.ToLower().Contains(query) ?? false)
-        || (e.notes?.ToLower().Contains(query) ?? false)
+        (e.Name?.ToLower().Contains(query) ?? false)
+        || (e.FormattedAddress?.ToLower().Contains(query) ?? false)
+        || (e.Email?.ToLower().Contains(query) ?? false)
+        || (e.Supervisor?.ToLower().Contains(query) ?? false)
+        || (e.SupervisorEmail?.ToLower().Contains(query) ?? false)
+        || (e.Notes?.ToLower().Contains(query) ?? false)
         );
 
         Filtered = new ObservableCollection<Employer>(result);

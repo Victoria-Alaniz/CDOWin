@@ -31,9 +31,9 @@ public sealed partial class UpdateCaseInformation : Page {
         BuildCounselorDropDown();
         BenefitDropDown.Flyout = BuildFlyout(Benefit.All);
         StatusDropDown.Flyout = BuildFlyout(Status.All);
-        if (string.IsNullOrEmpty(ViewModel.OriginalClient.benefits))
+        if (string.IsNullOrEmpty(ViewModel.OriginalClient.Benefits))
             BenefitDropDown.Content = "None";
-        if (string.IsNullOrEmpty(ViewModel.OriginalClient.status))
+        if (string.IsNullOrEmpty(ViewModel.OriginalClient.Status))
             StatusDropDown.Content = "None";
     }
 
@@ -41,7 +41,7 @@ public sealed partial class UpdateCaseInformation : Page {
         var flyout = new MenuFlyout();
         foreach (var counselor in _counselors) {
             var item = new MenuFlyoutItem {
-                Text = counselor.name,
+                Text = counselor.Name,
                 Tag = counselor
             };
 
@@ -50,7 +50,7 @@ public sealed partial class UpdateCaseInformation : Page {
         }
         CounselorDropDown.Flyout = flyout;
 
-        if (ViewModel.OriginalClient.counselorReference?.name is string name) {
+        if (ViewModel.OriginalClient.CounselorReference?.name is string name) {
             CounselorDropDown.Content = name;
         } else {
             CounselorDropDown.Content = "Select a Counselor";
@@ -73,14 +73,14 @@ public sealed partial class UpdateCaseInformation : Page {
     }
 
     private void SetupDatePicker() {
-        if (ViewModel.OriginalClient.startDate is DateTime startDate)
+        if (ViewModel.OriginalClient.StartDate is DateTime startDate)
             StartDatePicker.Date = startDate;
     }
 
     // Data Updates
 
     private void StartDatePicker_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args) {
-        if (ViewModel.OriginalClient.startDate is DateTime startDate) {
+        if (ViewModel.OriginalClient.StartDate is DateTime startDate) {
             if (startDate == StartDatePicker.Date)
                 return;
 
@@ -95,12 +95,12 @@ public sealed partial class UpdateCaseInformation : Page {
 
     private void CounselorSelected(object sender, RoutedEventArgs e) {
         if (sender is MenuFlyoutItem item && item.Tag is Counselor counselor) {
-            ViewModel.UpdatedClient.counselor = counselor.name;
-            ViewModel.UpdatedClient.counselorID = counselor.id;
-            ViewModel.UpdatedClient.counselorEmail = counselor.email;
-            ViewModel.UpdatedClient.counselorPhone = counselor.phone;
-            ViewModel.UpdatedClient.counselorFax = counselor.fax;
-            CounselorDropDown.Content = counselor.name;
+            ViewModel.UpdatedClient.counselor = counselor.Name;
+            ViewModel.UpdatedClient.counselorID = counselor.Id;
+            ViewModel.UpdatedClient.counselorEmail = counselor.Email;
+            ViewModel.UpdatedClient.counselorPhone = counselor.Phone;
+            ViewModel.UpdatedClient.counselorFax = counselor.Fax;
+            CounselorDropDown.Content = counselor.Name;
         }
     }
 

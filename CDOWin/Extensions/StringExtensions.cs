@@ -6,7 +6,7 @@ static class StringExtensions {
     /// This is useful for multi-line TextBox comparisons to their original
     /// values stored in the model.
     /// </summary>
-    /// <param name="s"></param>
+    /// <param Name="s"></param>
     /// <returns></returns>
     public static string? NormalizeString(this string s) {
         if (s == null) return null;
