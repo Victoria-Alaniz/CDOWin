@@ -10,8 +10,7 @@
 
     <Grid Width="480" RowSpacing="10" ColumnSpacing="12">
         <!-- Row 0: Notes -->
-        <TextBox Grid.Row="0" Grid.Column="0"
-                 Style="{StaticResource MultiLineTextBoxStyle}"
+        <TextBox Grid.Row="0" Grid.Column="0" Style="{StaticResource MultiLineTextBoxStyle}"
                  Header="New Note" TextChanged="LabeledMultiLinePair_TextChanged"/>
     </Grid>
 </Page>

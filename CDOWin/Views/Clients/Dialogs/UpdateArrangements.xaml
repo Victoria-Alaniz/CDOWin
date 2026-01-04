@@ -18,13 +18,13 @@
         
         <!-- Row 0: Employment Goals -->
         <TextBox Grid.Row="0" Grid.Column="0" Style="{StaticResource MultiLineTextBoxStyle}"
-                 Header="Employment Goals" Text="{Binding employmentGoal}"
+                 Header="Employment Goals" Text="{Binding EmploymentGoal}"
                  Tag="{x:Bind dialogs:ArrangementsField.EmploymentGoal}"
                  TextChanged="LabeledTextBox_TextChanged"/>
 
         <!-- Row 1: Conditions -->
         <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource MultiLineTextBoxStyle}"
-                 Header="Conditions" Text="{Binding conditions}"
+                 Header="Conditions" Text="{Binding Conditions}"
                  Tag="{x:Bind dialogs:ArrangementsField.Conditions}"
                  TextChanged="LabeledTextBox_TextChanged"/>
     </Grid>

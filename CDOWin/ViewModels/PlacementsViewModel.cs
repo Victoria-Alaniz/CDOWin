@@ -90,9 +90,9 @@ public partial class PlacementsViewModel(IPlacementService service) : Observable
 
         var query = SearchQuery.Trim().ToLower();
         var result = _allPlacements.Where(r =>
-        (r.ClientName ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
-        (r.Employer?.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
-        (r.Supervisor ?? "").ToLower().Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (r.ClientName ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+        (r.Employer?.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+        (r.Supervisor ?? "").ToLower().Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
         (r.Position ?? "").ToLower().Contains(query, StringComparison.CurrentCultureIgnoreCase)
         );
 

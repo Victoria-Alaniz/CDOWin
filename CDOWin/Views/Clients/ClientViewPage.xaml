@@ -270,9 +270,9 @@
                             <TextBlock Style="{StaticResource LabelTextBlockStyle}"
                                        Text="Secretary"/>
                             <TextBlock Style="{StaticResource ValueTextBlockStyle}"
-                                       Text="{Binding SelectedClient.CounselorReference.secretaryName}"/>
+                                       Text="{Binding SelectedClient.CounselorReference.SecretaryName}"/>
                             <TextBlock Style="{StaticResource ValueTextBlockStyle}"
-                                       Text="{Binding SelectedClient.CounselorReference.secretaryEmail}"/>
+                                       Text="{Binding SelectedClient.CounselorReference.SecretaryEmail}"/>
                         </StackPanel>
                     </Grid>
                 </Grid>

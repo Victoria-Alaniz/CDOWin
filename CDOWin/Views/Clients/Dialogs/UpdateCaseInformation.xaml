@@ -31,22 +31,22 @@
                             DateChanged="StartDatePicker_DateChanged"/>
         
         <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Header="Case ID" 
-                 Text="{Binding caseID}" Tag="{x:Bind dialogs:CaseField.CaseID}"
+                 Text="{Binding CaseID}" Tag="{x:Bind dialogs:CaseField.CaseID}"
                  TextChanged="TextBox_TextChanged"/>
         <StackPanel Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Spacing="8">
             <TextBlock Text="Status"/>
-            <DropDownButton x:Name="StatusDropDown" Content="{Binding status}" 
+            <DropDownButton x:Name="StatusDropDown" Content="{Binding Status}" 
                             HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"/>
         </StackPanel>
 
         <!-- Row 1: Benefits/Premiums -->
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="8">
             <TextBlock Text="Benefits"/>
-            <DropDownButton x:Name="BenefitDropDown" Content="{Binding benefits}" 
+            <DropDownButton x:Name="BenefitDropDown" Content="{Binding Benefits}" 
                             HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"/>
         </StackPanel>
         <TextBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Header="Premiums" 
-                 Text="{Binding premiums}" Tag="{x:Bind dialogs:CaseField.Premiums}"
+                 Text="{Binding Premiums}" Tag="{x:Bind dialogs:CaseField.Premiums}"
                  TextChanged="TextBox_TextChanged"/>
         
         <!-- Row 2: Counselor -->

@@ -32,55 +32,55 @@
         
         <!-- Row 0: Name -->
         <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Header="Name" 
-                 Text="{Binding name}" Tag="{x:Bind local:Field.Name}"
+                 Text="{Binding Name}" Tag="{x:Bind local:Field.Name}"
                  TextChanged="LabeledTextBox_TextChanged"/>
         
         <!-- Row 1: Phone & Fax -->
         <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Header="Phone" 
-                 Text="{Binding phone}" Tag="{x:Bind local:Field.Phone}"
+                 Text="{Binding Phone}" Tag="{x:Bind local:Field.Phone}"
                  TextChanged="LabeledTextBox_TextChanged"/>
         <TextBox Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Header="Fax" 
-                 Text="{Binding fax}" Tag="{x:Bind local:Field.Fax}"
+                 Text="{Binding Fax}" Tag="{x:Bind local:Field.Fax}"
                  TextChanged="LabeledTextBox_TextChanged"/>
 
         <!-- Row 2: Address 1 & 2 -->
         <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Header="Address" 
-                 Text="{Binding address1}" Tag="{x:Bind local:Field.Address1}"
+                 Text="{Binding Address1}" Tag="{x:Bind local:Field.Address1}"
                  TextChanged="LabeledTextBox_TextChanged"/>
         <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Header="Apt, ste, etc." 
-                 Text="{Binding address2}" Tag="{x:Bind local:Field.Address2}"
+                 Text="{Binding Address2}" Tag="{x:Bind local:Field.Address2}"
                  TextChanged="LabeledTextBox_TextChanged"/>
         
         <!-- Row 3: City/State/Zip -->
         <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Header="City" 
-                 Text="{Binding city}" Tag="{x:Bind local:Field.City}"
+                 Text="{Binding City}" Tag="{x:Bind local:Field.City}"
                  TextChanged="LabeledTextBox_TextChanged"/>
         <StackPanel Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="1" Spacing="8">
             <TextBlock Text="State"/>
-            <DropDownButton x:Name="StateDropDownButton" Content="{Binding state}"
+            <DropDownButton x:Name="StateDropDownButton" Content="{Binding State}"
                             HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"/>
         </StackPanel>
         <TextBox Grid.Row="3" Grid.Column="5" Header="Zip" 
-                 Text="{Binding zip}" Tag="{x:Bind local:Field.Zip}"
+                 Text="{Binding Zip}" Tag="{x:Bind local:Field.Zip}"
                  TextChanged="LabeledTextBox_TextChanged"/>
         
         <!-- Row 4: Supervisor Name & Phone -->
         <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Header="Supervisor" 
-                 Text="{Binding supervisor}" Tag="{x:Bind local:Field.Supervisor}"
+                 Text="{Binding Supervisor}" Tag="{x:Bind local:Field.Supervisor}"
                  TextChanged="LabeledTextBox_TextChanged"/>
         <TextBox Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" Header="Phone" 
-                 Text="{Binding supervisorPhone}" Tag="{x:Bind local:Field.SupervisorPhone}"
+                 Text="{Binding SupervisorPhone}" Tag="{x:Bind local:Field.SupervisorPhone}"
                  TextChanged="LabeledTextBox_TextChanged"/>
 
         <!-- Row 5: Supervisor Email -->
         <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6" Header="Email"
-                 Text="{Binding supervisorEmail}" Tag="{x:Bind local:Field.SupervisorEmail}"
+                 Text="{Binding SupervisorEmail}" Tag="{x:Bind local:Field.SupervisorEmail}"
                  TextChanged="LabeledTextBox_TextChanged"/>
         
         <!-- Row 6: Notes -->
         <TextBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6"
                  Style="{StaticResource MultiLineTextBoxStyle}"
-                 Header="Notes" Text="{Binding notes}" Tag="{x:Bind local:Field.Notes}"
+                 Header="Notes" Text="{Binding Notes}" Tag="{x:Bind local:Field.Notes}"
                  TextChanged="LabeledTextBox_TextChanged"/>
     </Grid>
 </Page>

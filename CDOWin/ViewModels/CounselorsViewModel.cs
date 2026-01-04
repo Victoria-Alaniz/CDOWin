@@ -104,9 +104,9 @@ public partial class CounselorsViewModel(ICounselorService service) : Observable
 
         var query = SearchQuery.Trim().ToLower();
         var result = _allCounselors.Where(c =>
-        (c.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
-        (c.SecretaryName ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
-        (c.Email ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (c.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+        (c.SecretaryName ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+        (c.Email ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
         (c.SecretaryEmail ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase)
         );
 

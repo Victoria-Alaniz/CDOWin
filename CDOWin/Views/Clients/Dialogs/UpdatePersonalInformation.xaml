@@ -36,43 +36,43 @@
 
         <NumberBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Header="DL/ID"
                    Style="{StaticResource WholeNumberStyle}"
-                   Text="{Binding driversLicense}" Tag="{x:Bind dialogs:PersonalField.DL}"
+                   Text="{Binding DriversLicense}" Tag="{x:Bind dialogs:PersonalField.DL}"
                    ValueChanged="NumberBox_ValueChanged"/>
         <NumberBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Header="SSN"
-                   Text="{Binding ssn}" Tag="{x:Bind dialogs:PersonalField.SSN}"
+                   Text="{Binding Ssn}" Tag="{x:Bind dialogs:PersonalField.SSN}"
                    ValueChanged="NumberBox_ValueChanged"/>
         
         <!-- Row 1: Fluent Languages/Race-->
         <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Header="Fluent Languages" 
-                 Text="{Binding fluentLanguages}" Tag="{x:Bind dialogs:PersonalField.Languages}"
+                 Text="{Binding FluentLanguages}" Tag="{x:Bind dialogs:PersonalField.Languages}"
                  TextChanged="TextBox_TextChanged"/>
         <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Header="Race" 
-                 Text="{Binding race}" Tag="{x:Bind dialogs:PersonalField.Race}"
+                 Text="{Binding Race}" Tag="{x:Bind dialogs:PersonalField.Race}"
                  TextChanged="TextBox_TextChanged"/>
         <!-- Row 2: Address -->
         <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Header="Address" 
-                 Text="{Binding address1}" Tag="{x:Bind dialogs:PersonalField.Address1}"
+                 Text="{Binding Address1}" Tag="{x:Bind dialogs:PersonalField.Address1}"
                  TextChanged="TextBox_TextChanged"/>
         <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Header="Apt, ste, etc" 
-                 Text="{Binding address2}" Tag="{x:Bind dialogs:PersonalField.Address2}"
+                 Text="{Binding Address2}" Tag="{x:Bind dialogs:PersonalField.Address2}"
                  TextChanged="TextBox_TextChanged"/>
         
         <!-- Row 3: Address cont. -->
         <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Header="City" 
-                 Text="{Binding city}" Tag="{x:Bind dialogs:PersonalField.City}"
+                 Text="{Binding City}" Tag="{x:Bind dialogs:PersonalField.City}"
                  TextChanged="TextBox_TextChanged"/>
         <StackPanel Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="1" Spacing="8">
             <TextBlock Text="State"/>
-            <DropDownButton x:Name="StateDropDownButton" Content="{Binding state}"
+            <DropDownButton x:Name="StateDropDownButton" Content="{Binding State}"
                             HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"/>
         </StackPanel>
         <NumberBox Grid.Row="3" Grid.Column="5" Header="Zip"
-                   Text="{Binding zip}" Tag="{x:Bind dialogs:PersonalField.Zip}"
+                   Text="{Binding Zip}" Tag="{x:Bind dialogs:PersonalField.Zip}"
                    ValueChanged="NumberBox_ValueChanged"/>
 
         <!-- Row 4: Education -->
         <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" Style="{StaticResource MultiLineTextBoxStyle}"
-                 Header="Education" Text="{Binding education}" Tag="{x:Bind dialogs:PersonalField.Education}"
+                 Header="Education" Text="{Binding Education}" Tag="{x:Bind dialogs:PersonalField.Education}"
                  TextChanged="TextBox_TextChanged"/>
     </Grid>
 </Page>

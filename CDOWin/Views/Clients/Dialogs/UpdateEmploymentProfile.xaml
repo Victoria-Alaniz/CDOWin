@@ -18,20 +18,18 @@
         </Grid.RowDefinitions>
         
         <!-- Row 0: Disability -->
-        <TextBox Grid.Row="0" Grid.Column="0" 
-                 Style="{StaticResource MultiLineTextBoxStyle}"
-                 Header="Disability" Text="{Binding disability}" 
+        <TextBox Grid.Row="0" Grid.Column="0" Style="{StaticResource MultiLineTextBoxStyle}"
+                 Header="Disability" Text="{Binding Disability}" 
                  Tag="{x:Bind dialogs:EmploymentField.Disability}"
                  TextChanged="TextBox_TextChanged"/>
         <!-- Row 1: Criminal Charges -->
-        <TextBox Grid.Row="1" Grid.Column="0" 
-                 Style="{StaticResource MultiLineTextBoxStyle}"
-                 Header="Criminal Charges" Text="{Binding criminalCharge}" 
+        <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource MultiLineTextBoxStyle}"
+                 Header="Criminal Charges" Text="{Binding CriminalCharge}" 
                  Tag="{x:Bind dialogs:EmploymentField.CriminalCharge}"
                  TextChanged="TextBox_TextChanged"/>
         <!-- Row 2: Transportation -->
         <TextBox Grid.Row="2" Grid.Column="0" Header="Transportation" 
-                 Text="{Binding transportation}" Tag="{x:Bind dialogs:EmploymentField.Transportation}"
+                 Text="{Binding Transportation}" Tag="{x:Bind dialogs:EmploymentField.Transportation}"
                  TextChanged="TextBox_TextChanged"/>
     </Grid>
 </Page>

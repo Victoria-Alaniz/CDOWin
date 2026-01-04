@@ -6,7 +6,7 @@ using CDOWin.Views.Reminders.Dialogs;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Reflection.Metadata.Ecma335;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 
@@ -92,9 +92,11 @@ public sealed partial class CalendarWindow : Window {
     }
 
     private async void OnReminderClickedAsync(object? sender, int id) {
+        Debug.WriteLine($"OnReminderClickedAsync {id}");
         if (ViewModel.GetReminderByID(id) is not Reminder reminder)
             return;
 
+        Debug.WriteLine($"IS Reminder");
         var updateVM = new ReminderUpdateViewModel(reminder);
         var dialog = DialogFactory.UpdateDialog(this.Content.XamlRoot, $"Edit Reminder for {updateVM.Original.ClientName}");
         dialog.Content = new UpdateReminderPage(updateVM);

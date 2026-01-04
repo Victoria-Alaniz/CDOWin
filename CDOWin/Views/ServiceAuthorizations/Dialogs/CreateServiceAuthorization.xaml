@@ -31,11 +31,11 @@
 
         <!-- Row 0: Case ID + Tier + Counselor (Non Editable) -->
         <controls:LabelPair Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4"
-                            Label="Issued By" Value="{Binding Client.counselorReference.name}"/>
+                            Label="Issued By" Value="{Binding Client.CounselorReference.Name}"/>
         <controls:LabelPair Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
-                            Label="Tier Level" Value="{Binding Client.status}"/>
+                            Label="Tier Level" Value="{Binding Client.Status}"/>
         <controls:LabelPair Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2"
-                            Label="Case ID" Value="{Binding Client.caseID}"/>
+                            Label="Case ID" Value="{Binding Client.CaseID}"/>
 
         <!-- Row 1: Office Address -->
         <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Header="DRS Office Address" 

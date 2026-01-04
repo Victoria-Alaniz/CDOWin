@@ -90,9 +90,9 @@ public partial class ServiceAuthorizationsViewModel(IServiceAuthorizationService
 
         var query = SearchQuery.Trim().ToLower();
         var result = _allServiceAuthorizations.Where(s =>
-        (s.Client?.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
-        (s.Client?.CounselorReference?.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
-        (s.Id ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (s.Client?.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+        (s.Client?.CounselorReference?.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+        (s.Id ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
         (s.Description ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase)
         );
 

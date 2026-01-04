@@ -99,11 +99,11 @@ public partial class EmployersViewModel(IEmployerService service) : ObservableOb
 
         var query = SearchQuery.Trim().ToLower();
         var result = _allEmployers.Where(e =>
-        (e.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
-        (e.FormattedAddress ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
-        (e.Email ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (e.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+        (e.FormattedAddress ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+        (e.Email ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
         (e.Supervisor ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
-        (e.SupervisorEmail ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) || 
+        (e.SupervisorEmail ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
         (e.Notes ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase)
         );
 

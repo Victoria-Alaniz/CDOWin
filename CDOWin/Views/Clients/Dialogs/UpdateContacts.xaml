@@ -26,42 +26,42 @@
 
         <!-- Row 0: Phone 1 -->
         <TextBox Grid.Row="0" Grid.Column="0" Header="Phone 1" 
-                 Text="{Binding phone1}" Tag="{x:Bind dialogs:ContactField.Phone1}"
+                 Text="{Binding Phone1}" Tag="{x:Bind dialogs:ContactField.Phone1}"
                  TextChanged="TextBox_TextChanged"/>
         <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Header="Description" 
-                 Text="{Binding phone1Identity}" Tag="{x:Bind dialogs:ContactField.Phone1Identity}"
+                 Text="{Binding Phone1Identity}" Tag="{x:Bind dialogs:ContactField.Phone1Identity}"
                  TextChanged="TextBox_TextChanged"/>
 
         <!-- Row 1: Phone 2 -->
         <TextBox Grid.Row="1" Grid.Column="0" Header="Phone 2" 
-                 Text="{Binding phone2}" Tag="{x:Bind dialogs:ContactField.Phone2}"
+                 Text="{Binding Phone2}" Tag="{x:Bind dialogs:ContactField.Phone2}"
                  TextChanged="TextBox_TextChanged"/>
         <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Header="Description"
-                 Text="{Binding phone2Identity}" Tag="{x:Bind dialogs:ContactField.Phone2Identity}"
+                 Text="{Binding Phone2Identity}" Tag="{x:Bind dialogs:ContactField.Phone2Identity}"
                  TextChanged="TextBox_TextChanged"/>
 
         <!-- Row 2: Phone 3 -->
         <TextBox Grid.Row="2" Grid.Column="0" Header="Phone 3" 
-                 Text="{Binding phone3}" Tag="{x:Bind dialogs:ContactField.Phone3}"
+                 Text="{Binding Phone3}" Tag="{x:Bind dialogs:ContactField.Phone3}"
                  TextChanged="TextBox_TextChanged"/>
         <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Header="Description" 
-                 Text="{Binding phone3Identity}" Tag="{x:Bind dialogs:ContactField.Phone3Identity}"
+                 Text="{Binding Phone3Identity}" Tag="{x:Bind dialogs:ContactField.Phone3Identity}"
                  TextChanged="TextBox_TextChanged"/>
 
         <!-- Row 3: Email 1 -->
         <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Header="Email 1" 
-                 Text="{Binding email}" Tag="{x:Bind dialogs:ContactField.Email}"
+                 Text="{Binding Email}" Tag="{x:Bind dialogs:ContactField.Email}"
                  TextChanged="TextBox_TextChanged"/>
         <TextBox Grid.Row="3" Grid.Column="2" Header="Description" 
-                 Text="{Binding emailIdentity}" Tag="{x:Bind dialogs:ContactField.EmailIdentity}"
+                 Text="{Binding EmailIdentity}" Tag="{x:Bind dialogs:ContactField.EmailIdentity}"
                  TextChanged="TextBox_TextChanged"/>
 
         <!-- Row 4: Email 2 -->
         <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Header="Email 2" 
-                 Text="{Binding email2}" Tag="{x:Bind dialogs:ContactField.Email2}"
+                 Text="{Binding Email2}" Tag="{x:Bind dialogs:ContactField.Email2}"
                  TextChanged="TextBox_TextChanged"/>
         <TextBox Grid.Row="4" Grid.Column="2" Header="Email 2" 
-                 Text="{Binding email2Identity}" Tag="{x:Bind dialogs:ContactField.Email2Identity}"
+                 Text="{Binding Email2Identity}" Tag="{x:Bind dialogs:ContactField.Email2Identity}"
                  TextChanged="TextBox_TextChanged"/>
 
     </Grid>

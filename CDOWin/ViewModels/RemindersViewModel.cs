@@ -68,7 +68,7 @@ public partial class RemindersViewModel : ObservableObject {
 
     public IReadOnlyDictionary<DateTime, IReadOnlyList<Reminder>> GetRemindersByMonth(DateTime month) {
         var dict = new Dictionary<DateTime, IReadOnlyList<Reminder>>();
-        foreach(var group in _allReminders
+        foreach (var group in _allReminders
             .Where(r => r.Date.Month == month.Month)
             .GroupBy(r => r.Date.Date)
             .OrderBy(g => g.Key)) {
@@ -95,7 +95,7 @@ public partial class RemindersViewModel : ObservableObject {
         }
     }
 
-    public Reminder? GetReminderByID(int id) => Filtered.FirstOrDefault(r => r.Id == id);
+    public Reminder? GetReminderByID(int id) => _allReminders.FirstOrDefault(r => r.Id == id);
 
     public bool DateHasReminders(DateTime date) => _allReminders.Any(r => r.Date.Date == date.Date);
 
@@ -167,7 +167,7 @@ public partial class RemindersViewModel : ObservableObject {
             .ToList()
             .AsReadOnly();
 
-        if (source == null)  return;
+        if (source == null) return;
 
         _dispatcher.TryEnqueue(() => {
             ClientSpecific.Clear();
