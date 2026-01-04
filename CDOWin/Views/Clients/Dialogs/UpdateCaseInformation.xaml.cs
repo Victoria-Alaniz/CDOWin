@@ -11,7 +11,7 @@ using System.Diagnostics;
 namespace CDOWin.Views.Clients.Dialogs;
 
 public sealed partial class UpdateCaseInformation : Page {
-    private List<Counselor> _counselors;
+    private readonly List<Counselor> _counselors;
 
     public ClientUpdateViewModel ViewModel { get; private set; }
 

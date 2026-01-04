@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace CDOWin.ViewModels;
 
-public partial class PlacementsViewModel : ObservableObject {
+public partial class PlacementsViewModel(IPlacementService service) : ObservableObject {
 
     // =========================
     // Services / Dependencies
     // =========================
-    private readonly IPlacementService _service;
-    private readonly DispatcherQueue _dispatcher;
+    private readonly IPlacementService _service = service;
+    private readonly DispatcherQueue _dispatcher = DispatcherQueue.GetForCurrentThread();
 
     // =========================
     // Private Backing Fields
@@ -35,15 +35,6 @@ public partial class PlacementsViewModel : ObservableObject {
 
     [ObservableProperty]
     public partial string SearchQuery { get; set; } = string.Empty;
-
-
-    // =========================
-    // Constructor
-    // =========================
-    public PlacementsViewModel(IPlacementService service) {
-        _service = service;
-        _dispatcher = DispatcherQueue.GetForCurrentThread();
-    }
 
     // =========================
     // Property Change Methods

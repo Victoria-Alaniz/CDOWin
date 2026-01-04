@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace CDOWin.ViewModels;
 
-public partial class ServiceAuthorizationsViewModel : ObservableObject {
+public partial class ServiceAuthorizationsViewModel(IServiceAuthorizationService service) : ObservableObject {
 
     // =========================
     // Services / Dependencies
     // =========================
-    private readonly IServiceAuthorizationService _service;
-    private readonly DispatcherQueue _dispatcher;
+    private readonly IServiceAuthorizationService _service = service;
+    private readonly DispatcherQueue _dispatcher = DispatcherQueue.GetForCurrentThread();
 
     // =========================
     // Private Backing Fields
@@ -35,14 +35,6 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
 
     [ObservableProperty]
     public partial string SearchQuery { get; set; } = string.Empty;
-
-    // =========================
-    // Constructor
-    // =========================
-    public ServiceAuthorizationsViewModel(IServiceAuthorizationService service) {
-        _service = service;
-        _dispatcher = DispatcherQueue.GetForCurrentThread();
-    }
 
     // =========================
     // Property Change Methods

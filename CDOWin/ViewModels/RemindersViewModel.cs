@@ -67,14 +67,14 @@ public partial class RemindersViewModel : ObservableObject {
     // =========================
 
     public IReadOnlyDictionary<DateTime, IReadOnlyList<Reminder>> GetRemindersByMonth(DateTime month) {
-        return _allReminders
+        var dict = new Dictionary<DateTime, IReadOnlyList<Reminder>>();
+        foreach(var group in _allReminders
             .Where(r => r.Date.Month == month.Month)
             .GroupBy(r => r.Date.Date)
-            .OrderBy(g => g.Key)
-            .ToDictionary(
-                g => g.Key,
-                g => (IReadOnlyList<Reminder>)g.ToList()
-            );
+            .OrderBy(g => g.Key)) {
+            dict[group.Key] = group.ToList();
+        }
+        return dict;
     }
 
     public void RequestClient(int clientID) => _selectionService.RequestSelectedClient(clientID);
@@ -191,7 +191,7 @@ public partial class RemindersViewModel : ObservableObject {
             RemindersFilter.All => _allReminders,
             RemindersFilter.Upcoming => _allReminders.Where(r => r.Date > DateTime.Now),
             RemindersFilter.Client => ClientSpecific,
-            _ => Array.Empty<Reminder>()
+            _ => []
         };
 
         Filtered.Clear();

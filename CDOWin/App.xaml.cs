@@ -6,7 +6,7 @@ using Microsoft.UI.Xaml;
 namespace CDOWin;
 
 public partial class App : Application {
-    private WindowManager _windowManager;
+    private readonly WindowManager _windowManager;
 
     public App() {
         _windowManager = WindowManager.Instance;

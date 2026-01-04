@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace CDOWin.ViewModels;
 
-public partial class CounselorsViewModel : ObservableObject {
+public partial class CounselorsViewModel(ICounselorService service) : ObservableObject {
 
     // =========================
     // Services / Dependencies
     // =========================
-    private readonly ICounselorService _service;
-    private readonly DispatcherQueue _dispatcher;
+    private readonly ICounselorService _service = service;
+    private readonly DispatcherQueue _dispatcher = DispatcherQueue.GetForCurrentThread();
 
     // =========================
     // Private Backing Fields
@@ -36,14 +36,6 @@ public partial class CounselorsViewModel : ObservableObject {
 
     [ObservableProperty]
     public partial string SearchQuery { get; set; } = string.Empty;
-
-    // =========================
-    // Constructor
-    // =========================
-    public CounselorsViewModel(ICounselorService service) {
-        _service = service;
-        _dispatcher = DispatcherQueue.GetForCurrentThread();
-    }
 
     // =========================
     // Property Change Methods
@@ -96,7 +88,7 @@ public partial class CounselorsViewModel : ObservableObject {
 
     public async Task UpdateCounselorAsync(UpdateCounselorDTO update) {
         if (Selected == null) return;
-        var updatedCounselor = await _service.UpdateCounselorAsync(Selected.Id, update);
+        _ = await _service.UpdateCounselorAsync(Selected.Id, update);
         await ReloadCounselorAsync(Selected.Id);
     }
 

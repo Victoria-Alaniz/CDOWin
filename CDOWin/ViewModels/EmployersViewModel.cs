@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace CDOWin.ViewModels;
 
-public partial class EmployersViewModel : ObservableObject {
+public partial class EmployersViewModel(IEmployerService service) : ObservableObject {
 
     // =========================
     // Services / Dependencies
     // =========================
-    private readonly IEmployerService _service;
-    private readonly DispatcherQueue _dispatcher;
+    private readonly IEmployerService _service = service;
+    private readonly DispatcherQueue _dispatcher = DispatcherQueue.GetForCurrentThread();
 
     // =========================
     // Private Backing Fields
@@ -36,14 +36,6 @@ public partial class EmployersViewModel : ObservableObject {
 
     [ObservableProperty]
     public partial string SearchQuery { get; set; } = string.Empty;
-
-    // =========================
-    // Constructor
-    // =========================
-    public EmployersViewModel(IEmployerService service) {
-        _service = service;
-        _dispatcher = DispatcherQueue.GetForCurrentThread();
-    }
 
     // =========================
     // Property Change Methods
@@ -91,7 +83,7 @@ public partial class EmployersViewModel : ObservableObject {
     public async Task UpdateEmployerAsync(EmployerDTO update) {
         if (Selected == null)
             return;
-        var updatedEmployer = await _service.UpdateEmployerAsync(Selected.Id, update);
+        _ = await _service.UpdateEmployerAsync(Selected.Id, update);
         await ReloadEmployerAsync(Selected.Id);
     }
 

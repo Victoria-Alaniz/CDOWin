@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace CDOWin.ViewModels;
 
-public partial class StatesViewModel : ObservableObject {
-    private readonly IStateService _service;
+public partial class StatesViewModel(IStateService service) : ObservableObject {
+    private readonly IStateService _service = service;
 
     [ObservableProperty]
     public partial ObservableCollection<State> States { get; private set; } = [];
@@ -19,10 +19,6 @@ public partial class StatesViewModel : ObservableObject {
 
     [ObservableProperty]
     public partial State? SelectedState { get; set; }
-
-    public StatesViewModel(IStateService service) {
-        _service = service;
-    }
 
     partial void OnSelectedStateChanged(State? value) {
         if (value == null) return;
