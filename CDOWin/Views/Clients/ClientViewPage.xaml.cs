@@ -101,6 +101,16 @@ public sealed partial class ClientViewPage : Page {
         await dialog.ShowAsync();
     }
 
+    private void SA_Click(object sender, RoutedEventArgs e) {
+        if (sender is Button button && button.Tag is string id)
+            Debug.WriteLine($"SA Clicked. ID: {id}");
+    }
+
+    private void Placement_Click(object sender, RoutedEventArgs e) {
+        if (sender is Button button && button.Tag is string id)
+            Debug.WriteLine($"SA Clicked. ID: {id}");
+    }
+
     private async void ReminderFlyoutItem_Click(object sender, RoutedEventArgs e) {
         if (sender is MenuFlyoutItem item
             && item.Tag is ReminderMenuItem reminderItem

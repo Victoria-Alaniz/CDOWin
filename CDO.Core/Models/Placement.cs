@@ -35,6 +35,7 @@ public record class Placement(
     EmployerDTO? Employer
     ) {
     public string? FormattedHireDate => HireDate?.ToString(format: "MM/dd/yyyy");
+
     public string? FormattedEndDate => EndDate?.ToString(format: "MM/dd/yyyy");
 
     public string? FormattedSalary => $"${Salary}";
