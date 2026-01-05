@@ -36,7 +36,7 @@ public class UpdateClientDTO {
     public string? EmploymentGoal { get; set; }
     public int? EmployerID { get; set; }
     public string? Status { get; set; }
-    public string? Benefit { get; set; }
+    public string? Benefits { get; set; }
     public string? CriminalCharge { get; set; }
     public string? Education { get; set; }
     public string? Transportation { get; set; }

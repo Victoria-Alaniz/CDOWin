@@ -107,7 +107,7 @@ public sealed partial class UpdateCaseInformation : Page {
     private void DropDownSelected(object sender, RoutedEventArgs e) {
         if (sender is MenuFlyoutItem item) {
             if (item.Tag is Benefit benefit) {
-                ViewModel.UpdatedClient.Benefit = benefit.Value;
+                ViewModel.UpdatedClient.Benefits = benefit.Value;
                 BenefitDropDown.Content = benefit.Value;
             } else if (item.Tag is Status status) {
                 ViewModel.UpdatedClient.Status = status.Value;
@@ -132,12 +132,6 @@ public sealed partial class UpdateCaseInformation : Page {
         switch (type) {
             case CaseField.CaseID:
                 ViewModel.UpdatedClient.CaseID = value;
-                break;
-            case CaseField.Status:
-                ViewModel.UpdatedClient.Status = value;
-                break;
-            case CaseField.Benefit:
-                ViewModel.UpdatedClient.Benefit = value;
                 break;
             case CaseField.Premiums:
                 ViewModel.UpdatedClient.Premium = value;
