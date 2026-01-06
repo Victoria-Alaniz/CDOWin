@@ -7,15 +7,23 @@ using Microsoft.UI.Xaml.Controls;
 namespace CDOWin.Views.Placements;
 
 public sealed partial class PlacementsPage : Page {
-    public PlacementsViewModel ViewModel { get; }
 
+    // =========================
+    // ViewModel
+    // =========================
+    public PlacementsViewModel ViewModel { get; } = AppServices.PlacementsViewModel;
+
+    // =========================
+    // Constructor
+    // =========================
     public PlacementsPage() {
         InitializeComponent();
-        ViewModel = AppServices.PlacementsViewModel;
-        DataContext = ViewModel;
         InspectorFrame.Navigate(typeof(PlacementInspector), ViewModel);
     }
 
+    // =========================
+    // Click Handlers
+    // =========================
     private void ListView_ItemClick(object sender, ItemClickEventArgs e) {
         if (e.ClickedItem is Placement placement) {
             _ = ViewModel.ReloadPlacementAsync(placement.Id);
