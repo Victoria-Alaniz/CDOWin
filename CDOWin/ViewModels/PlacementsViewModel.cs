@@ -33,7 +33,7 @@ public partial class PlacementsViewModel : ObservableObject {
     public partial ObservableCollection<Placement> Filtered { get; private set; } = [];
 
     [ObservableProperty]
-    public partial Placement? Selected { get; set; }
+    public partial Placement? Selected { get; set; } = null;
 
     [ObservableProperty]
     public partial string SearchQuery { get; set; } = string.Empty;
