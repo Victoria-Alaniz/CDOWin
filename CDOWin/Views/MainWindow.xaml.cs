@@ -32,7 +32,6 @@ public sealed partial class MainWindow : Window {
     // =========================
     // Window Setup
     // =========================
-
     private void SetupWindow() {
         ExtendsContentIntoTitleBar = true;
 
@@ -60,7 +59,6 @@ public sealed partial class MainWindow : Window {
     // =========================
     // Navigation
     // =========================
-
     private void OnNavigationRequested(CDOFrame frame) {
         var item = NavigationBar.MenuItems
             .OfType<NavigationViewItem>()
