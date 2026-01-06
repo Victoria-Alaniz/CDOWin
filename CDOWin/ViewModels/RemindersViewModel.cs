@@ -45,7 +45,7 @@ public partial class RemindersViewModel : ObservableObject {
         get => _filter;
         set {
             if (SetProperty(ref _filter, value)) {
-                _dispatcher.TryEnqueue(ApplyFilterInternal);
+                _dispatcher.TryEnqueue(ApplyFilter);
             }
         }
     }
@@ -125,7 +125,7 @@ public partial class RemindersViewModel : ObservableObject {
         var snapshot = reminders.OrderBy(r => r.Date).ToList().AsReadOnly();
         _allReminders = snapshot;
 
-        _dispatcher.TryEnqueue(ApplyFilterInternal);
+        _dispatcher.TryEnqueue(ApplyFilter);
     }
 
     public async Task ReloadReminderAsync(int id) {
@@ -138,7 +138,14 @@ public partial class RemindersViewModel : ObservableObject {
             .AsReadOnly();
 
         _allReminders = updated;
-        _dispatcher.TryEnqueue(ApplyFilterInternal);
+
+        if(Filter == RemindersFilter.Client) {
+            ClientSpecific = new ObservableCollection<Reminder>(
+                ClientSpecific.Select(r => r.Id == id ? reminder : r)
+            );
+        }
+
+        _dispatcher.TryEnqueue(ApplyFilter);
     }
 
     public async Task UpdateReminderAsync(int id, UpdateReminderDTO update) {
@@ -154,14 +161,13 @@ public partial class RemindersViewModel : ObservableObject {
             .ToList()
             .AsReadOnly();
 
-        _dispatcher.TryEnqueue(ApplyFilterInternal);
+        _dispatcher.TryEnqueue(ApplyFilter);
     }
 
     // =========================
     // Event Handlers
     // =========================
     private void OnClientChanged(Client? client) {
-        Debug.WriteLine("On client changed");
         var source = client?.Reminders?
             .OrderBy(r => r.Date)
             .ToList()
@@ -175,7 +181,7 @@ public partial class RemindersViewModel : ObservableObject {
                 ClientSpecific.Add(reminder);
 
             if (Filter == RemindersFilter.Client)
-                ApplyFilterInternal();
+                ApplyFilter();
         });
     }
 
@@ -186,7 +192,8 @@ public partial class RemindersViewModel : ObservableObject {
     // =========================
     // Utility / Filtering
     // =========================
-    private void ApplyFilterInternal() {
+    private void ApplyFilter() {
+        Debug.WriteLine(Filter.ToString());
         IEnumerable<Reminder> source = _filter switch {
             RemindersFilter.All => _allReminders,
             RemindersFilter.Upcoming => _allReminders.Where(r => r.Date > DateTime.Now),
