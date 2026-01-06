@@ -10,16 +10,13 @@ using System.Linq;
 namespace CDOWin.Views.Employers.Dialogs;
 
 public sealed partial class UpdateEmployer : Page {
-    private List<State> _states;
+    private List<State> _states = AppServices.StatesViewModel.States.ToList();
 
     public EmployerUpdateViewModel ViewModel;
 
     // Constructor
     public UpdateEmployer(EmployerUpdateViewModel viewModel) {
-        var states = AppServices.StatesViewModel.States.ToList();
-        _states = states;
         ViewModel = viewModel;
-        DataContext = viewModel.Original;
         InitializeComponent();
         BuildStateDropdown();
     }

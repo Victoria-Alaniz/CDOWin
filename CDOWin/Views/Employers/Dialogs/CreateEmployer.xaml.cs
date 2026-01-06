@@ -15,16 +15,13 @@ public sealed partial class CreateEmployer : Page {
     // Dependencies
     // =========================
     private readonly CreateEmployerViewModel ViewModel;
-    private List<State> _states;
+    private List<State> _states = AppServices.StatesViewModel.States.ToList();
 
     // =========================
     // Constructor
     // =========================
     public CreateEmployer(CreateEmployerViewModel viewModel) {
-        var states = AppServices.StatesViewModel.States.ToList();
-        _states = states;
         ViewModel = viewModel;
-        DataContext = viewModel;
         InitializeComponent();
         BuildStateDropdown();
     }

@@ -13,16 +13,14 @@ public sealed partial class EmployersPage : Page {
     // =========================
     // ViewModel
     // =========================
-    private EmployersViewModel ViewModel { get; }
+    private EmployersViewModel ViewModel { get; } = AppServices.EmployersViewModel;
 
     // =========================
     // Constructor
     // =========================
     public EmployersPage() {
         InitializeComponent();
-        ViewModel = AppServices.EmployersViewModel;
-        DataContext = ViewModel;
-        InspectorFrame.Navigate(typeof(EmployerInspector), ViewModel);
+        InspectorFrame.Navigate(typeof(EmployerInspector));
     }
 
     // =========================

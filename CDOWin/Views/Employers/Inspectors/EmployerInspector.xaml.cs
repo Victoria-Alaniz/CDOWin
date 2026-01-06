@@ -1,4 +1,5 @@
 using CDO.Core.DTOs;
+using CDOWin.Services;
 using CDOWin.ViewModels;
 using CDOWin.Views.Employers.Dialogs;
 using Microsoft.UI.Xaml.Controls;
@@ -8,17 +9,22 @@ using System;
 namespace CDOWin.Views.Employers.Inspectors;
 
 public sealed partial class EmployerInspector : Page {
-    public EmployersViewModel ViewModel { get; private set; } = null!;
 
+    // =========================
+    // ViewModel
+    // =========================
+    public EmployersViewModel ViewModel { get; private set; } = AppServices.EmployersViewModel;
+
+    // =========================
+    // Constructor
+    // =========================
     public EmployerInspector() {
         InitializeComponent();
     }
 
-    protected override void OnNavigatedTo(NavigationEventArgs e) {
-        ViewModel = (EmployersViewModel)e.Parameter;
-        DataContext = ViewModel;
-    }
-
+    // =========================
+    // Click Handlers
+    // =========================
     private async void EditButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
         if (ViewModel == null || ViewModel.Selected == null)
             return;
@@ -30,11 +36,7 @@ public sealed partial class EmployerInspector : Page {
         var result = await dialog.ShowAsync();
 
         if (result == ContentDialogResult.Primary) {
-            updateEmployer(updateVM.Updated);
+            _ = ViewModel.UpdateEmployerAsync(updateVM.Updated);
         }
-    }
-
-    private void updateEmployer(EmployerDTO update) {
-        _ = ViewModel.UpdateEmployerAsync(update);
     }
 }

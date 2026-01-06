@@ -20,7 +20,7 @@ public sealed partial class CounselorsPage : Page {
     // =========================
     public CounselorsPage() {
         InitializeComponent();
-        InspectorFrame.Navigate(typeof(CounselorInspector), ViewModel);
+        InspectorFrame.Navigate(typeof(CounselorInspector));
     }
 
     // =========================
