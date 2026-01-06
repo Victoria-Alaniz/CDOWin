@@ -5,7 +5,6 @@ using CDOWin.Views.Clients.Dialogs;
 using CDOWin.Views.ServiceAuthorizations.Dialogs;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Diagnostics;
 
@@ -14,9 +13,9 @@ namespace CDOWin.Views.Clients;
 public sealed partial class ClientViewPage : Page {
 
     // =========================
-    // Dependencies
+    // ViewModel
     // =========================
-    public ClientsViewModel ViewModel { get; private set; } = null!;
+    public ClientsViewModel ViewModel { get; } = AppServices.ClientsViewModel;
 
     // =========================
     // Constructor
@@ -24,14 +23,6 @@ public sealed partial class ClientViewPage : Page {
     public ClientViewPage() {
         InitializeComponent();
         BuildRemindersFlyout();
-    }
-
-    // =========================
-    // Navigation
-    // =========================
-    protected override void OnNavigatedTo(NavigationEventArgs e) {
-        ViewModel = (ClientsViewModel)e.Parameter;
-        DataContext = ViewModel;
     }
 
     // =========================

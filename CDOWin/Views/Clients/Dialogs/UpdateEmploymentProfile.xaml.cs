@@ -5,13 +5,23 @@ using Microsoft.UI.Xaml.Controls;
 namespace CDOWin.Views.Clients.Dialogs;
 
 public sealed partial class UpdateEmploymentProfile : Page {
+
+    // =========================
+    // Dependencies
+    // =========================
     public ClientUpdateViewModel ViewModel { get; private set; }
+
+    // =========================
+    // Constructor
+    // =========================
     public UpdateEmploymentProfile(ClientUpdateViewModel viewModel) {
         ViewModel = viewModel;
-        DataContext = viewModel.OriginalClient;
         InitializeComponent();
     }
 
+    // =========================
+    // Property Change Methods
+    // =========================
     private void TextBox_TextChanged(object sender, TextChangedEventArgs e) {
         if (sender is not TextBox textbox || textbox.Tag is not EmploymentField field)
             return;
@@ -24,6 +34,9 @@ public sealed partial class UpdateEmploymentProfile : Page {
         UpdateValue(text, field);
     }
 
+    // =========================
+    // Utility Methods
+    // =========================
     private void UpdateValue(string value, EmploymentField type) {
         switch (type) {
             case EmploymentField.Disability:

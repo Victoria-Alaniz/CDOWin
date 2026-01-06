@@ -8,7 +8,6 @@
     xmlns:controls="using:CDOWin.Controls" 
     xmlns:models="using:CDO.Core.Models" 
     xmlns:dialogs="using:CDOWin.Views.Clients.Dialogs"
-    d:DataContext="{d:DesignInstance Type=models:Client}"
     mc:Ignorable="d">
 
     <Grid Width="480" RowSpacing="10" ColumnSpacing="12">
@@ -36,43 +35,51 @@
 
         <NumberBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Header="DL/ID"
                    Style="{StaticResource WholeNumberStyle}"
-                   Text="{Binding DriversLicense}" Tag="{x:Bind dialogs:PersonalField.DL}"
+                   Text="{x:Bind ViewModel.OriginalClient.DriversLicense}" 
+                   Tag="{x:Bind dialogs:PersonalField.DL}"
                    ValueChanged="NumberBox_ValueChanged"/>
         <NumberBox Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Header="SSN"
-                   Text="{Binding Ssn}" Tag="{x:Bind dialogs:PersonalField.SSN}"
+                   Text="{x:Bind ViewModel.OriginalClient.Ssn}" 
+                   Tag="{x:Bind dialogs:PersonalField.SSN}"
                    ValueChanged="NumberBox_ValueChanged"/>
         
         <!-- Row 1: Fluent Languages/Race-->
         <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Header="Fluent Languages" 
-                 Text="{Binding FluentLanguages}" Tag="{x:Bind dialogs:PersonalField.Languages}"
+                 Text="{x:Bind ViewModel.OriginalClient.FluentLanguages}" 
+                 Tag="{x:Bind dialogs:PersonalField.Languages}"
                  TextChanged="TextBox_TextChanged"/>
         <TextBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Header="Race" 
-                 Text="{Binding Race}" Tag="{x:Bind dialogs:PersonalField.Race}"
+                 Text="{x:Bind ViewModel.OriginalClient.Race}" 
+                 Tag="{x:Bind dialogs:PersonalField.Race}"
                  TextChanged="TextBox_TextChanged"/>
         <!-- Row 2: Address -->
         <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Header="Address" 
-                 Text="{Binding Address1}" Tag="{x:Bind dialogs:PersonalField.Address1}"
+                 Text="{x:Bind ViewModel.OriginalClient.Address1}" 
+                 Tag="{x:Bind dialogs:PersonalField.Address1}"
                  TextChanged="TextBox_TextChanged"/>
         <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Header="Apt, ste, etc" 
-                 Text="{Binding Address2}" Tag="{x:Bind dialogs:PersonalField.Address2}"
+                 Text="{x:Bind ViewModel.OriginalClient.Address2}" 
+                 Tag="{x:Bind dialogs:PersonalField.Address2}"
                  TextChanged="TextBox_TextChanged"/>
         
         <!-- Row 3: Address cont. -->
         <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Header="City" 
-                 Text="{Binding City}" Tag="{x:Bind dialogs:PersonalField.City}"
+                 Text="{x:Bind ViewModel.OriginalClient.City}" 
+                 Tag="{x:Bind dialogs:PersonalField.City}"
                  TextChanged="TextBox_TextChanged"/>
         <StackPanel Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="1" Spacing="8">
             <TextBlock Text="State"/>
-            <DropDownButton x:Name="StateDropDownButton" Content="{Binding State}"
+            <DropDownButton x:Name="StateDropDownButton" Content="{x:Bind ViewModel.OriginalClient.State}"
                             HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"/>
         </StackPanel>
         <NumberBox Grid.Row="3" Grid.Column="5" Header="Zip"
-                   Text="{Binding Zip}" Tag="{x:Bind dialogs:PersonalField.Zip}"
+                   Text="{x:Bind ViewModel.OriginalClient.Zip}" 
+                   Tag="{x:Bind dialogs:PersonalField.Zip}"
                    ValueChanged="NumberBox_ValueChanged"/>
 
         <!-- Row 4: Education -->
         <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" Style="{StaticResource MultiLineTextBoxStyle}"
-                 Header="Education" Text="{Binding Education}" Tag="{x:Bind dialogs:PersonalField.Education}"
-                 TextChanged="TextBox_TextChanged"/>
+                 Header="Education" Text="{x:Bind ViewModel.OriginalClient.Education}" 
+                 Tag="{x:Bind dialogs:PersonalField.Education}" TextChanged="TextBox_TextChanged"/>
     </Grid>
 </Page>

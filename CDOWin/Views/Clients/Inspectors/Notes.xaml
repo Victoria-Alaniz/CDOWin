@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="using:CDOWin.ViewModels" 
-    d:DataContext="{d:DesignInstance Type=viewmodels:ClientsViewModel}"
     mc:Ignorable="d">
 
     <Grid>
@@ -21,15 +20,13 @@
         </Grid.ColumnDefinitions>
 
         <!-- Header -->
-        <TextBlock Grid.Row="0" Grid.Column="0"
-                   Style="{StaticResource InspectorHeaderStyle}"
-                   Text="Notes"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Notes"
+                   Style="{StaticResource InspectorHeaderStyle}"/>
 
         <!-- Edit Button -->
         <Button Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" 
                 Style="{StaticResource SingleIconButtonStyle}"
-                Click="Button_Click"
-                ToolTipService.ToolTip="New Note">
+                Click="Button_Click" ToolTipService.ToolTip="New Note">
             <FontIcon Glyph="&#xE710;" Style="{StaticResource SingleIconFontStyle}"/>
         </Button>
 

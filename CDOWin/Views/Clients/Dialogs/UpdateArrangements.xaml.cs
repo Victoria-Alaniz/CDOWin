@@ -5,14 +5,23 @@ using Microsoft.UI.Xaml.Controls;
 namespace CDOWin.Views.Clients.Dialogs;
 
 public sealed partial class UpdateArrangements : Page {
+
+    // =========================
+    // Dependencies
+    // =========================
     public ClientUpdateViewModel ViewModel;
 
+    // =========================
+    // Constructor
+    // =========================
     public UpdateArrangements(ClientUpdateViewModel viewModel) {
         ViewModel = viewModel;
-        DataContext = viewModel.OriginalClient;
         InitializeComponent();
     }
 
+    // =========================
+    // Property Change Methods
+    // =========================
     private void LabeledTextBox_TextChanged(object sender, TextChangedEventArgs e) {
         if (sender is not TextBox textbox || textbox.Tag is not ArrangementsField field)
             return;
@@ -25,6 +34,9 @@ public sealed partial class UpdateArrangements : Page {
         UpdateValue(text, field);
     }
 
+    // =========================
+    // Utility Methods
+    // =========================
     private void UpdateValue(string value, ArrangementsField type) {
         switch (type) {
             case ArrangementsField.EmploymentGoal:

@@ -7,16 +7,24 @@ using Microsoft.UI.Xaml.Controls;
 namespace CDOWin.Views.Clients;
 
 public sealed partial class ClientsPage : Page {
-    public readonly ClientsViewModel ViewModel;
 
+    // =========================
+    // ViewModel
+    // =========================
+    public ClientsViewModel ViewModel { get; } = AppServices.ClientsViewModel;
+
+    // =========================
+    // Constructor
+    // =========================
     public ClientsPage() {
         InitializeComponent();
-        ViewModel = AppServices.ClientsViewModel;
-        DataContext = ViewModel;
-        ClientFrame.Navigate(typeof(ClientViewPage), ViewModel);
-        InspectorFrame.Navigate(typeof(Notes), ViewModel);
+        ClientFrame.Navigate(typeof(ClientViewPage));
+        InspectorFrame.Navigate(typeof(Notes));
     }
 
+    // =========================
+    // Click Handlers
+    // =========================
     private void ListView_ItemClick(object sender, ItemClickEventArgs e) {
         var selection = (ClientSummaryDTO)e.ClickedItem;
         _ = ViewModel.LoadSelectedClientAsync(selection.Id);

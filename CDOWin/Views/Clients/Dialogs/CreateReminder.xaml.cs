@@ -10,14 +10,13 @@ public sealed partial class CreateReminder : Page {
     // =========================
     // Dependencies
     // =========================
-    CreateReminderViewModel ViewModel;
+    private readonly CreateReminderViewModel ViewModel;
 
     // =========================
     // Constructor
     // =========================
     public CreateReminder(CreateReminderViewModel viewModel) {
         ViewModel = viewModel;
-        DataContext = viewModel;
         InitializeComponent();
         SetupDatePicker();
     }

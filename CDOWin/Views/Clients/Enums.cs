@@ -12,10 +12,10 @@ public class ReminderMenuItem {
     public int Days { get; private set; }
 
     public static ReminderMenuItem FourtyFifthDay {
-        get { return new ReminderMenuItem("Create 45th Day Reminder", "Bill 45 Days", 44); }
+        get { return new ReminderMenuItem("New 45th Day Reminder", "Bill 45 Days", 44); }
     }
     public static ReminderMenuItem NinetiethDay {
-        get { return new ReminderMenuItem("Create 90th Day Reminder", "Bill 90 Days", 89); }
+        get { return new ReminderMenuItem("New 90th Day Reminder", "Bill 90 Days", 89); }
     }
     public override string ToString() {
         return Value;

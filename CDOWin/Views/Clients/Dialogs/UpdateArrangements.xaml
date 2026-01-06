@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:CDO.Core.Models" 
     xmlns:dialogs="using:CDOWin.Views.Clients.Dialogs"
-    d:DataContext="{d:DesignInstance Type=models:Client}"
     mc:Ignorable="d">
 
     <Grid Width="480" RowSpacing="10" ColumnSpacing="12">
@@ -18,13 +17,13 @@
         
         <!-- Row 0: Employment Goals -->
         <TextBox Grid.Row="0" Grid.Column="0" Style="{StaticResource MultiLineTextBoxStyle}"
-                 Header="Employment Goals" Text="{Binding EmploymentGoal}"
+                 Header="Employment Goals" Text="{x:Bind ViewModel.OriginalClient.EmploymentGoal}"
                  Tag="{x:Bind dialogs:ArrangementsField.EmploymentGoal}"
                  TextChanged="LabeledTextBox_TextChanged"/>
 
         <!-- Row 1: Conditions -->
         <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource MultiLineTextBoxStyle}"
-                 Header="Conditions" Text="{Binding Conditions}"
+                 Header="Conditions" Text="{x:Bind ViewModel.OriginalClient.Conditions}"
                  Tag="{x:Bind dialogs:ArrangementsField.Conditions}"
                  TextChanged="LabeledTextBox_TextChanged"/>
     </Grid>

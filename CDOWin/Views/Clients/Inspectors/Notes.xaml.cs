@@ -1,3 +1,4 @@
+using CDOWin.Services;
 using CDOWin.ViewModels;
 using CDOWin.Views.Clients.Dialogs;
 using Microsoft.UI.Xaml;
@@ -8,17 +9,21 @@ using System;
 namespace CDOWin.Views.Clients.Inspectors;
 
 public sealed partial class Notes : Page {
-    public ClientsViewModel ViewModel { get; private set; } = null!;
+    // =========================
+    // ViewModel
+    // =========================
+    public ClientsViewModel ViewModel { get; private set; } = AppServices.ClientsViewModel!;
 
+    // =========================
+    // Constructor
+    // =========================
     public Notes() {
         InitializeComponent();
     }
 
-    protected override void OnNavigatedTo(NavigationEventArgs e) {
-        ViewModel = (ClientsViewModel)e.Parameter;
-        DataContext = ViewModel;
-    }
-
+    // =========================
+    // Click Handlers
+    // =========================
     private async void Button_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
         if (ViewModel.SelectedClient == null) return;
         var updateVM = new ClientUpdateViewModel(ViewModel.SelectedClient);

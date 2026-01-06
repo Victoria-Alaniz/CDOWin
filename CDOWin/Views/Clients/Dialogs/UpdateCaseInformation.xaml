@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:CDO.Core.Models"
     xmlns:dialogs="using:CDOWin.Views.Clients.Dialogs"
-    d:DataContext="{d:DesignInstance Type=models:Client}"
     mc:Ignorable="d">
 
     <Grid Width="480" RowSpacing="10" ColumnSpacing="12">
@@ -31,29 +30,28 @@
                             DateChanged="StartDatePicker_DateChanged"/>
         
         <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Header="Case ID" 
-                 Text="{Binding CaseID}" Tag="{x:Bind dialogs:CaseField.CaseID}"
+                 Text="{x:Bind ViewModel.OriginalClient.CaseID}" Tag="{x:Bind dialogs:CaseField.CaseID}"
                  TextChanged="TextBox_TextChanged"/>
         <StackPanel Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Spacing="8">
             <TextBlock Text="Status"/>
-            <DropDownButton x:Name="StatusDropDown" Content="{Binding Status}" 
+            <DropDownButton x:Name="StatusDropDown" Content="{x:Bind ViewModel.OriginalClient.Status}" 
                             HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"/>
         </StackPanel>
 
         <!-- Row 1: Benefits/Premiums -->
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="8">
             <TextBlock Text="Benefits"/>
-            <DropDownButton x:Name="BenefitDropDown" Content="{Binding Benefits}" 
+            <DropDownButton x:Name="BenefitDropDown" Content="{x:Bind ViewModel.OriginalClient.Benefits}" 
                             HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"/>
         </StackPanel>
         <TextBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Header="Premiums" 
-                 Text="{Binding Premiums}" Tag="{x:Bind dialogs:CaseField.Premiums}"
+                 Text="{x:Bind ViewModel.OriginalClient.Premiums}" Tag="{x:Bind dialogs:CaseField.Premiums}"
                  TextChanged="TextBox_TextChanged"/>
         
         <!-- Row 2: Counselor -->
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6">
             <TextBlock Margin="0,8,8,8" Text="Counselor" Style="{StaticResource LabelTextBlockStyle}"/>
-            <DropDownButton x:Name="CounselorDropDown" 
-                            HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"/>
+            <DropDownButton x:Name="CounselorDropDown" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"/>
         </StackPanel>
     </Grid>
 </Page>

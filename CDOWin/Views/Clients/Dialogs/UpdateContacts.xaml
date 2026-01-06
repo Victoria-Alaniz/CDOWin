@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:CDO.Core.Models" 
     xmlns:dialogs="using:CDOWin.Views.Clients.Dialogs"
-    d:DataContext="{d:DesignInstance Type=models:Client}"
     mc:Ignorable="d">
 
     <Grid Width="480" RowSpacing="10" ColumnSpacing="12">
@@ -26,42 +25,52 @@
 
         <!-- Row 0: Phone 1 -->
         <TextBox Grid.Row="0" Grid.Column="0" Header="Phone 1" 
-                 Text="{Binding Phone1}" Tag="{x:Bind dialogs:ContactField.Phone1}"
+                 Text="{x:Bind ViewModel.OriginalClient.Phone1}" 
+                 Tag="{x:Bind dialogs:ContactField.Phone1}"
                  TextChanged="TextBox_TextChanged"/>
         <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Header="Description" 
-                 Text="{Binding Phone1Identity}" Tag="{x:Bind dialogs:ContactField.Phone1Identity}"
+                 Text="{x:Bind ViewModel.OriginalClient.Phone1Identity}" 
+                 Tag="{x:Bind dialogs:ContactField.Phone1Identity}"
                  TextChanged="TextBox_TextChanged"/>
 
         <!-- Row 1: Phone 2 -->
         <TextBox Grid.Row="1" Grid.Column="0" Header="Phone 2" 
-                 Text="{Binding Phone2}" Tag="{x:Bind dialogs:ContactField.Phone2}"
+                 Text="{x:Bind ViewModel.OriginalClient.Phone2}" 
+                 Tag="{x:Bind dialogs:ContactField.Phone2}"
                  TextChanged="TextBox_TextChanged"/>
         <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Header="Description"
-                 Text="{Binding Phone2Identity}" Tag="{x:Bind dialogs:ContactField.Phone2Identity}"
+                 Text="{x:Bind ViewModel.OriginalClient.Phone2Identity}" 
+                 Tag="{x:Bind dialogs:ContactField.Phone2Identity}"
                  TextChanged="TextBox_TextChanged"/>
 
         <!-- Row 2: Phone 3 -->
         <TextBox Grid.Row="2" Grid.Column="0" Header="Phone 3" 
-                 Text="{Binding Phone3}" Tag="{x:Bind dialogs:ContactField.Phone3}"
+                 Text="{x:Bind ViewModel.OriginalClient.Phone3}" 
+                 Tag="{x:Bind dialogs:ContactField.Phone3}"
                  TextChanged="TextBox_TextChanged"/>
         <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Header="Description" 
-                 Text="{Binding Phone3Identity}" Tag="{x:Bind dialogs:ContactField.Phone3Identity}"
+                 Text="{x:Bind ViewModel.OriginalClient.Phone3Identity}" 
+                 Tag="{x:Bind dialogs:ContactField.Phone3Identity}"
                  TextChanged="TextBox_TextChanged"/>
 
         <!-- Row 3: Email 1 -->
         <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Header="Email 1" 
-                 Text="{Binding Email}" Tag="{x:Bind dialogs:ContactField.Email}"
+                 Text="{x:Bind ViewModel.OriginalClient.Email}" 
+                 Tag="{x:Bind dialogs:ContactField.Email}"
                  TextChanged="TextBox_TextChanged"/>
         <TextBox Grid.Row="3" Grid.Column="2" Header="Description" 
-                 Text="{Binding EmailIdentity}" Tag="{x:Bind dialogs:ContactField.EmailIdentity}"
+                 Text="{x:Bind ViewModel.OriginalClient.EmailIdentity}" 
+                 Tag="{x:Bind dialogs:ContactField.EmailIdentity}"
                  TextChanged="TextBox_TextChanged"/>
 
         <!-- Row 4: Email 2 -->
         <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Header="Email 2" 
-                 Text="{Binding Email2}" Tag="{x:Bind dialogs:ContactField.Email2}"
+                 Text="{x:Bind ViewModel.OriginalClient.Email2}" 
+                 Tag="{x:Bind dialogs:ContactField.Email2}"
                  TextChanged="TextBox_TextChanged"/>
         <TextBox Grid.Row="4" Grid.Column="2" Header="Email 2" 
-                 Text="{Binding Email2Identity}" Tag="{x:Bind dialogs:ContactField.Email2Identity}"
+                 Text="{x:Bind ViewModel.OriginalClient.Email2Identity}" 
+                 Tag="{x:Bind dialogs:ContactField.Email2Identity}"
                  TextChanged="TextBox_TextChanged"/>
 
     </Grid>

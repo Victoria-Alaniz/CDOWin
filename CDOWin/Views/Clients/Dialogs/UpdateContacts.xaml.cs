@@ -5,14 +5,23 @@ using Microsoft.UI.Xaml.Controls;
 namespace CDOWin.Views.Clients.Dialogs;
 
 public sealed partial class UpdateContacts : Page {
+
+    // =========================
+    // Dependencies
+    // =========================
     public ClientUpdateViewModel ViewModel { get; private set; }
 
+    // =========================
+    // Constructor
+    // =========================
     public UpdateContacts(ClientUpdateViewModel viewModel) {
         ViewModel = viewModel;
-        DataContext = viewModel.OriginalClient;
         InitializeComponent();
     }
 
+    // =========================
+    // Property Change Methods
+    // =========================
     private void TextBox_TextChanged(object sender, TextChangedEventArgs e) {
         if (sender is not TextBox textbox || textbox.Tag is not ContactField field)
             return;
@@ -25,6 +34,9 @@ public sealed partial class UpdateContacts : Page {
         UpdateValue(text, field);
     }
 
+    // =========================
+    // Utility Methods
+    // =========================
     private void UpdateValue(string value, ContactField type) {
         switch (type) {
             case ContactField.Phone1:

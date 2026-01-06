@@ -11,22 +11,26 @@ using System.Linq;
 namespace CDOWin.Views.Clients.Dialogs;
 
 public sealed partial class UpdatePersonalInformation : Page {
-    private List<State> _states;
 
+    // =========================
+    // Dependencies
+    // =========================
+    private readonly List<State> _states = AppServices.StatesViewModel.States.ToList();
     public ClientUpdateViewModel ViewModel { get; private set; }
 
+    // =========================
+    // Constructor
+    // =========================
     public UpdatePersonalInformation(ClientUpdateViewModel viewModel) {
-        var states = AppServices.StatesViewModel.States.ToList();
-        _states = states;
         ViewModel = viewModel;
-        DataContext = viewModel.OriginalClient;
         InitializeComponent();
         BuildStateDrowdown();
         SetupDatePicker();
     }
 
+    // =========================
     // UI Setup
-
+    // =========================
     private void BuildStateDrowdown() {
         var flyout = new MenuFlyout();
 
@@ -48,8 +52,9 @@ public sealed partial class UpdatePersonalInformation : Page {
             DOBPicker.Date = dob;
     }
 
-    // Data Updates
-
+    // =========================
+    // Property Change Methods
+    // =========================
     private void DOBPicker_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args) {
         if (ViewModel.OriginalClient.Dob is DateTime dob) {
             if (dob == DOBPicker.Date)
@@ -102,6 +107,9 @@ public sealed partial class UpdatePersonalInformation : Page {
         UpdateValue(text, field);
     }
 
+    // =========================
+    // Utility Methods
+    // =========================
     private void UpdateValue(string value, PersonalField type) {
         switch (type) {
             case PersonalField.Languages:
@@ -124,8 +132,6 @@ public sealed partial class UpdatePersonalInformation : Page {
                 break;
         }
     }
-
-    // Utility Methods
 
     private string? ParseDouble(double Value) {
         string stringValue = ((int)Value).ToString();

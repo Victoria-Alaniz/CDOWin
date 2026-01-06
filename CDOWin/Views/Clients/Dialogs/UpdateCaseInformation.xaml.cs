@@ -11,22 +11,26 @@ using System.Diagnostics;
 namespace CDOWin.Views.Clients.Dialogs;
 
 public sealed partial class UpdateCaseInformation : Page {
-    private readonly List<Counselor> _counselors;
 
+    // =========================
+    // Dependencies
+    // =========================
+    private readonly List<Counselor> _counselors = AppServices.CounselorsViewModel.All();
     public ClientUpdateViewModel ViewModel { get; private set; }
 
+    // =========================
+    // Constructor
+    // =========================
     public UpdateCaseInformation(ClientUpdateViewModel viewModel) {
-        var counselors = AppServices.CounselorsViewModel.All();
-        _counselors = counselors;
         ViewModel = viewModel;
-        DataContext = viewModel.OriginalClient;
         InitializeComponent();
         BuildDropDowns();
         SetupDatePicker();
     }
 
+    // =========================
     // UI Setup
-
+    // =========================
     private void BuildDropDowns() {
         BuildCounselorDropDown();
         BenefitDropDown.Flyout = BuildFlyout(Benefit.All);
@@ -77,8 +81,9 @@ public sealed partial class UpdateCaseInformation : Page {
             StartDatePicker.Date = startDate;
     }
 
-    // Data Updates
-
+    // =========================
+    // Property Change Methods
+    // =========================
     private void StartDatePicker_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args) {
         if (ViewModel.OriginalClient.StartDate is DateTime startDate) {
             if (startDate == StartDatePicker.Date)
@@ -128,6 +133,9 @@ public sealed partial class UpdateCaseInformation : Page {
         UpdateValue(text, field);
     }
 
+    // =========================
+    // Utility Methods
+    // =========================
     private void UpdateValue(string value, CaseField type) {
         switch (type) {
             case CaseField.CaseID:

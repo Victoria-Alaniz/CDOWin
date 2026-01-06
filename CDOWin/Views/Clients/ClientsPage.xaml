@@ -9,7 +9,6 @@
     xmlns:viewmodels="using:CDOWin.ViewModels"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:dto="using:CDO.Core.DTOs"
-    d:DataContext="{d:DesignInstance Type=viewmodels:ClientsViewModel}"
     mc:Ignorable="d">
 
     <Grid>
@@ -73,12 +72,12 @@
             <!-- Search Bar -->
             <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                      Margin="8, 0, 8, 8" PlaceholderText="Filter clients"
-                     Text="{Binding SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                     Text="{x:Bind ViewModel.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <!-- Clients List -->
             <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                       HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
-                      ItemsSource="{Binding Filtered}"
+                      ItemsSource="{x:Bind ViewModel.Filtered, Mode=OneWay}"
                       IsItemClickEnabled="True"
                       ItemClick="ListView_ItemClick">
                 <ListView.ItemTemplate>
