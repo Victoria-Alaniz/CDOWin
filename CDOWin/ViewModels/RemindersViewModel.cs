@@ -140,9 +140,7 @@ public partial class RemindersViewModel : ObservableObject {
         _allReminders = updated;
 
         if (Filter == RemindersFilter.Client) {
-            ClientSpecific = new ObservableCollection<Reminder>(
-                ClientSpecific.Select(r => r.Id == id ? reminder : r)
-            );
+            _dispatcher.TryEnqueue(() => ClientSpecific = UpdateReminder(id, reminder, ClientSpecific));
         }
 
         _dispatcher.TryEnqueue(ApplyFilter);
@@ -161,7 +159,19 @@ public partial class RemindersViewModel : ObservableObject {
             .ToList()
             .AsReadOnly();
 
+        if (Filter == RemindersFilter.Client) {
+            _dispatcher.TryEnqueue(() => ClientSpecific = RemoveReminder(id, ClientSpecific));
+        }
+
         _dispatcher.TryEnqueue(ApplyFilter);
+    }
+
+    private static ObservableCollection<Reminder> UpdateReminder(int id, Reminder reminder, ObservableCollection<Reminder> collection) {
+        return new ObservableCollection<Reminder>(collection.Select(r => r.Id == id ? reminder : r));
+    } 
+
+    private static ObservableCollection<Reminder> RemoveReminder(int id, ObservableCollection<Reminder> collection) {
+        return new ObservableCollection<Reminder>(collection.Where(r => r.Id != id));
     }
 
     // =========================
