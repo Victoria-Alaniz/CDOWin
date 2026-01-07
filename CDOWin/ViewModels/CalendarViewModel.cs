@@ -41,7 +41,6 @@ public partial class CalendarViewModel(RemindersViewModel viewModel) : Observabl
     }
 
     public void IncrementMonth() {
-        Debug.WriteLine($"Incrementing Date");
         CurrentMonth = CurrentMonth.AddMonths(1);
         BuildCalendarDays();
     }

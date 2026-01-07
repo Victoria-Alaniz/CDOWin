@@ -10,12 +10,12 @@
     mc:Ignorable="d">
 
     <Border Padding="6" BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}" BorderThickness="1">
-        <Grid>
-            <TextBlock Margin="0,0,-6,-20" Text="{x:Bind Date.Day}" FontSize="82" FontWeight="SemiBold"
+        <Grid Opacity="{x:Bind IsCurrentMonth, Mode=OneWay, Converter={StaticResource BoolTransparentConverter}}">
+            <TextBlock Margin="0,0,-6,-20" Text="{x:Bind Date.Day, Mode=OneWay}" FontSize="82" FontWeight="SemiBold"
                        Opacity="0.2" Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                        HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
             <ScrollViewer>
-                <ItemsRepeater ItemsSource="{x:Bind Reminders}">
+                <ItemsRepeater ItemsSource="{x:Bind Reminders, Mode=OneWay}">
                     <ItemsRepeater.ItemTemplate>
                         <DataTemplate x:DataType="models:Reminder">
                             

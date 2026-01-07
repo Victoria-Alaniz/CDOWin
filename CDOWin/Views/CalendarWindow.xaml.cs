@@ -16,6 +16,7 @@ public sealed partial class CalendarWindow : Window {
     // Dependencies
     // =========================
     private CalendarViewModel ViewModel { get; }
+    private readonly FrameworkElement[] _dayCells = new FrameworkElement[42];
 
     // =========================
     // Constructor
@@ -27,8 +28,8 @@ public sealed partial class CalendarWindow : Window {
 
         ViewModel = AppServices.CalendarViewModel;
         ViewModel.BuildCalendarDays();
-
-        BuildCalendar();
+        InitializeCalendarGrid();
+        UpdateCalendar();
     }
 
     // =========================
@@ -48,33 +49,33 @@ public sealed partial class CalendarWindow : Window {
         AppWindow.TitleBar.ButtonForegroundColor = accentColor;
     }
 
-    void BuildCalendar() {
-        MonthHeader.Text = ViewModel.CurrentMonth.ToString("MMMM yyyy");
-
-        CalendarGrid.Children.Clear();
-        int totalDays = ViewModel.Days.Count;
-
-        for (int i = 0; i < totalDays; i++) {
-            if (!ViewModel.Days[i].IsCurrentMonth) {
-                var emptyDayView = new EmptyCalendarDay();
-                Grid.SetRow(emptyDayView, i / 7);
-                Grid.SetColumn(emptyDayView, i % 7);
-                CalendarGrid.Children.Add(emptyDayView);
-                continue;
-            }
-
-            var day = ViewModel.Days[i];
-            var dayView = new CalendarDayView {
-                Date = day.Date,
-                Reminders = day.Reminders
-            };
-
+    private void InitializeCalendarGrid() {
+        for(int i = 0; i < _dayCells.Length; i++) {
+            var dayView = new CalendarDayView { IsCurrentMonth = false };
             dayView.ReminderClicked += OnReminderClickedAsync;
-
             Grid.SetRow(dayView, i / 7);
             Grid.SetColumn(dayView, i % 7);
 
             CalendarGrid.Children.Add(dayView);
+            _dayCells[i] = dayView;
+        }
+    }
+
+    private void UpdateCalendar() {
+        MonthHeader.Text = ViewModel.CurrentMonth.ToString("MMMM yyyy");
+
+        for (int i = 0; i < _dayCells.Length; i++) {
+            var day = ViewModel.Days[i];
+            var cell = (CalendarDayView)_dayCells[i];
+            cell.IsCurrentMonth = day.IsCurrentMonth;
+
+            if(!day.IsCurrentMonth) {
+                cell.Reminders = [];
+                continue;
+            }
+
+            cell.Date = day.Date;
+            cell.Reminders = day.Reminders;
         }
     }
 
@@ -85,10 +86,10 @@ public sealed partial class CalendarWindow : Window {
         if (sender is Button button && button.Tag is string tag) {
             if (tag == "0") {
                 ViewModel.DecrementMonth();
-                BuildCalendar();
+                UpdateCalendar();
             } else {
                 ViewModel.IncrementMonth();
-                BuildCalendar();
+                UpdateCalendar();
             }
         }
     }
@@ -105,7 +106,7 @@ public sealed partial class CalendarWindow : Window {
 
         if (result == ContentDialogResult.Primary) {
             await ViewModel.UpdateReminderAsync(id, updateVM.Updated);
-            BuildCalendar();
+            UpdateCalendar();
         }
     }
 }

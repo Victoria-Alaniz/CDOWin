@@ -20,6 +20,18 @@ public sealed partial class CalendarDayView : UserControl {
         new PropertyMetadata(DateTime.MinValue)
     );
 
+    public bool IsCurrentMonth {
+        get => (bool)GetValue(IsCurrentMonthProperty);
+        set => SetValue(IsCurrentMonthProperty, value);
+    }
+
+    public static readonly DependencyProperty IsCurrentMonthProperty = DependencyProperty.Register(
+        nameof(IsCurrentMonth),
+        typeof(bool),
+        typeof(CalendarDayView),
+        new PropertyMetadata(true)
+        );
+
     public ObservableCollection<Reminder> Reminders {
         get => (ObservableCollection<Reminder>)GetValue(RemindersProperty);
         set => SetValue(RemindersProperty, value);
