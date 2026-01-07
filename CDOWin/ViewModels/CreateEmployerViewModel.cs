@@ -17,6 +17,7 @@ public partial class CreateEmployerViewModel(IEmployerService service) : Observa
     // Fields
     // =========================
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanSave))]
     public partial string Name { get; set; } = string.Empty;
 
     public string? Address1 { get; set; }
@@ -37,13 +38,6 @@ public partial class CreateEmployerViewModel(IEmployerService service) : Observa
     // Input Validation
     // =========================
     public bool CanSave => !string.IsNullOrWhiteSpace(Name);
-
-    // =========================
-    // Property Change Methods
-    // =========================
-    partial void OnNameChanged(string value) {
-        OnPropertyChanged(nameof(CanSave));
-    }
 
     // =========================
     // CRUD Methods

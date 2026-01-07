@@ -17,6 +17,7 @@ public partial class CreateCounselorViewModel(ICounselorService service) : Obser
     // Fields
     // =========================
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanSave))]
     public partial string Name { get; set; } = string.Empty;
 
     [ObservableProperty]
@@ -41,13 +42,6 @@ public partial class CreateCounselorViewModel(ICounselorService service) : Obser
     // Input Validation
     // =========================
     public bool CanSave => !string.IsNullOrWhiteSpace(Name);
-
-    // =========================
-    // Property Change Methods
-    // =========================
-    partial void OnNameChanged(string value) {
-        OnPropertyChanged(nameof(CanSave));
-    }
 
     // =========================
     // CRUD Methods

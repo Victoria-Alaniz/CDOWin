@@ -20,19 +20,13 @@ public partial class CreateReminderViewModel(IReminderService service, int clien
     public DateTime Date = DateTime.Now.Date;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanSave))]
     public partial string Description { get; set; } = string.Empty;
 
     // =========================
     // Input Validation
     // =========================
     public bool CanSave => !string.IsNullOrWhiteSpace(Description);
-
-    // =========================
-    // Property Change Methods
-    // =========================
-    partial void OnDescriptionChanged(string value) {
-        OnPropertyChanged(nameof(CanSave));
-    }
 
     // =========================
     // CRUD Methods

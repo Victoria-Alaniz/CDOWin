@@ -51,8 +51,8 @@ public partial class CreateServiceAuthorizationsViewModel(IServiceAuthorizationS
     public bool CanSave => CanSaveMethod();
 
     private bool CanSaveMethod() {
-        Debug.WriteLine("didchange");
-        if (string.IsNullOrWhiteSpace(Id)
+        if (Client.CounselorID != null
+            || string.IsNullOrWhiteSpace(Id)
             || string.IsNullOrWhiteSpace(Description)
             || string.IsNullOrWhiteSpace(UnitOfMeasurement)
             || UnitCost == null)
@@ -60,10 +60,6 @@ public partial class CreateServiceAuthorizationsViewModel(IServiceAuthorizationS
 
         return true;
     }
-
-    // =========================
-    // Property Change Methods
-    // =========================
 
     // =========================
     // CRUD Methods
