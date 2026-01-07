@@ -88,8 +88,19 @@ public sealed partial class ClientViewPage : Page {
         var createSAVM = AppServices.CreateServiceAuthorizationsViewModel(ViewModel.SelectedClient);
         var createSAPage = new CreateServiceAuthorization(createSAVM);
         dialog.Content = createSAPage;
+        dialog.IsPrimaryButtonEnabled = createSAVM.CanSave;
 
-        await dialog.ShowAsync();
+        createSAVM.PropertyChanged += (_, args) => {
+            if (args.PropertyName == nameof(createSAVM.CanSave))
+                dialog.IsPrimaryButtonEnabled = createSAVM.CanSave;
+        };
+
+        var result = await dialog.ShowAsync();
+
+        if(result == ContentDialogResult.Primary) {
+            await createSAVM.CreateSAAsync();
+            _ = ViewModel.ReloadClientAsync();
+        }
     }
 
     private void SA_Click(object sender, RoutedEventArgs e) {

@@ -38,7 +38,7 @@ public sealed partial class CreateReminder : Page {
         }
     }
 
-    private void LabeledMultiLinePair_TextChanged(object sender, TextChangedEventArgs e) {
+    private void TextChanged(object sender, TextChangedEventArgs e) {
         if (sender is TextBox textbox && textbox.Text.NormalizeString() is string text)
             ViewModel.Description = text;
     }
