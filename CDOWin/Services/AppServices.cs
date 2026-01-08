@@ -109,8 +109,8 @@ public static class AppServices {
         return new CreateEmployerViewModel(EmployerService);
     }
 
-    public static CreatePlacementViewModel CreatePlacementViewMdoel() {
-        return new CreatePlacementViewModel(PlacementService);
+    public static CreatePlacementViewModel CreatePlacementViewMdoel(Client client, Employer employer) {
+        return new CreatePlacementViewModel(PlacementService, client, employer);
     }
 
     public static CreateReminderViewModel CreateReminderViewModel(int clientId) {

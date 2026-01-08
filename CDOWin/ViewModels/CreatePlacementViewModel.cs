@@ -1,30 +1,27 @@
-﻿using CDO.Core.Interfaces;
+﻿using CDO.Core.DTOs;
+using CDO.Core.Interfaces;
+using CDO.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.Threading.Tasks;
 
 namespace CDOWin.ViewModels;
 
-public partial class CreatePlacementViewModel(IPlacementService service) : ObservableObject {
+public partial class CreatePlacementViewModel(IPlacementService service, Client client, Employer employer) : ObservableObject {
 
     // =========================
     // Dependencies
     // =========================
     private readonly IPlacementService _service = service;
 
+    [ObservableProperty]
+    public partial Client Client { get; set; } = client;
+
+    [ObservableProperty]
+    public partial Employer Employer { get; set; } = employer;
 
     [ObservableProperty]
     public partial int? PlacementNumber { get; set; }
-
-    [ObservableProperty]
-    public partial string? EmployerID { get; set; }
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(CanSave))]
-    public partial int? ClientID { get; set; }
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(CanSave))]
-    public partial int? CounselorID { get; set; }
 
     [ObservableProperty]
     public partial string? PoNumber { get; set; }
@@ -106,4 +103,40 @@ public partial class CreatePlacementViewModel(IPlacementService service) : Obser
     // =========================
     // CRUD Methods
     // =========================
+    public async Task CreatePlacementAsync() {
+        if (Client.EmployerID == null
+            || Client.CounselorID == null)
+            return;
+
+        var placement = new PlacementDTO {
+            PlacementNumber = PlacementNumber,
+            EmployerID = Employer.Id.ToString(),
+            ClientID = Client.Id,
+            CounselorID = Client.CounselorID,
+            PoNumber = PoNumber,
+            Supervisor = Supervisor,
+            SupervisorEmail = SupervisorEmail,
+            SupervisorPhone = SupervisorPhone,
+            Position = Position,
+            Salary = Salary,
+            DaysOnJob = DaysOnJob,
+            ClientName = ClientName,
+            CounselorName = CounselorName,
+            Active = Active,
+            Website = Website,
+            DescriptionOfDuties = DescriptionOfDuties,
+            NumbersOfHoursWorking = NumbersOfHoursWorking,
+            FirstFiveDays1 = FirstFiveDays1,
+            FirstFiveDays2 = FirstFiveDays2,
+            FirstFiveDays3 = FirstFiveDays3,
+            FirstFiveDays4 = FirstFiveDays4,
+            FirstFiveDays5 = FirstFiveDays5,
+            DescriptionOfWorkSchedule = DescriptionOfWorkSchedule,
+            HourlyOrMonthlyWages = HourlyOrMonthlyWages,
+            HireDate = HireDate,
+            EndDate = EndDate
+        };
+
+        await _service.CreatePlacementAsync(placement);
+    }
 }
