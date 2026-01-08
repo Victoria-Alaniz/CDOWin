@@ -4,41 +4,87 @@ using CDOWin.Views.Counselors;
 using CDOWin.Views.Employers;
 using CDOWin.Views.Placements;
 using CDOWin.Views.ServiceAuthorizations;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Drawing.Diagrams;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
+using System.Collections.Generic;
 
 namespace CDOWin.Navigation;
 
 public sealed class NavigationService : INavigationService {
+    private NavigationView? _navigationView;
     private Frame? _frame;
+    private readonly Dictionary<CDOFrame, Page> _pages = new();
+    private CDOFrame? _currentFrame;
+    private int _previousSelectedIndex = 0;
 
     public event Action<CDOFrame>? NavigationRequested;
 
-    public void SetFrame(Frame frame) => _frame = frame;
+    public void Initialize(NavigationView navigationView, Frame frame) {
+        _navigationView = navigationView;
+        _frame = frame;
+
+        // Preload our pages
+        _pages[CDOFrame.Clients] = new ClientsPage();
+        _pages[CDOFrame.Counselors] = new CounselorsPage();
+        _pages[CDOFrame.Employers] = new EmployersPage();
+        _pages[CDOFrame.ServiceAuthorizations] = new ServiceAuthorizationsPage();
+        _pages[CDOFrame.Placements] = new PlacementsPage();
+
+        _navigationView.SelectionChanged += SelectionChanged;
+    }
 
     public void Navigate(CDOFrame frame) {
         NavigationRequested?.Invoke(frame);
     }
 
-    public void ShowClients(Direction direction) {
-        _frame?.Navigate(typeof(ClientsPage), null, Transition(direction));
+    private void ShowPage(CDOFrame frame, Direction direction) {
+        if (_frame == null || frame == _currentFrame) return;
+        if(_pages.TryGetValue(frame, out var page)) {
+            _frame.Navigate(page.GetType(), null, Transition(direction));
+            _currentFrame = frame;
+        }
     }
 
-    public void ShowCounselors(Direction direction) {
-        _frame?.Navigate(typeof(CounselorsPage), null, Transition(direction));
-    }
+    public void ShowClients(Direction direction) => ShowPage(CDOFrame.Clients, direction);
 
-    public void ShowEmployers(Direction direction) {
-        _frame?.Navigate(typeof(EmployersPage), null, Transition(direction));
-    }
+    public void ShowCounselors(Direction direction) => ShowPage(CDOFrame.Counselors, direction);
 
-    public void ShowPlacements(Direction direction) {
-        _frame?.Navigate(typeof(PlacementsPage), null, Transition(direction));
-    }
+    public void ShowEmployers(Direction direction) => ShowPage(CDOFrame.Employers, direction);
 
-    public void ShowServiceAuthorizations(Direction direction) {
-        _frame?.Navigate(typeof(ServiceAuthorizationsPage), null, Transition(direction));
+    public void ShowPlacements(Direction direction) => ShowPage(CDOFrame.Placements, direction);
+
+    public void ShowServiceAuthorizations(Direction direction) => ShowPage(CDOFrame.ServiceAuthorizations, direction);
+
+    private void SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
+        if (args.SelectedItem is NavigationViewItem selectedItem && selectedItem.Tag is CDOFrame frame) {
+            var currentSelectedIndex = sender.MenuItems.IndexOf(selectedItem);
+            var direction = currentSelectedIndex - _previousSelectedIndex > 0
+                ? Direction.Forward
+                : Direction.Backward;
+            _previousSelectedIndex = currentSelectedIndex;
+
+            switch (frame) {
+                case CDOFrame.Clients:
+                    ShowClients(direction);
+                    break;
+                case CDOFrame.Counselors:
+                    ShowCounselors(direction);
+                    break;
+                case CDOFrame.Employers:
+                    ShowEmployers(direction);
+                    break;
+                case CDOFrame.ServiceAuthorizations:
+                    ShowServiceAuthorizations(direction);
+                    break;
+                case CDOFrame.Placements:
+                    ShowPlacements(direction);
+                    break;
+            }
+            ;
+        }
     }
 
     private static SlideNavigationTransitionInfo Transition(Direction direction) {

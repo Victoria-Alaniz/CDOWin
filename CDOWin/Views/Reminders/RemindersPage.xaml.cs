@@ -122,8 +122,10 @@ public sealed partial class RemindersPage : Page {
     }
 
     private void ViewClient_Click(object sender, RoutedEventArgs e) {
-        if (sender is MenuFlyoutItem flyoutItem && flyoutItem.Tag is int clientId)
+        if (sender is MenuFlyoutItem flyoutItem && flyoutItem.Tag is int clientId) {
             ViewModel.RequestClient(clientId);
+            AppServices.Navigation.ShowClients(Navigation.Direction.Backward);
+        }
     }
 
     private void Defer_Click(object sender, RoutedEventArgs e) {
