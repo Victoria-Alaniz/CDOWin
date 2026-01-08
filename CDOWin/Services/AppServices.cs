@@ -79,9 +79,9 @@ public static class AppServices {
         // Initialize ViewModels
         ClientsViewModel = new ClientsViewModel(
             ClientService,
-            DataCoordinator, 
-            _clientSelectionService, 
-            _placementSelectionService, 
+            DataCoordinator,
+            _clientSelectionService,
+            _placementSelectionService,
             _sASelectionService
             );
 

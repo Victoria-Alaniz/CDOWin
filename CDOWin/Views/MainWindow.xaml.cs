@@ -3,7 +3,6 @@ using CDOWin.Services;
 using CDOWin.Views.Reminders;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System.Linq;
 using System.Threading.Tasks;

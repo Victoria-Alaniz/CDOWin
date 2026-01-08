@@ -1,5 +1,4 @@
-﻿using CDO.Core.DTOs;
-using CDO.Core.Interfaces;
+﻿using CDO.Core.Interfaces;
 using CDO.Core.Models;
 using CDOWin.Data;
 using CDOWin.Services;

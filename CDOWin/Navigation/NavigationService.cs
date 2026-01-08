@@ -4,8 +4,6 @@ using CDOWin.Views.Counselors;
 using CDOWin.Views.Employers;
 using CDOWin.Views.Placements;
 using CDOWin.Views.ServiceAuthorizations;
-using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.Drawing.Diagrams;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
@@ -42,7 +40,7 @@ public sealed class NavigationService : INavigationService {
 
     private void ShowPage(CDOFrame frame, Direction direction) {
         if (_frame == null || frame == _currentFrame) return;
-        if(_pages.TryGetValue(frame, out var page)) {
+        if (_pages.TryGetValue(frame, out var page)) {
             _frame.Navigate(page.GetType(), null, Transition(direction));
             _currentFrame = frame;
         }
