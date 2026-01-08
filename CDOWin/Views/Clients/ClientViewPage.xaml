@@ -156,7 +156,7 @@
                         </Grid>
 
                         <!-- Phone 1 -->
-                        <FontIcon Grid.Row="1" Grid.Column="0" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" Glyph="&#xE717;"
+                        <FontIcon Grid.Row="1" Grid.Column="0" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" Glyph="&#xE717;"
                                   Visibility="{x:Bind ViewModel.SelectedClient.Phone1, Mode=OneWay, Converter={StaticResource StringToVisability}}"/>
                         <c:LabelPair Grid.Row="1" Grid.Column="1" 
                                      Label="{x:Bind ViewModel.SelectedClient.Phone1Identity, Mode=OneWay}" 
@@ -164,25 +164,19 @@
                                      Visibility="{x:Bind ViewModel.SelectedClient.Phone1, Mode=OneWay, Converter={StaticResource StringToVisability}}"/>
 
                         <!-- Phone 2 -->
-                        <FontIcon Grid.Row="2" Grid.Column="0" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" Glyph="&#xE717;" 
-                                  Visibility="{x:Bind ViewModel.SelectedClient.Phone2, Mode=OneWay, Converter={StaticResource StringToVisability}}"/>
-
                         <c:LabelPair Grid.Row="2" Grid.Column="1"
                                      Label="{x:Bind ViewModel.SelectedClient.Phone2Identity, Mode=OneWay}" 
                                      Value="{x:Bind ViewModel.SelectedClient.Phone2, Mode=OneWay}"
                                      Visibility="{x:Bind ViewModel.SelectedClient.Phone2, Mode=OneWay, Converter={StaticResource StringToVisability}}"/>
 
                         <!-- Phone 3 -->
-                        <FontIcon Grid.Row="3" Grid.Column="0" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" Glyph="&#xE717;" 
-                                  Visibility="{x:Bind ViewModel.SelectedClient.Phone3, Mode=OneWay, Converter={StaticResource StringToVisability}}"/>
-
                         <c:LabelPair Grid.Row="3" Grid.Column="1"
                                      Label="{x:Bind ViewModel.SelectedClient.Phone3Identity, Mode=OneWay}" 
                                      Value="{x:Bind ViewModel.SelectedClient.Phone3, Mode=OneWay}"
                                      Visibility="{x:Bind ViewModel.SelectedClient.Phone3, Mode=OneWay, Converter={StaticResource StringToVisability}}"/>
 
                         <!-- Email 1 -->
-                        <FontIcon Grid.Row="4" Grid.Column="0" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" Glyph="&#xE715;" 
+                        <FontIcon Grid.Row="4" Grid.Column="0" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" Glyph="&#xE715;" 
                                   Visibility="{x:Bind ViewModel.SelectedClient.Email, Mode=OneWay, Converter={StaticResource StringToVisability}}"/>
 
                         <c:LabelPair Grid.Row="4" Grid.Column="1"
@@ -191,9 +185,6 @@
                                      Visibility="{x:Bind ViewModel.SelectedClient.Email, Mode=OneWay, Converter={StaticResource StringToVisability}}"/>
 
                         <!-- Email 2 -->
-                        <FontIcon Grid.Row="5" Grid.Column="0" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" Glyph="&#xE715;" 
-                                  Visibility="{x:Bind ViewModel.SelectedClient.Email2, Mode=OneWay, Converter={StaticResource StringToVisability}}"/>
-
                         <c:LabelPair Grid.Row="5" Grid.Column="1"
                                      Label="{x:Bind ViewModel.SelectedClient.Email2Identity, Mode=OneWay}" 
                                      Value="{x:Bind ViewModel.SelectedClient.Email2, Mode=OneWay}"
