@@ -109,15 +109,17 @@ public sealed partial class ClientViewPage : Page {
     }
 
     private void SA_Click(object sender, RoutedEventArgs e) {
-        if (sender is Button button && button.Tag is string id)
+        if (sender is Button button && button.Tag is string id) {
             ViewModel.SASelected(id);
-        AppServices.Navigation.Navigate(CDOFrame.ServiceAuthorizations);
+            AppServices.Navigation.ShowServiceAuthorizations(Navigation.Direction.Forward);
+        }
     }
 
     private void Placement_Click(object sender, RoutedEventArgs e) {
-        if (sender is Button button && button.Tag is string id)
+        if (sender is Button button && button.Tag is string id) {
             ViewModel.PlacementSelected(id);
-        AppServices.Navigation.Navigate(CDOFrame.Placements);
+            AppServices.Navigation.ShowPlacements(Navigation.Direction.Forward);
+        }
     }
 
     private async void ReminderFlyoutItem_Click(object sender, RoutedEventArgs e) {

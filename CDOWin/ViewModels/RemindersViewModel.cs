@@ -6,6 +6,7 @@ using CDOWin.Services;
 using CDOWin.Views.Reminders;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,6 +31,7 @@ public partial class RemindersViewModel : ObservableObject {
     // =========================
     private IReadOnlyList<Reminder> _allReminders = [];
     private RemindersFilter _filter = RemindersFilter.All;
+    private readonly DispatcherTimer _refreshTimer;
 
     // =========================
     // Public Properties / State
@@ -64,6 +66,13 @@ public partial class RemindersViewModel : ObservableObject {
 
         _selectionService.SelectedClientChanged += OnClientChanged;
         _selectionService.NewReminderCreated += OnReminderCreated;
+
+        _refreshTimer = new DispatcherTimer {
+            Interval = TimeSpan.FromSeconds(30)
+        };
+
+        _refreshTimer.Tick += async (_, _) => await LoadRemindersAsync();
+        _refreshTimer.Start();
     }
 
     // =========================

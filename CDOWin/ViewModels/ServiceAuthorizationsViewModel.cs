@@ -8,6 +8,7 @@ using Microsoft.UI.Dispatching;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -63,9 +64,10 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     }
 
     private void OnSASelected(string id) {
+        Debug.WriteLine("SA SELECTED");
         var selected = _allServiceAuthorizations.FirstOrDefault(s => s.Id == id);
         if (selected == null) return;
-
+        Debug.WriteLine("It wasnt null");
         _dispatcher.TryEnqueue(() => {
             Selected = selected;
             SearchQuery = ""; // Clearing the query applies the filter
