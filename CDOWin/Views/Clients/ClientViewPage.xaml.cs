@@ -49,15 +49,15 @@ public sealed partial class ClientViewPage : Page {
     // Click Handlers
     // =========================
     private void OpenDocuments_Clicked(object sender, RoutedEventArgs e) {
-        Process.Start("explorer.exe", $"{ViewModel.SelectedClient?.DocumentsFolderPath}");
+        Process.Start("explorer.exe", $"{ViewModel.Selected?.DocumentsFolderPath}");
     }
 
     private async void CreateReminder_ClickAsync(SplitButton sender, SplitButtonClickEventArgs e) {
-        if (ViewModel.SelectedClient == null) return;
+        if (ViewModel.Selected == null) return;
 
         // Initialize our dialog/vm/page
-        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"Create Reminder for {ViewModel.SelectedClient.Name}");
-        var createReminderVM = AppServices.CreateReminderViewModel(ViewModel.SelectedClient.Id);
+        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"Create Reminder for {ViewModel.Selected.Name}");
+        var createReminderVM = AppServices.CreateReminderViewModel(ViewModel.Selected.Id);
         var createReminderPage = new CreateReminder(createReminderVM);
 
         // Set the content
@@ -83,11 +83,11 @@ public sealed partial class ClientViewPage : Page {
     }
 
     private async void CreateSA_Click(object sender, RoutedEventArgs e) {
-        if (ViewModel.SelectedClient == null) return;
+        if (ViewModel.Selected == null) return;
 
-        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"New Service Authorization for {ViewModel.SelectedClient.Name}");
-        var createSAVM = AppServices.CreateServiceAuthorizationsViewModel(ViewModel.SelectedClient);
-        var createSAPage = new CreateServiceAuthorization(createSAVM, ViewModel.SelectedClient.Id);
+        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"New Service Authorization for {ViewModel.Selected.Name}");
+        var createSAVM = AppServices.CreateServiceAuthorizationsViewModel(ViewModel.Selected);
+        var createSAPage = new CreateServiceAuthorization(createSAVM, ViewModel.Selected.Id);
         dialog.Content = createSAPage;
         dialog.IsPrimaryButtonEnabled = createSAVM.CanSave;
 
@@ -123,8 +123,8 @@ public sealed partial class ClientViewPage : Page {
     private async void ReminderFlyoutItem_Click(object sender, RoutedEventArgs e) {
         if (sender is MenuFlyoutItem item
             && item.Tag is ReminderMenuItem reminderItem
-            && ViewModel.SelectedClient != null) {
-            var newReminderVM = AppServices.CreateReminderViewModel(ViewModel.SelectedClient.Id);
+            && ViewModel.Selected != null) {
+            var newReminderVM = AppServices.CreateReminderViewModel(ViewModel.Selected.Id);
             newReminderVM.Description = reminderItem.Description;
 
             var dateOffset = DateTimeOffset.Now.AddDays(reminderItem.Days);
@@ -144,10 +144,10 @@ public sealed partial class ClientViewPage : Page {
     }
 
     private async void EditButton_Clicked(object sender, RoutedEventArgs e) {
-        if (sender is Button button && button.Tag is ClientEditType tag && ViewModel.SelectedClient != null) {
+        if (sender is Button button && button.Tag is ClientEditType tag && ViewModel.Selected != null) {
 
             var dialog = DialogFactory.UpdateDialog(this.XamlRoot, "");
-            var updateVM = new ClientUpdateViewModel(ViewModel.SelectedClient);
+            var updateVM = new ClientUpdateViewModel(ViewModel.Selected);
 
             switch (tag) {
                 case ClientEditType.Personal:
@@ -185,8 +185,8 @@ public sealed partial class ClientViewPage : Page {
     // Utility Methods
     // =========================
     private void UpdateCheckbox(CheckboxTag tag, bool isChecked) {
-        if (ViewModel.SelectedClient == null) return;
-        var updateVM = new ClientUpdateViewModel(ViewModel.SelectedClient);
+        if (ViewModel.Selected == null) return;
+        var updateVM = new ClientUpdateViewModel(ViewModel.Selected);
         updateVM.UpdateCheckbox(tag, isChecked);
         UpdateClient(updateVM.UpdatedClient);
     }

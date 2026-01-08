@@ -1,6 +1,7 @@
 ﻿using CDO.Core.DTOs;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
+using CDOWin.Data;
 using CDOWin.Services;
 using CDOWin.Views.Reminders;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -20,6 +21,7 @@ public partial class RemindersViewModel : ObservableObject {
     // Services / Dependencies
     // =========================
     private readonly IReminderService _service;
+    private readonly DataCoordinator _dataCoordinator;
     private readonly ClientSelectionService _selectionService;
     private readonly DispatcherQueue _dispatcher;
 
@@ -53,8 +55,10 @@ public partial class RemindersViewModel : ObservableObject {
     // =========================
     // Constructor
     // =========================
-    public RemindersViewModel(IReminderService service, ClientSelectionService clientSelectionService) {
+    public RemindersViewModel(DataCoordinator dataCoordinator, IReminderService service, ClientSelectionService clientSelectionService) {
         _service = service;
+        _dataCoordinator = dataCoordinator;
+
         _selectionService = clientSelectionService;
         _dispatcher = DispatcherQueue.GetForCurrentThread();
 
@@ -119,7 +123,7 @@ public partial class RemindersViewModel : ObservableObject {
     // CRUD Methods
     // =========================
     public async Task LoadRemindersAsync() {
-        var reminders = await _service.GetAllRemindersAsync();
+        var reminders = await _dataCoordinator.GetRemindersAsync();
         if (reminders == null) return;
 
         var snapshot = reminders.OrderBy(r => r.Date).ToList().AsReadOnly();

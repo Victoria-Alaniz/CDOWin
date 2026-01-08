@@ -1,6 +1,7 @@
 ﻿using CDO.Core.DTOs;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
+using CDOWin.Data;
 using CDOWin.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Dispatching;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Gaming.Input.ForceFeedback;
 
 namespace CDOWin.ViewModels;
 
@@ -18,6 +20,7 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     // Services / Dependencies
     // =========================
     private readonly IServiceAuthorizationService _service;
+    private readonly DataCoordinator _dataCoordinator;
     private readonly SASelectionService _selectionService;
     private readonly DispatcherQueue _dispatcher = DispatcherQueue.GetForCurrentThread();
 
@@ -43,8 +46,10 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     // Constructor
     // =========================
 
-    public ServiceAuthorizationsViewModel(IServiceAuthorizationService service, SASelectionService selectionService) {
+    public ServiceAuthorizationsViewModel(DataCoordinator dataCoordinator, IServiceAuthorizationService service, SASelectionService selectionService) {
         _service = service;
+        _dataCoordinator = dataCoordinator;
+
         _selectionService = selectionService;
         _selectionService.NewSACreated += OnNewSACreated;
         _selectionService.SASelected += OnSASelected;
@@ -63,9 +68,8 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
         if (selected == null) return;
 
         _dispatcher.TryEnqueue(() => {
-            SearchQuery = "";
-            ApplyFilter();
             Selected = selected;
+            SearchQuery = ""; // Clearing the query applies the filter
         });
     }
 
@@ -82,8 +86,8 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     // =========================
     // CRUD Methods
     // =========================
-    public async Task LoadServiceAuthorizationsAsync() {
-        var serviceAuthorizations = await _service.GetAllServiceAuthorizationsAsync();
+    public async Task LoadServiceAuthorizationsAsync(bool force = false) {
+        var serviceAuthorizations = await _dataCoordinator.GetSAsAsync();
         if (serviceAuthorizations == null) return;
 
         var snapshot = serviceAuthorizations.OrderBy(o => o.Id).ToList().AsReadOnly();
@@ -127,8 +131,11 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     // Utility / Filtering
     // =========================
     void ApplyFilter() {
+        string? previousSelection = Selected?.Id;
+
         if (string.IsNullOrWhiteSpace(SearchQuery)) {
             Filtered = new ObservableCollection<ServiceAuthorization>(_allServiceAuthorizations);
+            ReSelect(previousSelection);
             return;
         }
 
@@ -141,5 +148,13 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
         );
 
         Filtered = new ObservableCollection<ServiceAuthorization>(result);
+        ReSelect(previousSelection);
+
+    }
+
+    private void ReSelect(string? id) {
+        if (id == null) return;
+        if (Filtered.FirstOrDefault(sa => sa.Id == id) is ServiceAuthorization selected)
+            Selected = selected;
     }
 }
