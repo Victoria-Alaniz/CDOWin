@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CDOWin.Navigation;
 
@@ -35,7 +36,7 @@ public sealed class NavigationService : INavigationService {
     }
 
     public void Navigate(CDOFrame frame) {
-        NavigationRequested?.Invoke(frame);
+        SelectPage(frame);
     }
 
     private void ShowPage(CDOFrame frame, Direction direction) {
@@ -46,15 +47,16 @@ public sealed class NavigationService : INavigationService {
         }
     }
 
-    public void ShowClients(Direction direction) => ShowPage(CDOFrame.Clients, direction);
+    private void SelectPage(CDOFrame page) {
+        if (_frame == null || _navigationView == null) return;
 
-    public void ShowCounselors(Direction direction) => ShowPage(CDOFrame.Counselors, direction);
-
-    public void ShowEmployers(Direction direction) => ShowPage(CDOFrame.Employers, direction);
-
-    public void ShowPlacements(Direction direction) => ShowPage(CDOFrame.Placements, direction);
-
-    public void ShowServiceAuthorizations(Direction direction) => ShowPage(CDOFrame.ServiceAuthorizations, direction);
+        foreach (var item in _navigationView.MenuItems) {
+            if (item is NavigationViewItem nvi && nvi.Tag is CDOFrame frame && frame == page) {
+                _navigationView.SelectedItem = nvi;
+                return;
+            }
+        }
+    }
 
     private void SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
         if (args.SelectedItem is NavigationViewItem selectedItem && selectedItem.Tag is CDOFrame frame) {
@@ -66,19 +68,19 @@ public sealed class NavigationService : INavigationService {
 
             switch (frame) {
                 case CDOFrame.Clients:
-                    ShowClients(direction);
+                    ShowPage(CDOFrame.Clients, direction);
                     break;
                 case CDOFrame.Counselors:
-                    ShowCounselors(direction);
+                    ShowPage(CDOFrame.Counselors, direction);
                     break;
                 case CDOFrame.Employers:
-                    ShowEmployers(direction);
+                    ShowPage(CDOFrame.Employers, direction);
                     break;
                 case CDOFrame.ServiceAuthorizations:
-                    ShowServiceAuthorizations(direction);
+                    ShowPage(CDOFrame.ServiceAuthorizations, direction);
                     break;
                 case CDOFrame.Placements:
-                    ShowPlacements(direction);
+                    ShowPage(CDOFrame.Placements, direction);
                     break;
             }
             ;
