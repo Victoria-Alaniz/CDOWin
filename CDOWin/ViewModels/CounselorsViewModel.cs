@@ -3,6 +3,7 @@ using CDO.Core.Interfaces;
 using CDO.Core.Models;
 using CDOWin.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.UI.Dispatching;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,13 @@ public partial class CounselorsViewModel(DataCoordinator dataCoordinator, ICouns
     // Public Methods
     // =========================
     public List<Counselor> All() => _allCounselors.ToList();
+
+    public List<Counselor> GetCounselors() {
+        if (_allCounselors.Count == 0)
+            LoadCounselorsAsync().GetAwaiter().GetResult();
+
+        return _allCounselors.ToList();
+    }
 
     // =========================
     // CRUD Methods

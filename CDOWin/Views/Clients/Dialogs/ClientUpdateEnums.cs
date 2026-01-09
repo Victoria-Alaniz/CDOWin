@@ -9,6 +9,8 @@ public enum ClientEditType {
 }
 
 public enum PersonalField {
+    FirstName,
+    LastName,
     DL,
     SSN,
     Languages,

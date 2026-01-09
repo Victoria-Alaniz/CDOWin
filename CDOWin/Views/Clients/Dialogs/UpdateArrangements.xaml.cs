@@ -22,7 +22,7 @@ public sealed partial class UpdateArrangements : Page {
     // =========================
     // Property Change Methods
     // =========================
-    private void LabeledTextBox_TextChanged(object sender, TextChangedEventArgs e) {
+    private void TextBox_TextChanged(object sender, TextChangedEventArgs e) {
         if (sender is not TextBox textbox || textbox.Tag is not ArrangementsField field)
             return;
 

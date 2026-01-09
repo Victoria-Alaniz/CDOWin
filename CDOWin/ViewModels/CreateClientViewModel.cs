@@ -2,7 +2,10 @@
 using CDO.Core.Interfaces;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CDOWin.ViewModels;
 
@@ -13,7 +16,12 @@ public partial class CreateClientViewModel(IClientService service) : ObservableO
     // =========================
     private readonly IClientService _service = service;
 
-    // Required Fields
+
+    // =========================
+    // Fields
+    // =========================
+
+    // Required
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
@@ -33,7 +41,7 @@ public partial class CreateClientViewModel(IClientService service) : ObservableO
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
-    public partial string? State { get; set; }
+    public partial string? State { get; set; } = "TX";
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
@@ -112,9 +120,6 @@ public partial class CreateClientViewModel(IClientService service) : ObservableO
 
     [ObservableProperty]
     public partial string? Conditions { get; set; }
-
-    [ObservableProperty]
-    public partial string? DocumentFolder { get; set; }
 
     [ObservableProperty]
     public partial bool? Active { get; set; }
@@ -203,6 +208,10 @@ public partial class CreateClientViewModel(IClientService service) : ObservableO
             || Disability == null)
             return;
 
+        // Create Document folder
+        var folderName = $"Z:\\DARS Clients\\{Counselor}-{FirstName} {LastName}";
+        if (!CreateDocumentFolder(folderName)) return;
+
         var client = new CreateClientDTO {
             FirstName = FirstName,
             LastName = LastName,
@@ -234,7 +243,7 @@ public partial class CreateClientViewModel(IClientService service) : ObservableO
             CounselorFax = CounselorFax,
             ClientNotes = ClientNotes,
             Conditions = Conditions,
-            DocumentFolder = DocumentFolder,
+            DocumentFolder = folderName,
             Active = Active,
             EmploymentGoal = EmploymentGoal,
             EmployerID = EmployerID,
@@ -258,4 +267,30 @@ public partial class CreateClientViewModel(IClientService service) : ObservableO
 
         await _service.CreateClientAsync(client);
     }
+
+    private bool CreateDocumentFolder(string path) {
+        if (!TryEnsureDirectory(path, out var error)) {
+            Debug.WriteLine(error);
+            return false;
+        }
+
+        return true;
+    }
+
+    public static bool TryEnsureDirectory(string path, out string? error) {
+        error = null;
+
+        try {
+            Directory.CreateDirectory(path);
+            return true;
+        } catch (Exception ex) when (
+              ex is IOException ||
+              ex is UnauthorizedAccessException ||
+              ex is DirectoryNotFoundException
+          ) {
+            error = ex.Message;
+            return false;
+        }
+    }
+
 }

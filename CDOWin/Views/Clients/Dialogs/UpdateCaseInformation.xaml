@@ -33,7 +33,7 @@
                  Text="{x:Bind ViewModel.OriginalClient.CaseID}" Tag="{x:Bind dialogs:CaseField.CaseID}"
                  TextChanged="TextBox_TextChanged"/>
         <StackPanel Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Spacing="8">
-            <TextBlock Text="Status"/>
+            <TextBlock Text="Tier"/>
             <DropDownButton x:Name="StatusDropDown" Content="{x:Bind ViewModel.OriginalClient.Status}" 
                             HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"/>
         </StackPanel>

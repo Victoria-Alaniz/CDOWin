@@ -2,6 +2,7 @@
 using CDO.Core.Models;
 using CDOWin.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
+using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -25,6 +26,13 @@ public partial class StatesViewModel(DataCoordinator dataCoordinator, IStateServ
     partial void OnSelectedStateChanged(State? value) {
         if (value == null) return;
         _ = RefreshSelectedState(value.Id);
+    }
+
+    public List<State> GetStates() {
+        if (States.Count == 0)
+            LoadStatesAsync().GetAwaiter().GetResult();
+
+        return States.ToList();
     }
 
     public async Task LoadStatesAsync() {

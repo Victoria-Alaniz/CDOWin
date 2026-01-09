@@ -72,6 +72,5 @@
                  Text="{x:Bind ViewModel.OriginalClient.Email2Identity}" 
                  Tag="{x:Bind dialogs:ContactField.Email2Identity}"
                  TextChanged="TextBox_TextChanged"/>
-
     </Grid>
 </Page>

@@ -116,7 +116,7 @@ public static class AppServices {
     public static async Task LoadSecondaryDataAsync() {
         _ = DataCoordinator.GetSAsAsync();
         _ = DataCoordinator.GetPlacementsAsync();
-        _ = DataCoordinator.GetSAsAsync();
+        _ = StatesViewModel.LoadStatesAsync();
     }
 
     public static CreateCounselorViewModel CreateCounselorViewModel() {

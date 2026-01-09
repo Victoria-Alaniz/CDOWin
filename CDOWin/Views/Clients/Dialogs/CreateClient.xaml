@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="CDOWin.Views.Clients.Dialogs.CreateClient"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CDOWin.Views.Clients.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dialogs="using:CDOWin.Views.Clients.Dialogs"
+    mc:Ignorable="d">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Width="500">
+        <StackPanel>
+            <!-- Personal Info -->
+            <Expander Header="Personal Info" IsExpanded="True" HorizontalAlignment="Stretch" 
+                      Expanding="Expander_Expanding" Tag="{x:Bind local:CreateClientCategory.PersonalInfo}">
+                <Grid Width="464" HorizontalAlignment="Stretch" RowSpacing="10" ColumnSpacing="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <!-- Row 0: Name -->
+                    <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Header="First Name" 
+                             Tag="{x:Bind dialogs:PersonalField.FirstName}"
+                             TextChanged="PTextBox_TextChanged"/>
+                    <TextBox Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="3" Header="Last Name"
+                             Tag="{x:Bind dialogs:PersonalField.LastName}"
+                             TextChanged="PTextBox_TextChanged"/>
+
+                    <!-- Row 1: DOB/DL/SSN -->
+                    <CalendarDatePicker Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                        x:Name="DOBPicker" Header="DOB" HorizontalAlignment="Stretch"
+                                        DateChanged="DOBPicker_DateChanged"/>
+
+                    <NumberBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Header="DL/ID"
+                               Style="{StaticResource WholeNumberStyle}"
+                               Tag="{x:Bind dialogs:PersonalField.DL}"
+                               ValueChanged="PNumberBox_ValueChanged"/>
+                    <NumberBox Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Header="SSN"
+                               Tag="{x:Bind dialogs:PersonalField.SSN}"
+                               ValueChanged="PNumberBox_ValueChanged"/>
+
+                    <!-- Row 2: Fluent Languages/Race-->
+                    <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Header="Fluent Languages" 
+                             Tag="{x:Bind dialogs:PersonalField.Languages}"
+                             TextChanged="PTextBox_TextChanged"/>
+                    <TextBox Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Header="Race" 
+                             TextChanged="PTextBox_TextChanged"/>
+                    
+                    <!-- Row 3: Address -->
+                    <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="4" Header="Address"
+                             TextChanged="PTextBox_TextChanged"/>
+                    <TextBox Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Header="Apt, ste, etc" 
+                             Tag="{x:Bind dialogs:PersonalField.Address2}"
+                             TextChanged="PTextBox_TextChanged"/>
+                    
+                    <!-- Row 4: Address cont. -->
+                    <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Header="City" 
+                             Tag="{x:Bind dialogs:PersonalField.City}"
+                             TextChanged="PTextBox_TextChanged"/>
+                    <StackPanel Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="1" Spacing="8">
+                        <TextBlock Text="State"/>
+                        <DropDownButton x:Name="StateDropDownButton" Content="{x:Bind ViewModel.State}"
+                                        HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+                    <NumberBox Grid.Row="4" Grid.Column="5" Header="Zip"
+                               Tag="{x:Bind dialogs:PersonalField.Zip}"
+                               ValueChanged="PNumberBox_ValueChanged"/>
+
+                    <!-- Row 5: Education -->
+                    <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="6" Style="{StaticResource MultiLineTextBoxStyle}"
+                             Header="Education" Text="{x:Bind ViewModel.Education}" 
+                             Tag="{x:Bind dialogs:PersonalField.Education}" TextChanged="PTextBox_TextChanged"/>
+                </Grid>
+            </Expander>
+
+            <!-- Contact Information -->
+            <Expander Header="Contact Information" IsExpanded="False" HorizontalAlignment="Stretch"
+                      Expanding="Expander_Expanding" Tag="{x:Bind local:CreateClientCategory.PersonalInfo}">
+                <Grid Width="464" HorizontalAlignment="Stretch" RowSpacing="10" ColumnSpacing="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Row 0: Phone 1 -->
+                    <TextBox Grid.Row="0" Grid.Column="0" Header="Phone 1" 
+                             Tag="{x:Bind dialogs:ContactField.Phone1}"
+                             TextChanged="CTextBox_TextChanged"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Header="Description" 
+                             Tag="{x:Bind dialogs:ContactField.Phone1Identity}"
+                             TextChanged="CTextBox_TextChanged"/>
+
+                    <!-- Row 1: Phone 2 -->
+                    <TextBox Grid.Row="1" Grid.Column="0" Header="Phone 2" 
+                             Tag="{x:Bind dialogs:ContactField.Phone2}"
+                             TextChanged="CTextBox_TextChanged"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Header="Description"
+                             Tag="{x:Bind dialogs:ContactField.Phone2Identity}"
+                             TextChanged="CTextBox_TextChanged"/>
+
+                    <!-- Row 2: Phone 3 -->
+                    <TextBox Grid.Row="2" Grid.Column="0" Header="Phone 3" 
+                             Tag="{x:Bind dialogs:ContactField.Phone3}"
+                             TextChanged="CTextBox_TextChanged"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Header="Description" 
+                             Tag="{x:Bind dialogs:ContactField.Phone3Identity}"
+                             TextChanged="CTextBox_TextChanged"/>
+
+                    <!-- Row 3: Email 1 -->
+                    <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Header="Email 1" 
+                             Tag="{x:Bind dialogs:ContactField.Email}"
+                             TextChanged="CTextBox_TextChanged"/>
+                    <TextBox Grid.Row="3" Grid.Column="2" Header="Description" 
+                             Tag="{x:Bind dialogs:ContactField.EmailIdentity}"
+                             TextChanged="CTextBox_TextChanged"/>
+
+                    <!-- Row 4: Email 2 -->
+                    <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Header="Email 2" 
+                             Tag="{x:Bind dialogs:ContactField.Email2}"
+                             TextChanged="CTextBox_TextChanged"/>
+                    <TextBox Grid.Row="4" Grid.Column="2" Header="Email 2" 
+                             Tag="{x:Bind dialogs:ContactField.Email2Identity}"
+                             TextChanged="CTextBox_TextChanged"/>
+                </Grid>
+            </Expander>
+
+            <!-- Case Information -->
+            <Expander Header="Case Information" IsExpanded="False" HorizontalAlignment="Stretch"
+                      Expanding="Expander_Expanding" Tag="{x:Bind local:CreateClientCategory.PersonalInfo}">
+                <Grid Width="464" HorizontalAlignment="Stretch" RowSpacing="10" ColumnSpacing="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Row 0: Start Date/Case ID/Status -->
+                    <CalendarDatePicker Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                            x:Name="StartDatePicker" Header="Start Date" HorizontalAlignment="Stretch"
+                            DateChanged="StartDatePicker_DateChanged"/>
+
+                    <TextBox Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Header="Case ID" 
+                             Tag="{x:Bind dialogs:CaseField.CaseID}" TextChanged="TextBox_TextChanged"/>
+                    <StackPanel Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Spacing="8">
+                        <TextBlock Text="Tier"/>
+                        <DropDownButton x:Name="StatusDropDown"  HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+
+                    <!-- Row 1: Benefits/Premiums -->
+                    <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="8">
+                        <TextBlock Text="Benefits"/>
+                        <DropDownButton x:Name="BenefitDropDown" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+                    <TextBox Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Header="Premiums" 
+                             Tag="{x:Bind dialogs:CaseField.Premiums}" TextChanged="TextBox_TextChanged"/>
+
+                    <!-- Row 2: Counselor -->
+                    <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6">
+                        <TextBlock Margin="0,8,8,8" Text="Counselor" Style="{StaticResource LabelTextBlockStyle}"/>
+                        <DropDownButton x:Name="CounselorDropDown" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch"/>
+                    </StackPanel>
+                </Grid>
+            </Expander>
+
+            <!-- Arrangements -->
+            <Expander Header="Arrangements" IsExpanded="False" HorizontalAlignment="Stretch"
+                      Expanding="Expander_Expanding" Tag="{x:Bind local:CreateClientCategory.PersonalInfo}">
+                <Grid Width="464" HorizontalAlignment="Stretch" RowSpacing="10" ColumnSpacing="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Row 0: Employment Goals -->
+                    <TextBox Grid.Row="0" Grid.Column="0" Style="{StaticResource MultiLineTextBoxStyle}"
+                             Header="Employment Goals" Tag="{x:Bind dialogs:ArrangementsField.EmploymentGoal}"
+                             TextChanged="ATextBox_TextChanged"/>
+
+                    <!-- Row 1: Conditions -->
+                    <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource MultiLineTextBoxStyle}"
+                             Header="Conditions" Tag="{x:Bind dialogs:ArrangementsField.Conditions}"
+                             TextChanged="ATextBox_TextChanged"/>
+                </Grid>
+            </Expander>
+
+            <!-- Employment Profile -->
+            <Expander Header="Employment Profile" IsExpanded="False" HorizontalAlignment="Stretch"
+                      Expanding="Expander_Expanding" Tag="{x:Bind local:CreateClientCategory.PersonalInfo}">
+                <Grid Width="464" HorizontalAlignment="Stretch" RowSpacing="10" ColumnSpacing="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Row 0: Disability -->
+                    <TextBox Grid.Row="0" Grid.Column="0" Style="{StaticResource MultiLineTextBoxStyle}"
+                             Header="Disability" Tag="{x:Bind dialogs:EmploymentField.Disability}"
+                             TextChanged="ETextBox_TextChanged"/>
+                    <!-- Row 1: Criminal Charges -->
+                    <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource MultiLineTextBoxStyle}"
+                             Header="Criminal Charges" Tag="{x:Bind dialogs:EmploymentField.CriminalCharge}"
+                             TextChanged="ETextBox_TextChanged"/>
+                    <!-- Row 2: Transportation -->
+                    <TextBox Grid.Row="2" Grid.Column="0" Header="Transportation" 
+                             Tag="{x:Bind dialogs:EmploymentField.Transportation}"
+                             TextChanged="ETextBox_TextChanged"/>
+                </Grid>
+            </Expander>
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>

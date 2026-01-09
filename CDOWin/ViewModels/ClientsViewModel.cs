@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Gaming.Input.ForceFeedback;
 
 namespace CDOWin.ViewModels;
 
@@ -111,8 +112,8 @@ public partial class ClientsViewModel : ObservableObject {
     // =========================
     // CRUD Methods
     // =========================
-    public async Task LoadClientSummariesAsync() {
-        var clients = await _dataCoordinator.GetClientsAsync();
+    public async Task LoadClientSummariesAsync(bool force = false) {
+        var clients = await _dataCoordinator.GetClientsAsync(force);
         if (clients == null) return;
 
         var snapshot = clients.OrderBy(c => c.Name).ToList().AsReadOnly();
