@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CDOWin.ViewModels;
 
-public partial class CreatePlacementViewModel(IPlacementService service, Client client, Employer employer) : ObservableObject {
+public partial class CreatePlacementViewModel(IPlacementService service, Client client) : ObservableObject {
 
     // =========================
     // Dependencies
@@ -18,7 +18,7 @@ public partial class CreatePlacementViewModel(IPlacementService service, Client 
     public partial Client Client { get; set; } = client;
 
     [ObservableProperty]
-    public partial Employer Employer { get; set; } = employer;
+    public partial Employer? Employer { get; set; }
 
     [ObservableProperty]
     public partial int? PlacementNumber { get; set; }
@@ -43,12 +43,6 @@ public partial class CreatePlacementViewModel(IPlacementService service, Client 
 
     [ObservableProperty]
     public partial float? DaysOnJob { get; set; }
-
-    [ObservableProperty]
-    public partial string? ClientName { get; set; }
-
-    [ObservableProperty]
-    public partial string? CounselorName { get; set; }
 
     [ObservableProperty]
     public partial bool? Active { get; set; }
@@ -95,7 +89,9 @@ public partial class CreatePlacementViewModel(IPlacementService service, Client 
     public bool CanSave => CanSaveMethod();
 
     public bool CanSaveMethod() {
-
+        // Employer cannot be null
+        // Client cannot be null
+        // other shit cannnot be null
 
         return true;
     }
@@ -110,7 +106,7 @@ public partial class CreatePlacementViewModel(IPlacementService service, Client 
 
         var placement = new PlacementDTO {
             PlacementNumber = PlacementNumber,
-            EmployerID = Employer.Id.ToString(),
+            EmployerID = Employer?.Id.ToString(),
             ClientID = Client.Id,
             CounselorID = Client.CounselorID,
             PoNumber = PoNumber,
@@ -120,8 +116,8 @@ public partial class CreatePlacementViewModel(IPlacementService service, Client 
             Position = Position,
             Salary = Salary,
             DaysOnJob = DaysOnJob,
-            ClientName = ClientName,
-            CounselorName = CounselorName,
+            ClientName = Client.Name,
+            CounselorName = Client.CounselorReference?.Name,
             Active = Active,
             Website = Website,
             DescriptionOfDuties = DescriptionOfDuties,

@@ -2,6 +2,7 @@ using CDO.Core.DTOs;
 using CDOWin.Services;
 using CDOWin.ViewModels;
 using CDOWin.Views.Clients.Dialogs;
+using CDOWin.Views.Placements.Dialogs;
 using CDOWin.Views.ServiceAuthorizations.Dialogs;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -87,7 +88,7 @@ public sealed partial class ClientViewPage : Page {
 
         var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"New Service Authorization for {ViewModel.Selected.Name}");
         var createSAVM = AppServices.CreateServiceAuthorizationsViewModel(ViewModel.Selected);
-        var createSAPage = new CreateServiceAuthorization(createSAVM, ViewModel.Selected.Id);
+        var createSAPage = new CreateServiceAuthorization(createSAVM);
         dialog.Content = createSAPage;
         dialog.IsPrimaryButtonEnabled = createSAVM.CanSave;
 
@@ -115,6 +116,14 @@ public sealed partial class ClientViewPage : Page {
         }
     }
 
+    private async void CreatePlacement_Click(object sender, RoutedEventArgs e) {
+        if (ViewModel.Selected == null) return;
+
+        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"New Placement for {ViewModel.Selected.Name}");
+        var createPlacementVM = AppServices.CreatePlacementViewMdoel(ViewModel.Selected);
+        var createPage = new CreatePlacements(createPlacementVM);
+    }
+    
     private void Placement_Click(object sender, RoutedEventArgs e) {
         if (sender is Button button && button.Tag is string id) {
             ViewModel.PlacementSelected(id);

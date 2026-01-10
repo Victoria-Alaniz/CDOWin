@@ -6,9 +6,35 @@
     xmlns:local="using:CDOWin.Views.Placements.Dialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CDOWin.Controls"
+    xmlns:viewModels="using:CDOWin.ViewModels"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid Width="480" RowSpacing="12" ColumnSpacing="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Row 0: Case ID + Tier + Counselor (Non Editable) -->
+        <controls:LabelPair Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4"
+                            Label="Issued By" Value="{x:Bind ViewModel.Client.CounselorReference.Name}"/>
+        <controls:LabelPair Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2"
+                            Label="Tier Level" Value="{x:Bind ViewModel.Client.Status}"/>
+        <controls:LabelPair Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2"
+                            Label="Case ID" Value="{x:Bind ViewModel.Client.CaseID}"/>
 
     </Grid>
 </Page>

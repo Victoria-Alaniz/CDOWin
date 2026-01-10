@@ -24,7 +24,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- Row 0: Phone 1 -->
-        <TextBox Grid.Row="0" Grid.Column="0" Header="Phone 1" 
+        <TextBox Grid.Row="0" Grid.Column="0" Header="Phone" 
                  Text="{x:Bind ViewModel.OriginalClient.Phone1}" 
                  Tag="{x:Bind dialogs:ContactField.Phone1}"
                  TextChanged="TextBox_TextChanged"/>
@@ -54,7 +54,7 @@
                  TextChanged="TextBox_TextChanged"/>
 
         <!-- Row 3: Email 1 -->
-        <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Header="Email 1" 
+        <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Header="Email" 
                  Text="{x:Bind ViewModel.OriginalClient.Email}" 
                  Tag="{x:Bind dialogs:ContactField.Email}"
                  TextChanged="TextBox_TextChanged"/>
@@ -68,7 +68,7 @@
                  Text="{x:Bind ViewModel.OriginalClient.Email2}" 
                  Tag="{x:Bind dialogs:ContactField.Email2}"
                  TextChanged="TextBox_TextChanged"/>
-        <TextBox Grid.Row="4" Grid.Column="2" Header="Email 2" 
+        <TextBox Grid.Row="4" Grid.Column="2" Header="Description" 
                  Text="{x:Bind ViewModel.OriginalClient.Email2Identity}" 
                  Tag="{x:Bind dialogs:ContactField.Email2Identity}"
                  TextChanged="TextBox_TextChanged"/>

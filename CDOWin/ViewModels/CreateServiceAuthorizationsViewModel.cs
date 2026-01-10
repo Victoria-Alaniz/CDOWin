@@ -50,7 +50,7 @@ public partial class CreateServiceAuthorizationsViewModel(IServiceAuthorizationS
     public bool CanSave => CanSaveMethod();
 
     private bool CanSaveMethod() {
-        if (Client.CounselorID != null
+        if (Client.CounselorID == null
             || string.IsNullOrWhiteSpace(Id)
             || string.IsNullOrWhiteSpace(Description)
             || string.IsNullOrWhiteSpace(UnitOfMeasurement)
