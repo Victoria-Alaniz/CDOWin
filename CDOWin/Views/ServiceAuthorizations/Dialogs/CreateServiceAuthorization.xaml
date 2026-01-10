@@ -38,11 +38,11 @@
 
         <!-- Row 1: Office Address -->
         <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="6" Header="DRS Office Address"
-                 TextChanged="TextChanged" Tag="{x:Bind local:Field.Office}"/>
+                 MaxLength="100" TextChanged="TextChanged" Tag="{x:Bind local:Field.Office}"/>
         
         <!-- Row 2: SA Number + Start Date + End Date -->
         <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Header="SA Number"
-                 TextChanged="TextChanged" Tag="{x:Bind local:Field.Id}"/>
+                 MaxLength="15" TextChanged="TextChanged" Tag="{x:Bind local:Field.Id}"/>
         
         <CalendarDatePicker Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2"
                             Header="Start Date" x:Name="StartDatePicker" HorizontalAlignment="Stretch"
@@ -54,14 +54,14 @@
 
         <!-- Row 3: U/M + Cost-->
         <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Header="U/M"
-                 TextChanged="TextChanged" Tag="{x:Bind local:Field.UoM}"/>
+                 MaxLength="9" TextChanged="TextChanged" Tag="{x:Bind local:Field.UoM}"/>
         <NumberBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Header="Unit Cost"
                    x:Name="NumberBox" PlaceholderText="0.00"
                    ValueChanged="NumberBox_ValueChanged"/>
 
         <!-- Row 4: Decription -->
         <TextBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" Header="Description"
-                 Style ="{StaticResource MultiLineTextBoxStyle}" 
+                 MaxLength="50" Style ="{StaticResource MultiLineTextBoxStyle}" 
                  TextChanged="TextChanged" Tag="{x:Bind local:Field.Description}"/>
     </Grid>
 </Page>

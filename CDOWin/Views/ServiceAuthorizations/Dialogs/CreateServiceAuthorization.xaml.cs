@@ -16,7 +16,7 @@ public sealed partial class CreateServiceAuthorization : Page {
     // =========================
     // Constructor
     // =========================
-    public CreateServiceAuthorization(CreateServiceAuthorizationsViewModel viewModel, int clientID) {
+    public CreateServiceAuthorization(CreateServiceAuthorizationsViewModel viewModel) {
         ViewModel = viewModel;
         InitializeComponent();
         SetupDatePickers();
