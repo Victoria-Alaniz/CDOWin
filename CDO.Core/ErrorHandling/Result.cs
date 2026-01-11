@@ -20,6 +20,6 @@ public sealed class Result<T> : Result {
         Value = value;
     }
 
-    public static Result<T> Succss(T value) => new(true, value, null);
+    public static Result<T> Success(T value) => new(true, value, null);
     public static new Result<T> Fail(AppError error) => new(false, default, error);
 }

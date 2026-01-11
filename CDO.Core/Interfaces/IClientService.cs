@@ -1,4 +1,5 @@
 ﻿using CDO.Core.DTOs;
+using CDO.Core.ErrorHandling;
 using CDO.Core.Models;
 
 namespace CDO.Core.Interfaces;
@@ -17,7 +18,7 @@ public interface IClientService {
     // -----------------------------
     // POST Methods
     // -----------------------------
-    public Task<Client?> CreateClientAsync(CreateClientDTO dto);
+    public Task<Result<Client>> CreateClientAsync(CreateClientDTO dto);
 
     // -----------------------------
     // PATCH Methods

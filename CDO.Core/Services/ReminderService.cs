@@ -1,5 +1,6 @@
 ﻿using CDO.Core.Constants;
 using CDO.Core.DTOs;
+using CDO.Core.ErrorHandling;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
 
@@ -29,8 +30,14 @@ public class ReminderService : IReminderService {
     // -----------------------------
     // POST Methods
     // -----------------------------
-    public Task<Reminder?> CreateReminderAsync(CreateReminderDTO dto) {
-        return _network.PostAsync<CreateReminderDTO, Reminder>(Endpoints.Reminders, dto);
+    //public Task<Reminder?> CreateReminderAsync(CreateReminderDTO dto) {
+    //    return _network.PostAsync<CreateReminderDTO, Reminder>(Endpoints.Reminders, dto);
+    //}
+
+    public async Task<Result<Reminder>> CreateRemindersAsync(CreateReminderDTO dto) {
+        var result = await _network.NeoPostAsync<CreateReminderDTO, Reminder>(Endpoints.Reminders, dto);
+        if (!result.IsSuccess) return Result<Reminder>.Fail(TranslateError(result.Error!));
+        return Result<Reminder>.Success(result.Value!);
     }
 
     // -----------------------------
@@ -46,4 +53,14 @@ public class ReminderService : IReminderService {
     public Task<bool> DeleteReminderAsync(int id) {
         return _network.DeleteAsync(Endpoints.Reminder(id));
     }
+
+    // -----------------------------
+    // Utility Methods
+    // -----------------------------
+    private static AppError TranslateError(AppError error) =>
+        error.Kind switch {
+            ErrorKind.Conflict => error with { Message = "A Reminder with this ID already exists." },
+            ErrorKind.Validation => error with { Message = "Invalid data." },
+            _ => error
+        };
 }

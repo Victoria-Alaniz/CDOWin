@@ -1,5 +1,6 @@
 ﻿using CDO.Core.Constants;
 using CDO.Core.DTOs;
+using CDO.Core.ErrorHandling;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
 
@@ -27,8 +28,14 @@ public class PlacementService : IPlacementService {
     // -----------------------------
     // POST Methods
     // -----------------------------
-    public Task<Placement?> CreatePlacementAsync(PlacementDTO dto) {
-        return _network.PostAsync<PlacementDTO, Placement>(Endpoints.Placements, dto);
+    //public Task<Placement?> CreatePlacementAsync(PlacementDTO dto) {
+    //    return _network.PostAsync<PlacementDTO, Placement>(Endpoints.Placements, dto);
+    //}
+
+    public async Task<Result<Placement>> CreatePlacementAsync(PlacementDTO dto) {
+        var result = await _network.NeoPostAsync<PlacementDTO, Placement>(Endpoints.Placements, dto);
+        if (!result.IsSuccess) return Result<Placement>.Fail(TranslateError(result.Error!));
+        return Result<Placement>.Success(result.Value!);
     }
 
     // -----------------------------
@@ -45,4 +52,13 @@ public class PlacementService : IPlacementService {
         return _network.DeleteAsync(Endpoints.Placement(id));
     }
 
+    // -----------------------------
+    // Utility Methods
+    // -----------------------------
+    private static AppError TranslateError(AppError error) =>
+        error.Kind switch {
+            ErrorKind.Conflict => error with { Message = "A Placement with this ID already exists." },
+            ErrorKind.Validation => error with { Message = "Invalid data." },
+            _ => error
+        };
 }

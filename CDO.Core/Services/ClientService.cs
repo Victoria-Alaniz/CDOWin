@@ -1,7 +1,9 @@
 ﻿using CDO.Core.Constants;
 using CDO.Core.DTOs;
+using CDO.Core.ErrorHandling;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
+using System.Runtime.InteropServices;
 
 namespace CDO.Core.Services;
 
@@ -31,8 +33,14 @@ public class ClientService : IClientService {
     // -----------------------------
     // POST
     // -----------------------------
-    public Task<Client?> CreateClientAsync(CreateClientDTO dto) {
-        return _network.PostAsync<CreateClientDTO, Client>(Endpoints.Clients, dto);
+    //public Task<Client?> CreateClientAsync(CreateClientDTO dto) {
+    //    return _network.PostAsync<CreateClientDTO, Client>(Endpoints.Clients, dto);
+    //}
+
+    public async Task<Result<Client>> CreateClientAsync(CreateClientDTO dto) {
+        var result = await _network.NeoPostAsync<CreateClientDTO, Client>(Endpoints.Clients, dto);
+        if (!result.IsSuccess) return Result<Client>.Fail(TranslateError(result.Error!));
+        return Result<Client>.Success(result.Value!);
     }
 
     // -----------------------------
@@ -48,4 +56,18 @@ public class ClientService : IClientService {
     public Task<bool> DeleteClientAsync(int id) {
         return _network.DeleteAsync(Endpoints.Client(id));
     }
+
+    // -----------------------------
+    // DELETE Methods
+    // -----------------------------
+
+    // -----------------------------
+    // Utility Methods
+    // -----------------------------
+    private static AppError TranslateError(AppError error) =>
+        error.Kind switch {
+            ErrorKind.Conflict => error with { Message = "A client with this ID already exists." },
+            ErrorKind.Validation => error with { Message = "Invalid data." },
+            _ => error
+        };
 }

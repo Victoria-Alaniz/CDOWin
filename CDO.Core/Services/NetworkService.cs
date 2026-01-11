@@ -1,5 +1,9 @@
-﻿using CDO.Core.Serialization;
+﻿using CDO.Core.ErrorHandling;
+using CDO.Core.Interfaces;
+using CDO.Core.Serialization;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -15,6 +19,7 @@ public class NetworkService : INetworkService {
     // Properties
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _jsonOptions;
+    private readonly String MediaType = "application/json";
 
     public NetworkService() {
         _httpClient = new HttpClient();
@@ -70,10 +75,29 @@ public class NetworkService : INetworkService {
     // -----------------------------
     // POST
     // -----------------------------
-    public async Task<TResponse?> PostAsync<TRequest, TResponse>(string endpoint, TRequest body) {
-        var options = _jsonOptions;
+    public async Task<Result<TResponse>> NeoPostAsync<TRequest, TResponse>(string endpoint, TRequest body) {
+        try {
+            var json = JsonSerializer.Serialize(body, _jsonOptions);
+            var content = new StringContent(json, encoding: Encoding.UTF8, MediaType);
+            var response = await _httpClient.PostAsJsonAsync(endpoint, content);
 
-        var json = JsonSerializer.Serialize(body, options);
+            if (response.IsSuccessStatusCode) {
+                var data = await response.Content.ReadFromJsonAsync<TResponse>();
+                return Result<TResponse>.Success(data!);
+            }
+
+            return Result<TResponse>.Fail(MapHttpError(response.StatusCode));
+        } catch (TaskCanceledException ex) {
+            return Result<TResponse>.Fail(new AppError(ErrorKind.Timeout, "The request timd out.", null, ex));
+        } catch (HttpRequestException ex) {
+            return Result<TResponse>.Fail(new AppError(ErrorKind.Network, "Unable to reach the server.", null, ex));
+        } catch (Exception ex) {
+            return Result<TResponse>.Fail(new AppError(ErrorKind.Unknown, "Unexpected error occurred.", null, ex));
+        }
+    }
+
+    public async Task<TResponse?> PostAsync<TRequest, TResponse>(string endpoint, TRequest body) {
+        var json = JsonSerializer.Serialize(body, _jsonOptions);
         var content = new StringContent(json, encoding: Encoding.UTF8, "application/json");
         var response = await _httpClient.PostAsync(endpoint, content);
         response.EnsureSuccessStatusCode();
@@ -116,4 +140,16 @@ public class NetworkService : INetworkService {
         Debug.WriteLine($"DELETE failed: {response.StatusCode}");
         return false;
     }
+
+    // -----------------------------
+    // Utility Methods
+    // -----------------------------
+    private static AppError MapHttpError(HttpStatusCode status) => status switch {
+        HttpStatusCode.BadRequest => new(ErrorKind.Validation, "Invalid request.", (int)status),
+        HttpStatusCode.Unauthorized => new(ErrorKind.Unauthorized, "Invalid API Key.", (int)status),
+        HttpStatusCode.Forbidden => new(ErrorKind.Forbidden, "Access denied.", (int)status),
+        HttpStatusCode.Conflict => new(ErrorKind.Conflict, "The requested item already exists.", (int)status),
+        HttpStatusCode.InternalServerError => new(ErrorKind.Server, "Invalid request.", (int)status),
+        _ => new(ErrorKind.Unknown, "Requet failed.", (int)status)
+    };
 }

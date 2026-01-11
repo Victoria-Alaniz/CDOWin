@@ -1,5 +1,6 @@
 ﻿using CDO.Core.Constants;
 using CDO.Core.DTOs;
+using CDO.Core.ErrorHandling;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
 
@@ -27,8 +28,14 @@ public class EmployerService : IEmployerService {
     // -----------------------------
     // POST Methods
     // -----------------------------
-    public Task<Employer?> CreateEmployerAsync(EmployerDTO dto) {
-        return _network.PostAsync<EmployerDTO, Employer>(Endpoints.Employers, dto);
+    //public Task<Employer?> CreateEmployerAsync(EmployerDTO dto) {
+    //    return _network.PostAsync<EmployerDTO, Employer>(Endpoints.Employers, dto);
+    //}
+
+    public async Task<Result<Employer>> CreateEmployerAsync(EmployerDTO dto) {
+        var result = await _network.NeoPostAsync<EmployerDTO, Employer>(Endpoints.Employers, dto);
+        if (!result.IsSuccess) return Result<Employer>.Fail(TranslateError(result.Error!));
+        return Result<Employer>.Success(result.Value!);
     }
 
     // -----------------------------
@@ -44,4 +51,14 @@ public class EmployerService : IEmployerService {
     public Task<bool> DeleteEmployerAsync(int id) {
         return _network.DeleteAsync(Endpoints.Employer(id));
     }
+
+    // -----------------------------
+    // Utility Methods
+    // -----------------------------
+    private static AppError TranslateError(AppError error) =>
+        error.Kind switch {
+            ErrorKind.Conflict => error with { Message = "A Employer with this ID already exists." },
+            ErrorKind.Validation => error with { Message = "Invalid data." },
+            _ => error
+        };
 }

@@ -1,5 +1,6 @@
 ﻿using CDO.Core.Constants;
 using CDO.Core.DTOs;
+using CDO.Core.ErrorHandling;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
 
@@ -23,8 +24,13 @@ public class StateService : IStateService {
     // -----------------------------
     // POST Methods
     // -----------------------------
-    public Task<State?> CreateStateAsync(CreateStateDTO dto) {
-        return _network.PostAsync<CreateStateDTO, State>(Endpoints.States, dto);
+    //public Task<State?> CreateStateAsync(CreateStateDTO dto) {
+    //    return _network.PostAsync<CreateStateDTO, State>(Endpoints.States, dto);
+    //}
+    public async Task<Result<State>> CreateStateAsync(CreateStateDTO dto) {
+        var result = await _network.NeoPostAsync<CreateStateDTO, State>(Endpoints.States, dto);
+        if (!result.IsSuccess) return Result<State>.Fail(TranslateError(result.Error!));
+        return Result<State>.Success(result.Value!);
     }
 
     // -----------------------------
@@ -41,4 +47,13 @@ public class StateService : IStateService {
         return _network.DeleteAsync(Endpoints.State(id));
     }
 
+    // -----------------------------
+    // Utility Methods
+    // -----------------------------
+    private static AppError TranslateError(AppError error) =>
+        error.Kind switch {
+            ErrorKind.Conflict => error with { Message = "A state with this value already exists." },
+            ErrorKind.Validation => error with { Message = "Invalid data." },
+            _ => error
+        };
 }

@@ -1,4 +1,6 @@
-﻿namespace CDO.Core.Services;
+﻿using CDO.Core.ErrorHandling;
+
+namespace CDO.Core.Interfaces;
 
 public interface INetworkService {
 
@@ -15,7 +17,7 @@ public interface INetworkService {
     // -----------------------------
     // POST
     // -----------------------------
-    Task<TResponse?> PostAsync<TRequest, TResponse>(string endpoint, TRequest body);
+    Task<Result<TResponse>> NeoPostAsync<TRequest, TResponse>(string endpoint, TRequest body);
 
     // -----------------------------
     // PATCH

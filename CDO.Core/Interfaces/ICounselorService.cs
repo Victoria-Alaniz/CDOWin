@@ -1,4 +1,5 @@
 ﻿using CDO.Core.DTOs;
+using CDO.Core.ErrorHandling;
 using CDO.Core.Models;
 
 namespace CDO.Core.Interfaces {
@@ -14,7 +15,8 @@ namespace CDO.Core.Interfaces {
         // -----------------------------
         // POST Methods
         // -----------------------------
-        public Task<Counselor?> CreateCounselorAsync(CreateCounselorDTO dto);
+        //public Task<Counselor?> CreateCounselorAsync(CreateCounselorDTO dto);
+        public Task<Result<Counselor>> CreateCounselorAsync(CreateCounselorDTO dto);
 
         // -----------------------------
         // PATCH Methods

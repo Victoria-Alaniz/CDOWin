@@ -1,5 +1,6 @@
 ﻿using CDO.Core.Constants;
 using CDO.Core.DTOs;
+using CDO.Core.ErrorHandling;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
 
@@ -27,8 +28,14 @@ public class ServiceAuthorizationService : IServiceAuthorizationService {
     // -----------------------------
     // POST Methods
     // -----------------------------
-    public Task<ServiceAuthorization?> CreateServiceAuthorizationAsync(CreateSADTO dto) {
-        return _network.PostAsync<CreateSADTO, ServiceAuthorization>(Endpoints.ServiceAuthorizations, dto);
+    //public Task<ServiceAuthorization?> CreateServiceAuthorizationAsync(CreateSADTO dto) {
+    //    return _network.PostAsync<CreateSADTO, ServiceAuthorization>(Endpoints.ServiceAuthorizations, dto);
+    //}
+
+    public async Task<Result<ServiceAuthorization>> CreateServiceAuthorizationAsync(CreateSADTO dto) {
+        var result = await _network.NeoPostAsync<CreateSADTO, ServiceAuthorization>(Endpoints.ServiceAuthorizations, dto);
+        if (!result.IsSuccess) return Result<ServiceAuthorization>.Fail(TranslateError(result.Error!));
+        return Result<ServiceAuthorization>.Success(result.Value!);
     }
 
     // -----------------------------
@@ -45,4 +52,13 @@ public class ServiceAuthorizationService : IServiceAuthorizationService {
         return _network.DeleteAsync(Endpoints.ServiceAuthorization(id));
     }
 
+    // -----------------------------
+    // Utility Methods
+    // -----------------------------
+    private static AppError TranslateError(AppError error) =>
+        error.Kind switch {
+            ErrorKind.Conflict => error with { Message = "An SA with this ID already exists." },
+            ErrorKind.Validation => error with { Message = "Invalid data." },
+            _ => error
+        };
 }

@@ -1,4 +1,5 @@
 ﻿using CDO.Core.DTOs;
+using CDO.Core.ErrorHandling;
 using CDO.Core.Models;
 
 namespace CDO.Core.Interfaces;
@@ -15,7 +16,8 @@ public interface IPlacementService {
     // -----------------------------
     // POST Methods
     // -----------------------------
-    public Task<Placement?> CreatePlacementAsync(PlacementDTO dto);
+    // public Task<Placement?> CreatePlacementAsync(PlacementDTO dto);
+    public Task<Result<Placement>> CreatePlacementAsync(PlacementDTO dto);
 
     // -----------------------------
     // PATCH Methods

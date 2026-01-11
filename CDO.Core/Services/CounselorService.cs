@@ -1,5 +1,6 @@
 ﻿using CDO.Core.Constants;
 using CDO.Core.DTOs;
+using CDO.Core.ErrorHandling;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
 
@@ -27,8 +28,14 @@ public class CounselorService : ICounselorService {
     // -----------------------------
     // POST Methods
     // -----------------------------
-    public Task<Counselor?> CreateCounselorAsync(CreateCounselorDTO dto) {
-        return _network.PostAsync<CreateCounselorDTO, Counselor>(Endpoints.Counselors, dto);
+    //public Task<Counselor?> CreateCounselorAsync(CreateCounselorDTO dto) {
+    //    return _network.PostAsync<CreateCounselorDTO, Counselor>(Endpoints.Counselors, dto);
+    //}
+
+    public async Task<Result<Counselor>> CreateCounselorAsync(CreateCounselorDTO dto) {
+        var result = await _network.NeoPostAsync<CreateCounselorDTO, Counselor>(Endpoints.Counselors, dto);
+        if (!result.IsSuccess) return Result<Counselor>.Fail(TranslateError(result.Error!));
+        return Result<Counselor>.Success(result.Value!);
     }
 
     // -----------------------------
@@ -44,4 +51,14 @@ public class CounselorService : ICounselorService {
     public Task<bool> DeleteCounselorAsync(int id) {
         return _network.DeleteAsync(Endpoints.Counselor(id));
     }
+
+    // -----------------------------
+    // Utility Methods
+    // -----------------------------
+    private static AppError TranslateError(AppError error) =>
+        error.Kind switch {
+            ErrorKind.Conflict => error with { Message = "A Counselor with this ID already exists." },
+            ErrorKind.Validation => error with { Message = "Invalid data." },
+            _ => error
+        };
 }

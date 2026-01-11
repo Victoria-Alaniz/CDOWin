@@ -1,4 +1,5 @@
 ﻿using CDO.Core.DTOs;
+using CDO.Core.ErrorHandling;
 using CDO.Core.Models;
 
 namespace CDO.Core.Interfaces;
@@ -15,7 +16,8 @@ public interface IStateService {
     // -----------------------------
     // POST Methods
     // -----------------------------
-    public Task<State?> CreateStateAsync(CreateStateDTO dto);
+    //public Task<State?> CreateStateAsync(CreateStateDTO dto);
+    public Task<Result<State>> CreateStateAsync(CreateStateDTO dto);
 
     // -----------------------------
     // PATCH Methods

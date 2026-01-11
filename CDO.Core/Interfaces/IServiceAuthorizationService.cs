@@ -1,4 +1,5 @@
 ﻿using CDO.Core.DTOs;
+using CDO.Core.ErrorHandling;
 using CDO.Core.Models;
 
 namespace CDO.Core.Interfaces;
@@ -15,7 +16,7 @@ public interface IServiceAuthorizationService {
     // -----------------------------
     // POST Methods
     // -----------------------------
-    public Task<ServiceAuthorization?> CreateServiceAuthorizationAsync(CreateSADTO dto);
+    public Task<Result<ServiceAuthorization>> CreateServiceAuthorizationAsync(CreateSADTO dto);
 
     // -----------------------------
     // PATCH Methods
