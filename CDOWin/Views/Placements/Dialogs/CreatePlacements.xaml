@@ -36,5 +36,7 @@
         <controls:LabelPair Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2"
                             Label="Case ID" Value="{x:Bind ViewModel.Client.CaseID}"/>
 
+        <!-- Row 1: Placement Number + SA Number -->
+        
     </Grid>
 </Page>

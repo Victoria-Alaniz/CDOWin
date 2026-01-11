@@ -51,10 +51,13 @@ public sealed partial class ClientViewPage : Page {
     // =========================
     // Click Handlers
     // =========================
+
+    // Documents
     private void OpenDocuments_Clicked(object sender, RoutedEventArgs e) {
         Process.Start("explorer.exe", $"{ViewModel.Selected?.DocumentsFolderPath}");
     }
 
+    // Reminders
     private async void CreateReminder_ClickAsync(SplitButton sender, SplitButtonClickEventArgs e) {
         if (ViewModel.Selected == null) return;
 
@@ -89,6 +92,28 @@ public sealed partial class ClientViewPage : Page {
         ViewModel.NotifyNewClientCreated();
     }
 
+    private async void ReminderFlyoutItem_Click(object sender, RoutedEventArgs e) {
+        if (sender is MenuFlyoutItem item
+            && item.Tag is ReminderMenuItem reminderItem
+            && ViewModel.Selected != null) {
+            var newReminderVM = AppServices.CreateReminderViewModel(ViewModel.Selected.Id);
+            newReminderVM.Description = reminderItem.Description;
+
+            var dateOffset = DateTimeOffset.Now.AddDays(reminderItem.Days);
+            newReminderVM.Date = dateOffset.Date.ToUniversalTime();
+
+            var reminderResult = await newReminderVM.CreateReminderAsync();
+            if (!reminderResult.IsSuccess) {
+                HandleErrorAsync(reminderResult);
+                return;
+            }
+
+            _ = ViewModel.ReloadClientAsync();
+            ViewModel.NotifyNewClientCreated();
+        }
+    }
+
+    // SAs
     private async void CreateSA_Click(object sender, RoutedEventArgs e) {
         if (ViewModel.Selected == null) return;
 
@@ -106,18 +131,17 @@ public sealed partial class ClientViewPage : Page {
         createSAVM.PropertyChanged += handler;
 
         var result = await dialog.ShowAsync();
+        createSAVM.PropertyChanged -= handler;
 
         if (result != ContentDialogResult.Primary) return;
         var sAResult = await createSAVM.CreateSAAsync();
 
-        if(!sAResult.IsSuccess) {
+        if (!sAResult.IsSuccess) {
             HandleErrorAsync(sAResult);
             return;
         }
 
         _ = ViewModel.ReloadClientAsync();
-
-        createSAVM.PropertyChanged -= handler;
     }
 
     private void SA_Click(object sender, RoutedEventArgs e) {
@@ -127,12 +151,35 @@ public sealed partial class ClientViewPage : Page {
         }
     }
 
+    // Placements
     private async void CreatePlacement_Click(object sender, RoutedEventArgs e) {
         if (ViewModel.Selected == null) return;
 
         var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"New Placement for {ViewModel.Selected.Name}");
         var createPlacementVM = AppServices.CreatePlacementViewMdoel(ViewModel.Selected);
         var createPage = new CreatePlacements(createPlacementVM);
+        dialog.Content = createPage;
+        dialog.IsPrimaryButtonEnabled = createPlacementVM.CanSave;
+
+        PropertyChangedEventHandler handler = (_, args) => {
+            if (args.PropertyName == nameof(createPlacementVM.CanSave))
+                dialog.IsPrimaryButtonEnabled = createPlacementVM.CanSave;
+        };
+
+        createPlacementVM.PropertyChanged += handler;
+
+        var result = await dialog.ShowAsync();
+        createPlacementVM.PropertyChanged += handler;
+
+        if (result != ContentDialogResult.Primary) return;
+        var placementResult = await createPlacementVM.CreatePlacementAsync();
+
+        if(!placementResult.IsSuccess) {
+            HandleErrorAsync(placementResult);
+            return;
+        }
+
+        _ = ViewModel.ReloadClientAsync();
     }
     
     private void Placement_Click(object sender, RoutedEventArgs e) {
@@ -142,26 +189,7 @@ public sealed partial class ClientViewPage : Page {
         }
     }
 
-    private async void ReminderFlyoutItem_Click(object sender, RoutedEventArgs e) {
-        if (sender is MenuFlyoutItem item
-            && item.Tag is ReminderMenuItem reminderItem
-            && ViewModel.Selected != null) {
-            var newReminderVM = AppServices.CreateReminderViewModel(ViewModel.Selected.Id);
-            newReminderVM.Description = reminderItem.Description;
 
-            var dateOffset = DateTimeOffset.Now.AddDays(reminderItem.Days);
-            newReminderVM.Date = dateOffset.Date.ToUniversalTime();
-
-            var reminderResult = await newReminderVM.CreateReminderAsync();
-            if(!reminderResult.IsSuccess) {
-                HandleErrorAsync(reminderResult);
-                return;
-            }
-
-            _ = ViewModel.ReloadClientAsync();
-            ViewModel.NotifyNewClientCreated();
-        }
-    }
 
     private void Checkbox_Clicked(object sender, RoutedEventArgs e) {
         if (sender is CheckBox checkBox && checkBox.Tag is CheckboxTag tag) {

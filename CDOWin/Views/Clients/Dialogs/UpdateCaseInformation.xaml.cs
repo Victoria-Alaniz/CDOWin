@@ -37,8 +37,9 @@ public sealed partial class UpdateCaseInformation : Page {
     private void BuildDropDowns() {
         BenefitDropDown.Flyout = BuildFlyout(Benefit.All);
         StatusDropDown.Flyout = BuildFlyout(Status.All);
-        BenefitDropDown.Content = ViewModel.OriginalClient.Benefits ?? "None";
-        StatusDropDown.Content = ViewModel.OriginalClient.Status ?? "None";
+        Debug.WriteLine($"FUCK: {ViewModel.OriginalClient.Benefits} PISS: {ViewModel.OriginalClient.Status}");
+        BenefitDropDown.Content = ViewModel.OriginalClient.Benefits?.NormalizeString() ?? "None";
+        StatusDropDown.Content = ViewModel.OriginalClient.Status?.NormalizeString() ?? "None";
     }
 
     private MenuFlyout BuildFlyout(IEnumerable<dynamic> items) {
