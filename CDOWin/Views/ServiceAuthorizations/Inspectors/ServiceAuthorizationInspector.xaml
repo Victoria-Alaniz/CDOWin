@@ -90,7 +90,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Style="{StaticResource InspectorAccentStyle}">
+            <Button Grid.Column="0" Style="{StaticResource InspectorAccentStyle}"
+                    Click="Export_Click">
                 <StackPanel Orientation="Horizontal" Spacing="5">
                     <SymbolIcon Symbol="Page"/>
                     <TextBlock Text="Invoice"/>

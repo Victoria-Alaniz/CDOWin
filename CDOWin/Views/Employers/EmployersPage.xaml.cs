@@ -55,13 +55,13 @@ public sealed partial class EmployersPage : Page {
         createEmployerVM.PropertyChanged -= handler;
 
         if (result != ContentDialogResult.Primary) return;
-        
+
         var updateResult = await createEmployerVM.CreateEmployerAsync();
         if (!updateResult.IsSuccess) {
             HandleErrorAsync(updateResult);
             return;
         }
-        
+
         _ = ViewModel.LoadEmployersAsync();
     }
 

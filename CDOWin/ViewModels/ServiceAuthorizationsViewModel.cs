@@ -1,5 +1,7 @@
 ﻿using CDO.Core.DTOs;
 using CDO.Core.ErrorHandling;
+using CDO.Core.Export.Composer;
+using CDO.Core.Export.Templates;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
 using CDOWin.Data;
@@ -10,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,6 +24,7 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     // Services / Dependencies
     // =========================
     private readonly IServiceAuthorizationService _service;
+    private readonly ITemplateProvider _templateProvider = new TemplateProvider();
     private readonly DataCoordinator _dataCoordinator;
     private readonly SASelectionService _selectionService;
     private readonly DispatcherQueue _dispatcher = DispatcherQueue.GetForCurrentThread();
@@ -84,6 +88,52 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
         else
             _dispatcher.TryEnqueue(ApplyFilter);
     }
+
+    // =========================
+    // Export Methods
+    // =========================
+    public Task<Result<string>> ExportSelectedAsync() {
+        var tcs = new TaskCompletionSource<Result<string>>();
+
+        if (Selected == null) {
+            tcs.SetResult(Result<string>.Fail(new AppError(ErrorKind.Validation, "No SA Selected.")));
+            return tcs.Task;
+        }
+
+        if (Selected.Client is not Client client) {
+            tcs.SetResult(Result<string>.Fail(new AppError(ErrorKind.Validation, "This shouldn't be possible")));
+            return tcs.Task;
+        }
+
+        // Grab the template BEFORE the thread
+        var templatePath = _templateProvider.GetTemplate("Invoice.dotx"); // sync path
+        var outputPath = Path.Combine(client.DocumentsFolderPath, $"Invoice_{Selected.Id}.docx");
+
+        var thread = new System.Threading.Thread(() => {
+            try {
+                Debug.WriteLine($"Opening template: {templatePath}");
+                var composer = new ServiceAuthorizationComposer(Selected);
+                composer.Compose(templatePath, outputPath);
+
+                // Open file
+                Process.Start(new ProcessStartInfo {
+                    FileName = outputPath,
+                    UseShellExecute = true
+                });
+
+                tcs.SetResult(Result<string>.Success(outputPath));
+            } catch (Exception ex) {
+                tcs.SetResult(Result<string>.Fail(new AppError(ErrorKind.Unknown, "Failed to export Service Authorization", Exception: ex)));
+            }
+        });
+
+        thread.SetApartmentState(System.Threading.ApartmentState.STA); // MUST do before Start
+        thread.Start();
+
+        return tcs.Task;
+    }
+
+
 
     // =========================
     // CRUD Methods

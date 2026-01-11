@@ -83,7 +83,7 @@ public sealed partial class ClientViewPage : Page {
         if (result != ContentDialogResult.Primary) return;
 
         var reminderResult = await createReminderVM.CreateReminderAsync();
-        if(!reminderResult.IsSuccess) {
+        if (!reminderResult.IsSuccess) {
             HandleErrorAsync(reminderResult);
             return;
         }
@@ -174,14 +174,14 @@ public sealed partial class ClientViewPage : Page {
         if (result != ContentDialogResult.Primary) return;
         var placementResult = await createPlacementVM.CreatePlacementAsync();
 
-        if(!placementResult.IsSuccess) {
+        if (!placementResult.IsSuccess) {
             HandleErrorAsync(placementResult);
             return;
         }
 
         _ = ViewModel.ReloadClientAsync();
     }
-    
+
     private void Placement_Click(object sender, RoutedEventArgs e) {
         if (sender is Button button && button.Tag is string id) {
             ViewModel.PlacementSelected(id);
@@ -248,7 +248,7 @@ public sealed partial class ClientViewPage : Page {
 
     private async Task UpdateClient(UpdateClientDTO update) {
         var result = await ViewModel.UpdateClientAsync(update);
-        if(!result.IsSuccess) {
+        if (!result.IsSuccess) {
             HandleErrorAsync(result);
             return;
         }

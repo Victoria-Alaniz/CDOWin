@@ -57,7 +57,7 @@ public sealed partial class CounselorsPage : Page {
         if (result != ContentDialogResult.Primary) return;
 
         var updateResult = await createCounselorVM.CreateCounselorAsync();
-        if(!updateResult.IsSuccess) {
+        if (!updateResult.IsSuccess) {
             HandleErrorAsync(updateResult);
             return;
         }

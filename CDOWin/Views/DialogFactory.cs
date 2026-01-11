@@ -31,7 +31,7 @@ public static class DialogFactory {
         dialog.Content = message;
         dialog.CloseButtonText = "OK";
         return dialog;
-        
+
     }
 
     private static ContentDialog Dialog(XamlRoot root, string title) {

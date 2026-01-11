@@ -3,7 +3,6 @@ using CDO.Core.Interfaces;
 using CDO.Core.Serialization;
 using System.Diagnostics;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
@@ -121,7 +120,7 @@ public class NetworkService : INetworkService {
             var content = new StringContent(json, encoding: Encoding.UTF8, MediaType);
             var response = await _httpClient.PatchAsync(endpoint, content);
 
-            if(response.IsSuccessStatusCode) {
+            if (response.IsSuccessStatusCode) {
                 var data = await response.Content.ReadFromJsonAsync<TResponse>();
                 return Result<TResponse>.Success(data!);
             }
