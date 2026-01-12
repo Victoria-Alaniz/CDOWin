@@ -9,14 +9,14 @@ public sealed class ServiceAuthorizationComposer {
 
     public ServiceAuthorizationComposer(ServiceAuthorization sa) => _sa = sa;
 
-    public void Compose(string templatePath, string outputPath) {
+    public void Compose(string templatePath) {
         var wordService = new WordInteropService();
-        wordService.ExportServiceAuthorization(templatePath, outputPath, _sa);
+        wordService.ExportServiceAuthorization(templatePath, _sa);
     }
 }
 
 public sealed class WordInteropService {
-    public void ExportServiceAuthorization(string templatePath, string outputPath, ServiceAuthorization sa) {
+    public void ExportServiceAuthorization(string templatePath, ServiceAuthorization sa) {
         Debug.WriteLine(templatePath);
         var app = new Word.Application();
 

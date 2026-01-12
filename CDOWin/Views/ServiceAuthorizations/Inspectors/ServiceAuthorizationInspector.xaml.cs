@@ -54,6 +54,7 @@ public sealed partial class ServiceAuthorizationInspector : Page {
 
     private async void HandleErrorAsync(Result result) {
         if (result.Error is not AppError error) return;
+        var message = $"{error.Exception.Source}: {error.Exception.InnerException}: {error.Exception.StackTrace}";
         var dialog = DialogFactory.ErrorDialog(this.XamlRoot, error.Kind.ToString(), error.Exception.Message);
         await dialog.ShowAsync();
     }

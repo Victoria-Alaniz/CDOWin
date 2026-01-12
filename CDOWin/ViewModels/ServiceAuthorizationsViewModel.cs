@@ -107,21 +107,21 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
 
         // Grab the template BEFORE the thread
         var templatePath = _templateProvider.GetTemplate("Invoice.dotx"); // sync path
-        var outputPath = Path.Combine(client.DocumentsFolderPath, $"Invoice_{Selected.Id}.docx");
+        //var outputPath = Path.Combine(client.DocumentsFolderPath, $"Invoice_{Selected.Id}.docx");
 
         var thread = new System.Threading.Thread(() => {
             try {
                 Debug.WriteLine($"Opening template: {templatePath}");
                 var composer = new ServiceAuthorizationComposer(Selected);
-                composer.Compose(templatePath, outputPath);
+                composer.Compose(templatePath);
 
                 // Open file
-                Process.Start(new ProcessStartInfo {
-                    FileName = outputPath,
-                    UseShellExecute = true
-                });
+                //Process.Start(new ProcessStartInfo {
+                //    FileName = outputPath,
+                //    UseShellExecute = true
+                //});
 
-                tcs.SetResult(Result<string>.Success(outputPath));
+                tcs.SetResult(Result<string>.Success("success"));
             } catch (Exception ex) {
                 tcs.SetResult(Result<string>.Fail(new AppError(ErrorKind.Unknown, "Failed to export Service Authorization", Exception: ex)));
             }
