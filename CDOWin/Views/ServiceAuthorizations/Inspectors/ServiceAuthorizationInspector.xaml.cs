@@ -4,6 +4,7 @@ using CDOWin.ViewModels;
 using CDOWin.Views.ServiceAuthorizations.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Diagnostics;
 
 namespace CDOWin.Views.ServiceAuthorizations.Inspectors;
 
@@ -36,15 +37,24 @@ public sealed partial class ServiceAuthorizationInspector : Page {
         if (result != ContentDialogResult.Primary) return;
 
         var updateResult = await ViewModel.UpdateSAAsync(updateVM.Updated);
-        if(!updateResult.IsSuccess) {
+        if (!updateResult.IsSuccess) {
             HandleErrorAsync(updateResult);
             return;
-        } 
+        }
+    }
+
+    private async void Export_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
+        Debug.WriteLine("Export click clicked");
+        var result = await ViewModel.ExportSelectedAsync();
+        if (!result.IsSuccess) {
+            HandleErrorAsync(result);
+            return;
+        }
     }
 
     private async void HandleErrorAsync(Result result) {
         if (result.Error is not AppError error) return;
-        var dialog = DialogFactory.ErrorDialog(this.XamlRoot, error.Kind.ToString(), error.Message);
+        var dialog = DialogFactory.ErrorDialog(this.XamlRoot, error.Kind.ToString(), error.Exception.Message);
         await dialog.ShowAsync();
     }
 }
