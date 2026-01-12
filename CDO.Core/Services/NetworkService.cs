@@ -98,21 +98,6 @@ public class NetworkService : INetworkService {
     // -----------------------------
     // PATCH
     // -----------------------------
-    //public async Task<TResponse?> UpdateAsync<TRequest, TResponse>(string endpoint, TRequest body) {
-    //    var json = JsonSerializer.Serialize(body, _jsonOptions);
-    //    var content = new StringContent(json, encoding: Encoding.UTF8, MediaType);
-
-    //    try {
-    //        var response = await _httpClient.PatchAsync(endpoint, content);
-    //        response.EnsureSuccessStatusCode();
-
-    //        return await response.Content.ReadFromJsonAsync<TResponse>();
-    //    } catch (HttpRequestException ex) {
-    //        Debug.WriteLine("HTTP Request Exception:");
-    //        Debug.WriteLine($"Message: {ex.Message}");
-    //        throw;
-    //    }
-    //}
 
     public async Task<Result<TResponse>> UpdateAsync<TRequest, TResponse>(string endpoint, TRequest body) {
         try {

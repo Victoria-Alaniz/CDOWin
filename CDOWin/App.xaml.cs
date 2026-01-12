@@ -2,6 +2,7 @@
 using CDOWin.Services;
 using Meziantou.Framework.Win32;
 using Microsoft.UI.Xaml;
+using System;
 
 namespace CDOWin;
 
@@ -9,6 +10,8 @@ public partial class App : Application {
     private readonly WindowManager _windowManager;
 
     public App() {
+        AppContext.SetSwitch("System.Runtime.InteropServices.EnableCOM", true);
+
         _windowManager = WindowManager.Instance;
         InitializeComponent();
     }
