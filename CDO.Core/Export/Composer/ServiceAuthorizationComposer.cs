@@ -7,9 +7,7 @@ namespace CDO.Core.Export.Composer;
 public sealed class ServiceAuthorizationComposer {
     private readonly ServiceAuthorization _sa;
 
-    public ServiceAuthorizationComposer(ServiceAuthorization sa) {
-        _sa = sa;
-    }
+    public ServiceAuthorizationComposer(ServiceAuthorization sa) => _sa = sa;
 
     public void Compose(string templatePath, string outputPath) {
         var wordService = new WordInteropService();
@@ -20,9 +18,7 @@ public sealed class ServiceAuthorizationComposer {
 public sealed class WordInteropService {
     public void ExportServiceAuthorization(string templatePath, string outputPath, ServiceAuthorization sa) {
         Debug.WriteLine(templatePath);
-        var app = new Word.Application {
-            Visible = false
-        };
+        var app = new Word.Application();
 
         var doc = app.Documents.Open(templatePath);
 
@@ -70,10 +66,8 @@ public sealed class WordInteropService {
                         break;
                 }
             }
-            doc.SaveAs2(outputPath, Word.WdSaveFormat.wdFormatDocumentDefault);
-            doc.Close(Word.WdSaveOptions.wdDoNotSaveChanges);
-        } finally {
-            app.Quit();
+        } catch (Exception ex) {
+            Debug.WriteLine(ex.ToString());
         }
     }
 }

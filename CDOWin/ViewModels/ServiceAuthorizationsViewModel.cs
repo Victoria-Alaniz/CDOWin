@@ -133,8 +133,6 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
         return tcs.Task;
     }
 
-
-
     // =========================
     // CRUD Methods
     // =========================
