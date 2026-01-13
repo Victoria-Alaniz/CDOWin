@@ -103,22 +103,8 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
             return tcs.Task;
         }
 
-        // Grab the template BEFORE the thread
-        var thread = new System.Threading.Thread(() => {
-            try {
-                var composer = new ServiceAuthorizationComposer(Selected);
-                composer.Compose();
-
-                tcs.SetResult(Result<string>.Success("success"));
-            } catch (Exception ex) {
-                tcs.SetResult(Result<string>.Fail(new AppError(ErrorKind.Unknown, "Failed to export Service Authorization", Exception: ex)));
-            }
-        });
-
-        thread.SetApartmentState(System.Threading.ApartmentState.STA); // MUST do before Start
-        thread.Start();
-
-        return tcs.Task;
+        var composer = new ServiceAuthorizationComposer(Selected);
+        return composer.Compose();
     }
 
     // =========================

@@ -1,5 +1,6 @@
 using CDO.Core.DTOs;
 using CDO.Core.ErrorHandling;
+using CDO.Core.Export.Composer;
 using CDOWin.Services;
 using CDOWin.ViewModels;
 using CDOWin.Views.Clients.Dialogs;
@@ -152,19 +153,26 @@ public sealed partial class ClientViewPage : Page {
         if(sa == null) { return; }
         var updateSAVM = new ServiceAuthorizationUpdateViewModel(sa);
         var dialog = DialogFactory.UpdateDialog(this.XamlRoot, "Edit Service Authorization");
+        dialog.SecondaryButtonText = "Export";
         dialog.Content = new UpdateSA(updateSAVM);
 
         var result = await dialog.ShowAsync();
 
-        if (result != ContentDialogResult.Primary) return;
+        if (result == ContentDialogResult.Primary) {
+            var updateResult = await updateSAVM.UpdateSAAsync();
+            if (!updateResult.IsSuccess) {
+                HandleErrorAsync(updateResult);
+                return;
+            }
+            _ = ViewModel.ReloadClientAsync();
+        } else if (result == ContentDialogResult.Secondary) {
+            var composer = new ServiceAuthorizationComposer(updateSAVM.Original);
+            var composerResult = await composer.Compose();
 
-        var updateResult = await updateSAVM.UpdateSAAsync();
-        if (!updateResult.IsSuccess) {
-            HandleErrorAsync(updateResult);
-            return;
+            if (composerResult.IsSuccess) return;
+
+            HandleErrorAsync(composerResult);
         }
-
-        _ = ViewModel.ReloadClientAsync();
     }
 
     // Placements
