@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CDOWin.ViewModels;
 
@@ -33,6 +34,7 @@ public partial class RemindersViewModel : ObservableObject {
     private IReadOnlyList<Reminder> _allReminders = [];
     private RemindersFilter _filter = RemindersFilter.All;
     private readonly DispatcherTimer _refreshTimer;
+    private DateTime _selectedDate = DateTime.Now;
 
     // =========================
     // Public Properties / State
@@ -115,18 +117,8 @@ public partial class RemindersViewModel : ObservableObject {
 
     public void ApplyDateFilter(DateTime date) {
         Filter = RemindersFilter.Date;
-        var source = _allReminders
-            .Where(r => r.Date.Date == date)
-            .ToList()
-            .AsReadOnly();
-
-        _dispatcher.TryEnqueue(() => {
-            Filtered.Clear();
-            foreach (var reminder in source)
-                Filtered.Add(reminder);
-
-            UpdateEndText();
-        });
+        _selectedDate = date;
+        ApplyFilter();
     }
 
     // =========================
@@ -226,6 +218,7 @@ public partial class RemindersViewModel : ObservableObject {
             RemindersFilter.All => _allReminders,
             RemindersFilter.Upcoming => _allReminders.Where(r => r.Date > DateTime.Now),
             RemindersFilter.Client => ClientSpecific,
+            RemindersFilter.Date => DateSpecifc(),
             _ => []
         };
 
@@ -234,6 +227,13 @@ public partial class RemindersViewModel : ObservableObject {
             Filtered.Add(reminder);
 
         UpdateEndText();
+    }
+
+    private IReadOnlyList<Reminder> DateSpecifc() {
+        return _allReminders
+            .Where(r => r.Date.Date == _selectedDate.Date)
+            .ToList()
+            .AsReadOnly();
     }
 
     private void UpdateEndText() {
