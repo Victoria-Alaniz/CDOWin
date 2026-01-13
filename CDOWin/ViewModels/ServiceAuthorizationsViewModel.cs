@@ -23,7 +23,6 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     // Services / Dependencies
     // =========================
     private readonly IServiceAuthorizationService _service;
-    private readonly ITemplateProvider _templateProvider = new TemplateProvider();
     private readonly DataCoordinator _dataCoordinator;
     private readonly SASelectionService _selectionService;
     private readonly DispatcherQueue _dispatcher = DispatcherQueue.GetForCurrentThread();
@@ -105,13 +104,10 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
         }
 
         // Grab the template BEFORE the thread
-        var templatePath = _templateProvider.GetTemplate("Invoice.dotx"); // sync path
-
         var thread = new System.Threading.Thread(() => {
             try {
-                Debug.WriteLine($"Opening template: {templatePath}");
                 var composer = new ServiceAuthorizationComposer(Selected);
-                composer.Compose(templatePath);
+                composer.Compose();
 
                 tcs.SetResult(Result<string>.Success("success"));
             } catch (Exception ex) {

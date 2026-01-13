@@ -1,4 +1,5 @@
-﻿using CDO.Core.Models;
+﻿using CDO.Core.Export.Templates;
+using CDO.Core.Models;
 using System.Diagnostics;
 using Word = Microsoft.Office.Interop.Word;
 
@@ -6,12 +7,15 @@ namespace CDO.Core.Export.Composer;
 
 public sealed class ServiceAuthorizationComposer {
     private readonly ServiceAuthorization _sa;
+    private readonly ITemplateProvider _templateProvider = new TemplateProvider();
 
     public ServiceAuthorizationComposer(ServiceAuthorization sa) => _sa = sa;
 
-    public void Compose(string templatePath) {
+    public void Compose() {
+        if (_templateProvider.GetTemplate("Invoice.dotx") is not string path) return;
+
         var wordService = new WordInteropService();
-        wordService.ExportServiceAuthorization(templatePath, _sa);
+        wordService.ExportServiceAuthorization(path, _sa);
     }
 }
 
