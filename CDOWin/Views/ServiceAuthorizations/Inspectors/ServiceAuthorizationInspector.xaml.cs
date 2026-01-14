@@ -2,9 +2,9 @@ using CDO.Core.ErrorHandling;
 using CDOWin.Services;
 using CDOWin.ViewModels;
 using CDOWin.Views.ServiceAuthorizations.Dialogs;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Diagnostics;
 
 namespace CDOWin.Views.ServiceAuthorizations.Inspectors;
 
@@ -25,7 +25,7 @@ public sealed partial class ServiceAuthorizationInspector : Page {
     // =========================
     // Click Handlers
     // =========================
-    private async void EditButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
+    private async void EditButton_Click(object sender, RoutedEventArgs e) {
         if (ViewModel == null || ViewModel.Selected == null) return;
 
         var updateVM = new ServiceAuthorizationUpdateViewModel(ViewModel.Selected);
@@ -36,15 +36,19 @@ public sealed partial class ServiceAuthorizationInspector : Page {
 
         if (result != ContentDialogResult.Primary) return;
 
-        var updateResult = await ViewModel.UpdateSAAsync(updateVM.Updated);
+        var updateResult = await updateVM.UpdateSAAsync();
+
         if (!updateResult.IsSuccess) {
             HandleErrorAsync(updateResult);
             return;
         }
+
+        _ = ViewModel.ReloadServiceAuthorizationAsync(ViewModel.Selected.Id);
     }
 
     private async void Export_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
-        Debug.WriteLine("Export click clicked");
+        if (ViewModel.Selected == null) return;
+
         var result = await ViewModel.ExportSelectedAsync();
         if (!result.IsSuccess) {
             HandleErrorAsync(result);

@@ -2,18 +2,7 @@
 using System.Diagnostics;
 using Word = Microsoft.Office.Interop.Word;
 
-namespace CDO.Core.Export.Composer;
-
-public sealed class ServiceAuthorizationComposer {
-    private readonly ServiceAuthorization _sa;
-
-    public ServiceAuthorizationComposer(ServiceAuthorization sa) => _sa = sa;
-
-    public void Compose(string templatePath) {
-        var wordService = new WordInteropService();
-        wordService.ExportServiceAuthorization(templatePath, _sa);
-    }
-}
+namespace CDO.Core.WordInterop;
 
 public sealed class WordInteropService {
     public void ExportServiceAuthorization(string templatePath, ServiceAuthorization sa) {

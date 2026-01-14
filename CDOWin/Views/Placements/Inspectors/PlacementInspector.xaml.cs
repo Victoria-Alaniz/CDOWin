@@ -1,10 +1,9 @@
 using CDOWin.Services;
 using CDOWin.ViewModels;
 using CDOWin.Views.Placements.Dialogs;
-using CDOWin.Views.ServiceAuthorizations.Dialogs;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Threading.Tasks;
 
 namespace CDOWin.Views.Placements.Inspectors;
 
@@ -22,13 +21,19 @@ public sealed partial class PlacementInspector : Page {
         InitializeComponent();
     }
 
-    private async void EditButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
+    // =========================
+    // Click Handlers
+    // =========================
+    private async void EditButton_Click(object sender, RoutedEventArgs e) {
         if (ViewModel == null || ViewModel.Selected == null) return;
 
+        // THERE IS NO PLLACEMENTS UPDATE VM
         var updateVM = new PlacementUpdateViewModel(ViewModel.Selected);
         var dialog = DialogFactory.UpdateDialog(this.XamlRoot, "Edit Placement");
-        dialog.Content = new UpdatePlacements(updateVM);
+        dialog.Content = new UpdatePlacement(updateVM);
 
         var result = await dialog.ShowAsync();
     }
+
+
 }

@@ -47,7 +47,7 @@
     <None Remove="Views\Inspectors\Placements.xaml" />
     <None Remove="Views\Notes.xaml" />
     <None Remove="Views\Placements\Dialogs\CreatePlacements.xaml" />
-    <None Remove="Views\Placements\Dialogs\UpdatePlacements.xaml" />
+    <None Remove="Views\Placements\Dialogs\UpdatePlacement.xaml" />
     <None Remove="Views\RemindersPage.xaml" />
     <None Remove="Views\ServiceAuthorizations\Dialogs\CreateServiceAuthorization.xaml" />
     <None Remove="Views\ServiceAuthorizations\Dialogs\UpdateSA.xaml" />
@@ -287,7 +287,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\Placements\Dialogs\UpdatePlacements.xaml">
+    <Page Update="Views\Placements\Dialogs\UpdatePlacement.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

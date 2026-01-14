@@ -1,5 +1,6 @@
 using CDO.Core.DTOs;
 using CDO.Core.ErrorHandling;
+using CDOWin.Composers;
 using CDOWin.Services;
 using CDOWin.ViewModels;
 using CDOWin.Views.Clients.Dialogs;
@@ -10,6 +11,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CDOWin.Views.Clients;
@@ -144,10 +146,32 @@ public sealed partial class ClientViewPage : Page {
         _ = ViewModel.ReloadClientAsync();
     }
 
-    private void SA_Click(object sender, RoutedEventArgs e) {
-        if (sender is Button button && button.Tag is string id) {
-            ViewModel.SASelected(id);
-            AppServices.Navigation.Navigate(CDOFrame.ServiceAuthorizations);
+    private async void SA_Click(object sender, RoutedEventArgs e) {
+        if (sender is not Button button || button.Tag is not string id) { return; }
+        var sa = ViewModel.Selected?.Pos?.FirstOrDefault(c => c.Id == id);
+
+        if (sa == null) { return; }
+        var updateSAVM = new ServiceAuthorizationUpdateViewModel(sa);
+        var dialog = DialogFactory.UpdateDialog(this.XamlRoot, "Edit Service Authorization");
+        dialog.SecondaryButtonText = "Export";
+        dialog.Content = new UpdateSA(updateSAVM);
+
+        var result = await dialog.ShowAsync();
+
+        if (result == ContentDialogResult.Primary) {
+            var updateResult = await updateSAVM.UpdateSAAsync();
+            if (!updateResult.IsSuccess) {
+                HandleErrorAsync(updateResult);
+                return;
+            }
+            _ = ViewModel.ReloadClientAsync();
+        } else if (result == ContentDialogResult.Secondary) {
+            var composer = new ServiceAuthorizationComposer(updateSAVM.Original);
+            var composerResult = await composer.Compose();
+
+            if (composerResult.IsSuccess) return;
+
+            HandleErrorAsync(composerResult);
         }
     }
 
@@ -184,6 +208,8 @@ public sealed partial class ClientViewPage : Page {
 
     private void Placement_Click(object sender, RoutedEventArgs e) {
         if (sender is Button button && button.Tag is string id) {
+            // Here we need to create a new dialog and show the placement
+
             ViewModel.PlacementSelected(id);
             AppServices.Navigation.Navigate(CDOFrame.Placements);
         }

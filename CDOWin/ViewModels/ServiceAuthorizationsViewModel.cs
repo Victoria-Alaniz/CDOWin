@@ -1,9 +1,8 @@
 ﻿using CDO.Core.DTOs;
 using CDO.Core.ErrorHandling;
-using CDO.Core.Export.Composer;
-using CDO.Core.Export.Templates;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
+using CDOWin.Composers;
 using CDOWin.Data;
 using CDOWin.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -11,8 +10,6 @@ using Microsoft.UI.Dispatching;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,7 +21,6 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     // Services / Dependencies
     // =========================
     private readonly IServiceAuthorizationService _service;
-    private readonly ITemplateProvider _templateProvider = new TemplateProvider();
     private readonly DataCoordinator _dataCoordinator;
     private readonly SASelectionService _selectionService;
     private readonly DispatcherQueue _dispatcher = DispatcherQueue.GetForCurrentThread();
@@ -69,10 +65,9 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     }
 
     private void OnSASelected(string id) {
-        Debug.WriteLine("SA SELECTED");
         var selected = _allServiceAuthorizations.FirstOrDefault(s => s.Id == id);
         if (selected == null) return;
-        Debug.WriteLine("It wasnt null");
+
         _dispatcher.TryEnqueue(() => {
             Selected = selected;
             SearchQuery = ""; // Clearing the query applies the filter
@@ -105,25 +100,8 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
             return tcs.Task;
         }
 
-        // Grab the template BEFORE the thread
-        var templatePath = _templateProvider.GetTemplate("Invoice.dotx"); // sync path
-
-        var thread = new System.Threading.Thread(() => {
-            try {
-                Debug.WriteLine($"Opening template: {templatePath}");
-                var composer = new ServiceAuthorizationComposer(Selected);
-                composer.Compose(templatePath);
-
-                tcs.SetResult(Result<string>.Success("success"));
-            } catch (Exception ex) {
-                tcs.SetResult(Result<string>.Fail(new AppError(ErrorKind.Unknown, "Failed to export Service Authorization", Exception: ex)));
-            }
-        });
-
-        thread.SetApartmentState(System.Threading.ApartmentState.STA); // MUST do before Start
-        thread.Start();
-
-        return tcs.Task;
+        var composer = new ServiceAuthorizationComposer(Selected);
+        return composer.Compose();
     }
 
     // =========================
