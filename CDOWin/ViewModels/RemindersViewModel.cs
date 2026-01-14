@@ -215,7 +215,7 @@ public partial class RemindersViewModel : ObservableObject {
         Debug.WriteLine(Filter.ToString());
         IEnumerable<Reminder> source = _filter switch {
             RemindersFilter.All => _allReminders,
-            RemindersFilter.Upcoming => _allReminders.Where(r => r.Date > DateTime.Now),
+            RemindersFilter.Upcoming => _allReminders.Where(r => r.Date > DateTime.Now.AddDays(-1)),
             RemindersFilter.Client => ClientSpecific,
             RemindersFilter.Date => DateSpecifc(),
             _ => []

@@ -13,6 +13,10 @@ public class ClientSummaryDTO {
     public string? Address2 { get; init; }
     public string? Zip { get; init; }
     public string? CounselorName { get; init; }
+    public string? Phone { get; init; }
+    public string? Phone2 { get; init; }
+    public string? Phone3 { get; init; }
+
 
     // Computed Properties
     public string Name => $"{LastName}, {FirstName}";

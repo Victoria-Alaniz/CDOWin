@@ -31,7 +31,7 @@
                    Text="{x:Bind ViewModel.Selected.Name, Mode=OneWay}"/>
         
         <!-- Button Row -->
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="0,6,4,4">
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="0,6,4,8">
             
             <!-- Documents Button -->
             <Button Style="{StaticResource SingleIconButtonStyle}" Margin="4,2,8,0"
@@ -265,6 +265,42 @@
                     </Grid>
                 </Grid>
 
+                <!-- Conditions Card -->
+                <Grid Style="{StaticResource CardContainerGridStyle}">
+
+                    <!-- Inner Grid -->
+                    <Grid Style="{StaticResource CardInnerGridStyle}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Header -->
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="Conditions"
+                       Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <Button Grid.Column="1" Style="{StaticResource SubtleButtonStyle}"
+                    Tag="{x:Bind dialogs:ClientEditType.Conditions}" Click="EditButton_Clicked"
+                    ToolTipService.ToolTip="Edit">
+                                <FontIcon Glyph="&#xE70F;" FontSize="16" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                            </Button>
+                        </Grid>
+
+                        <!-- Start Date/Case ID/Status Section -->
+                        <c:LabelPair Grid.Row="1" Grid.Column="0"
+                     Label="Employment Goals" Value="{x:Bind ViewModel.Selected.EmploymentGoal, Mode=OneWay}"/>
+
+                        <c:LabelPair Grid.Row="2" Grid.Column="0"
+                     Label="Conditions" Value="{x:Bind ViewModel.Selected.Conditions, Mode=OneWay}"/>
+                    </Grid>
+                </Grid>
+
                 <!-- Service Authorizations Card -->
                 <Grid Style="{StaticResource CardContainerGridStyle}">
                     <!-- Inner Grid -->
@@ -309,7 +345,46 @@
                         </ScrollViewer>
                     </Grid>
                 </Grid>
-                
+
+                <!-- Employment Profile Card -->
+                <Grid Style="{StaticResource CardContainerGridStyle}">
+
+                    <!-- Inner Grid -->
+                    <Grid Style="{StaticResource CardInnerGridStyle}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Header -->
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="Employment Profile"
+                                       Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            <Button Grid.Column="1" Style="{StaticResource SubtleButtonStyle}"
+                                    Tag="{x:Bind dialogs:ClientEditType.Employment}" Click="EditButton_Clicked"
+                                    ToolTipService.ToolTip="Edit">
+                                <FontIcon Glyph="&#xE70F;" FontSize="16" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                            </Button>
+                        </Grid>
+                        <!-- Start Date/Case ID/Status Section -->
+                        <c:LabelPair Grid.Row="1" Grid.Column="0" Label="Disability" 
+                                     Value="{x:Bind ViewModel.Selected.Disability, Mode=OneWay}"/>
+
+                        <c:LabelPair Grid.Row="2" Grid.Column="0" Label="Criminal Charges" 
+                                     Value="{x:Bind ViewModel.Selected.CriminalCharge, Mode=OneWay}"/>
+
+                        <c:LabelPair Grid.Row="3" Grid.Column="0" Label="Transportation" 
+                                     Value="{x:Bind ViewModel.Selected.Transportation, Mode=OneWay}"/>
+                    </Grid>
+                </Grid>
+
                 <!-- Placements Card -->
                 <Grid Style="{StaticResource CardContainerGridStyle}">
                     <!-- Inner Grid -->
@@ -355,81 +430,6 @@
                                 </DataTemplate>
                             </ItemsRepeater>
                         </ScrollViewer>
-                    </Grid>
-                </Grid>
-
-                <!-- Conditions Card -->
-                <Grid Style="{StaticResource CardContainerGridStyle}">
-
-                    <!-- Inner Grid -->
-                    <Grid Style="{StaticResource CardInnerGridStyle}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <!-- Header -->
-                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Grid.Column="0" Text="Conditions"
-                                       Style="{StaticResource SubtitleTextBlockStyle}"/>
-                            <Button Grid.Column="1" Style="{StaticResource SubtleButtonStyle}"
-                                    Tag="{x:Bind dialogs:ClientEditType.Conditions}" Click="EditButton_Clicked"
-                                    ToolTipService.ToolTip="Edit">
-                                <FontIcon Glyph="&#xE70F;" FontSize="16" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
-                            </Button>
-                        </Grid>
-
-                        <!-- Start Date/Case ID/Status Section -->
-                        <c:LabelPair Grid.Row="1" Grid.Column="0"
-                                     Label="Employment Goals" Value="{x:Bind ViewModel.Selected.EmploymentGoal, Mode=OneWay}"/>
-
-                        <c:LabelPair Grid.Row="2" Grid.Column="0"
-                                     Label="Conditions" Value="{x:Bind ViewModel.Selected.Conditions, Mode=OneWay}"/>
-                    </Grid>
-                </Grid>
-
-                <!-- Employment Profile Card -->
-                <Grid Style="{StaticResource CardContainerGridStyle}">
-                    
-                    <!-- Inner Grid -->
-                    <Grid Style="{StaticResource CardInnerGridStyle}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <!-- Header -->
-                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Grid.Column="0" Text="Employment Profile"
-                                       Style="{StaticResource SubtitleTextBlockStyle}"/>
-                            <Button Grid.Column="1" Style="{StaticResource SubtleButtonStyle}"
-                                    Tag="{x:Bind dialogs:ClientEditType.Employment}" Click="EditButton_Clicked"
-                                    ToolTipService.ToolTip="Edit">
-                                <FontIcon Glyph="&#xE70F;" FontSize="16" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
-                            </Button>
-                        </Grid>
-                        <!-- Start Date/Case ID/Status Section -->
-                        <c:LabelPair Grid.Row="1" Grid.Column="0" Label="Disability" 
-                                     Value="{x:Bind ViewModel.Selected.Disability, Mode=OneWay}"/>
-
-                        <c:LabelPair Grid.Row="2" Grid.Column="0" Label="Criminal Charges" 
-                                     Value="{x:Bind ViewModel.Selected.CriminalCharge, Mode=OneWay}"/>
-
-                        <c:LabelPair Grid.Row="3" Grid.Column="0" Label="Transportation" 
-                                     Value="{x:Bind ViewModel.Selected.Transportation, Mode=OneWay}"/>
                     </Grid>
                 </Grid>
 
