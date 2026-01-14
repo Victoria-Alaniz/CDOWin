@@ -34,7 +34,7 @@ public sealed partial class UpdatePlacement : Page {
     // Constructor
     // =========================
     private void SetupNumberBoxes() {
-        if(ViewModel.Original.PlacementNumber is int number)
+        if (ViewModel.Original.PlacementNumber is int number)
             PlacementNumber.Value = (double)number;
 
         if (ViewModel.Original.DaysOnJob is float days)
@@ -50,7 +50,7 @@ public sealed partial class UpdatePlacement : Page {
         if (ViewModel.Original.HireDate is DateTime startDate)
             HireDatePicker.Date = startDate;
 
-        if(ViewModel.Original.EndDate is DateTime endDate)
+        if (ViewModel.Original.EndDate is DateTime endDate)
             EndDatePicker.Date = endDate;
 
         if (TryParseDateString(ViewModel.Original.FirstFiveDays1, out var day1))
@@ -228,8 +228,8 @@ public sealed partial class UpdatePlacement : Page {
             "M/d/yyyy",
             "MM/d/yyyy",
             "M/dd/yy",
-            "MM/dd/yy", 
-            "M/dd/yyyy", 
+            "MM/dd/yy",
+            "M/dd/yyyy",
             "MM/dd/yyyy"
             ];
         return DateTime.TryParseExact(dateString, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out date);

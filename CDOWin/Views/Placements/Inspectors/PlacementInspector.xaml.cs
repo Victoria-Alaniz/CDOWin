@@ -34,6 +34,4 @@ public sealed partial class PlacementInspector : Page {
 
         var result = await dialog.ShowAsync();
     }
-
-
 }
