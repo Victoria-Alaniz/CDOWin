@@ -1,3 +1,4 @@
+using CDOWin.Extensions;
 using CDOWin.Services;
 using CDOWin.ViewModels;
 using CDOWin.Views.Clients.Dialogs;
@@ -24,18 +25,34 @@ public sealed partial class Notes : Page {
     // =========================
     // Click Handlers
     // =========================
-    private async void Button_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
-        if (ViewModel.Selected == null) return;
+    private void EditButton_Click(object sender, RoutedEventArgs e) {
+        NotesBox.IsReadOnly = false;
+        SaveButton.Visibility = Visibility.Visible;
+        NewButton.Visibility = Visibility.Collapsed;
+    }
+
+    private void SaveButton_Click(object sender, RoutedEventArgs e) {
+        SaveButton.Visibility = Visibility.Collapsed;
+        NewButton.Visibility = Visibility.Visible;
+        NotesBox.IsReadOnly = true;
+        var updateVM = new ClientUpdateViewModel(ViewModel.Selected);
+        updateVM.UpdatedClient.ClientNotes = NotesBox.Text.NormalizeString();
+        _ = ViewModel.UpdateClientAsync(updateVM.UpdatedClient);
+    }
+
+    private async void SplitButton_Click(SplitButton sender, SplitButtonClickEventArgs args) {
+        if (ViewModel.Selected == null || sender is null) return;
         var updateVM = new ClientUpdateViewModel(ViewModel.Selected);
 
-        ContentDialog dialog = new();
-        dialog.XamlRoot = this.XamlRoot;
-        dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-        dialog.PrimaryButtonText = "Add to Notes";
-        dialog.CloseButtonText = "Cancel";
-        dialog.DefaultButton = ContentDialogButton.Primary;
-        dialog.Title = "Add New Note";
-        dialog.Content = new UpdateNotes(updateVM);
+        ContentDialog dialog = new() {
+            XamlRoot = this.XamlRoot,
+            Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+            PrimaryButtonText = "Add to Notes",
+            CloseButtonText = "Cancel",
+            DefaultButton = ContentDialogButton.Primary,
+            Title = "Add New Note",
+            Content = new UpdateNotes(updateVM)
+        };
 
         var result = await dialog.ShowAsync();
         if (result == ContentDialogResult.Primary)
