@@ -1,4 +1,5 @@
 using CDO.Core.Models;
+using CDOWin.Composers;
 using CDOWin.Controls;
 using CDOWin.Services;
 using CDOWin.ViewModels;
@@ -108,5 +109,9 @@ public sealed partial class CalendarWindow : Window {
             await ViewModel.UpdateReminderAsync(id, updateVM.Updated);
             UpdateCalendar();
         }
+    }
+
+    private void ExportButton_Click(object sender, RoutedEventArgs e) {
+        ViewModel.ExportReminders();
     }
 }

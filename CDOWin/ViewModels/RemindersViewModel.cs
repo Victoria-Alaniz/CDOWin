@@ -92,6 +92,12 @@ public partial class RemindersViewModel : ObservableObject {
         return dict;
     }
 
+    public List<Reminder> GetRemindsListForMonth(DateTime month) {
+        return _allReminders
+            .Where(r => r.Date.Date.Month == month.Month)
+            .ToList();
+    }
+
     public void RequestClient(int clientID) => _selectionService.RequestSelectedClient(clientID);
 
     public void DeferDate(int id, int days) {

@@ -1,9 +1,12 @@
 ﻿using CDO.Core.DTOs;
 using CDO.Core.Models;
+using CDOWin.Composers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CDOWin.ViewModels;
@@ -20,17 +23,23 @@ public partial class CalendarViewModel(RemindersViewModel viewModel) : Observabl
         var firstOfMonth = new DateTime(CurrentMonth.Year, CurrentMonth.Month, 1);
         var firstVisibleDay = firstOfMonth.AddDays(-(int)firstOfMonth.DayOfWeek);
 
-        var remindersByDate = _remindersViewModel.GetRemindersByMonth(firstOfMonth);
+        var reminders = _remindersViewModel.GetRemindersByMonth(firstOfMonth);
 
         for (int i = 0; i < 42; i++) {
             var date = firstVisibleDay.AddDays(i);
 
             Days.Add(new CalendarDay(date, date.Month == CurrentMonth.Month) {
                 Reminders = new ObservableCollection<Reminder>(
-                    remindersByDate.GetValueOrDefault(date.Date) ?? []
+                    reminders.GetValueOrDefault(date.Date) ?? []
                     )
             });
         }
+    }
+
+    public void ExportReminders() {
+        var list = _remindersViewModel.GetRemindsListForMonth(CurrentMonth);
+        var composer = new RemindersComposer();
+        composer.BuildCSV(list);
     }
 
     public void SetCurrentMonth() {

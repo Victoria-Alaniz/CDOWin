@@ -49,6 +49,9 @@
             <TextBlock Grid.Row="0" Grid.Column="0" x:Name="MonthHeader" Margin="8,2,8,0" Style="{StaticResource PageTitleStyle}"/>
             
             <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="0">
+                <!-- Export Button -->
+                <Button Click="ExportButton_Click" Margin="0" Style="{StaticResource SubtleButtonStyle}" Content="Export"/>
+                
                 <!-- Decrement Button -->
                 <Button Click="Button_Click" Tag="0" Margin="0" Style="{StaticResource SingleIconButtonStyle}">
                     <FontIcon Glyph="&#xE76B;" Style="{StaticResource SingleIconFontStyle}"/>
