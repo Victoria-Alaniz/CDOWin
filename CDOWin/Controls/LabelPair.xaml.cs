@@ -13,8 +13,8 @@ public sealed partial class LabelPair : UserControl {
 
     public static readonly DependencyProperty LabelProperty =
         DependencyProperty.Register(
-            nameof(Label), 
-            typeof(string), 
+            nameof(Label),
+            typeof(string),
             typeof(LabelPair),
             new PropertyMetadata(""));
 
@@ -25,9 +25,9 @@ public sealed partial class LabelPair : UserControl {
 
     public static readonly DependencyProperty ValueProperty =
         DependencyProperty.Register(
-            nameof(Value), 
-            typeof(string), 
-            typeof(LabelPair), 
+            nameof(Value),
+            typeof(string),
+            typeof(LabelPair),
             new PropertyMetadata("", OnValueChanged));
 
     public bool IsValueSelectable {
