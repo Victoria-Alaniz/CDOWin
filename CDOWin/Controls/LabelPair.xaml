@@ -12,7 +12,8 @@
     <StackPanel IsRightTapEnabled="True" RightTapped="StackPanel_RightTapped">
         <TextBlock Text="{x:Bind Label, Mode=OneWay}" 
                    Style="{StaticResource LabelTextBlockStyle}"/>
-        <TextBlock Text="{x:Bind Value, Mode=OneWay}" 
-                   Style="{StaticResource ValueTextBlockStyle}"/>
+        <TextBlock Text="{x:Bind Value, Mode=OneWay}"
+                   Style="{StaticResource ValueTextBlockStyle}"
+                   IsTextSelectionEnabled="{x:Bind IsValueSelectable, Mode=TwoWay}"/>
     </StackPanel>
 </UserControl>

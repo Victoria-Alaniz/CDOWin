@@ -12,7 +12,11 @@ public sealed partial class LabelPair : UserControl {
     }
 
     public static readonly DependencyProperty LabelProperty =
-        DependencyProperty.Register("Label", typeof(string), typeof(LabelPair), new PropertyMetadata(""));
+        DependencyProperty.Register(
+            nameof(Label), 
+            typeof(string), 
+            typeof(LabelPair),
+            new PropertyMetadata(""));
 
     public string Value {
         get => (string)GetValue(ValueProperty);
@@ -20,7 +24,23 @@ public sealed partial class LabelPair : UserControl {
     }
 
     public static readonly DependencyProperty ValueProperty =
-        DependencyProperty.Register("Value", typeof(string), typeof(LabelPair), new PropertyMetadata("", OnValueChanged));
+        DependencyProperty.Register(
+            nameof(Value), 
+            typeof(string), 
+            typeof(LabelPair), 
+            new PropertyMetadata("", OnValueChanged));
+
+    public bool IsValueSelectable {
+        get => (bool)GetValue(IsValueSelectableProperty);
+        set => SetValue(IsValueSelectableProperty, value);
+    }
+
+    public static readonly DependencyProperty IsValueSelectableProperty =
+        DependencyProperty.Register(
+            nameof(IsValueSelectable),
+            typeof(bool),
+            typeof(LabelPair),
+            new PropertyMetadata(false));
 
     public LabelPair() {
         InitializeComponent();

@@ -113,6 +113,7 @@
 
                         <!-- Education Section -->
                         <c:LabelPair Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" Label="Education"
+                                     IsValueSelectable="True"
                                      Value="{x:Bind ViewModel.Selected.Education, Mode=OneWay}"/>
                     </Grid>
                 </Grid>
@@ -284,20 +285,20 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.Column="0" Text="Conditions"
-                       Style="{StaticResource SubtitleTextBlockStyle}"/>
+                                       Style="{StaticResource SubtitleTextBlockStyle}"/>
                             <Button Grid.Column="1" Style="{StaticResource SubtleButtonStyle}"
-                    Tag="{x:Bind dialogs:ClientEditType.Conditions}" Click="EditButton_Clicked"
-                    ToolTipService.ToolTip="Edit">
+                                    Tag="{x:Bind dialogs:ClientEditType.Conditions}" Click="EditButton_Clicked"
+                                    ToolTipService.ToolTip="Edit">
                                 <FontIcon Glyph="&#xE70F;" FontSize="16" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
                             </Button>
                         </Grid>
 
                         <!-- Start Date/Case ID/Status Section -->
-                        <c:LabelPair Grid.Row="1" Grid.Column="0"
-                     Label="Employment Goals" Value="{x:Bind ViewModel.Selected.EmploymentGoal, Mode=OneWay}"/>
+                        <c:LabelPair Grid.Row="1" Grid.Column="0" Label="Employment Goals" IsValueSelectable="True"
+                                     Value="{x:Bind ViewModel.Selected.EmploymentGoal, Mode=OneWay}"/>
 
-                        <c:LabelPair Grid.Row="2" Grid.Column="0"
-                     Label="Conditions" Value="{x:Bind ViewModel.Selected.Conditions, Mode=OneWay}"/>
+                        <c:LabelPair Grid.Row="2" Grid.Column="0" Label="Conditions" IsValueSelectable="True"
+                                      Value="{x:Bind ViewModel.Selected.Conditions, Mode=OneWay}"/>
                     </Grid>
                 </Grid>
 
