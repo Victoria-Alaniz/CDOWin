@@ -28,12 +28,12 @@ public sealed partial class Notes : Page {
     private void EditButton_Click(object sender, RoutedEventArgs e) {
         NotesBox.IsReadOnly = false;
         SaveButton.Visibility = Visibility.Visible;
-        NewButton.Visibility = Visibility.Collapsed;
+        NewButton.IsEnabled = false;
     }
 
     private void SaveButton_Click(object sender, RoutedEventArgs e) {
         SaveButton.Visibility = Visibility.Collapsed;
-        NewButton.Visibility = Visibility.Visible;
+        NewButton.IsEnabled = true;
         NotesBox.IsReadOnly = true;
         var updateVM = new ClientUpdateViewModel(ViewModel.Selected);
         updateVM.UpdatedClient.ClientNotes = NotesBox.Text.NormalizeString();

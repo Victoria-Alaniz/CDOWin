@@ -24,9 +24,9 @@
                    Style="{StaticResource InspectorHeaderStyle}"/>
 
         <!-- Button Bar -->
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-            <Button Style="{StaticResource SingleIconButtonStyle}" Margin="4,4,16,0"
-                    Height="38" Width="38" Visibility="Collapsed" x:Name="SaveButton"
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Spacing="0">
+            <Button Style="{StaticResource SingleIconButtonStyle}" Margin="0"
+                    Height="40" Width="40" Visibility="Collapsed" x:Name="SaveButton"
                     Click="SaveButton_Click" ToolTipService.ToolTip="Save">
                 <FontIcon Glyph="&#xE74E;" Style="{StaticResource SingleIconFontStyle}"/>
             </Button>
