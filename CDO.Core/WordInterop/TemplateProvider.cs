@@ -12,7 +12,7 @@ public sealed class TemplateProvider : ITemplateProvider {
 
     public string GetTemplate(string templateName) {
         var shared = Path.Combine(SharedDrive, templateName);
-        if (File.Exists(shared)) return shared;
+        //if (File.Exists(shared)) return shared;
 
         var fallback = Path.Combine(_fallbackPath, templateName);
         if (!File.Exists(fallback))

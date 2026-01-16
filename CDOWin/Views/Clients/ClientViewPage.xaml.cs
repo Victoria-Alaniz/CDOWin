@@ -1,5 +1,6 @@
 using CDO.Core.DTOs;
 using CDO.Core.ErrorHandling;
+using CDO.Core.Models;
 using CDOWin.Composers;
 using CDOWin.Services;
 using CDOWin.ViewModels;
@@ -146,7 +147,8 @@ public sealed partial class ClientViewPage : Page {
             }
             _ = ViewModel.ReloadClientAsync();
         } else if (result == ContentDialogResult.Secondary) {
-            var composer = new ServiceAuthorizationComposer(updateSAVM.Original);
+            var export = ServiceAuthorization.InjectClient(sa, ViewModel.Selected!);
+            var composer = new ServiceAuthorizationComposer(export);
             var composerResult = await composer.Compose();
 
             if (composerResult.IsSuccess) return;

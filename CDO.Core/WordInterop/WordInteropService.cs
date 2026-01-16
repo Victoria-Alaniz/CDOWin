@@ -7,9 +7,10 @@ namespace CDO.Core.WordInterop;
 public sealed class WordInteropService {
     public void ExportServiceAuthorization(string templatePath, ServiceAuthorization sa) {
         Debug.WriteLine(templatePath);
+
         var app = new Word.Application();
 
-        var doc = app.Documents.Open(templatePath);
+        var doc = app.Documents.Add(templatePath);
 
         try {
             foreach (Word.FormField field in doc.FormFields) {
@@ -21,7 +22,7 @@ public sealed class WordInteropService {
                         field.Result = sa.Office ?? "";
                         break;
                     case "ClientName":
-                        field.Result = sa.Client?.Name ?? "";
+                        field.Result = $"{sa.Client?.FirstName} {sa.Client?.LastName}";
                         break;
                     case "CaseID":
                         field.Result = sa.Client?.CaseID ?? "";
@@ -55,6 +56,17 @@ public sealed class WordInteropService {
                         break;
                 }
             }
+
+            // 3️⃣ NOW save the document wherever you want
+            string outputPath = Path.Combine(
+                Path.GetTempPath(),
+                $"ServiceAuthorization_{Guid.NewGuid()}.docx"
+            );
+
+            doc.SaveAs2(outputPath, Word.WdSaveFormat.wdFormatXMLDocument);
+
+            app.Visible = true;
+            doc.Activate();
         } catch (Exception ex) {
             Debug.WriteLine(ex.ToString());
         }
