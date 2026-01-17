@@ -1,3 +1,4 @@
+using CDO.Core.ErrorHandling;
 using CDOWin.Services;
 using CDOWin.ViewModels;
 using CDOWin.Views.Placements.Dialogs;
@@ -34,6 +35,17 @@ public sealed partial class PlacementInspector : Page {
         dialog.Content = new UpdatePlacement(updateVM);
 
         var result = await dialog.ShowAsync();
+
+        if (result != ContentDialogResult.Primary) return;
+
+        var updateResult = await updateVM.UpdatePlacementAsync();
+
+        if(!updateResult.IsSuccess) {
+            HandleErrorAsync(updateResult);
+            return;
+        }
+
+        _ = ViewModel.ReloadPlacementAsync(ViewModel.Selected.Id);
     }
 
     private async void Delete_Click(object sender, RoutedEventArgs e) {
@@ -46,5 +58,12 @@ public sealed partial class PlacementInspector : Page {
         if (result == ContentDialogResult.Primary) {
             await ViewModel.DeleteSelectedPlacement();
         }
+    }
+
+    private async void HandleErrorAsync(Result result) {
+        if (result.Error is not AppError error) return;
+        var message = $"{error.Exception.Source}: {error.Exception.InnerException}: {error.Exception.StackTrace}";
+        var dialog = DialogFactory.ErrorDialog(this.XamlRoot, error.Kind.ToString(), error.Exception.Message);
+        await dialog.ShowAsync();
     }
 }

@@ -51,10 +51,8 @@ public sealed partial class ServiceAuthorizationInspector : Page {
         if (ViewModel.Selected == null) return;
 
         var result = await ViewModel.ExportSelectedAsync();
-        if (!result.IsSuccess) {
+        if (!result.IsSuccess)
             HandleErrorAsync(result);
-            return;
-        }
     }
 
     private async void Delete_Click(object sender, RoutedEventArgs e) {
