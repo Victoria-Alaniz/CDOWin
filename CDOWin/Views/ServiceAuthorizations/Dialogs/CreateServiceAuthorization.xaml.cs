@@ -107,7 +107,6 @@ public sealed partial class CreateServiceAuthorization : Page {
             // Also set the description to the text in case they do not ever select.
             ViewModel.Description = sender.Text;
         }
-        Debug.WriteLine($"Current Description: {ViewModel.Description}");
     }
 
     private void DescriptionSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {

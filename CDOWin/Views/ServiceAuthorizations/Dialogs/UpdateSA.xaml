@@ -45,18 +45,28 @@
                             Header="End Date" x:Name="EndDatePicker" HorizontalAlignment="Stretch"
                             DateChanged="DatePicker_DateChanged" Tag="{x:Bind local:DateType.EndDate}"/>
 
-        <!-- Row 2: U/M + Cost-->
-        <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Header="U/M"
-                 Text="{x:Bind ViewModel.Original.UnitOfMeasurement}"
-                 TextChanged="TextChanged" Tag="{x:Bind local:Field.UoM}"/>
-        <NumberBox Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Header="Unit Cost"
-                   x:Name="NumberBox" PlaceholderText="0.00"
-                   ValueChanged="NumberBox_ValueChanged"/>
-
         <!-- Row 3: Decription -->
-        <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" Header="Description"
+        <AutoSuggestBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Header="Description"
+                        Text="{x:Bind ViewModel.Original.Description}" x:Name="DescriptionSuggestBox"
+                        TextChanged="DescriptionSuggestBox_TextChanged"
+                        QuerySubmitted="DescriptionSuggestBox_QuerySubmitted"
+                        SuggestionChosen="DescriptionSuggestBox_SuggestionChosen"/>
+        
+        <!--
+        <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Header="Description"
                  Style ="{StaticResource MultiLineTextBoxStyle}" 
                  Text="{x:Bind ViewModel.Original.Description}"
                  TextChanged="TextChanged" Tag="{x:Bind local:Field.Description}"/>
+        -->
+        
+        <!-- Row 3: U/M + Cost-->
+        <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Header="U/M"
+                 x:Name="UMBox" Text="{x:Bind ViewModel.Original.UnitOfMeasurement}"
+                 TextChanged="TextChanged" Tag="{x:Bind local:Field.UoM}"/>
+        <NumberBox Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Header="Unit Cost"
+                   x:Name="NumberBox" PlaceholderText="0.00"
+                   ValueChanged="NumberBox_ValueChanged"/>
+
+
     </Grid>
 </Page>

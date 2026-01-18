@@ -1,7 +1,10 @@
+using CDO.Core.Models.Enums;
 using CDOWin.Extensions;
 using CDOWin.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Diagnostics;
+using System.Linq;
 using Windows.Globalization.NumberFormatting;
 
 namespace CDOWin.Views.ServiceAuthorizations.Dialogs;
@@ -12,6 +15,7 @@ public sealed partial class UpdateSA : Page {
     // Dependencies
     // =========================
     public ServiceAuthorizationUpdateViewModel ViewModel;
+    private readonly SAType[] _descriptions = SAType.AllItems();
 
     // =========================
     // Constructor
@@ -86,6 +90,37 @@ public sealed partial class UpdateSA : Page {
                     ViewModel.Updated.EndDate = offset.Date.ToUniversalTime();
                     break;
             }
+        }
+    }
+
+    private void DescriptionSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) {
+        if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput) {
+            var query = sender.Text.Trim().ToLower();
+            var suggestions = _descriptions
+                .Where(d => d.Description.Contains(query, StringComparison.CurrentCultureIgnoreCase))
+                .ToList();
+
+            sender.ItemsSource = suggestions;
+
+            // Also set the description to the text in case they do not ever select.
+            ViewModel.Updated.Description = sender.Text;
+        }
+    }
+
+    private void DescriptionSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
+        if (args.ChosenSuggestion is SAType saType) {
+            ViewModel.Updated.Description = saType.Description;
+            NumberBox.Value = (double)saType.Value;
+            UMBox.Text = saType.UM;
+        }
+    }
+
+    private void DescriptionSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args) {
+        if (args.SelectedItem is SAType saType) {
+            sender.Text = saType.Description;
+            ViewModel.Updated.Description = saType.Description;
+            NumberBox.Value = (double)saType.Value;
+            UMBox.Text = saType.UM;
         }
     }
 }
