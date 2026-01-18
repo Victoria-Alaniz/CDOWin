@@ -1,4 +1,5 @@
 using CDO.Core.DTOs;
+using CDOWin.ErrorHandling;
 using CDOWin.Services;
 using CDOWin.ViewModels;
 using CDOWin.Views.Clients.Dialogs;
@@ -57,8 +58,14 @@ public sealed partial class ClientsPage : Page {
 
         if (result != ContentDialogResult.Primary) return;
 
-        await createClientVM.CreateClientAsync();
-        _ = ViewModel.LoadClientSummariesAsync(force: true);
+        var updateResult = await createClientVM.CreateClientAsync();
+        if(!updateResult.IsSuccess) {
+            ErrorHandler.Handle(updateResult, this.XamlRoot);
+            return;
+        }
+
+        await ViewModel.LoadClientSummariesAsync(force: true);
+        ViewModel.Selected = updateResult.Value;
     }
 
     private void ListView_ItemClick(object sender, ItemClickEventArgs e) {

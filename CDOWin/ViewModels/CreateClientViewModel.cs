@@ -283,6 +283,13 @@ public partial class CreateClientViewModel(IClientService service) : ObservableO
 
         try {
             Directory.CreateDirectory(path);
+            Directory.CreateDirectory(path + "\\1850-Elevator Spch-resume");
+            Directory.CreateDirectory(path + "\\Billing Reports");
+            Directory.CreateDirectory(path + "\\BST-Release-Orientation");
+            Directory.CreateDirectory(path + "\\IPE-Supporting Docs");
+            Directory.CreateDirectory(path + "\\Plan 1845 A&B");
+            Directory.CreateDirectory(path + "\\Referrals (VR5000)");
+            Directory.CreateDirectory(path + "\\Service Authorizations");
             return true;
         } catch (Exception ex) when (
               ex is IOException ||
@@ -293,5 +300,4 @@ public partial class CreateClientViewModel(IClientService service) : ObservableO
             return false;
         }
     }
-
 }
