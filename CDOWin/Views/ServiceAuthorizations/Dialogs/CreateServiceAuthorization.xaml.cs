@@ -15,6 +15,7 @@ public sealed partial class CreateServiceAuthorization : Page {
     // Dependencies
     // =========================
     private readonly CreateServiceAuthorizationsViewModel ViewModel;
+    private readonly DARSOffice[] _offices = DARSOffice.AllItems();
     private readonly SAType[] _descriptions = SAType.AllItems();
 
     // =========================
@@ -124,5 +125,29 @@ public sealed partial class CreateServiceAuthorization : Page {
             NumberBox.Value = (double)saType.Value;
             UMBox.Text = saType.UM;
         }
+    }
+
+    private void OfficeSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) {
+        if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput) {
+            var query = sender.Text.Trim().ToLower();
+            var suggestions = _offices
+                .Where(o => o.Address.Contains(query, StringComparison.CurrentCultureIgnoreCase))
+                .ToList();
+
+            sender.ItemsSource = suggestions;
+
+            // Also set the description to the text in case they do not ever select.
+            ViewModel.Office = sender.Text;
+        }
+    }
+
+    private void OfficeSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
+        if (args.ChosenSuggestion is DARSOffice office)
+            ViewModel.Office = office.Address;
+    }
+
+    private void OfficeSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args) {
+        if (args.SelectedItem is DARSOffice office)
+            ViewModel.Office = office.Address;
     }
 }

@@ -51,8 +51,10 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Row 0: Office Address -->
-                <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Header="DRS Office Address"
-                         MaxLength="100" TextChanged="TextChanged" Tag="{x:Bind local:Field.Office}"/>
+                <AutoSuggestBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Header="Office Address"
+                                x:Name="OfficeSuggestBox" TextChanged="OfficeSuggestBox_TextChanged"
+                                QuerySubmitted="OfficeSuggestBox_QuerySubmitted"
+                                SuggestionChosen="OfficeSuggestBox_SuggestionChosen"/>
 
                 <!-- Row 1: SA Number + Start Date + End Date -->
                 <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Header="SA Number"

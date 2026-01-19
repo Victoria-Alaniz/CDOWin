@@ -28,9 +28,11 @@
         </Grid.ColumnDefinitions>
         
         <!-- Row 0: Office Address -->
-        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Header="DRS Office Address"
-                 Text="{x:Bind ViewModel.Original.Office}"
-                 TextChanged="TextChanged" Tag="{x:Bind local:Field.Office}"/>
+        <AutoSuggestBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Header="Office Address"
+                        Text="{x:Bind ViewModel.Original.Office}"
+                        x:Name="OfficeSuggestBox" TextChanged="OfficeSuggestBox_TextChanged"
+                        QuerySubmitted="OfficeSuggestBox_QuerySubmitted"
+                        SuggestionChosen="OfficeSuggestBox_SuggestionChosen"/>
 
         <!-- Row 1: SA Number + Start Date + End Date -->
         <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Header="SA Number"
@@ -51,14 +53,7 @@
                         TextChanged="DescriptionSuggestBox_TextChanged"
                         QuerySubmitted="DescriptionSuggestBox_QuerySubmitted"
                         SuggestionChosen="DescriptionSuggestBox_SuggestionChosen"/>
-        
-        <!--
-        <TextBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="6" Header="Description"
-                 Style ="{StaticResource MultiLineTextBoxStyle}" 
-                 Text="{x:Bind ViewModel.Original.Description}"
-                 TextChanged="TextChanged" Tag="{x:Bind local:Field.Description}"/>
-        -->
-        
+
         <!-- Row 3: U/M + Cost-->
         <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Header="U/M"
                  x:Name="UMBox" Text="{x:Bind ViewModel.Original.UnitOfMeasurement}"
