@@ -12,7 +12,7 @@ public class SAType {
     public int Value { get; private set; }
 
     public static SAType BenchmarkAEnhanced {
-        get { return new SAType("Benchmark A ENHANCED Job Placement - 5 Days", 1200, "Service"); }
+        get { return new SAType("Benchmark A ENHANCED Job Placement - 5 Days", 1470, "Service"); }
     }
 
     public static SAType BenchmarkBEnhanced {
