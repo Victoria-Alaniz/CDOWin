@@ -13,7 +13,9 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace CDOWin.Views.Clients;
 
@@ -34,6 +36,20 @@ public sealed partial class ClientViewPage : Page {
     // =========================
     // Click Handlers
     // =========================
+
+    // Header
+    private async void TextBlock_RightTapped(object sender, Microsoft.UI.Xaml.Input.RightTappedRoutedEventArgs e) {
+        if (ViewModel.Selected == null) return;
+
+        var old = Header.Text;
+        var data = new DataPackage();
+        data.SetText($"{ViewModel.Selected.FirstName} {ViewModel.Selected.LastName}");
+
+        Clipboard.SetContent(data);
+        Header.Text = "Copied!";
+        await Task.Delay(650);
+        Header.Text = old;
+    }
 
     // Documents
     private void OpenDocuments_Clicked(object sender, RoutedEventArgs e) {

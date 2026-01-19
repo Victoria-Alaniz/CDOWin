@@ -28,7 +28,8 @@
 
         <!-- Row 0: Title + Buttons -->
         <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTitleStyle}"
-                   Text="{x:Bind ViewModel.Selected.Name, Mode=OneWay}"/>
+                   Text="{x:Bind ViewModel.Selected.Name, Mode=OneWay}"
+                   x:Name="Header" RightTapped="TextBlock_RightTapped"/>
         
         <!-- Button Row -->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="0,6,4,8">
