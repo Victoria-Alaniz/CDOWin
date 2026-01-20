@@ -28,7 +28,7 @@
 
         <!-- Row 0: Title + Buttons -->
         <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTitleStyle}"
-                   Text="{x:Bind ViewModel.Selected.Name, Mode=OneWay}"
+                   Text="{x:Bind ViewModel.Selected.NameAndID, Mode=OneWay}"
                    x:Name="Header" RightTapped="TextBlock_RightTapped"/>
         
         <!-- Button Row -->

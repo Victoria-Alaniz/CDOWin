@@ -59,7 +59,8 @@ public record class Client(
     string? Premiums,
     UpdateCounselorDTO? CounselorReference
     ) {
-    public string Name => $"{FirstName} {LastName} ({Id})";
+    public string NameAndID => $"{FirstName} {LastName} ({Id})";
+    public string FormattedName => $"{FirstName} {LastName}";
 
     public string? DocumentsFolderPath => DocumentFolder?.Replace('#', ' ').Trim();
 

@@ -126,7 +126,7 @@ public partial class CreatePlacementViewModel(IPlacementService service, DataInv
             Position = Position,
             Salary = Salary,
             DaysOnJob = DaysOnJob,
-            ClientName = Client.Name,
+            ClientName = Client.FormattedName,
             CounselorName = Client.CounselorReference?.Name,
             Active = true,
             Website = Website,

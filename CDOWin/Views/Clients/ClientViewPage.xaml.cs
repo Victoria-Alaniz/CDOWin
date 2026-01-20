@@ -14,7 +14,6 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 
@@ -38,7 +37,6 @@ public sealed partial class ClientViewPage : Page {
         base.OnNavigatedTo(e);
         if (ViewModel.Selected == null) return;
         _ = ViewModel.ReloadClientAsync();
-        Debug.WriteLine("NavigatedTo");
     }
 
     // =========================
@@ -69,7 +67,7 @@ public sealed partial class ClientViewPage : Page {
         if (sender is not Button || ViewModel.Selected == null) return;
 
         // Initialize our dialog/vm/page
-        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"Create Reminder for {ViewModel.Selected.Name}");
+        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"Create Reminder for {ViewModel.Selected.NameAndID}");
         var createReminderVM = AppServices.CreateReminderViewModel(ViewModel.Selected.Id);
         var createReminderPage = new CreateReminder(createReminderVM);
 
@@ -124,7 +122,7 @@ public sealed partial class ClientViewPage : Page {
     private async void CreateSA_Click(object sender, RoutedEventArgs e) {
         if (ViewModel.Selected == null) return;
 
-        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"New Service Authorization for {ViewModel.Selected.Name}");
+        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"New Service Authorization for {ViewModel.Selected.NameAndID}");
         var createSAVM = AppServices.CreateServiceAuthorizationsViewModel(ViewModel.Selected);
         var createSAPage = new CreateServiceAuthorization(createSAVM);
         dialog.Content = createSAPage;
@@ -184,7 +182,7 @@ public sealed partial class ClientViewPage : Page {
     private async void CreatePlacement_Click(object sender, RoutedEventArgs e) {
         if (ViewModel.Selected == null) return;
 
-        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"New Placement for {ViewModel.Selected.Name}");
+        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"New Placement for {ViewModel.Selected.NameAndID}");
         var createPlacementVM = AppServices.CreatePlacementViewMdoel(ViewModel.Selected);
         var createPage = new CreatePlacements(createPlacementVM);
         dialog.Content = createPage;

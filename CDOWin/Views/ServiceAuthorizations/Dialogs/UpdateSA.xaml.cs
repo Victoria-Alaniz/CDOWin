@@ -3,7 +3,6 @@ using CDOWin.Extensions;
 using CDOWin.ViewModels;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using Windows.Globalization.NumberFormatting;
 

@@ -59,7 +59,7 @@ public sealed partial class ClientsPage : Page {
         if (result != ContentDialogResult.Primary) return;
 
         var updateResult = await createClientVM.CreateClientAsync();
-        if(!updateResult.IsSuccess) {
+        if (!updateResult.IsSuccess) {
             ErrorHandler.Handle(updateResult, this.XamlRoot);
             return;
         }

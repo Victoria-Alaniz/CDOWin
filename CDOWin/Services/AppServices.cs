@@ -42,7 +42,7 @@ public static class AppServices {
     public static PlacementsViewModel PlacementsViewModel { get; private set; } = null!;
 
     public static void InitializeServices(string baseAddress, string apiKey) {
-        
+
         // Initialize network service
         var network = new NetworkService();
         network.Initialize(baseAddress, apiKey);
@@ -78,7 +78,7 @@ public static class AppServices {
 
         CounselorsViewModel = new CounselorsViewModel(DataCoordinator, CounselorService);
         EmployersViewModel = new EmployersViewModel(DataCoordinator, EmployerService);
-        SAsViewModel = new ServiceAuthorizationsViewModel(DataCoordinator, SAService);
+        SAsViewModel = new ServiceAuthorizationsViewModel(DataCoordinator, SAService, _clientSelectionService);
         RemindersViewModel = new RemindersViewModel(DataCoordinator, ReminderService, _clientSelectionService);
         StatesViewModel = new StatesViewModel(DataCoordinator, StateService);
         PlacementsViewModel = new PlacementsViewModel(DataCoordinator, PlacementService);

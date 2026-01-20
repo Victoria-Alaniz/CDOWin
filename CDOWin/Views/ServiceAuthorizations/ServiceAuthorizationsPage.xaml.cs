@@ -38,4 +38,9 @@ public sealed partial class ServiceAuthorizationsPage : Page {
             _ = ViewModel.ReloadServiceAuthorizationAsync(sa.Id);
         }
     }
+
+    private void GoToClient_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
+        if (sender is not Button button || button.Tag is not int id) return;
+        ViewModel.RequestClient(id);
+    }
 }

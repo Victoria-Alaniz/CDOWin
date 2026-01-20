@@ -3,6 +3,7 @@ using CDO.Core.Interfaces;
 using CDO.Core.Models;
 using CDOWin.Composers;
 using CDOWin.Data;
+using CDOWin.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Dispatching;
 using System;
@@ -20,6 +21,7 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     // =========================
     private readonly IServiceAuthorizationService _service;
     private readonly DataCoordinator _dataCoordinator;
+    private readonly ClientSelectionService _selectionService;
     private readonly DispatcherQueue _dispatcher = DispatcherQueue.GetForCurrentThread();
 
     // =========================
@@ -44,9 +46,18 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     // Constructor
     // =========================
 
-    public ServiceAuthorizationsViewModel(DataCoordinator dataCoordinator, IServiceAuthorizationService service) {
+    public ServiceAuthorizationsViewModel(DataCoordinator dataCoordinator, IServiceAuthorizationService service, ClientSelectionService selectionService) {
         _service = service;
+        _selectionService = selectionService;
         _dataCoordinator = dataCoordinator;
+    }
+
+    // =========================
+    // Public Methods
+    // =========================
+    public void RequestClient(int clientID) {
+        AppServices.Navigation.Navigate(Views.CDOFrame.Clients);
+        _selectionService.RequestSelectedClient(clientID);
     }
 
     // =========================
@@ -149,7 +160,7 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
 
         var query = SearchQuery.Trim().ToLower();
         var result = _allServiceAuthorizations.Where(s =>
-        (s.Client?.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+        (s.Client?.NameAndID ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
         (s.Client?.CounselorReference?.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
         (s.Id ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
         (s.Description ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase)
