@@ -61,9 +61,11 @@
                      Text="{x:Bind ViewModel.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <!-- ServiceAuthorizations Table -->
-            <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ListView"
-                      Style="{StaticResource DataTableStyle}" ItemsSource="{x:Bind ViewModel.Filtered, Mode=OneWay}" 
-                      SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}" ItemClick="ListView_ItemClick">
+            <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ListView" 
+                      Style="{StaticResource DataTableStyle}" 
+                      ItemsSource="{x:Bind ViewModel.Filtered, Mode=OneWay}" 
+                      SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}" 
+                      ItemClick="ListView_ItemClick">
 
                 <!-- Header -->
                 <ListView.Header>
@@ -77,11 +79,11 @@
                             <ColumnDefinition Width="100"/>
                             <ColumnDefinition Width="230"/>
                             <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="230"/>
                             <ColumnDefinition Width="110"/>
                             <ColumnDefinition Width="110"/>
                             <ColumnDefinition Width="110"/>
-                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="350"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="SA Number" FontWeight="SemiBold"/>
@@ -103,11 +105,11 @@
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="230"/>
                                 <ColumnDefinition Width="100"/>
-                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="230"/>
                                 <ColumnDefinition Width="110"/>
                                 <ColumnDefinition Width="110"/>
                                 <ColumnDefinition Width="110"/>
-                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="350"/>
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.Column="0" Text="{x:Bind ServiceAuthorizationNumber}"/>
@@ -123,7 +125,17 @@
                                 </Button>
                             </Grid>
                             <TextBlock Grid.Column="2" Text="{x:Bind CaseID}"/>
-                            <TextBlock Grid.Column="3" Text="{x:Bind CounselorName}" TextWrapping="WrapWholeWords" FontWeight="Bold"/>
+                            <Grid Grid.Column="3" Margin="0,0,12,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="{x:Bind CounselorName}" TextWrapping="WrapWholeWords" FontWeight="Bold"/>
+                                <Button Grid.Column="1" Click="GoToCounselor_Click" Tag="{x:Bind Client.Id}">
+                                    <FontIcon Glyph="&#xE76C;"/>
+                                </Button>
+                            </Grid>
                             <TextBlock Grid.Column="4" Text="{x:Bind FormattedStartDate}"/>
                             <TextBlock Grid.Column="5" Text="{x:Bind FormattedEndDate}"/>
                             <TextBlock Grid.Column="6" Text="{x:Bind FormattedCost}"/>

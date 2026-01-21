@@ -43,4 +43,9 @@ public sealed partial class ServiceAuthorizationsPage : Page {
         if (sender is not Button button || button.Tag is not int id) return;
         ViewModel.RequestClient(id);
     }
+
+    private void GoToCounselor_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
+        if (sender is not Button button || button.Tag is not int id) return;
+        // ViewModel.RequestClient(id);
+    }
 }
