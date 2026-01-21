@@ -5,6 +5,7 @@ using CDO.Core.Models;
 using CDOWin.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace CDOWin.ViewModels;
@@ -57,6 +58,8 @@ public partial class CreateServiceAuthorizationsViewModel(IServiceAuthorizationS
 
     private bool CanSaveMethod() {
         if (Client.CounselorID == null
+            || Client.CounselorReference == null
+            || string.IsNullOrWhiteSpace(Client.CaseID)
             || string.IsNullOrWhiteSpace(SANumber)
             || string.IsNullOrWhiteSpace(Description)
             || string.IsNullOrWhiteSpace(UnitOfMeasurement)
@@ -70,10 +73,13 @@ public partial class CreateServiceAuthorizationsViewModel(IServiceAuthorizationS
     // CRUD Methods
     // =========================
     public async Task<Result<Invoice>> CreateSAAsync() {
-        var sa = new CreateInvoiceDTO {
+        var invoice = new CreateInvoiceDTO {
             ServiceAuthorizationNumber = SANumber,
             ClientID = Client.Id,
-            CounselorrID = Client.CounselorID,
+            ClientName = Client.FormattedName,
+            CounselorName = Client.CounselorReference!.Name!,
+            CaseID = Client.CaseID!,
+            CounselorID = Client.CounselorID,
             Description = Description,
             StartDate = StartDate,
             EndDate = EndDate,
@@ -81,8 +87,9 @@ public partial class CreateServiceAuthorizationsViewModel(IServiceAuthorizationS
             UnitCost = UnitCost,
             UnitOfMeasurement = UnitOfMeasurement
         };
+        Debug.WriteLine(invoice);
 
         _invalidation.InvalidateSAs();
-        return await _service.CreateServiceAuthorizationAsync(sa);
+        return await _service.CreateServiceAuthorizationAsync(invoice);
     }
 }

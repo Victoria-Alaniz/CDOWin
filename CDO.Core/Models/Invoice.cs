@@ -3,6 +3,9 @@
 public record class Invoice(
     int Id,
     string ServiceAuthorizationNumber,
+    string ClientName,
+    string CaseID,
+    string CounselorName,
     string Description,
     string? Office,
     int? CounselorID,
@@ -21,6 +24,9 @@ public record class Invoice(
         return new Invoice(
             invoice.Id,
             invoice.ServiceAuthorizationNumber,
+            invoice.ClientName,
+            invoice.CaseID,
+            invoice.CounselorName,
             invoice.Description,
             invoice.Office,
             invoice.CounselorID,
