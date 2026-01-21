@@ -30,6 +30,7 @@ public static class AppServices {
     public static DataCoordinator DataCoordinator { get; private set; } = null!;
     private static readonly DataInvalidationService _invalidationService = new();
     private static readonly ClientSelectionService _clientSelectionService = new();
+    private static readonly CounselorSelectionService _counselorSelecitonService = new();
 
     // ViewModels
     public static CalendarViewModel CalendarViewModel { get; private set; } = null!;
@@ -76,9 +77,9 @@ public static class AppServices {
             _clientSelectionService
         );
 
-        CounselorsViewModel = new CounselorsViewModel(DataCoordinator, CounselorService);
+        CounselorsViewModel = new CounselorsViewModel(DataCoordinator, CounselorService, _counselorSelecitonService);
         EmployersViewModel = new EmployersViewModel(DataCoordinator, EmployerService);
-        SAsViewModel = new ServiceAuthorizationsViewModel(DataCoordinator, SAService, _clientSelectionService);
+        SAsViewModel = new ServiceAuthorizationsViewModel(DataCoordinator, SAService, _clientSelectionService, _counselorSelecitonService);
         RemindersViewModel = new RemindersViewModel(DataCoordinator, ReminderService, _clientSelectionService);
         StatesViewModel = new StatesViewModel(DataCoordinator, StateService);
         PlacementsViewModel = new PlacementsViewModel(DataCoordinator, PlacementService);

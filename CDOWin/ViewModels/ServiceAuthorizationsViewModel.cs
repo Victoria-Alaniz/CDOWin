@@ -21,7 +21,8 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     // =========================
     private readonly IServiceAuthorizationService _service;
     private readonly DataCoordinator _dataCoordinator;
-    private readonly ClientSelectionService _selectionService;
+    private readonly ClientSelectionService _clientSelectionService;
+    private readonly CounselorSelectionService _counselorSelectionService;
     private readonly DispatcherQueue _dispatcher = DispatcherQueue.GetForCurrentThread();
 
     // =========================
@@ -46,9 +47,10 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     // Constructor
     // =========================
 
-    public ServiceAuthorizationsViewModel(DataCoordinator dataCoordinator, IServiceAuthorizationService service, ClientSelectionService selectionService) {
+    public ServiceAuthorizationsViewModel(DataCoordinator dataCoordinator, IServiceAuthorizationService service, ClientSelectionService clientSelectionService, CounselorSelectionService counselorSelectionService) {
         _service = service;
-        _selectionService = selectionService;
+        _clientSelectionService = clientSelectionService;
+        _counselorSelectionService = counselorSelectionService;
         _dataCoordinator = dataCoordinator;
     }
 
@@ -57,7 +59,12 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     // =========================
     public void RequestClient(int clientID) {
         AppServices.Navigation.Navigate(Views.CDOFrame.Clients);
-        _selectionService.RequestSelectedClient(clientID);
+        _clientSelectionService.RequestSelectedClient(clientID);
+    }
+
+    public void RequestCounselor(int counselorID) {
+        AppServices.Navigation.Navigate(Views.CDOFrame.Counselors);
+        _counselorSelectionService.RequestSelectedCounselor(counselorID);
     }
 
     // =========================

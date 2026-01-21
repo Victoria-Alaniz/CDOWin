@@ -3,6 +3,7 @@ using CDO.Core.ErrorHandling;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
 using CDOWin.Data;
+using CDOWin.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Dispatching;
 using System;
@@ -13,14 +14,15 @@ using System.Threading.Tasks;
 
 namespace CDOWin.ViewModels;
 
-public partial class CounselorsViewModel(DataCoordinator dataCoordinator, ICounselorService service) : ObservableObject {
+public partial class CounselorsViewModel : ObservableObject {
 
     // =========================
     // Services / Dependencies
     // =========================
-    private readonly ICounselorService _service = service;
-    private readonly DataCoordinator _dataCoordinator = dataCoordinator;
-    private readonly DispatcherQueue _dispatcher = DispatcherQueue.GetForCurrentThread();
+    private readonly ICounselorService _service;
+    private readonly DataCoordinator _dataCoordinator;
+    private readonly CounselorSelectionService _selecitonService;
+    private readonly DispatcherQueue _dispatcher;
 
     // =========================
     // Private Backing Fields
@@ -40,6 +42,17 @@ public partial class CounselorsViewModel(DataCoordinator dataCoordinator, ICouns
     [ObservableProperty]
     public partial string SearchQuery { get; set; } = string.Empty;
 
+    public CounselorsViewModel(DataCoordinator dataCoordinator, ICounselorService service, CounselorSelectionService selectionService) {
+        _service = service;
+        _dataCoordinator = dataCoordinator;
+
+        _selecitonService = selectionService;
+        _dispatcher = DispatcherQueue.GetForCurrentThread();
+
+        _selecitonService.CounselorSelectionRequested += OnRequestSelectedCounselorChange;
+
+    }
+
     // =========================
     // Property Change Methods
     // =========================
@@ -48,6 +61,13 @@ public partial class CounselorsViewModel(DataCoordinator dataCoordinator, ICouns
             ApplyFilter();
         else
             _dispatcher.TryEnqueue(ApplyFilter);
+    }
+
+    private void OnRequestSelectedCounselorChange(int counselorId) {
+        if (Selected != null && Selected.Id == counselorId) return;
+        SearchQuery = string.Empty;
+        ApplyFilter();
+        _ = ReloadCounselorAsync(counselorId);
     }
 
     // =========================

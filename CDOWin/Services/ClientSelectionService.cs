@@ -19,11 +19,7 @@ public class ClientSelectionService {
         }
     }
 
-    public void RequestSelectedClient(int clientId) {
-        ClientSelectionRequested?.Invoke(clientId);
-    }
+    public void RequestSelectedClient(int clientId) => ClientSelectionRequested?.Invoke(clientId);
 
-    public void NotifyNewReminderCreated() {
-        NewReminderCreated?.Invoke();
-    }
+    public void NotifyNewReminderCreated() => NewReminderCreated?.Invoke();
 }
