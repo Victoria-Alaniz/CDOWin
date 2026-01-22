@@ -1,6 +1,4 @@
-﻿using CDO.Core.Models;
-
-namespace CDO.Core.DTOs;
+﻿namespace CDO.Core.DTOs;
 
 public class CounselorSummaryDTO {
     // Non-optional fields
