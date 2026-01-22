@@ -108,15 +108,6 @@ public partial class CreateClientViewModel(IClientService service) : ObservableO
     public partial int? CounselorID { get; set; }
 
     [ObservableProperty]
-    public partial string? CounselorEmail { get; set; }
-
-    [ObservableProperty]
-    public partial string? CounselorPhone { get; set; }
-
-    [ObservableProperty]
-    public partial string? CounselorFax { get; set; }
-
-    [ObservableProperty]
     public partial string? ClientNotes { get; set; }
 
     [ObservableProperty]
@@ -216,7 +207,6 @@ public partial class CreateClientViewModel(IClientService service) : ObservableO
         var client = new CreateClientDTO {
             FirstName = FirstName,
             LastName = LastName,
-            Counselor = Counselor,
             City = City,
             State = State,
             Disability = Disability,
@@ -239,9 +229,6 @@ public partial class CreateClientViewModel(IClientService service) : ObservableO
             Email2 = Email2,
             Email2Identity = Email2Identity,
             CounselorID = CounselorID,
-            CounselorEmail = CounselorEmail,
-            CounselorPhone = CounselorPhone,
-            CounselorFax = CounselorFax,
             ClientNotes = ClientNotes,
             Conditions = Conditions,
             DocumentFolder = folderName,

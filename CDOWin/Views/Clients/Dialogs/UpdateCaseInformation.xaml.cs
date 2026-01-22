@@ -60,7 +60,7 @@ public sealed partial class UpdateCaseInformation : Page {
     }
 
     private void SetupAutoSuggestBox() {
-        CounselorAutoSuggest.PlaceholderText = ViewModel.OriginalClient.Counselor ?? "Type to search counselors";
+        CounselorAutoSuggest.PlaceholderText = ViewModel.OriginalClient.CounselorReference.Name ?? "Type to search counselors";
     }
 
     private void SetupDatePicker() {

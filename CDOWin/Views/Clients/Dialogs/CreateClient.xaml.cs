@@ -320,11 +320,7 @@ public sealed partial class CreateClient : Page {
 
     private void UpdateSelectedCounselor(Counselor counselor) {
         Debug.WriteLine(counselor.Name);
-        ViewModel.Counselor = counselor.Name;
         ViewModel.CounselorID = counselor.Id;
-        ViewModel.CounselorEmail = counselor.Email;
-        ViewModel.CounselorPhone = counselor.Phone;
-        ViewModel.CounselorFax = counselor.Fax;
     }
 
     // Conditions Fields

@@ -6,7 +6,6 @@ public record class Client(
     int Id,
     string FirstName,                                       // FirstName
     string LastName,                                        // LastName
-    string Counselor,
     Reminder[] Reminders,
     Placement[]? Placements,
     Invoice[]? Invoices,
@@ -32,9 +31,6 @@ public record class Client(
     string? Email2Identity,
     string Disability,
     int? CounselorID,
-    string? CounselorEmail,
-    string? CounselorPhone,
-    string? CounselorFax,
     string? ClientNotes,
     string? Conditions,
     string? DocumentFolder,
