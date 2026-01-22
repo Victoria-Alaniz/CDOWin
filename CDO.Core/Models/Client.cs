@@ -4,28 +4,28 @@ namespace CDO.Core.Models;
 
 public record class Client(
     int Id,
-    string FirstName,                                       // FirstName
-    string LastName,                                        // LastName
+    string FirstName,
+    string LastName,
     Reminder[] Reminders,
     Placement[]? Placements,
     Invoice[]? Invoices,
     DateTime? StartDate,
-    int? Ssn,                                               // SSN
+    int? Ssn,
     string? CaseID,
-    string? Address1,                                       // Address1
-    string? Address2,                                       // Address2
-    string City,                                            // City
-    string State,                                           // State
-    string? Zip,                                            // Zip
-    DateTime? Dob,                                          // DOB
-    string? DriversLicense,                                 // DL
-    string? Phone1,                                         // Phone1
+    string? Address1,
+    string? Address2,
+    string City,
+    string State,
+    string? Zip,
+    DateTime? Dob,
+    string? DriversLicense,
+    string? Phone1,
     string? Phone1Identity,
-    string? Phone2,                                         // Phone2
+    string? Phone2,
     string? Phone2Identity,
-    string? Phone3,                                         // Phone3
+    string? Phone3,
     string? Phone3Identity,
-    string? Email,                                          // Email
+    string? Email,
     string? EmailIdentity,
     string? Email2,
     string? Email2Identity,
@@ -39,7 +39,7 @@ public record class Client(
     int? EmployerID,
     string? Status,
     string? Benefits,
-    string? CriminalCharge,                                 // NOCCCHK If (!empty) CriminalCharge
+    string? CriminalCharge,
     string? Education,
     string? Transportation,
     bool? ResumeRequired,
@@ -50,14 +50,13 @@ public record class Client(
     bool? OrientationCompleted,
     bool? DataSheetCompleted,
     bool? ElevatorSpeechCompleted,
-    string? Race,                                           // Race
-    string? FluentLanguages,                                // ECK/SCK/OLCK | OtherLang
+    string? Race,
+    string? FluentLanguages,
     string? Premiums,
     UpdateCounselorDTO? CounselorReference
     ) {
     public string NameAndID => $"{FirstName} {LastName} ({Id})";
     public string FormattedName => $"{FirstName} {LastName}";
-
     public string? DocumentsFolderPath => DocumentFolder?.Replace('#', ' ').Trim();
 
     public string FormattedAddress {
