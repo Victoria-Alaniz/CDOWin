@@ -13,9 +13,13 @@ namespace CDO.Core.Serialization;
 [JsonSerializable(typeof(List<ClientSummaryDTO>))]
 
 [JsonSerializable(typeof(Counselor))]
+[JsonSerializable(typeof(CounselorResponseDTO))]
 [JsonSerializable(typeof(List<Counselor>))]
 [JsonSerializable(typeof(CreateCounselorDTO))]
 [JsonSerializable(typeof(UpdateCounselorDTO))]
+
+[JsonSerializable(typeof(CounselorSummaryDTO))]
+[JsonSerializable(typeof(List<CounselorSummaryDTO>))]
 
 [JsonSerializable(typeof(Employer))]
 [JsonSerializable(typeof(List<Employer>))]

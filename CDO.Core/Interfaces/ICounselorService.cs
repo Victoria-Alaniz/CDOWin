@@ -8,9 +8,10 @@ namespace CDO.Core.Interfaces {
         // -----------------------------
         // GET Methods
         // -----------------------------
+        public Task<List<CounselorSummaryDTO>?> GetAllCounselorSummariesAsync();
         public Task<List<Counselor>?> GetAllCounselorsAsync();
 
-        public Task<Counselor?> GetCounselorAsync(int id);
+        public Task<CounselorResponseDTO?> GetCounselorAsync(int id);
 
         // -----------------------------
         // POST Methods
