@@ -63,7 +63,8 @@ public sealed partial class CounselorsPage : Page {
             return;
         }
 
-        _ = ViewModel.LoadCounselorSummariesAsync();
+        await ViewModel.LoadCounselorSummariesAsync(force: true);
+        _ = ViewModel.LoadSelectedCounselorAsync(updateResult.Value!.Id);
     }
 
     private void ListView_ItemClick(object sender, ItemClickEventArgs e) {

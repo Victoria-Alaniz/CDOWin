@@ -116,7 +116,7 @@
 
                     <!-- Title -->
                     <TextBlock Grid.Column="0" Style="{StaticResource PageTitleStyle}"
-                               Text="{x:Bind ViewModel.SelectedSummary.Name, Mode=OneWay}"/>
+                               Text="{x:Bind ViewModel.Selected.Name, Mode=OneWay}"/>
                 </Grid>
 
                 <!-- Subtitle -->
