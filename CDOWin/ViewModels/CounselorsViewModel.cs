@@ -54,9 +54,9 @@ public partial class CounselorsViewModel : ObservableObject {
     // =========================
 
     public CounselorsViewModel(
-        DataCoordinator dataCoordinator, 
-        ICounselorService service, 
-        CounselorSelectionService counselorSelectionService, 
+        DataCoordinator dataCoordinator,
+        ICounselorService service,
+        CounselorSelectionService counselorSelectionService,
         ClientSelectionService clientSelectionService) {
         _service = service;
         _dataCoordinator = dataCoordinator;

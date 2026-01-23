@@ -48,9 +48,9 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     // =========================
 
     public ServiceAuthorizationsViewModel(
-        DataCoordinator dataCoordinator, 
-        IServiceAuthorizationService service, 
-        ClientSelectionService clientSelectionService, 
+        DataCoordinator dataCoordinator,
+        IServiceAuthorizationService service,
+        ClientSelectionService clientSelectionService,
         CounselorSelectionService counselorSelectionService) {
         _service = service;
         _dataCoordinator = dataCoordinator;
