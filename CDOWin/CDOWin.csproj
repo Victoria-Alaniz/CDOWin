@@ -192,7 +192,7 @@
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Never</AppxBundle>
-    <HoursBetweenUpdateChecks>4</HoursBetweenUpdateChecks>
+    <HoursBetweenUpdateChecks>2</HoursBetweenUpdateChecks>
     <AppInstallerUri>https://update.alaniz.tech/cdo/AppPackages/</AppInstallerUri>
   </PropertyGroup>
   <ItemGroup>

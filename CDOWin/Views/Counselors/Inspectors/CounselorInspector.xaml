@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="using:CDOWin.ViewModels"
+    xmlns:models="using:CDO.Core.Models"
     xmlns:control="using:CDOWin.Controls"
     mc:Ignorable="d">
 
@@ -15,6 +16,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -34,7 +37,7 @@
             <FontIcon Glyph="&#xE70F;" Style="{StaticResource SingleIconFontStyle}"/>
         </Button>
 
-        <!-- Details Caption-->
+        <!-- Counselor Caption-->
         <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="16,-2,16,8"
                    Style="{StaticResource InspectorCaptionStyle}" Text="Counselor"/>
 
@@ -74,5 +77,29 @@
             <control:LabelPair Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Label="Notes" 
                                Value="{x:Bind ViewModel.Selected.Notes, Mode=OneWay}"/>
         </Grid>
+
+        <!-- Counselor Caption-->
+        <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="16,4,16,8"
+                   Style="{StaticResource InspectorCaptionStyle}" Text="Service Authorizations"/>
+
+        <!-- Item Repeater -->
+        <ScrollViewer Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="12,0,12,0">
+            <ItemsRepeater ItemsSource="{x:Bind ViewModel.Selected.Invoices, Mode=OneWay}">
+                <DataTemplate x:DataType="models:Invoice">
+
+                    <!-- Button -->
+                    <Button Margin="0,0,0,6" Click="SA_Click" Tag="{x:Bind Id}"
+                                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                            BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}">
+                        <StackPanel Spacing="2">
+                            <TextBlock FontWeight="Bold" Text="{x:Bind ServiceAuthorizationNumber}"/>
+                            <TextBlock Text="{x:Bind Description}"/>
+                            <TextBlock Text="{x:Bind FormattedDateRange}"/>
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </ItemsRepeater>
+        </ScrollViewer>
     </Grid>
 </Page>
