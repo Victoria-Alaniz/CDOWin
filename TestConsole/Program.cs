@@ -13,6 +13,6 @@ IServiceAuthorizationService _service = new ServiceAuthorizationService(network)
 
 var invoices = await _service.GetAllServiceAuthorizationsAsync();
 
-foreach(var invoice in invoices) {
+foreach (var invoice in invoices) {
     Console.WriteLine($"{invoice.CounselorName}: {invoice.CounselorID}");
 }

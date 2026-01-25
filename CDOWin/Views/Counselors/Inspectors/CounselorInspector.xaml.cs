@@ -1,13 +1,9 @@
-using CDO.Core.Models;
-using CDOWin.Composers;
 using CDOWin.ErrorHandling;
 using CDOWin.Services;
 using CDOWin.ViewModels;
 using CDOWin.Views.Counselors.Dialogs;
-using CDOWin.Views.ServiceAuthorizations.Dialogs;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Linq;
 
 namespace CDOWin.Views.Counselors.Inspectors;
 
