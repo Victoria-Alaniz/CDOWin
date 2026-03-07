@@ -22,10 +22,10 @@ public interface INetworkService {
     // -----------------------------
     // PATCH
     // -----------------------------
-    Task<Result<TResponse>> UpdateAsync<TRequest, TResponse>(string endpoint, TRequest body);
+    Task<Result> UpdateAsync<T>(string endpoint, T body);
 
     // -----------------------------
     // DELETE Methods
     // -----------------------------
-    Task<Result<bool>> DeleteAsync(string endpoint);
+    Task<Result> DeleteAsync(string endpoint);
 }

@@ -1,3 +1,4 @@
+using CDO.Core.DTOs.Counselors;
 using CDO.Core.Models;
 using CDOWin.Extensions;
 using CDOWin.Services;
@@ -16,7 +17,7 @@ public sealed partial class UpdateCaseInformation : Page {
     // =========================
     // Dependencies
     // =========================
-    private readonly List<Counselor> _counselors = AppServices.CounselorsViewModel.GetCounselors();
+    private readonly List<CounselorSummary> _counselors = AppServices.CounselorsViewModel.GetCounselors();
     public ClientUpdateViewModel ViewModel { get; private set; }
 
     // =========================
@@ -60,7 +61,8 @@ public sealed partial class UpdateCaseInformation : Page {
     }
 
     private void SetupAutoSuggestBox() {
-        CounselorAutoSuggest.PlaceholderText = ViewModel.OriginalClient.Counselor ?? "Type to search counselors";
+        if (ViewModel.OriginalClient.CounselorReference is null) return;
+        CounselorAutoSuggest.PlaceholderText = ViewModel.OriginalClient.CounselorReference.ToString() ?? "Type to search counselors";
     }
 
     private void SetupDatePicker() {
@@ -100,17 +102,17 @@ public sealed partial class UpdateCaseInformation : Page {
     }
 
     private void CounselorAutoSuggest_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args) {
-        if (args.SelectedItem is Counselor selectedCounselor) {
+        if (args.SelectedItem is CounselorSummary selectedCounselor) {
             var result = _counselors.FirstOrDefault(c => c.Id == selectedCounselor.Id);
             if (result != null) {
                 UpdateSelectedCounselor(result);
-                sender.Text = result.Name; // display chosen name
+                sender.Text = result.ToString(); // display chosen Name
             }
         }
     }
 
     private void CounselorAutoSuggest_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
-        if (args.ChosenSuggestion is Counselor chosenCounselor) {
+        if (args.ChosenSuggestion is CounselorSummary chosenCounselor) {
             var counselor = _counselors.FirstOrDefault(c => c.Id == chosenCounselor.Id);
             if (counselor != null) { UpdateSelectedCounselor(counselor); }
         } else if (!string.IsNullOrWhiteSpace(args.QueryText)) {
@@ -158,16 +160,12 @@ public sealed partial class UpdateCaseInformation : Page {
         }
     }
 
-    private void UpdateSelectedCounselor(Counselor counselor) {
+    private void UpdateSelectedCounselor(CounselorSummary counselor) {
         // Update Labels
         CPhone.Value = counselor.Phone ?? "";
         CEmail.Value = counselor.Email ?? "";
 
-        // Update Client
-        ViewModel.UpdatedClient.Counselor = counselor.Name;
+        // Update ClientDetail
         ViewModel.UpdatedClient.CounselorID = counselor.Id;
-        ViewModel.UpdatedClient.CounselorEmail = counselor.Email;
-        ViewModel.UpdatedClient.CounselorPhone = counselor.Phone;
-        ViewModel.UpdatedClient.CounselorFax = counselor.Fax;
     }
 }

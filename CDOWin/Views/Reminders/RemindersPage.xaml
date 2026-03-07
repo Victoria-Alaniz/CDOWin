@@ -6,7 +6,6 @@
     xmlns:local="using:CDOWin.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewmodels="using:CDOWin.ViewModels" 
     xmlns:models="using:CDO.Core.Models"
     xmlns:reminders="using:CDOWin.Views.Reminders"
     mc:Ignorable="d">
@@ -63,12 +62,12 @@
                         <DataTemplate x:DataType="models:Reminder">
                             
                             <!-- Split Button -->
-                            <SplitButton Margin="8,6,8,0" Padding="14,10,14,10" Click="Reminder_Click"
+                            <SplitButton Margin="8,6,8,0" Padding="12,8" Click="Reminder_Click"
                                          Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                                          HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                          BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
                                          Tag="{x:Bind Id}">
-                                <Grid Opacity="{x:Bind Complete, Mode=OneWay, Converter={StaticResource BoolOpacityConverter}}">
+                                <Grid Opacity="{x:Bind Complete, Converter={StaticResource BoolOpacityConverter}}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
                                         <RowDefinition />
@@ -81,21 +80,21 @@
                                         </Grid.ColumnDefinitions>
 
                                         <TextBlock Grid.Column="0" FontSize="14" 
-                                                   FontWeight="Bold" Text="{x:Bind ClientName, Mode=OneWay}"/>
+                                                   FontWeight="Bold" Text="{x:Bind ClientName}"/>
                                         <TextBlock Grid.Column="1" FontSize="14" 
-                                                   FontWeight="Normal" Text="{x:Bind LocalDate, Mode=OneWay}"/>
+                                                   FontWeight="Normal" Text="{x:Bind LocalDate}"/>
                                     </Grid>
 
                                     <TextBlock Grid.Row="1" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                                FontWeight="Normal" TextWrapping="WrapWholeWords" 
-                                               Text="{x:Bind Description, Mode=OneWay}"/>
+                                               Text="{x:Bind Description}"/>
                                 </Grid>
 
                                 <!-- Split Button Flyout -->
                                 <SplitButton.Flyout>
                                     <MenuFlyout Placement="Right">
                                         <!-- Section 0: Completion / Goto Client -->
-                                        <MenuFlyoutItem Text="{x:Bind Complete, Mode=OneWay, Converter={StaticResource BoolCompletedConverter}}" 
+                                        <MenuFlyoutItem Text="{x:Bind Complete, Converter={StaticResource BoolCompletedConverter}}" 
                                                         Click="ToggleCompleted_Click" Tag="{x:Bind Id}">
                                             <MenuFlyoutItem.Icon>
                                                 <FontIcon Glyph="&#xF0B5;" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>

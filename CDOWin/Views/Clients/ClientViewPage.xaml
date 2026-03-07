@@ -3,11 +3,10 @@
     x:Class="CDOWin.Views.Clients.ClientViewPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:views="using:CDOWin.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewmodels="using:CDOWin.ViewModels" 
-    xmlns:models="using:CDO.Core.Models"
+    xmlns:sas="using:CDO.Core.DTOs.SAs"
+    xmlns:placements="using:CDO.Core.DTOs.Placements"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:dialogs="using:CDOWin.Views.Clients.Dialogs"
     xmlns:c="using:CDOWin.Controls"
@@ -19,6 +18,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -28,30 +28,57 @@
 
         <!-- Row 0: Title + Buttons -->
         <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTitleStyle}"
-                   Text="{x:Bind ViewModel.Selected.NameAndID, Mode=OneWay}"
+                   Opacity="{x:Bind ViewModel.Selected.InActive, Mode=OneWay, Converter={StaticResource BoolOpacityConverter}}"
+                   Text="{x:Bind ViewModel.Selected.FormattedName, Mode=OneWay}"
                    x:Name="Header" RightTapped="TextBlock_RightTapped"/>
-        
-        <!-- Button Row -->
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="0,6,4,8">
+
+        <!-- CommandBar -->
+        <CommandBar Grid.Row="0" Grid.Column="1" DefaultLabelPosition="Collapsed" Background="Transparent">
             
             <!-- Documents Button -->
-            <Button Style="{StaticResource SingleIconButtonStyle}" Margin="4,2,8,0"
-                    Click="OpenDocuments_Clicked" ToolTipService.ToolTip="Open Documents">
-                <FontIcon Glyph="&#xE838;" Style="{StaticResource SingleIconFontStyle}"/>
-            </Button>
+            <AppBarButton Width="56" Label="Documents" Click="OpenDocuments_Clicked" IsCompact="False" ToolTipService.ToolTip="Open Documents">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE838;" Style="{StaticResource SingleIconFontStyle}"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
             
-            <!-- Reminders Split Button (flyout contains templated reminders) -->
-            <Button Style="{StaticResource SingleIconButtonStyle}" Margin="4,2,8,0"
-                    Click="CreateReminder_ClickAsync" ToolTipService.ToolTip="New Reminder">
-                <FontIcon Glyph="&#xED0E;" Style="{StaticResource SingleIconFontStyle}"/>
-            </Button>
-        </StackPanel>
+            <!-- Reminders Button -->
+            <AppBarButton Width="56" Label="New Reminder" Click="CreateReminder_ClickAsync" IsCompact="False" ToolTipService.ToolTip="New Reminder">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xED0E;" Style="{StaticResource SingleIconFontStyle}"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            
+            <!-- Menu Button -->
+            <AppBarButton Width="56" IsCompact="False" ToolTipService.ToolTip="More">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE712;" Style="{StaticResource SingleIconFontStyle}"/>
+                </AppBarButton.Icon>
+                <AppBarButton.Flyout>
+                    <MenuFlyout Placement="BottomEdgeAlignedLeft">
+                        <MenuFlyoutItem Text="Edit..." Click="EditButton_Clicked" Tag="{x:Bind dialogs:ClientEditType.Administrative}">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Edit" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutItem Text="{x:Bind ViewModel.Selected.Active, Mode=OneWay, Converter={StaticResource BoolActiveConverter}}"
+                                        Click="ToggleActive_Clicked"/>
+                        <MenuFlyoutSeparator/>
+                        <MenuFlyoutItem Text="Delete...">
+                            <MenuFlyoutItem.Icon>
+                                <SymbolIcon Symbol="Delete" Foreground="{ThemeResource SystemFillColorCriticalBrush}"/>
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+        </CommandBar>
 
         <!-- Row 1: ScrollViewer + WrapPanel -->
         <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             
             <!-- Wrap Panel -->
-            <controls:WrapPanel Orientation="Horizontal" Margin="8,12,8,8" HorizontalSpacing="8" VerticalSpacing="8">
+            <controls:WrapPanel Orientation="Horizontal" Margin="8,0,8,8" HorizontalSpacing="8" VerticalSpacing="8">
 
                 <!-- Personal Information Card-->
                 <Grid Style="{StaticResource CardContainerGridStyle}">
@@ -109,8 +136,14 @@
                                      Value="{x:Bind ViewModel.Selected.Race, Mode=OneWay}"/>
 
                         <!-- Address Section -->
-                        <c:LabelPair Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" Label="Address"
-                                     Value="{x:Bind ViewModel.Selected.FormattedAddress, Mode=OneWay}"/>
+                        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6"  
+                                    Visibility="{x:Bind ViewModel.Selected.FormattedAddress, Mode=OneWay, Converter={StaticResource StringToVisability}}">
+                            <TextBlock Style="{StaticResource LabelTextBlockStyle}" Text="Address"/>
+                            <TextBlock Style="{StaticResource ValueTextBlockStyle}" IsTextSelectionEnabled="True"
+                                       Text="{x:Bind ViewModel.Selected.FormattedStreetAddress, Mode=OneWay}"/>
+                            <TextBlock Style="{StaticResource ValueTextBlockStyle}" IsTextSelectionEnabled="True"
+                                       Text="{x:Bind ViewModel.Selected.FormattedCityStateZip, Mode=OneWay}"/>
+                        </StackPanel>
 
                         <!-- Education Section -->
                         <c:LabelPair Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6" Label="Education"
@@ -235,32 +268,34 @@
                         <c:LabelPair Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Label="Case ID" 
                                      Value="{x:Bind ViewModel.Selected.CaseID, Mode=OneWay}"/>
 
-                        <c:LabelPair Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Label="Tier" 
-                                     Value="{x:Bind ViewModel.Selected.Status, Mode=OneWay}"/>
+                        <c:LabelPair Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Label="Case Load"
+                                     Value="{x:Bind ViewModel.Selected.CounselorReference.CaseLoadID, Mode=OneWay}"/>
 
                         <!-- Benefits/Premiums Section -->
                         <c:LabelPair Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Label="Benefits" 
                                      Value="{x:Bind ViewModel.Selected.Benefits, Mode=OneWay}"/>
 
-                        <c:LabelPair Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Label="Premiums" 
+                        <c:LabelPair Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Label="Premiums" 
                                      Value="{x:Bind ViewModel.Selected.Premiums, Mode=OneWay}"/>
 
+                        <c:LabelPair Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" Label="Tier" 
+                                     Value="{x:Bind ViewModel.Selected.Status, Mode=OneWay}"/>
+
                         <!-- Counselor Section -->
-                        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6">
+                        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6"  
+                                    Visibility="{x:Bind ViewModel.Selected.CounselorReference, Mode=OneWay, Converter={StaticResource StringToVisability}}">
                             <TextBlock Style="{StaticResource LabelTextBlockStyle}" Text="Counselor"/>
                             <TextBlock Style="{StaticResource ValueTextBlockStyle}" IsTextSelectionEnabled="True"
-                                       Text="{x:Bind ViewModel.Selected.CounselorReference.Name, Mode=OneWay}"
-                                       Visibility="{x:Bind ViewModel.Selected.CounselorReference.Name, Mode=OneWay, Converter={StaticResource StringToVisability}}"/>
+                                       Text="{x:Bind ViewModel.Selected.CounselorReference.Name, Mode=OneWay}"/>
                             <TextBlock Style="{StaticResource ValueTextBlockStyle}" IsTextSelectionEnabled="True"
-                                       Text="{x:Bind ViewModel.Selected.CounselorReference.Phone, Mode=OneWay}"
-                                       Visibility="{x:Bind ViewModel.Selected.CounselorReference.Phone, Mode=OneWay, Converter={StaticResource StringToVisability}}"/>
+                                       Text="{x:Bind ViewModel.Selected.CounselorReference.Phone, Mode=OneWay}"/>
                             <TextBlock Style="{StaticResource ValueTextBlockStyle}" IsTextSelectionEnabled="True"
-                                       Text="{x:Bind ViewModel.Selected.CounselorReference.Email, Mode=OneWay}"
-                                       Visibility="{x:Bind ViewModel.Selected.CounselorReference.Email, Mode=OneWay, Converter={StaticResource StringToVisability}}"/>
+                                       Text="{x:Bind ViewModel.Selected.CounselorReference.Email, Mode=OneWay}"/>
                         </StackPanel>
 
                         <!-- Secretary Section -->
-                        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6">
+                        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="6"
+                                    Visibility="{x:Bind ViewModel.Selected.CounselorReference, Mode=OneWay, Converter={StaticResource StringToVisability}}">
                             <TextBlock Style="{StaticResource LabelTextBlockStyle}" Text="Secretary"/>
                             <TextBlock Style="{StaticResource ValueTextBlockStyle}" IsTextSelectionEnabled="True"
                                        Text="{x:Bind ViewModel.Selected.CounselorReference.SecretaryName, Mode=OneWay}"/>
@@ -309,14 +344,14 @@
                 <!-- Service Authorizations Card -->
                 <Grid Style="{StaticResource CardContainerGridStyle}">
                     <!-- Inner Grid -->
-                    <Grid Style="{StaticResource CardInnerGridStyle}">
+                    <Grid Style="{StaticResource CardInnerGridStyle}" Margin="12,6,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
                         <!-- Header -->
-                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="0,0,6,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
@@ -330,17 +365,17 @@
                         </Grid>
                         
                         <!-- Item Repeater -->
-                        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,4,0">
-                            <ItemsRepeater ItemsSource="{x:Bind ViewModel.Selected.Pos, Mode=OneWay}">
-                                <DataTemplate x:DataType="models:ServiceAuthorization">
+                        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                            <ItemsRepeater ItemsSource="{x:Bind ViewModel.Invoices, Mode=OneWay}">
+                                <DataTemplate x:DataType="sas:InvoiceDetail">
 
                                     <!-- Button -->
-                                    <Button Margin="0,0,0,6" Click="SA_Click" Tag="{x:Bind Id}"
+                                    <Button Margin="0,0,12,6" Click="SA_Click" Tag="{x:Bind Id}"
                                             HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                                             BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}">
                                         <StackPanel Spacing="2">
-                                            <TextBlock FontWeight="Bold" Text="{x:Bind Id}"/>
+                                            <TextBlock FontWeight="Bold" Text="{x:Bind ServiceAuthorizationNumber}"/>
                                             <TextBlock Text="{x:Bind Description}"/>
                                             <TextBlock Text="{x:Bind FormattedDateRange}"/>
                                         </StackPanel>
@@ -393,14 +428,14 @@
                 <!-- Placements Card -->
                 <Grid Style="{StaticResource CardContainerGridStyle}">
                     <!-- Inner Grid -->
-                    <Grid Style="{StaticResource CardInnerGridStyle}">
+                    <Grid Style="{StaticResource CardInnerGridStyle}" Margin="12,6,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
                         <!-- Header -->
-                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6">
+                        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Margin="0,0,6,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
@@ -416,22 +451,29 @@
                         </Grid>
 
                         <!-- Item Repeater -->
-                        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,4,0">
-                            <ItemsRepeater ItemsSource="{x:Bind ViewModel.Selected.Placements, Mode=OneWay}">
-                                <DataTemplate x:DataType="models:Placement">
+                        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                            <ItemsRepeater ItemsSource="{x:Bind ViewModel.Placements, Mode=OneWay}">
+                                <DataTemplate x:DataType="placements:PlacementDetail">
 
                                     <!-- Button -->
-                                    <Button Margin="0,0,0,6" Click="Placement_Click" Tag="{x:Bind Id}"
-                                            HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                            BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}">
+                                    <SplitButton Margin="0,0,12,6" Click="Placement_Click" Tag="{x:Bind Id}"
+                                                 HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                                 BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}">
                                         <StackPanel Spacing="2">
-                                            <TextBlock FontWeight="Bold" Text="{x:Bind Employer.Name}"/>
-                                            <TextBlock Text="{x:Bind Employer.Phone}"/>
+                                            <TextBlock FontWeight="Bold" Text="{x:Bind EmployerName}"/>
+                                            <TextBlock Text="{x:Bind EmployerPhone}"/>
                                             <TextBlock Text="{x:Bind Position}"/>
                                             <TextBlock Text="{x:Bind FormattedHireDate}"/>
                                         </StackPanel>
-                                    </Button>
+
+                                        <SplitButton.Flyout>
+                                            <!-- MenuFlyout -->
+                                            <MenuFlyout Placement="Right">
+                                                <MenuFlyoutItem Text="Go To Placement" Click="GoToPlacement_Click"  Tag="{x:Bind Id}"/>
+                                            </MenuFlyout>
+                                        </SplitButton.Flyout>
+                                    </SplitButton>
                                 </DataTemplate>
                             </ItemsRepeater>
                         </ScrollViewer>
@@ -524,5 +566,23 @@
                 </Grid>
             </controls:WrapPanel>
         </ScrollViewer>
+    
+        <!-- Row 2: Status Bar -->
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" 
+              Background="{ThemeResource LayerOnMicaBaseAltFillColorDefaultBrush}">
+            <StackPanel Orientation="Horizontal" Spacing="8" 
+                        VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Style="{StaticResource PageSubtitleStyle}" Margin="0">
+                    <Run Text="ACE ID:"/>
+                    <Run Text="{x:Bind ViewModel.Selected.Id, Mode=OneWay}"/>
+                    <Run Text=","/>
+                </TextBlock>
+                <TextBlock Style="{StaticResource PageSubtitleStyle}" Margin="0">
+                    <Run Text="Counselor ID:"/>
+                    <Run Text="{x:Bind ViewModel.Selected.CounselorID, Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock Text="TTW" FontWeight="Bold" Visibility="{x:Bind ViewModel.Selected.TTW, Mode=OneWay, Converter={StaticResource BoolVisibilityConverter}}"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

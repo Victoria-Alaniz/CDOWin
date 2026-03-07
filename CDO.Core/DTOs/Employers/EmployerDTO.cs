@@ -1,4 +1,4 @@
-namespace CDO.Core.DTOs;
+namespace CDO.Core.DTOs.Employers;
 
 public class EmployerDTO {
     public string? Name { get; set; }
@@ -12,7 +12,7 @@ public class EmployerDTO {
     public string? Email { get; set; }
     public string? Website { get; set; }
     public string? Notes { get; set; }
-    public string? Supervisor { get; set; }
+    public string? SupervisorName { get; set; }
     public string? SupervisorPhone { get; set; }
     public string? SupervisorEmail { get; set; }
 }

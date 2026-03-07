@@ -7,12 +7,16 @@
     xmlns:local="using:CDOWin">
     <Application.Resources>
         <ResourceDictionary>
+            <converters:BoolToSolidBrushConverter x:Key="BoolSolidBrushConverter"/>
             <converters:BoolOpacityConverter x:Key="BoolOpacityConverter"/>
             <converters:BoolCompletedConverter x:Key="BoolCompletedConverter"/>
+            <converters:BoolActiveConverter x:Key="BoolActiveConverter"/>
             <converters:BoolTransparentConverter x:Key="BoolTransparentConverter"/>
+            <converters:BoolVisibilityConverter x:Key="BoolVisibilityConverter"/>
             <converters:NullOpacityConverter x:Key="NullOpacityConverter"/>
             <converters:StringNullVisibilityConverter x:Key="StringToVisability"/>
             <converters:NullVisibilityConverter x:Key="NullToVisability"/>
+            <converters:NullToBoolConverter x:Key="NullToBoolConverter"/>
 
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">

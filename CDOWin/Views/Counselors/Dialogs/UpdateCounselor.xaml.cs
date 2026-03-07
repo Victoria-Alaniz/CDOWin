@@ -17,6 +17,15 @@ public sealed partial class UpdateCounselor : Page {
     public UpdateCounselor(CounselorUpdateViewModel viewModel) {
         ViewModel = viewModel;
         InitializeComponent();
+        SetupNumberBox();
+    }
+
+    // =========================
+    // UI Methods
+    // =========================
+    private void SetupNumberBox() {
+        if (ViewModel.Original.CaseLoadId == null) return;
+        CaseLoad_Numberbox.Value = (double)ViewModel.Original.CaseLoadId;
     }
 
     // =========================
@@ -32,6 +41,11 @@ public sealed partial class UpdateCounselor : Page {
             return;
 
         UpdateModel(text, field);
+    }
+
+    private void CaseLoad_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args) {
+        var value = (int)sender.Value;
+        ViewModel.Updated.CaseLoadID = value;
     }
 
     // =========================

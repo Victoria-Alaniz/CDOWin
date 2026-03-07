@@ -7,15 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
-    xmlns:viewmodels="using:CDOWin.ViewModels"
-    xmlns:models="using:CDO.Core.Models"
+    xmlns:employers="using:CDO.Core.DTOs.Employers"
     mc:Ignorable="d">
 
     <Grid>
         <!-- Columns -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="344"/>
+            <ColumnDefinition Width="336"/>
         </Grid.ColumnDefinitions>
 
         <!-- Left Column -->
@@ -26,6 +25,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
 
             <!-- Columns -->
@@ -34,34 +34,17 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Title + Button -->
-            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+            <!-- Title -->
+            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource PageTitleStyle}"
+                       Text="Employers"/>
 
-                    <!-- Title -->
-                    <TextBlock Grid.Column="0" Style="{StaticResource PageTitleStyle}"
-                               Text="Employers"/>
+            <!-- CommandBar -->
+            <CommandBar Grid.Row="0" Grid.Column="1" DefaultLabelPosition="Collapsed" Background="Transparent">
+                <AppBarButton Width="56" Click="NewEmployer_ClickAsync" IsCompact="False" ToolTipService.ToolTip="New Employer">
+                    <FontIcon Glyph="&#xE710;" Style="{StaticResource SingleIconFontStyle}"/>
+                </AppBarButton>
+            </CommandBar>
 
-                    <!-- Add Button -->
-                    <Button Grid.Column="1" VerticalAlignment="Center"
-                            Style="{StaticResource SingleIconButtonStyle}"
-                            Click="NewEmployer_ClickAsync"
-                            ToolTipService.ToolTip="New Employer">
-                        <FontIcon Glyph="&#xE710;" Style="{StaticResource SingleIconFontStyle}"/>
-                    </Button>
-                </Grid>
-
-                <!-- Subtitle -->
-                <TextBlock Style="{StaticResource PageSubtitleStyle}">
-                    <Run Text="{x:Bind ViewModel.Filtered.Count, Mode=OneWay}"/>
-                    <Run Text="Employers"/>
-                </TextBlock>
-            </StackPanel>
-            
             <!-- Search Bar -->
             <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                      Margin="8,0,8,8" PlaceholderText="Filter Employers"
@@ -71,14 +54,12 @@
             <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="ListView"
                       Style="{StaticResource DataTableStyle}" 
                       ItemsSource="{x:Bind ViewModel.Filtered, Mode=OneWay}" 
-                      SelectedItem="{x:Bind ViewModel.Selected, Mode=TwoWay}" 
+                      SelectedItem="{x:Bind ViewModel.SelectedSummary, Mode=TwoWay}" 
                       ItemClick="ListView_ItemClick">
 
                 <!-- Header -->
                 <ListView.Header>
-                    <Grid Background="{ThemeResource SolidBackgroundFillColorTertiaryBrush}"
-                          BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
-                          BorderThickness="0,0,0,1" Padding="12,8">
+                    <Grid Style="{StaticResource DataTableHeaderStyle}">
 
                         <interactivity:Interaction.Behaviors>
                             <behaviors:StickyHeaderBehavior/>
@@ -88,52 +69,52 @@
                             <ColumnDefinition Width="180"/>
                             <ColumnDefinition Width="180"/>
                             <ColumnDefinition Width="110"/>
-                            <ColumnDefinition Width="110"/>
-                            <ColumnDefinition Width="210"/>
-                            <ColumnDefinition Width="140"/>
-                            <ColumnDefinition Width="140"/>
-                            <ColumnDefinition Width="210"/>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="180"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="Employer" FontWeight="SemiBold"/>
                         <TextBlock Grid.Column="1" Text="Address" FontWeight="SemiBold"/>
                         <TextBlock Grid.Column="2" Text="Phone" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="3" Text="Fax" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="4" Text="Email" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="5" Text="Supervisor" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="6" Text="Supervisor Phone" FontWeight="SemiBold"/>
-                        <TextBlock Grid.Column="7" Text="Supervisor Email" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="3" Text="Supervisor" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="4" Text="Website" FontWeight="SemiBold"/>
                     </Grid>
                 </ListView.Header>
 
                 <!-- Content -->
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Employer">
+                    <DataTemplate x:DataType="employers:EmployerSummary">
                         <Grid Padding="12,8">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="180"/>
                                 <ColumnDefinition Width="180"/>
                                 <ColumnDefinition Width="110"/>
-                                <ColumnDefinition Width="110"/>
-                                <ColumnDefinition Width="210"/>
-                                <ColumnDefinition Width="140"/>
-                                <ColumnDefinition Width="140"/>
-                                <ColumnDefinition Width="210"/>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="180"/>
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.Column="0" Text="{x:Bind Name}" TextWrapping="WrapWholeWords" 
                                        FontWeight="Bold"/>
                             <TextBlock Grid.Column="1" Text="{x:Bind FormattedAddress}" TextTrimming="CharacterEllipsis"/>
                             <TextBlock Grid.Column="2" Text="{x:Bind Phone}"/>
-                            <TextBlock Grid.Column="3" Text="{x:Bind Fax}"/>
-                            <TextBlock Grid.Column="4" Text="{x:Bind Email}" TextTrimming="CharacterEllipsis"/>
-                            <TextBlock Grid.Column="5" Text="{x:Bind Supervisor}" FontWeight="SemiBold" TextWrapping="WrapWholeWords"/>
-                            <TextBlock Grid.Column="6" Text="{x:Bind SupervisorPhone}"/>
-                            <TextBlock Grid.Column="7" Text="{x:Bind SupervisorEmail}" TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Grid.Column="3" Text="{x:Bind FormattedSupervisor}" TextWrapping="WrapWholeWords"/>
+                            <TextBlock Grid.Column="4" Text="{x:Bind Website}"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <!-- Row 2: Status Bar -->
+            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" 
+              Background="{ThemeResource LayerOnMicaBaseAltFillColorDefaultBrush}">
+                <StackPanel Orientation="Horizontal" Spacing="8" 
+                            VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Style="{StaticResource PageSubtitleStyle}" Margin="0">
+                        <Run Text="{x:Bind ViewModel.Filtered.Count, Mode=OneWay}"/>
+                        <Run Text="Employers"/>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
         </Grid>
 
         <!-- Right Column -->

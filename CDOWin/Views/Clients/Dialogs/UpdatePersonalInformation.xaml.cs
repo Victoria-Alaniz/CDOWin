@@ -87,7 +87,7 @@ public sealed partial class UpdatePersonalInformation : Page {
                 ViewModel.UpdatedClient.DriversLicense = stringValue;
                 break;
             case PersonalField.SSN:
-                ViewModel.UpdatedClient.Ssn = ParseSSN(stringValue);
+                ViewModel.UpdatedClient.Ssn = stringValue;
                 break;
             case PersonalField.Zip:
                 ViewModel.UpdatedClient.Zip = stringValue;
@@ -100,10 +100,7 @@ public sealed partial class UpdatePersonalInformation : Page {
             return;
 
         var text = textbox.Text.NormalizeString();
-
-        if (string.IsNullOrWhiteSpace(text))
-            return;
-
+        if (string.IsNullOrWhiteSpace(text)) return;
         UpdateValue(text, field);
     }
 
@@ -137,17 +134,6 @@ public sealed partial class UpdatePersonalInformation : Page {
         string stringValue = ((int)Value).ToString();
         if (stringValue.Length < 11)
             return stringValue;
-        return null;
-    }
-
-    private int? ParseSSN(string value) {
-        var sanitizedValue = value.Trim();
-        if (sanitizedValue.Length <= 11) {
-            int x;
-            if (int.TryParse(value, out x)) {
-                return x;
-            }
-        }
         return null;
     }
 }

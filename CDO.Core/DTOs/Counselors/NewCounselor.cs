@@ -1,10 +1,11 @@
-namespace CDO.Core.DTOs;
+namespace CDO.Core.DTOs.Counselors;
 
-public class CreateCounselorDTO {
+public class NewCounselor {
     // Required creation fields
-    public required string name { get; init; }
+    public required string Name { get; init; }
 
     // Optional fields
+    public int? CaseLoadID { get; init; }
     public string? Email { get; init; }
     public string? Phone { get; init; }
     public string? Fax { get; init; }

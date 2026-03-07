@@ -1,16 +1,23 @@
-﻿using CDO.Core.DTOs;
-using CDO.Core.Models;
+﻿using CDO.Core.DTOs.Clients;
 using CDOWin.Views.Clients.Dialogs;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace CDOWin.ViewModels;
 
-public partial class ClientUpdateViewModel(Client client) : ObservableObject {
+public partial class ClientUpdateViewModel : ObservableObject {
     // =========================
     // Dependencies
     // =========================
-    public Client OriginalClient = client;
-    public UpdateClientDTO UpdatedClient = new();
+    public ClientDetail OriginalClient;
+    public ClientUpdate UpdatedClient = new();
+
+    [ObservableProperty]
+    public partial string? FolderPath { get; set; }
+
+    public ClientUpdateViewModel(ClientDetail client) {
+        OriginalClient = client;
+        FolderPath = client.DocumentsFolderPath;
+    }
 
     // =========================
     // CRUD Methods

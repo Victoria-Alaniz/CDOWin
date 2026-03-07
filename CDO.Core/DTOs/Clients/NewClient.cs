@@ -1,13 +1,13 @@
-namespace CDO.Core.DTOs;
+namespace CDO.Core.DTOs.Clients;
 
-public class CreateClientDTO {
+public class NewClient {
     // Required creation fields
     public required string FirstName { get; init; }
     public required string LastName { get; init; }
-    public required string Counselor { get; init; }
     public required string City { get; init; }
     public required string State { get; init; }
     public required string Disability { get; init; }
+    public required bool TTW { get; init; }
 
 
     // Optional fields
@@ -30,9 +30,6 @@ public class CreateClientDTO {
     public string? Email2 { get; init; }
     public string? Email2Identity { get; init; }
     public int? CounselorID { get; init; }
-    public string? CounselorEmail { get; init; }
-    public string? CounselorPhone { get; init; }
-    public string? CounselorFax { get; init; }
     public string? ClientNotes { get; init; }
     public string? Conditions { get; init; }
     public string? DocumentFolder { get; init; }

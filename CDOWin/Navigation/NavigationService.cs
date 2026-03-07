@@ -6,7 +6,6 @@ using CDOWin.Views.Placements;
 using CDOWin.Views.ServiceAuthorizations;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
-using System;
 using System.Collections.Generic;
 
 namespace CDOWin.Navigation;
@@ -17,8 +16,6 @@ public sealed class NavigationService : INavigationService {
     private readonly Dictionary<CDOFrame, Page> _pages = new();
     private CDOFrame? _currentFrame;
     private int _previousSelectedIndex = 0;
-
-    public event Action<CDOFrame>? NavigationRequested;
 
     public void Initialize(NavigationView navigationView, Frame frame) {
         _navigationView = navigationView;

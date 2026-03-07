@@ -1,9 +1,11 @@
-using CDO.Core.Models;
+using CDO.Core.DTOs.Counselors;
 using CDOWin.ErrorHandling;
 using CDOWin.Services;
 using CDOWin.ViewModels;
 using CDOWin.Views.Counselors.Dialogs;
 using CDOWin.Views.Counselors.Inspectors;
+using CDOWin.Views.Shared.Dialogs;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
@@ -31,7 +33,7 @@ public sealed partial class CounselorsPage : Page {
     // =========================
     protected override async void OnNavigatedTo(NavigationEventArgs e) {
         base.OnNavigatedTo(e);
-        await ViewModel.LoadCounselorsAsync();
+        await ViewModel.LoadCounselorSummariesAsync();
     }
 
     // =========================
@@ -62,12 +64,31 @@ public sealed partial class CounselorsPage : Page {
             return;
         }
 
-        _ = ViewModel.LoadCounselorsAsync();
+        await ViewModel.LoadCounselorSummariesAsync(force: true);
+        _ = ViewModel.LoadSelectedCounselorAsync(updateResult.Value!.Id);
     }
 
     private void ListView_ItemClick(object sender, ItemClickEventArgs e) {
-        if (e.ClickedItem is Counselor counselor) {
-            _ = ViewModel.ReloadCounselorAsync(counselor.Id);
+        if (e.ClickedItem is CounselorSummary counselor) {
+            _ = ViewModel.LoadSelectedCounselorAsync(counselor.Id);
+        }
+    }
+
+    private void GoToClient_Click(object sender, RoutedEventArgs e) {
+        if (sender is not Button button || button.Tag is not int id) return;
+        ViewModel.RequestClient(id);
+    }
+
+    private async void Delete_MenuFlyoutItem_Click(object sender, RoutedEventArgs e) {
+        if (ViewModel.Selected == null) return;
+
+        var dialog = DialogFactory.DeleteDialog(this.XamlRoot, "Delete Counselor?");
+        dialog.Content = new DeletePage();
+
+        var result = await dialog.ShowAsync();
+        if (result == ContentDialogResult.Primary) {
+            var deleteResult = await ViewModel.DeleteSelectedCounselor();
+            if (!deleteResult.IsSuccess) ErrorHandler.Handle(deleteResult, this.XamlRoot);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using CDO.Core.DTOs;
+﻿using CDO.Core.DTOs.Counselors;
 using CDO.Core.ErrorHandling;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
@@ -21,24 +21,13 @@ public partial class CreateCounselorViewModel(ICounselorService service) : Obser
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
     public partial string Name { get; set; } = string.Empty;
-
-    [ObservableProperty]
-    public partial string? Email { get; set; }
-
-    [ObservableProperty]
-    public partial string? Phone { get; set; }
-
-    [ObservableProperty]
-    public partial string? Fax { get; set; }
-
-    [ObservableProperty]
-    public partial string? Notes { get; set; }
-
-    [ObservableProperty]
-    public partial string? SecretaryName { get; set; }
-
-    [ObservableProperty]
-    public partial string? SecretaryEmail { get; set; }
+    public int? CaseLoadId { get; set; }
+    public string? Email { get; set; }
+    public string? Phone { get; set; }
+    public string? Fax { get; set; }
+    public string? Notes { get; set; }
+    public string? SecretaryName { get; set; }
+    public string? SecretaryEmail { get; set; }
 
     // =========================
     // Input Validation
@@ -49,8 +38,9 @@ public partial class CreateCounselorViewModel(ICounselorService service) : Obser
     // CRUD Methods
     // =========================
     public async Task<Result<Counselor>> CreateCounselorAsync() {
-        var counselor = new CreateCounselorDTO {
-            name = Name,
+        var counselor = new NewCounselor {
+            Name = Name,
+            CaseLoadID = CaseLoadId,
             Email = Email,
             Phone = Phone,
             Fax = Fax,

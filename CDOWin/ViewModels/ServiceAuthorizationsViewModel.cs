@@ -1,6 +1,6 @@
-﻿using CDO.Core.ErrorHandling;
+﻿using CDO.Core.DTOs.SAs;
+using CDO.Core.ErrorHandling;
 using CDO.Core.Interfaces;
-using CDO.Core.Models;
 using CDOWin.Composers;
 using CDOWin.Data;
 using CDOWin.Services;
@@ -17,57 +17,73 @@ namespace CDOWin.ViewModels;
 public partial class ServiceAuthorizationsViewModel : ObservableObject {
 
     // =========================
-    // Services / Dependencies
+    // Dependencies
     // =========================
     private readonly IServiceAuthorizationService _service;
     private readonly DataCoordinator _dataCoordinator;
-    private readonly ClientSelectionService _selectionService;
-    private readonly DispatcherQueue _dispatcher = DispatcherQueue.GetForCurrentThread();
+    private readonly ClientSelectionService _clientSelectionService;
+    private readonly CounselorSelectionService _counselorSelectionService;
+    private readonly DispatcherQueue _dispatcher;
 
     // =========================
     // Private Backing Fields
     // =========================
-    private IReadOnlyList<Invoice> _allServiceAuthorizations = [];
+    private IReadOnlyList<InvoiceSummary> _cache = [];
 
     // =========================
-    // View State
+    // UI State
     // =========================
 
     [ObservableProperty]
-    public partial ObservableCollection<Invoice> Filtered { get; private set; } = [];
+    public partial ObservableCollection<InvoiceSummary> Filtered { get; private set; } = [];
 
     [ObservableProperty]
-    public partial Invoice? Selected { get; set; }
+    public partial InvoiceSummary? SelectedSummary { get; set; }
+
+    [ObservableProperty]
+    public partial InvoiceDetail? Selected { get; set; }
 
     [ObservableProperty]
     public partial string SearchQuery { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial bool IsFiltered { get; set; } = false;
 
     // =========================
     // Constructor
     // =========================
 
-    public ServiceAuthorizationsViewModel(DataCoordinator dataCoordinator, IServiceAuthorizationService service, ClientSelectionService selectionService) {
+    public ServiceAuthorizationsViewModel(
+        DataCoordinator dataCoordinator,
+        IServiceAuthorizationService service,
+        ClientSelectionService clientSelectionService,
+        CounselorSelectionService counselorSelectionService) {
         _service = service;
-        _selectionService = selectionService;
         _dataCoordinator = dataCoordinator;
+
+
+        _clientSelectionService = clientSelectionService;
+        _counselorSelectionService = counselorSelectionService;
+        _dispatcher = DispatcherQueue.GetForCurrentThread();
     }
+
+    // =========================
+    // Property Change Methods
+    // =========================
+    partial void OnSearchQueryChanged(string value) => ApplyFilter();
+    partial void OnIsFilteredChanged(bool value) => ApplyFilter();
 
     // =========================
     // Public Methods
     // =========================
     public void RequestClient(int clientID) {
         AppServices.Navigation.Navigate(Views.CDOFrame.Clients);
-        _selectionService.RequestSelectedClient(clientID);
+        _clientSelectionService.RequestSelectedClient(clientID);
     }
 
-    // =========================
-    // Property Change Methods
-    // =========================
-    partial void OnSearchQueryChanged(string value) {
-        if (_dispatcher.HasThreadAccess)
-            ApplyFilter();
-        else
-            _dispatcher.TryEnqueue(ApplyFilter);
+    public void RequestCounselor(int counselorID) {
+        AppServices.Navigation.Navigate(Views.CDOFrame.Counselors);
+        _counselorSelectionService.RequestSelectedCounselor(counselorID);
     }
 
     // =========================
@@ -78,11 +94,6 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
 
         if (Selected == null) {
             tcs.SetResult(Result<string>.Fail(new AppError(ErrorKind.Validation, "No SA Selected.")));
-            return tcs.Task;
-        }
-
-        if (Selected.Client is not Client client) {
-            tcs.SetResult(Result<string>.Fail(new AppError(ErrorKind.Validation, "This shouldn't be possible")));
             return tcs.Task;
         }
 
@@ -97,49 +108,28 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
         var serviceAuthorizations = await _dataCoordinator.GetSAsAsync();
         if (serviceAuthorizations == null) return;
 
-        var snapshot = serviceAuthorizations.OrderBy(o => o.ServiceAuthorizationNumber).ToList().AsReadOnly();
-        _allServiceAuthorizations = snapshot;
-
-        _dispatcher.TryEnqueue(() => {
-            ApplyFilter();
-        });
+        var snapshot = serviceAuthorizations.OrderBy(o => o.EndDate).ToList().AsReadOnly();
+        _cache = snapshot;
+        ApplyFilter();
     }
 
-    public async Task ReloadServiceAuthorizationAsync(string id) {
-        var serviceAuthorization = await _service.GetServiceAuthorizationAsync(id);
-        if (serviceAuthorization == null) return;
+    public async Task LoadSelectedSAAsync(int id) {
+        if (Selected != null && Selected.Id == id) return;
 
-        var updated = _allServiceAuthorizations
-            .Select(s => s.ServiceAuthorizationNumber == id ? serviceAuthorization : s)
-            .ToList()
-            .AsReadOnly();
-
-        _allServiceAuthorizations = updated;
-
-        _dispatcher.TryEnqueue(() => {
-            var index = Filtered
-            .Select((s, i) => new { s, i })
-            .FirstOrDefault(x => x.s.ServiceAuthorizationNumber == id)?.i;
-
-            if (index != null)
-                Filtered[index.Value] = serviceAuthorization;
-
-            Selected = serviceAuthorization;
-        });
+        var selectedSA = await _service.GetServiceAuthorizationAsync(id);
+        Selected = selectedSA;
     }
 
-    public async Task<Result<bool>> DeleteSelectedSA() {
-        if (Selected == null) return Result<bool>.Fail(new AppError(ErrorKind.Validation, "No Placement selected.", null, null));
-        var id = Selected.ServiceAuthorizationNumber;
+    public async Task<Result> DeleteSelectedSA() {
+        if (SelectedSummary == null) return Result<bool>.Fail(new AppError(ErrorKind.Validation, "No SA selected.", null, null));
+        var id = SelectedSummary.Id;
         var result = await _service.DeleteServiceAuthorizationAsync(id);
 
         if (result.IsSuccess) {
-            Selected = null;
-            _allServiceAuthorizations = _allServiceAuthorizations
-                .Where(sa => sa.ServiceAuthorizationNumber != id)
-                .ToList()
-                .AsReadOnly();
-            ApplyFilter();
+            OnUI(() => {
+                Selected = null;
+                SelectedSummary = null;
+            });
             _ = LoadServiceAuthorizationsAsync(force: true);
         }
 
@@ -150,30 +140,35 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     // Utility / Filtering
     // =========================
     void ApplyFilter() {
-        string? previousSelection = Selected?.ServiceAuthorizationNumber;
+        int? previousSelection = SelectedSummary?.Id;
+        var filterDate = IsFiltered ? DateTime.Today : DateTime.MinValue;
 
-        if (string.IsNullOrWhiteSpace(SearchQuery)) {
-            Filtered = new ObservableCollection<Invoice>(_allServiceAuthorizations);
-            ReSelect(previousSelection);
-            return;
+        IEnumerable<InvoiceSummary> result = _cache.Where(i => i.EndDate >= filterDate);
+
+        if (!string.IsNullOrWhiteSpace(SearchQuery)) {
+            var query = SearchQuery.Trim().ToLower();
+            result = result.Where(i =>
+            (i.ClientName).Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+            (i.CounselorName).Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+            (i.ServiceAuthorizationNumber).Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+            (i.Description).Contains(query, StringComparison.CurrentCultureIgnoreCase)
+            );
         }
 
-        var query = SearchQuery.Trim().ToLower();
-        var result = _allServiceAuthorizations.Where(s =>
-        (s.Client?.NameAndID ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
-        (s.Client?.CounselorReference?.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
-        (s.ServiceAuthorizationNumber ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
-        (s.Description ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase)
-        );
-
-        Filtered = new ObservableCollection<Invoice>(result);
-        ReSelect(previousSelection);
-
+        OnUI(() => {
+            Filtered = new ObservableCollection<InvoiceSummary>(result);
+            ReSelect(previousSelection);
+        });
     }
 
-    private void ReSelect(string? id) {
+    private void OnUI(Action action) {
+        if (_dispatcher.HasThreadAccess) action();
+        else _dispatcher.TryEnqueue(() => action());
+    }
+
+    private void ReSelect(int? id) {
         if (id == null) return;
-        if (Filtered.FirstOrDefault(sa => sa.ServiceAuthorizationNumber == id) is Invoice selected)
-            Selected = selected;
+        if (Filtered.FirstOrDefault(i => i.Id == id) is InvoiceSummary selected)
+            SelectedSummary = selected;
     }
 }

@@ -1,4 +1,8 @@
-﻿using CDO.Core.DTOs;
+﻿using CDO.Core.DTOs.Clients;
+using CDO.Core.DTOs.Counselors;
+using CDO.Core.DTOs.Employers;
+using CDO.Core.DTOs.Placements;
+using CDO.Core.DTOs.SAs;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
 using System;
@@ -47,19 +51,19 @@ public class DataCoordinator {
     // =========================
     // Public Fields
     // =========================
-    public CachedList<ClientSummaryDTO> Clients { get; } = new();
-    public CachedList<Counselor> Counselors { get; } = new();
-    public CachedList<Employer> Employers { get; } = new();
-    public CachedList<Placement> Placements { get; } = new();
+    public CachedList<ClientSummary> Clients { get; } = new();
+    public CachedList<CounselorSummary> Counselors { get; } = new();
+    public CachedList<EmployerSummary> Employers { get; } = new();
+    public CachedList<PlacementSummary> Placements { get; } = new();
     public CachedList<Reminder> Reminders { get; } = new();
-    public CachedList<Invoice> SAs { get; } = new();
+    public CachedList<InvoiceSummary> SAs { get; } = new();
     public CachedList<State> States { get; } = new();
 
     // =========================
     // TTLs
     // =========================
     private static readonly TimeSpan ClientTTL = TimeSpan.FromMinutes(5);
-    private static readonly TimeSpan CounselorTTL = TimeSpan.FromHours(30);
+    private static readonly TimeSpan CounselorTTL = TimeSpan.FromMinutes(30);
     private static readonly TimeSpan EmployerTTL = TimeSpan.FromHours(1);
     private static readonly TimeSpan PlacementTTL = TimeSpan.FromHours(1);
     private static readonly TimeSpan ReminderTTL = TimeSpan.FromSeconds(45);
@@ -75,66 +79,66 @@ public class DataCoordinator {
     // =========================
     // Update Methods
     // =========================
-    public async Task<IReadOnlyList<ClientSummaryDTO>> GetClientsAsync(bool force = false) {
+    public async Task<IReadOnlyList<ClientSummary>> GetClientsAsync(bool force = false) {
         if (force || Clients.IsStale(ClientTTL)) {
             var data = await _clients.GetAllClientSummariesAsync();
-            Clients.Update(data);
+            if (data != null) Clients.Update(data);
         }
 
-        return Clients.Data!;
+        return Clients.Data ?? [];
     }
 
-    public async Task<IReadOnlyList<Counselor>> GetCounselorsAsync(bool force = false) {
+    public async Task<IReadOnlyList<CounselorSummary>> GetCounselorsAsync(bool force = false) {
         if (force || Counselors.IsStale(CounselorTTL)) {
-            var data = await _counselors.GetAllCounselorsAsync();
-            Counselors.Update(data);
+            var data = await _counselors.GetAllCounselorSummariesAsync();
+            if (data != null) Counselors.Update(data);
         }
 
-        return Counselors.Data!;
+        return Counselors.Data ?? [];
     }
 
-    public async Task<IReadOnlyList<Employer>> GetEmployersAsync(bool force = false) {
+    public async Task<IReadOnlyList<EmployerSummary>> GetEmployerSummariesAsync(bool force = false) {
         if (force || Employers.IsStale(EmployerTTL)) {
-            var data = await _employers.GetAllEmployersAsync();
-            Employers.Update(data);
+            var data = await _employers.GetAllEmployerSummariesAsync();
+            if (data != null) Employers.Update(data);
         }
 
-        return Employers.Data!;
+        return Employers.Data ?? [];
     }
 
-    public async Task<IReadOnlyList<Placement>> GetPlacementsAsync(bool force = false) {
+    public async Task<IReadOnlyList<PlacementSummary>> GetPlacementSummariesAsync(bool force = false) {
         if (force || Placements.IsStale(PlacementTTL)) {
-            var data = await _placements.GetAllPlacementsAsync();
-            Placements.Update(data);
+            var data = await _placements.GetAllPlacementSummariesAsync();
+            if (data != null) Placements.Update(data);
         }
 
-        return Placements.Data!;
+        return Placements.Data ?? [];
     }
 
     public async Task<IReadOnlyList<Reminder>> GetRemindersAsync(bool force = false) {
         if (force || Reminders.IsStale(ReminderTTL)) {
             var data = await _reminders.GetAllRemindersAsync();
-            Reminders.Update(data);
+            if (data != null) Reminders.Update(data);
         }
 
-        return Reminders.Data!;
+        return Reminders.Data ?? [];
     }
 
-    public async Task<IReadOnlyList<Invoice>> GetSAsAsync(bool force = false) {
+    public async Task<IReadOnlyList<InvoiceSummary>> GetSAsAsync(bool force = false) {
         if (force || SAs.IsStale(SATTL)) {
             var data = await _sas.GetAllServiceAuthorizationsAsync();
-            SAs.Update(data);
+            if (data != null) SAs.Update(data);
         }
 
-        return SAs.Data!;
+        return SAs.Data ?? [];
     }
 
     public async Task<IReadOnlyList<State>> GetStatesAsync(bool force = false) {
         if (force || States.IsStale(StateTTL)) {
             var data = await _states.GetAllStatesAsync();
-            States.Update(data);
+            if (data != null) States.Update(data);
         }
 
-        return States.Data!;
+        return States.Data ?? [];
     }
 }

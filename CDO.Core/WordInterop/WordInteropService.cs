@@ -1,11 +1,11 @@
-﻿using CDO.Core.Models;
+﻿using CDO.Core.DTOs.SAs;
 using System.Diagnostics;
 using Word = Microsoft.Office.Interop.Word;
 
 namespace CDO.Core.WordInterop;
 
 public sealed class WordInteropService {
-    public void ExportServiceAuthorization(string templatePath, Invoice sa) {
+    public void ExportServiceAuthorization(string templatePath, InvoiceDetail invoice) {
         Debug.WriteLine(templatePath);
 
         var app = new Word.Application();
@@ -16,43 +16,43 @@ public sealed class WordInteropService {
             foreach (Word.FormField field in doc.FormFields) {
                 switch (field.Name) {
                     case "ID":
-                        field.Result = sa.ServiceAuthorizationNumber;
+                        field.Result = invoice.ServiceAuthorizationNumber;
                         break;
                     case "DRSOffice":
-                        field.Result = sa.Office ?? "";
+                        field.Result = invoice.Office ?? "";
                         break;
                     case "ClientName":
-                        field.Result = $"{sa.Client?.FirstName} {sa.Client?.LastName}";
+                        field.Result = invoice.ClientName;
                         break;
                     case "CaseID":
-                        field.Result = sa.Client?.CaseID ?? "";
+                        field.Result = invoice.CaseId;
                         break;
                     case "StartDate":
-                        field.Result = sa.StartDate.ToString(format: "MM/dd/yyyy") ?? "";
+                        field.Result = invoice.StartDate.ToString(format: "MM/dd/yyyy") ?? "";
                         break;
                     case "EndDate":
-                        field.Result = sa.EndDate.ToString(format: "MM/dd/yyyy") ?? "";
+                        field.Result = invoice.EndDate.ToString(format: "MM/dd/yyyy") ?? "";
                         break;
                     case "SecretaryName":
-                        field.Result = sa.Client?.CounselorReference?.SecretaryName ?? "";
+                        field.Result = invoice.SecretaryName ?? "";
                         break;
                     case "CounselorName":
-                        field.Result = sa.Client?.CounselorReference?.Name ?? "";
+                        field.Result = invoice.CounselorName;
                         break;
                     case "UM":
-                        field.Result = sa.UnitOfMeasurement ?? "";
+                        field.Result = invoice.UnitOfMeasurement ?? "";
                         break;
                     case "SADescription":
-                        field.Result = sa.Description;
+                        field.Result = invoice.Description;
                         break;
                     case "UnitCost":
-                        field.Result = sa.UnitCost?.ToString("C2") ?? "";
+                        field.Result = invoice.UnitCost?.ToString("C2") ?? "";
                         break;
                     case "TotalLineCost":
-                        field.Result = sa.UnitCost?.ToString("C2") ?? "";
+                        field.Result = invoice.UnitCost?.ToString("C2") ?? "";
                         break;
                     case "GrandTotal":
-                        field.Result = sa.UnitCost?.ToString("C2") ?? "";
+                        field.Result = invoice.UnitCost?.ToString("C2") ?? "";
                         break;
                 }
             }
@@ -66,6 +66,7 @@ public sealed class WordInteropService {
             doc.SaveAs2(outputPath, Word.WdSaveFormat.wdFormatXMLDocument);
 
             app.Visible = true;
+            app.Activate();
             doc.Activate();
         } catch (Exception ex) {
             Debug.WriteLine(ex.ToString());

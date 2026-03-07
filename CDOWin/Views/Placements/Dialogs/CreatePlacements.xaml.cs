@@ -1,3 +1,4 @@
+using CDO.Core.DTOs.SAs;
 using CDO.Core.Models;
 using CDOWin.Extensions;
 using CDOWin.Services;
@@ -6,7 +7,9 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 
 namespace CDOWin.Views.Placements.Dialogs;
@@ -16,8 +19,9 @@ public sealed partial class CreatePlacements : Page {
     // =========================
     // Dependencies
     // =========================
-    private readonly List<Employer> _employers = AppServices.EmployersViewModel.GetEmployers();
+    private List<Employer> _employers = [];
     private readonly CreatePlacementViewModel ViewModel;
+    private List<State> _states = AppServices.StatesViewModel.States.ToList();
 
     // =========================
     // Constructor
@@ -26,6 +30,9 @@ public sealed partial class CreatePlacements : Page {
         ViewModel = viewModel;
         InitializeComponent();
         BuildDropDown();
+        BuildStateDropdown();
+
+        _ = LoadEmployersAsync();
     }
 
     // =========================
@@ -34,8 +41,8 @@ public sealed partial class CreatePlacements : Page {
     private void BuildDropDown() {
         var flyout = new MenuFlyout();
 
-        if (ViewModel.Client.Pos == null) return;
-        foreach (var sa in ViewModel.Client.Pos) {
+        if (ViewModel.Client.Invoices == null) return;
+        foreach (var sa in ViewModel.Client.Invoices) {
             var item = new MenuFlyoutItem {
                 Text = sa.Description,
                 Tag = sa
@@ -48,34 +55,49 @@ public sealed partial class CreatePlacements : Page {
         SANumberDropDownButton.Flyout = flyout;
     }
 
-    // =========================
-    // Even Handlers
-    // =========================
-    private void DropDownSelected(object sender, RoutedEventArgs e) {
-        if (sender is not MenuFlyoutItem item || item.Tag is not Invoice sa)
-            return;
-        SANumberDropDownButton.Content = sa.ServiceAuthorizationNumber;
-        ViewModel.PoNumber = sa.ServiceAuthorizationNumber;
+    private void BuildStateDropdown() {
+        var flyout = new MenuFlyout();
+
+        foreach (var state in _states) {
+            var item = new MenuFlyoutItem {
+                Text = state.ShortName,
+                Tag = state.ShortName
+            };
+
+            item.Click += StateSelected;
+            flyout.Items.Add(item);
+        }
+
+        StateDropDownButton.Content = "TX";
+        ViewModel.State = "TX";
+        StateDropDownButton.Flyout = flyout;
     }
 
-    private void NumberBox_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args) {
-        if (sender.Tag is not UpdateField field || double.IsNaN(sender.Value)) return;
+    private async Task LoadEmployersAsync() {
+        var result = await AppServices.EmployersViewModel.GetEmployers();
+        if (result == null) return;
+        _employers = result;
+    }
 
-        switch (field) {
-            case UpdateField.PlacementNumber:
-                ViewModel.PlacementNumber = (int)sender.Value;
-                break;
-            case UpdateField.FormattedSalary:
-                ViewModel.Salary = sender.Value.ToString("C");
-                break;
-            case UpdateField.DaysOnJob:
-                ViewModel.DaysOnJob = (float)sender.Value;
-                break;
+    // =========================
+    // Event Handlers
+    // =========================
+    private void DropDownSelected(object sender, RoutedEventArgs e) {
+        if (sender is not MenuFlyoutItem item || item.Tag is not InvoiceDetail sa)
+            return;
+        SANumberDropDownButton.Content = sa.ServiceAuthorizationNumber;
+        ViewModel.SaNumber = sa.ServiceAuthorizationNumber;
+    }
 
+    private void StateSelected(object sender, RoutedEventArgs e) {
+        if (sender is MenuFlyoutItem item) {
+            var state = item.Tag.ToString();
+            ViewModel.State = state;
+            StateDropDownButton.Content = state;
         }
     }
 
-    private void TextChanged(object sender, TextChangedEventArgs e) {
+    private void TextBox_TextChanged(object sender, TextChangedEventArgs e) {
         if (sender is not TextBox textBox || textBox.Tag is not UpdateField field)
             return;
 
@@ -88,29 +110,43 @@ public sealed partial class CreatePlacements : Page {
         if (sender.Tag is UpdateField field && sender.Date is DateTimeOffset offset) {
             var dateString = offset.DateTime.Date.ToString(format: "MM/dd/yyyy");
             switch (field) {
-                case UpdateField.FormattedHireDate:
+                case UpdateField.HireDate:
                     ViewModel.HireDate = offset.DateTime.Date.ToUniversalTime();
                     break;
-                case UpdateField.FormattedEndDate:
+                case UpdateField.EndDate:
                     ViewModel.EndDate = offset.DateTime.Date.ToUniversalTime();
+                    SetDaysWorking();
                     break;
                 case UpdateField.Day1:
-                    ViewModel.FirstFiveDays1 = dateString;
+                    ViewModel.Day1 = dateString;
                     break;
                 case UpdateField.Day2:
-                    ViewModel.FirstFiveDays2 = dateString;
+                    ViewModel.Day2 = dateString;
                     break;
                 case UpdateField.Day3:
-                    ViewModel.FirstFiveDays3 = dateString;
+                    ViewModel.Day3 = dateString;
                     break;
                 case UpdateField.Day4:
-                    ViewModel.FirstFiveDays4 = dateString;
+                    ViewModel.Day4 = dateString;
                     break;
                 case UpdateField.Day5:
-                    ViewModel.FirstFiveDays5 = dateString;
+                    ViewModel.Day5 = dateString;
                     break;
             }
         }
+    }
+
+    private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e) {
+        if (sender is not MenuFlyoutItem item || item.Tag is not UpdateField field) return;
+        switch (field) {
+            case UpdateField.HireDate:
+                HireDatePicker.Date = null;
+                break;
+            case UpdateField.EndDate:
+                EndDatePicker.Date = null;
+                break;
+        }
+        SetDaysWorking();
     }
 
     // =========================
@@ -118,6 +154,7 @@ public sealed partial class CreatePlacements : Page {
     // =========================
     private void EmployerAutoSuggest_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) {
         if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput) {
+            ViewModel.EmployerName = sender.Text.Trim();
             var query = sender.Text.Trim().ToLower();
             var suggestions = _employers
                 .Where(c => !string.IsNullOrWhiteSpace(c.Name) && c.Name.Contains(query, StringComparison.CurrentCultureIgnoreCase))
@@ -137,27 +174,42 @@ public sealed partial class CreatePlacements : Page {
         }
     }
 
-    private void EmployerAutoSuggest_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
-        if (args.ChosenSuggestion is Employer chosenEmployer) {
-            var result = _employers.FirstOrDefault(e => e.Id == chosenEmployer.Id);
-            if (result != null) { UpdateSelectedEmployer(result); }
-        } else if (!string.IsNullOrWhiteSpace(args.QueryText)) {
-            // Optional: match typed text even if not chosen from suggestions
-            var result = _employers.FirstOrDefault(c => c.Name.Equals(args.QueryText, StringComparison.OrdinalIgnoreCase));
-            if (result != null) { UpdateSelectedEmployer(result); }
-        }
-    }
-
     // =========================
     // Utility Methods
     // =========================
+    private void SetDaysWorking() {
+        if (HireDatePicker.Date is not DateTimeOffset startDate
+            || EndDatePicker.Date is not DateTimeOffset endDate) {
+            ViewModel.DaysOnJob = null;
+            Debug.WriteLine("Set days to null");
+            return;
+        }
+        var daysOnJob = endDate - startDate;
+        if (daysOnJob.Days > 0) ViewModel.DaysOnJob = daysOnJob.Days;
+    }
+
     private void UpdateValue(string value, UpdateField field) {
         var text = value.NormalizeString();
         if (string.IsNullOrWhiteSpace(text)) return;
 
         switch (field) {
-            case UpdateField.Supervisor:
-                ViewModel.Supervisor = text;
+            case UpdateField.EmployerPhone:
+                ViewModel.EmployerPhone = text;
+                break;
+            case UpdateField.Address1:
+                ViewModel.Address1 = text;
+                break;
+            case UpdateField.Address2:
+                ViewModel.Address2 = text;
+                break;
+            case UpdateField.City:
+                ViewModel.City = text;
+                break;
+            case UpdateField.Zip:
+                ViewModel.Zip = text;
+                break;
+            case UpdateField.SupervisorName:
+                ViewModel.SupervisorName = text;
                 break;
             case UpdateField.SupervisorPhone:
                 ViewModel.SupervisorPhone = text;
@@ -165,35 +217,58 @@ public sealed partial class CreatePlacements : Page {
             case UpdateField.SupervisorEmail:
                 ViewModel.SupervisorEmail = text;
                 break;
-            case UpdateField.Position:
-                ViewModel.Position = text;
-                break;
-            case UpdateField.HoursWorked:
-                ViewModel.NumbersOfHoursWorking = text;
-                break;
-            case UpdateField.HourlyWage:
-                ViewModel.HourlyOrMonthlyWages = text;
-                break;
             case UpdateField.Website:
                 ViewModel.Website = text;
                 break;
+            case UpdateField.Position:
+                ViewModel.Position = text;
+                break;
+            case UpdateField.HoursWorking:
+                ViewModel.HoursWorking = text;
+                break;
+            case UpdateField.Wage:
+                ViewModel.Wages = text;
+                break;
+            case UpdateField.Benefits:
+                ViewModel.Benefits = text;
+                break;
             case UpdateField.JobDuties:
-                ViewModel.DescriptionOfDuties = text;
+                ViewModel.JobDuties = text;
                 break;
             case UpdateField.WorkSchedule:
-                ViewModel.DescriptionOfWorkSchedule = text;
+                ViewModel.WorkSchedule = text;
+                break;
+            case UpdateField.WorkEnvironment:
+                ViewModel.WorkEnvironment = text;
+                break;
+            case UpdateField.Accommodations:
+                ViewModel.Accommodations = text;
                 break;
         }
     }
 
     private void UpdateSelectedEmployer(Employer employer) {
         ViewModel.EmployerID = employer.Id;
-        ViewModel.Supervisor = employer.Supervisor;
+        ViewModel.EmployerName = employer.Name;
+        ViewModel.EmployerPhone = employer.Phone;
+        ViewModel.Address1 = employer.Address1;
+        ViewModel.Address2 = employer.Address2;
+        ViewModel.City = employer.City;
+        ViewModel.State = employer.State;
+        ViewModel.Zip = employer.Zip;
+        ViewModel.SupervisorName = employer.SupervisorName;
         ViewModel.SupervisorPhone = employer.SupervisorPhone;
         ViewModel.SupervisorEmail = employer.SupervisorEmail;
+        ViewModel.Website = employer.Website;
 
-        SupervisorTextBox.Text = employer.Supervisor;
+        EmployerPhoneTextBox.Text = employer.Phone;
+        AddressTextBox.Text = employer.Address1;
+        Address2TextBox.Text = employer.Address2;
+        CityTextBox.Text = employer.City;
+        ZipTextBox.Text = employer.Zip;
+        SupervisorTextBox.Text = employer.SupervisorName;
         SPhoneBox.Text = employer.SupervisorPhone;
         SEmailBox.Text = employer.SupervisorEmail;
+        WebsiteTextBox.Text = employer.Website;
     }
 }

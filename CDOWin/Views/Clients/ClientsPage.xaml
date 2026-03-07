@@ -3,12 +3,9 @@
     x:Class="CDOWin.Views.Clients.ClientsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:views="using:CDOWin.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    xmlns:viewmodels="using:CDOWin.ViewModels"
-    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
-    xmlns:dto="using:CDO.Core.DTOs"
+    xmlns:dto="using:CDO.Core.DTOs.Clients"
     mc:Ignorable="d">
 
     <Grid>
@@ -19,9 +16,9 @@
         
         <!-- Columns -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="212"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="344"/>
+            <ColumnDefinition Width="336"/>
         </Grid.ColumnDefinitions>
         
         <!-- Left Column -->
@@ -32,6 +29,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
             
             <!-- Columns -->
@@ -40,39 +38,25 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Title + Button Bar -->
-            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                
-                <!-- Title + Button -->
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+            <!-- Title -->
+            <TextBlock Grid.Row="0"  Grid.Column="0" Style="{StaticResource PageTitleStyle}"
+                       Text="Clients"/>
 
-                    <!-- Title -->
-                    <TextBlock Grid.Column="0" Style="{StaticResource PageTitleStyle}"
-                               Text="Clients"/>
-                    
-                    <!-- Add Button -->
-                    <Button Grid.Column="1" VerticalAlignment="Center" 
-                            Style="{StaticResource SingleIconButtonStyle}"
-                            Click="NewClient_Click"
-                            ToolTipService.ToolTip="New Client">
-                        <FontIcon Glyph="&#xE710;" Style="{StaticResource SingleIconFontStyle}"/>
-                    </Button>
-                </Grid>
+            <!-- CommandBar -->
+            <CommandBar Grid.Row="0" Grid.Column="1" DefaultLabelPosition="Collapsed" Background="Transparent">
+                <AppBarToggleButton Width="56" IsChecked="{x:Bind ViewModel.IsFiltered, Mode=TwoWay}" IsCompact="False" 
+                                    ToolTipService.ToolTip="Filter Inactive">
+                    <FontIcon Glyph="&#xE71C;" Foreground="{x:Bind ViewModel.IsFiltered, Mode=OneWay, Converter={StaticResource BoolSolidBrushConverter}}"/>
+                </AppBarToggleButton>
                 
-                <!-- Subtitle -->
-                <TextBlock Style="{StaticResource PageSubtitleStyle}">
-                    <Run Text="{x:Bind ViewModel.Filtered.Count, Mode=OneWay}"/>
-                    <Run Text="Clients"/>
-                </TextBlock>
-            </StackPanel>
-            
+                <AppBarButton Width="56" Click="NewClient_Click" IsCompact="False" ToolTipService.ToolTip="New Client">
+                    <FontIcon Glyph="&#xE710;" Style="{StaticResource SingleIconFontStyle}"/>
+                </AppBarButton>
+            </CommandBar>
+
             <!-- Search Bar -->
             <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                     Margin="8, 0, 8, 8" PlaceholderText="Filter clients"
+                     Margin="8, 0, 8, 8" PlaceholderText="Filter Clients"
                      Text="{x:Bind ViewModel.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <!-- Clients List -->
@@ -80,17 +64,15 @@
                       HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
                       SelectedItem="{x:Bind ViewModel.SelectedSummary, Mode=TwoWay}"
                       ItemsSource="{x:Bind ViewModel.Filtered, Mode=OneWay}"
-                      IsItemClickEnabled="True"
-                      ItemClick="ListView_ItemClick">
+                      IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="dto:ClientSummaryDTO">
-                        <Grid Margin="0,8,8,8">
+                    <DataTemplate x:DataType="dto:ClientSummary">
+                        <Grid Margin="0,8,8,8" Opacity="{x:Bind InActive, Converter={StaticResource BoolOpacityConverter}}">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" FontWeight="Bold"
-                                       Text="{x:Bind Name}"
+                            <TextBlock Grid.Row="0" FontWeight="Bold" Text="{x:Bind Name}"
                                        Foreground="{ThemeResource TextFillColorPrimaryBrush}"/>
                             <TextBlock Grid.Row="1" TextWrapping="WrapWholeWords"
                                        Text="{x:Bind FormattedAddress}"
@@ -99,6 +81,15 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <!-- Status Bar -->
+            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" 
+                  Background="{ThemeResource LayerOnMicaBaseAltFillColorDefaultBrush}">
+                <TextBlock Style="{StaticResource ListStatusBarStyle}">
+                    <Run Text="{x:Bind ViewModel.Filtered.Count, Mode=OneWay}"/>
+                    <Run Text="Clients"/>
+                </TextBlock>
+            </Grid>
         </Grid>
 
 

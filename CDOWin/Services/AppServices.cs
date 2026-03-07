@@ -1,8 +1,9 @@
-﻿using CDO.Core.Interfaces;
-using CDO.Core.Models;
+﻿using CDO.Core.DTOs.Clients;
+using CDO.Core.Interfaces;
 using CDO.Core.Services;
 using CDOWin.Data;
 using CDOWin.Navigation;
+using CDOWin.Observers;
 using CDOWin.ViewModels;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,6 +14,10 @@ namespace CDOWin.Services;
 public static class AppServices {
     // Network
     public static INetworkService NetworkService { get; private set; } = null!;
+
+    // Lifecycle
+    private static AppSuspensionService _suspensionService = new();
+    private static readonly PowerStateObserver _powerObserver = new(_suspensionService);
 
     // Navigation
     public static INavigationService Navigation { get; } = new NavigationService();
@@ -30,6 +35,9 @@ public static class AppServices {
     public static DataCoordinator DataCoordinator { get; private set; } = null!;
     private static readonly DataInvalidationService _invalidationService = new();
     private static readonly ClientSelectionService _clientSelectionService = new();
+    private static readonly CounselorSelectionService _counselorSelecitonService = new();
+    private static readonly EmployerSelectionService _employerSelectionService = new();
+    private static readonly PlacementSelectionService _placementSelectionService = new();
 
     // ViewModels
     public static CalendarViewModel CalendarViewModel { get; private set; } = null!;
@@ -73,15 +81,47 @@ public static class AppServices {
         ClientsViewModel = new ClientsViewModel(
             ClientService,
             DataCoordinator,
-            _clientSelectionService
+            _clientSelectionService,
+            _placementSelectionService
         );
 
-        CounselorsViewModel = new CounselorsViewModel(DataCoordinator, CounselorService);
-        EmployersViewModel = new EmployersViewModel(DataCoordinator, EmployerService);
-        SAsViewModel = new ServiceAuthorizationsViewModel(DataCoordinator, SAService, _clientSelectionService);
-        RemindersViewModel = new RemindersViewModel(DataCoordinator, ReminderService, _clientSelectionService);
+        CounselorsViewModel = new CounselorsViewModel(
+            DataCoordinator, CounselorService,
+            _counselorSelecitonService,
+            _clientSelectionService
+            );
+
+        EmployersViewModel = new EmployersViewModel(
+            DataCoordinator,
+            EmployerService,
+            _employerSelectionService
+            );
+
+        SAsViewModel = new ServiceAuthorizationsViewModel(
+            DataCoordinator,
+            SAService,
+            _clientSelectionService,
+            _counselorSelecitonService
+            );
+
+        RemindersViewModel = new RemindersViewModel(
+            DataCoordinator,
+            ReminderService,
+            _clientSelectionService,
+            _suspensionService
+            );
+
         StatesViewModel = new StatesViewModel(DataCoordinator, StateService);
-        PlacementsViewModel = new PlacementsViewModel(DataCoordinator, PlacementService);
+
+        PlacementsViewModel = new PlacementsViewModel(
+            DataCoordinator,
+            PlacementService,
+            _clientSelectionService,
+            _counselorSelecitonService,
+            _employerSelectionService,
+            _placementSelectionService
+            );
+
         CalendarViewModel = new CalendarViewModel(RemindersViewModel);
 
     }
@@ -92,7 +132,7 @@ public static class AppServices {
         var tasks = new List<Task> {
             DataCoordinator.GetClientsAsync(),
             DataCoordinator.GetCounselorsAsync(),
-            DataCoordinator.GetEmployersAsync(),
+            DataCoordinator.GetEmployerSummariesAsync(),
             DataCoordinator.GetRemindersAsync(),
         };
 
@@ -106,7 +146,7 @@ public static class AppServices {
 
     public static async Task LoadSecondaryDataAsync() {
         _ = DataCoordinator.GetSAsAsync();
-        _ = DataCoordinator.GetPlacementsAsync();
+        _ = DataCoordinator.GetPlacementSummariesAsync();
         _ = StatesViewModel.LoadStatesAsync();
     }
 
@@ -122,7 +162,7 @@ public static class AppServices {
         return new CreateEmployerViewModel(EmployerService);
     }
 
-    public static CreatePlacementViewModel CreatePlacementViewMdoel(Client client) {
+    public static CreatePlacementViewModel CreatePlacementViewMdoel(ClientDetail client) {
         return new CreatePlacementViewModel(PlacementService, _invalidationService, client);
     }
 
@@ -130,7 +170,7 @@ public static class AppServices {
         return new CreateReminderViewModel(ReminderService, clientId);
     }
 
-    public static CreateServiceAuthorizationsViewModel CreateServiceAuthorizationsViewModel(Client client) {
+    public static CreateServiceAuthorizationsViewModel CreateServiceAuthorizationsViewModel(ClientDetail client) {
         return new CreateServiceAuthorizationsViewModel(SAService, _invalidationService, client);
     }
 }

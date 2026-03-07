@@ -1,5 +1,4 @@
-using CDO.Core.DTOs;
-using CDO.Core.Models;
+using CDO.Core.DTOs.Clients;
 using CDOWin.Composers;
 using CDOWin.ErrorHandling;
 using CDOWin.Services;
@@ -7,6 +6,7 @@ using CDOWin.ViewModels;
 using CDOWin.Views.Clients.Dialogs;
 using CDOWin.Views.Placements.Dialogs;
 using CDOWin.Views.ServiceAuthorizations.Dialogs;
+using CDOWin.Views.Shared.Dialogs;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -93,29 +93,8 @@ public sealed partial class ClientViewPage : Page {
             return;
         }
 
+        ViewModel.NotifyNewReminderCreated();
         _ = ViewModel.ReloadClientAsync();
-        ViewModel.NotifyNewClientCreated();
-    }
-
-    private async void ReminderFlyoutItem_Click(object sender, RoutedEventArgs e) {
-        if (sender is MenuFlyoutItem item
-            && item.Tag is ReminderMenuItem reminderItem
-            && ViewModel.Selected != null) {
-            var newReminderVM = AppServices.CreateReminderViewModel(ViewModel.Selected.Id);
-            newReminderVM.Description = reminderItem.Description;
-
-            var dateOffset = DateTimeOffset.Now.AddDays(reminderItem.Days);
-            newReminderVM.Date = dateOffset.Date.ToUniversalTime();
-
-            var reminderResult = await newReminderVM.CreateReminderAsync();
-            if (!reminderResult.IsSuccess) {
-                ErrorHandler.Handle(reminderResult, this.XamlRoot);
-                return;
-            }
-
-            _ = ViewModel.ReloadClientAsync();
-            ViewModel.NotifyNewClientCreated();
-        }
     }
 
     // SAs
@@ -150,11 +129,11 @@ public sealed partial class ClientViewPage : Page {
     }
 
     private async void SA_Click(object sender, RoutedEventArgs e) {
-        if (sender is not Button button || button.Tag is not string id) { return; }
-        var sa = ViewModel.Selected?.Pos?.FirstOrDefault(c => c.Id == id);
+        if (sender is not Button button || button.Tag is not int id) { return; }
+        var invoice = ViewModel.Selected?.Invoices?.FirstOrDefault(i => i.Id == id);
 
-        if (sa == null) { return; }
-        var updateSAVM = new ServiceAuthorizationUpdateViewModel(sa);
+        if (invoice == null) { return; }
+        var updateSAVM = new ServiceAuthorizationUpdateViewModel(invoice);
         var dialog = DialogFactory.UpdateDialog(this.XamlRoot, "Edit Service Authorization");
         dialog.SecondaryButtonText = "Export";
         dialog.Content = new UpdateSA(updateSAVM);
@@ -169,8 +148,7 @@ public sealed partial class ClientViewPage : Page {
             }
             _ = ViewModel.ReloadClientAsync();
         } else if (result == ContentDialogResult.Secondary) {
-            var export = Invoice.InjectClient(sa, ViewModel.Selected!);
-            var composer = new ServiceAuthorizationComposer(export);
+            var composer = new ServiceAuthorizationComposer(invoice);
             var composerResult = await composer.Compose();
 
             if (composerResult.IsSuccess) return;
@@ -181,6 +159,7 @@ public sealed partial class ClientViewPage : Page {
     // Placements
     private async void CreatePlacement_Click(object sender, RoutedEventArgs e) {
         if (ViewModel.Selected == null) return;
+        Debug.WriteLine("CreatePlacement Clicked");
 
         var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"New Placement for {ViewModel.Selected.NameAndID}");
         var createPlacementVM = AppServices.CreatePlacementViewMdoel(ViewModel.Selected);
@@ -206,17 +185,18 @@ public sealed partial class ClientViewPage : Page {
             return;
         }
 
+        _ = AppServices.DataCoordinator.GetPlacementSummariesAsync(force: true);
+        _ = AppServices.DataCoordinator.GetEmployerSummariesAsync(force: true);
         _ = ViewModel.ReloadClientAsync();
     }
 
-    private async void Placement_Click(object sender, RoutedEventArgs e) {
-        if (sender is not Button button || button.Tag is not string id) { return; }
+    private async void Placement_Click(SplitButton sender, SplitButtonClickEventArgs args) {
+        if (sender.Tag is not int id) { return; }
         var placement = ViewModel.Selected?.Placements?.FirstOrDefault(c => c.Id == id);
 
         if (placement == null) { return; }
         var updatePlacementVM = new PlacementUpdateViewModel(placement);
         var dialog = DialogFactory.UpdateDialog(this.XamlRoot, "Edit Placement");
-        // dialog.SecondaryButtonText = "Export";
         dialog.Content = new UpdatePlacement(updatePlacementVM);
 
         var result = await dialog.ShowAsync();
@@ -231,22 +211,42 @@ public sealed partial class ClientViewPage : Page {
         }
     }
 
-
+    private void GoToPlacement_Click(object sender, RoutedEventArgs e) {
+        if (sender is not MenuFlyoutItem menuItem || menuItem.Tag is not int id) return;
+        ViewModel.RequestPlacement(id);
+    }
 
     private void Checkbox_Clicked(object sender, RoutedEventArgs e) {
-        if (sender is CheckBox checkBox && checkBox.Tag is CheckboxTag tag) {
-            var isChecked = checkBox.IsChecked;
-            _ = UpdateCheckboxAsync(tag, isChecked ?? false);
+        if (sender is not CheckBox checkBox || checkBox.Tag is not CheckboxTag tag) return;
+        var isChecked = checkBox.IsChecked;
+        _ = UpdateCheckboxAsync(tag, isChecked ?? false);
+    }
+
+    private async void ToggleActive_Clicked(object sender, RoutedEventArgs e) {
+        if (sender is not MenuFlyoutItem || ViewModel.Selected == null) return;
+
+        if (ViewModel.Selected.Active) {
+            var dialog = DialogFactory.MarkInactiveDialog(this.XamlRoot, "Mark Client Inactive?");
+            dialog.Content = "Marking this client inactive will remove all existing reminders. This action cannot be undone.";
+
+            var result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+                _ = UpdateActiveAsync(false);
+        } else {
+            _ = UpdateActiveAsync(true);
         }
     }
 
     private async void EditButton_Clicked(object sender, RoutedEventArgs e) {
-        if (sender is Button button && button.Tag is ClientEditType tag && ViewModel.Selected != null) {
-
+        if (sender is Control button && button.Tag is ClientEditType tag && ViewModel.Selected != null) {
             var dialog = DialogFactory.UpdateDialog(this.XamlRoot, "");
             var updateVM = new ClientUpdateViewModel(ViewModel.Selected);
 
             switch (tag) {
+                case ClientEditType.Administrative:
+                    dialog.Title = "Edit ClientDetail";
+                    dialog.Content = new UpdateAdminsitrative(updateVM);
+                    break;
                 case ClientEditType.Personal:
                     dialog.Title = "Edit Personal Information";
                     dialog.Content = new UpdatePersonalInformation(updateVM);
@@ -279,6 +279,14 @@ public sealed partial class ClientViewPage : Page {
     // =========================
     // Utility Methods
     // =========================
+    private async Task UpdateActiveAsync(bool isActive) {
+        if (ViewModel.Selected == null) return;
+
+        var updateVM = new ClientUpdateViewModel(ViewModel.Selected);
+        updateVM.UpdatedClient.Active = isActive;
+
+        _ = UpdateClient(updateVM.UpdatedClient);
+    }
     private async Task UpdateCheckboxAsync(CheckboxTag tag, bool isChecked) {
         if (ViewModel.Selected == null) return;
 
@@ -288,7 +296,7 @@ public sealed partial class ClientViewPage : Page {
         _ = UpdateClient(updateVM.UpdatedClient);
     }
 
-    private async Task UpdateClient(UpdateClientDTO update) {
+    private async Task UpdateClient(ClientUpdate update) {
         var result = await ViewModel.UpdateClientAsync(update);
         if (!result.IsSuccess) {
             ErrorHandler.Handle(result, this.XamlRoot);

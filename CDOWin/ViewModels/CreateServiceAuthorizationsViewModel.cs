@@ -1,7 +1,7 @@
-﻿using CDO.Core.DTOs;
+﻿using CDO.Core.DTOs.Clients;
+using CDO.Core.DTOs.SAs;
 using CDO.Core.ErrorHandling;
 using CDO.Core.Interfaces;
-using CDO.Core.Models;
 using CDOWin.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CDOWin.ViewModels;
 
-public partial class CreateServiceAuthorizationsViewModel(IServiceAuthorizationService service, DataInvalidationService dataInvalidationService, Client client) : ObservableObject {
+public partial class CreateServiceAuthorizationsViewModel(IServiceAuthorizationService service, DataInvalidationService dataInvalidationService, ClientDetail client) : ObservableObject {
 
     // =========================
     // Dependencies
@@ -20,12 +20,11 @@ public partial class CreateServiceAuthorizationsViewModel(IServiceAuthorizationS
     // =========================
     // Fields
     // =========================
-    [ObservableProperty]
-    public partial Client Client { get; set; } = client;
+    public ClientDetail Client { get; set; } = client;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
-    public partial string Id { get; set; } = string.Empty;
+    public partial string SANumber { get; set; } = string.Empty;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
@@ -38,9 +37,7 @@ public partial class CreateServiceAuthorizationsViewModel(IServiceAuthorizationS
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
     public partial DateTime EndDate { get; set; } = DateTime.Now.Date;
-
-    [ObservableProperty]
-    public partial string? Office { get; set; }
+    public string? Office { get; set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
@@ -57,7 +54,9 @@ public partial class CreateServiceAuthorizationsViewModel(IServiceAuthorizationS
 
     private bool CanSaveMethod() {
         if (Client.CounselorID == null
-            || string.IsNullOrWhiteSpace(Id)
+            || Client.CounselorReference == null
+            || string.IsNullOrWhiteSpace(Client.CaseID)
+            || string.IsNullOrWhiteSpace(SANumber)
             || string.IsNullOrWhiteSpace(Description)
             || string.IsNullOrWhiteSpace(UnitOfMeasurement)
             || UnitCost == null)
@@ -69,20 +68,26 @@ public partial class CreateServiceAuthorizationsViewModel(IServiceAuthorizationS
     // =========================
     // CRUD Methods
     // =========================
-    public async Task<Result<Invoice>> CreateSAAsync() {
-        var sa = new CreateInvoiceDTO {
-            ServiceAuthorizationNumber = Id,
-            ClientID = Client.Id,
-            CounselorrID = Client.CounselorID,
+    public async Task<Result<InvoiceDetail>> CreateSAAsync() {
+        var invoice = new NewSA {
+            ServiceAuthorizationNumber = SANumber,
+            Office = Office,
             Description = Description,
             StartDate = StartDate,
             EndDate = EndDate,
-            Office = Office,
             UnitCost = UnitCost,
-            UnitOfMeasurement = UnitOfMeasurement
+            UnitOfMeasurement = UnitOfMeasurement,
+
+            ClientID = Client.Id,
+            ClientName = Client.FormattedName,
+            CaseID = Client.CaseID!,
+
+            CounselorID = Client.CounselorID,
+            CounselorName = Client.CounselorReference!.Name!,
+            SecretaryName = Client.CounselorReference.SecretaryName,
         };
 
         _invalidation.InvalidateSAs();
-        return await _service.CreateServiceAuthorizationAsync(sa);
+        return await _service.CreateServiceAuthorizationAsync(invoice);
     }
 }

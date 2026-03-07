@@ -1,16 +1,15 @@
-﻿using CDO.Core.DTOs;
+﻿using CDO.Core.DTOs.Clients;
+using CDO.Core.DTOs.Placements;
 using CDO.Core.ErrorHandling;
 using CDO.Core.Interfaces;
-using CDO.Core.Models;
 using CDOWin.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace CDOWin.ViewModels;
 
-public partial class CreatePlacementViewModel(IPlacementService service, DataInvalidationService dataInvalidationService, Client client) : ObservableObject {
+public partial class CreatePlacementViewModel(IPlacementService service, DataInvalidationService dataInvalidationService, ClientDetail client) : ObservableObject {
 
     // =========================
     // Dependencies
@@ -21,75 +20,53 @@ public partial class CreatePlacementViewModel(IPlacementService service, DataInv
     // =========================
     // Fields
     // =========================
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(CanSave))]
-    public partial Client Client { get; set; } = client;
+
+    // Placement Specific
+    public string? Position { get; set; }
+    public DateTime? HireDate { get; set; }
+    public DateTime? EndDate { get; set; }
+    public float? DaysOnJob { get; set; }
+    public string? Day1 { get; set; }
+    public string? Day2 { get; set; }
+    public string? Day3 { get; set; }
+    public string? Day4 { get; set; }
+    public string? Day5 { get; set; }
+    public string? JobDuties { get; set; }
+    public string? WorkEnvironment { get; set; }
+    public string? Accommodations { get; set; }
+    public string? HoursWorking { get; set; }
+    public string? WorkSchedule { get; set; }
+    public string? Wages { get; set; }
+    public string? Benefits { get; set; }
+
+    // SA/InvoiceDetail Specific
+    public int? InvoiceID { get; set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
-    public partial int? EmployerID { get; set; }
+    public partial string? SaNumber { get; set; }
+
+    // ClientDetail Secific
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanSave))]
+    public partial ClientDetail Client { get; set; } = client;
+
+    // EmployerName Specific
+    public int? EmployerID { get; set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
-    public partial int? PlacementNumber { get; set; }
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(CanSave))]
-    public partial string? PoNumber { get; set; }
-
-    [ObservableProperty]
-    public partial string? Supervisor { get; set; }
-
-    [ObservableProperty]
-    public partial string? SupervisorEmail { get; set; }
-
-    [ObservableProperty]
-    public partial string? SupervisorPhone { get; set; }
-
-    [ObservableProperty]
-    public partial string? Position { get; set; }
-
-    [ObservableProperty]
-    public partial string? Salary { get; set; }
-
-    [ObservableProperty]
-    public partial float? DaysOnJob { get; set; }
-
-    [ObservableProperty]
-    public partial string? Website { get; set; }
-
-    [ObservableProperty]
-    public partial string? DescriptionOfDuties { get; set; }
-
-    [ObservableProperty]
-    public partial string? NumbersOfHoursWorking { get; set; }
-
-    [ObservableProperty]
-    public partial string? FirstFiveDays1 { get; set; }
-
-    [ObservableProperty]
-    public partial string? FirstFiveDays2 { get; set; }
-
-    [ObservableProperty]
-    public partial string? FirstFiveDays3 { get; set; }
-
-    [ObservableProperty]
-    public partial string? FirstFiveDays4 { get; set; }
-
-    [ObservableProperty]
-    public partial string? FirstFiveDays5 { get; set; }
-
-    [ObservableProperty]
-    public partial string? DescriptionOfWorkSchedule { get; set; }
-
-    [ObservableProperty]
-    public partial string? HourlyOrMonthlyWages { get; set; }
-
-    [ObservableProperty]
-    public partial DateTime? HireDate { get; set; }
-
-    [ObservableProperty]
-    public partial DateTime? EndDate { get; set; }
+    public partial string? EmployerName { get; set; }
+    public string? EmployerPhone { get; set; }
+    public string? Address1 { get; set; }
+    public string? Address2 { get; set; }
+    public string? City { get; set; }
+    public string? State { get; set; } = "TX";
+    public string? Zip { get; set; }
+    public string? SupervisorName { get; set; }
+    public string? SupervisorEmail { get; set; }
+    public string? SupervisorPhone { get; set; }
+    public string? Website { get; set; }
 
     // =========================
     // Input Validation
@@ -97,11 +74,9 @@ public partial class CreatePlacementViewModel(IPlacementService service, DataInv
     public bool CanSave => CanSaveMethod();
 
     public bool CanSaveMethod() {
-        Debug.WriteLine($"{EmployerID == null} {Client == null} {PlacementNumber == null} {PoNumber == null}");
-        if (EmployerID == null
+        if (EmployerName == null
             || Client == null
-            || PlacementNumber == null
-            || PoNumber == null)
+            || SaNumber == null)
             return false;
 
         return true;
@@ -110,37 +85,64 @@ public partial class CreatePlacementViewModel(IPlacementService service, DataInv
     // =========================
     // CRUD Methods
     // =========================
-    public async Task<Result<Placement>> CreatePlacementAsync() {
+    public async Task<Result<PlacementDetail>> CreatePlacementAsync() {
         if (Client.CounselorID == null)
-            return Result<Placement>.Fail(new AppError(ErrorKind.Validation, "Client is missing a Counselor, assign on and try again."));
+            return Result<PlacementDetail>.Fail(new AppError(ErrorKind.Validation, "ClientDetail is missing a Counselor, assign on and try again."));
 
-        var placement = new PlacementDTO {
-            PlacementNumber = PlacementNumber,
-            EmployerID = EmployerID.ToString(),
-            ClientID = Client.Id,
-            CounselorID = Client.CounselorID,
-            PoNumber = PoNumber,
-            Supervisor = Supervisor,
+        int placementsNumber = 1;
+        if (Client.Placements?.Length is int length && length > 0)
+            placementsNumber = length + 1;
+
+        var placementEmployer = new PlacementEmployer {
+            EmployerID = EmployerID,
+            Name = EmployerName,
+            Phone = EmployerPhone,
+            Address1 = Address1,
+            Address2 = Address2,
+            City = City,
+            State = State,
+            Zip = Zip,
+            SupervisorName = SupervisorName,
             SupervisorEmail = SupervisorEmail,
             SupervisorPhone = SupervisorPhone,
+            Website = Website
+        };
+
+        var placement = new NewPlacement {
+            // Placement Specific
+            Active = Client.Active,
+            PlacementNumber = placementsNumber,
             Position = Position,
-            Salary = Salary,
-            DaysOnJob = DaysOnJob,
-            ClientName = Client.FormattedName,
-            CounselorName = Client.CounselorReference?.Name,
-            Active = true,
-            Website = Website,
-            DescriptionOfDuties = DescriptionOfDuties,
-            NumbersOfHoursWorking = NumbersOfHoursWorking,
-            FirstFiveDays1 = FirstFiveDays1,
-            FirstFiveDays2 = FirstFiveDays2,
-            FirstFiveDays3 = FirstFiveDays3,
-            FirstFiveDays4 = FirstFiveDays4,
-            FirstFiveDays5 = FirstFiveDays5,
-            DescriptionOfWorkSchedule = DescriptionOfWorkSchedule,
-            HourlyOrMonthlyWages = HourlyOrMonthlyWages,
             HireDate = HireDate,
-            EndDate = EndDate
+            EndDate = EndDate,
+            DaysOnJob = DaysOnJob,
+            Day1 = Day1,
+            Day2 = Day2,
+            Day3 = Day3,
+            Day4 = Day4,
+            Day5 = Day5,
+            JobDuties = JobDuties,
+            WorkEnvironment = WorkEnvironment,
+            Accommodations = Accommodations,
+            HoursWorking = HoursWorking,
+            WorkSchedule = WorkSchedule,
+            Wages = Wages,
+            Benefits = Benefits,
+
+            // SA/InvoiceDetail Specific
+            InvoiceID = InvoiceID,
+            SaNumber = SaNumber,
+
+            // ClientDetail Specific
+            ClientID = Client.Id,
+            ClientName = $"{Client.FirstName} {Client.LastName}",
+
+            // Counselor Specific
+            CounselorID = Client.CounselorID,
+            CounselorName = Client.CounselorReference?.Name,
+
+            // Employer Specific
+            Employer = placementEmployer
         };
 
         _invalidation.InvalidatePlacements();

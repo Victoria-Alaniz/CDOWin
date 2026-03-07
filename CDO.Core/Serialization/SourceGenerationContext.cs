@@ -1,39 +1,58 @@
 ﻿using CDO.Core.DTOs;
+using CDO.Core.DTOs.Clients;
+using CDO.Core.DTOs.Counselors;
+using CDO.Core.DTOs.Employers;
+using CDO.Core.DTOs.Placements;
+using CDO.Core.DTOs.Reminders;
+using CDO.Core.DTOs.SAs;
 using CDO.Core.Models;
 using System.Text.Json.Serialization;
 
 namespace CDO.Core.Serialization;
 
-[JsonSerializable(typeof(Client))]
-[JsonSerializable(typeof(List<Client>))]
-[JsonSerializable(typeof(CreateClientDTO))]
-[JsonSerializable(typeof(UpdateClientDTO))]
+[JsonSerializable(typeof(ClientDetail))]
+[JsonSerializable(typeof(List<ClientDetail>))]
+[JsonSerializable(typeof(NewClient))]
+[JsonSerializable(typeof(ClientUpdate))]
 
-[JsonSerializable(typeof(ClientSummaryDTO))]
-[JsonSerializable(typeof(List<ClientSummaryDTO>))]
+[JsonSerializable(typeof(ClientSummary))]
+[JsonSerializable(typeof(List<ClientSummary>))]
 
 [JsonSerializable(typeof(Counselor))]
+[JsonSerializable(typeof(CounselorDetail))]
 [JsonSerializable(typeof(List<Counselor>))]
-[JsonSerializable(typeof(CreateCounselorDTO))]
-[JsonSerializable(typeof(UpdateCounselorDTO))]
+[JsonSerializable(typeof(NewCounselor))]
+[JsonSerializable(typeof(CounselorUpdate))]
+
+[JsonSerializable(typeof(CounselorSummary))]
+[JsonSerializable(typeof(List<CounselorSummary>))]
 
 [JsonSerializable(typeof(Employer))]
 [JsonSerializable(typeof(List<Employer>))]
 [JsonSerializable(typeof(EmployerDTO))]
+[JsonSerializable(typeof(PlacementEmployer))]
 
-[JsonSerializable(typeof(Placement))]
-[JsonSerializable(typeof(List<Placement>))]
-[JsonSerializable(typeof(PlacementDTO))]
+[JsonSerializable(typeof(EmployerSummary))]
+[JsonSerializable(typeof(List<EmployerSummary>))]
+
+[JsonSerializable(typeof(PlacementDetail))]
+[JsonSerializable(typeof(List<PlacementDetail>))]
+[JsonSerializable(typeof(NewPlacement))]
+[JsonSerializable(typeof(PlacementUpdate))]
+
+[JsonSerializable(typeof(PlacementSummary))]
+[JsonSerializable(typeof(List<PlacementSummary>))]
 
 [JsonSerializable(typeof(Reminder))]
 [JsonSerializable(typeof(List<Reminder>))]
-[JsonSerializable(typeof(CreateReminderDTO))]
-[JsonSerializable(typeof(UpdateReminderDTO))]
+[JsonSerializable(typeof(NewReminder))]
+[JsonSerializable(typeof(ReminderUpdate))]
 
-[JsonSerializable(typeof(Invoice))]
-[JsonSerializable(typeof(List<Invoice>))]
-[JsonSerializable(typeof(CreateInvoiceDTO))]
-[JsonSerializable(typeof(UpdateInvoiceDTO))]
+[JsonSerializable(typeof(InvoiceDetail))]
+[JsonSerializable(typeof(InvoiceSummary))]
+[JsonSerializable(typeof(List<InvoiceSummary>))]
+[JsonSerializable(typeof(NewSA))]
+[JsonSerializable(typeof(SAUpdate))]
 
 [JsonSerializable(typeof(State))]
 [JsonSerializable(typeof(List<State>))]

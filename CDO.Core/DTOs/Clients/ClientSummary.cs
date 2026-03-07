@@ -1,12 +1,15 @@
-﻿namespace CDO.Core.DTOs;
+﻿namespace CDO.Core.DTOs.Clients;
 
-public class ClientSummaryDTO {
+public class ClientSummary() {
+
     // Non-optional fields
     public int Id { get; init; }
     public required string FirstName { get; init; }
     public required string LastName { get; init; }
     public required string City { get; init; }
     public required string State { get; init; }
+    public required bool Active { get; init; }
+    public required bool TTW { get; init; }
 
     // Nullable fields
     public string? Address1 { get; init; }
@@ -22,6 +25,8 @@ public class ClientSummaryDTO {
 
     // Computed Properties
     public string Name => $"{LastName}, {FirstName}";
+    public bool InActive => !Active;
+    public string FormattedName => $"{FirstName} {LastName}";
     public string FormattedAddress {
         get {
             if (Address1 == null && Address2 == null)
@@ -36,10 +41,8 @@ public class ClientSummaryDTO {
 
     public string FormattedCityStateZip {
         get {
-            if (Zip != null)
-                return $"{City}, {State} {Zip}";
-            else
-                return $"{City}, {State}";
+            if (Zip != null) return $"{City}, {State} {Zip}";
+            else return $"{City}, {State}";
         }
     }
 }

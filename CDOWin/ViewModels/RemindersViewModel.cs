@@ -1,4 +1,5 @@
-﻿using CDO.Core.DTOs;
+﻿using CDO.Core.DTOs.Clients;
+using CDO.Core.DTOs.Reminders;
 using CDO.Core.ErrorHandling;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
@@ -20,23 +21,26 @@ namespace CDOWin.ViewModels;
 public partial class RemindersViewModel : ObservableObject {
 
     // =========================
-    // Services / Dependencies
+    // Dependencies
     // =========================
     private readonly IReminderService _service;
     private readonly DataCoordinator _dataCoordinator;
     private readonly ClientSelectionService _selectionService;
     private readonly DispatcherQueue _dispatcher;
+    private readonly AppSuspensionService _suspensionService;
 
     // =========================
     // Private Backing Fields
     // =========================
-    private IReadOnlyList<Reminder> _allReminders = [];
+    private IReadOnlyList<Reminder> _cache = [];
     private RemindersFilter _filter = RemindersFilter.All;
-    private readonly DispatcherTimer _refreshTimer;
+    private DispatcherTimer _refreshTimer;
     private DateTime _selectedDate = DateTime.Now;
 
+    private bool delaying = false;
+
     // =========================
-    // Public Properties / State
+    // UI State
     // =========================
     [ObservableProperty]
     public partial ObservableCollection<Reminder> Filtered { get; private set; } = [];
@@ -59,7 +63,7 @@ public partial class RemindersViewModel : ObservableObject {
     // =========================
     // Constructor
     // =========================
-    public RemindersViewModel(DataCoordinator dataCoordinator, IReminderService service, ClientSelectionService clientSelectionService) {
+    public RemindersViewModel(DataCoordinator dataCoordinator, IReminderService service, ClientSelectionService clientSelectionService, AppSuspensionService suspensionService) {
         _service = service;
         _dataCoordinator = dataCoordinator;
 
@@ -68,6 +72,10 @@ public partial class RemindersViewModel : ObservableObject {
 
         _selectionService.SelectedClientChanged += OnClientChanged;
         _selectionService.NewReminderCreated += OnReminderCreated;
+
+        _suspensionService = suspensionService;
+        _suspensionService.SuspensionRequested += OnSuspension;
+        _suspensionService.ResumeRequested += OnResumeAsync;
 
         _refreshTimer = new DispatcherTimer {
             Interval = TimeSpan.FromSeconds(30)
@@ -83,7 +91,7 @@ public partial class RemindersViewModel : ObservableObject {
 
     public IReadOnlyDictionary<DateTime, IReadOnlyList<Reminder>> GetRemindersByMonth(DateTime month) {
         var dict = new Dictionary<DateTime, IReadOnlyList<Reminder>>();
-        foreach (var group in _allReminders
+        foreach (var group in _cache
             .Where(r => r.Date.Month == month.Month)
             .GroupBy(r => r.Date.Date)
             .OrderBy(g => g.Key)) {
@@ -93,7 +101,7 @@ public partial class RemindersViewModel : ObservableObject {
     }
 
     public List<Reminder> GetRemindsListForMonth(DateTime month) {
-        return _allReminders
+        return _cache
             .Where(r => r.Date.Date.Month == month.Month)
             .ToList();
     }
@@ -103,7 +111,7 @@ public partial class RemindersViewModel : ObservableObject {
     public void DeferDate(int id, int days) {
         var reminder = Filtered.FirstOrDefault(r => r.Id == id);
         if (reminder != null) {
-            var update = new UpdateReminderDTO { Date = reminder.Date.AddDays(days) };
+            var update = new ReminderUpdate { Date = reminder.Date.AddDays(days) };
             _ = UpdateReminderAsync(id, update);
         }
     }
@@ -111,14 +119,14 @@ public partial class RemindersViewModel : ObservableObject {
     public void ToggleCompleted(int id) {
         var reminder = Filtered.FirstOrDefault(r => r.Id == id);
         if (reminder != null) {
-            var update = new UpdateReminderDTO { Complete = !reminder.Complete };
+            var update = new ReminderUpdate { Complete = !reminder.Complete };
             _ = UpdateReminderAsync(id, update);
         }
     }
 
-    public Reminder? GetReminderByID(int id) => _allReminders.FirstOrDefault(r => r.Id == id);
+    public Reminder? GetReminderByID(int id) => _cache.FirstOrDefault(r => r.Id == id);
 
-    public bool DateHasReminders(DateTime date) => _allReminders.Any(r => r.Date.Date == date.Date);
+    public bool DateHasReminders(DateTime date) => _cache.Any(r => r.Date.Date == date.Date);
 
     public void ApplyDateFilter(DateTime date) {
         Filter = RemindersFilter.Date;
@@ -127,14 +135,35 @@ public partial class RemindersViewModel : ObservableObject {
     }
 
     // =========================
+    // App Lifecycle
+    // =========================
+    private void OnSuspension() => OnUI(StopTimer);
+
+    private void OnResumeAsync() => _ = StartTimerAsync();
+
+    private void StopTimer() => _refreshTimer.Stop();
+
+    private async Task StartTimerAsync() {
+        try {
+            if (delaying) return;
+            delaying = true;
+            await Task.Delay(5000);
+            delaying = false;
+            OnUI(() => _refreshTimer.Start());
+        } catch (Exception ex) {
+            Debug.WriteLine(ex);
+        }
+    }
+
+    // =========================
     // CRUD Methods
     // =========================
-    public async Task LoadRemindersAsync() {
-        var reminders = await _dataCoordinator.GetRemindersAsync();
+    public async Task LoadRemindersAsync(bool force = false) {
+        var reminders = await _dataCoordinator.GetRemindersAsync(force);
         if (reminders == null) return;
 
         var snapshot = reminders.OrderBy(r => r.Date).ToList().AsReadOnly();
-        _allReminders = snapshot;
+        _cache = snapshot;
 
         _dispatcher.TryEnqueue(ApplyFilter);
     }
@@ -143,12 +172,12 @@ public partial class RemindersViewModel : ObservableObject {
         var reminder = await _service.GetReminderAsync(id);
         if (reminder == null) return;
 
-        var updated = _allReminders
+        var updated = _cache
             .Select(r => r.Id == id ? reminder : r)
             .ToList()
             .AsReadOnly();
 
-        _allReminders = updated;
+        _cache = updated;
 
         if (Filter == RemindersFilter.Client) {
             _dispatcher.TryEnqueue(() => ClientSpecific = UpdateReminder(id, reminder, ClientSpecific));
@@ -157,28 +186,26 @@ public partial class RemindersViewModel : ObservableObject {
         _dispatcher.TryEnqueue(ApplyFilter);
     }
 
-    public async Task<Result<Reminder>> UpdateReminderAsync(int id, UpdateReminderDTO update) {
+    public async Task<Result> UpdateReminderAsync(int id, ReminderUpdate update) {
         var result = await _service.UpdateReminderAsync(id, update);
 
-        if (!result.IsSuccess) return result;
-
-        await ReloadReminderAsync(id);
+        if (result.IsSuccess) await ReloadReminderAsync(id);
         return result;
     }
 
     public async Task DeleteReminderAsync(int id) {
         await _service.DeleteReminderAsync(id);
 
-        _allReminders = _allReminders
+        _cache = _cache
             .Where(r => r.Id != id)
             .ToList()
             .AsReadOnly();
 
         if (Filter == RemindersFilter.Client) {
-            _dispatcher.TryEnqueue(() => ClientSpecific = RemoveReminder(id, ClientSpecific));
+            OnUI(() => ClientSpecific = RemoveReminder(id, ClientSpecific));
         }
 
-        _dispatcher.TryEnqueue(ApplyFilter);
+        OnUI(ApplyFilter);
     }
 
     private static ObservableCollection<Reminder> UpdateReminder(int id, Reminder reminder, ObservableCollection<Reminder> collection) {
@@ -192,7 +219,7 @@ public partial class RemindersViewModel : ObservableObject {
     // =========================
     // Event Handlers
     // =========================
-    private void OnClientChanged(Client? client) {
+    private void OnClientChanged(ClientDetail? client) {
         var source = client?.Reminders?
             .OrderBy(r => r.Date)
             .ToList()
@@ -200,7 +227,7 @@ public partial class RemindersViewModel : ObservableObject {
 
         if (source == null) return;
 
-        _dispatcher.TryEnqueue(() => {
+        OnUI(() => {
             ClientSpecific.Clear();
             foreach (var reminder in source)
                 ClientSpecific.Add(reminder);
@@ -211,17 +238,16 @@ public partial class RemindersViewModel : ObservableObject {
     }
 
     private void OnReminderCreated() {
-        _ = LoadRemindersAsync();
+        _ = LoadRemindersAsync(force: true);
     }
 
     // =========================
     // Utility / Filtering
     // =========================
     private void ApplyFilter() {
-        Debug.WriteLine(Filter.ToString());
         IEnumerable<Reminder> source = _filter switch {
-            RemindersFilter.All => _allReminders,
-            RemindersFilter.Upcoming => _allReminders.Where(r => r.Date > DateTime.Now.AddDays(-1)),
+            RemindersFilter.All => _cache,
+            RemindersFilter.Upcoming => _cache.Where(r => r.Date > DateTime.Now.AddDays(-1)),
             RemindersFilter.Client => ClientSpecific,
             RemindersFilter.Date => DateSpecifc(),
             _ => []
@@ -235,10 +261,15 @@ public partial class RemindersViewModel : ObservableObject {
     }
 
     private IReadOnlyList<Reminder> DateSpecifc() {
-        return _allReminders
+        return _cache
             .Where(r => r.Date.Date == _selectedDate.Date)
             .ToList()
             .AsReadOnly();
+    }
+
+    private void OnUI(Action action) {
+        if (_dispatcher.HasThreadAccess) action();
+        else _dispatcher.TryEnqueue(() => action());
     }
 
     private void UpdateEndText() {

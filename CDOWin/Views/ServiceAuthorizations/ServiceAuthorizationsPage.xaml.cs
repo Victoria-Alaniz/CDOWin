@@ -1,7 +1,8 @@
-using CDO.Core.Models;
+using CDO.Core.DTOs.SAs;
 using CDOWin.Services;
 using CDOWin.ViewModels;
 using CDOWin.Views.ServiceAuthorizations.Inspectors;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
@@ -34,13 +35,18 @@ public sealed partial class ServiceAuthorizationsPage : Page {
     // Click Handlers
     // =========================
     private void ListView_ItemClick(object sender, ItemClickEventArgs e) {
-        if (e.ClickedItem is Invoice sa) {
-            _ = ViewModel.ReloadServiceAuthorizationAsync(sa.ServiceAuthorizationNumber);
+        if (e.ClickedItem is InvoiceSummary sa) {
+            _ = ViewModel.LoadSelectedSAAsync(sa.Id);
         }
     }
 
-    private void GoToClient_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
+    private void GoToClient_Click(object sender, RoutedEventArgs e) {
         if (sender is not Button button || button.Tag is not int id) return;
         ViewModel.RequestClient(id);
+    }
+
+    private void GoToCounselor_Click(object sender, RoutedEventArgs e) {
+        if (sender is not Button button || button.Tag is not int id) return;
+        ViewModel.RequestCounselor(id);
     }
 }

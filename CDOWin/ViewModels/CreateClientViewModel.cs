@@ -1,7 +1,6 @@
-﻿using CDO.Core.DTOs;
+﻿using CDO.Core.DTOs.Clients;
 using CDO.Core.ErrorHandling;
 using CDO.Core.Interfaces;
-using CDO.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Diagnostics;
@@ -34,7 +33,11 @@ public partial class CreateClientViewModel(IClientService service) : ObservableO
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
-    public partial string? Counselor { get; set; }
+    public partial int? CounselorID { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanSave))]
+    public partial string? CounselorName { get; set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
@@ -47,137 +50,48 @@ public partial class CreateClientViewModel(IClientService service) : ObservableO
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(CanSave))]
     public partial string? Disability { get; set; }
+    public bool TTW { get; set; } = false;
 
     // Optional Fields
-
-    [ObservableProperty]
-    public partial int? Ssn { get; set; }
-
-    [ObservableProperty]
-    public partial string? CaseID { get; set; }
-
-    [ObservableProperty]
-    public partial string? Address1 { get; set; }
-
-    [ObservableProperty]
-    public partial string? Address2 { get; set; }
-
-    [ObservableProperty]
-    public partial string? Zip { get; set; }
-
-    [ObservableProperty]
-    public partial DateTime? Dob { get; set; }
-
-    [ObservableProperty]
-    public partial DateTime? StartDate { get; set; }
-
-    [ObservableProperty]
-    public partial string? DriversLicense { get; set; }
-
-    [ObservableProperty]
-    public partial string? Phone1 { get; set; }
-
-    [ObservableProperty]
-    public partial string? Phone1Identity { get; set; }
-
-    [ObservableProperty]
-    public partial string? Phone2 { get; set; }
-
-    [ObservableProperty]
-    public partial string? Phone2Identity { get; set; }
-
-    [ObservableProperty]
-    public partial string? Phone3 { get; set; }
-
-    [ObservableProperty]
-    public partial string? Phone3Identity { get; set; }
-
-    [ObservableProperty]
-    public partial string? Email { get; set; }
-
-    [ObservableProperty]
-    public partial string? EmailIdentity { get; set; }
-
-    [ObservableProperty]
-    public partial string? Email2 { get; set; }
-
-    [ObservableProperty]
-    public partial string? Email2Identity { get; set; }
-
-    [ObservableProperty]
-    public partial int? CounselorID { get; set; }
-
-    [ObservableProperty]
-    public partial string? CounselorEmail { get; set; }
-
-    [ObservableProperty]
-    public partial string? CounselorPhone { get; set; }
-
-    [ObservableProperty]
-    public partial string? CounselorFax { get; set; }
-
-    [ObservableProperty]
-    public partial string? ClientNotes { get; set; }
-
-    [ObservableProperty]
-    public partial string? Conditions { get; set; }
-
-    [ObservableProperty]
-    public partial bool? Active { get; set; }
-
-    [ObservableProperty]
-    public partial string? EmploymentGoal { get; set; }
-
-    [ObservableProperty]
-    public partial int? EmployerID { get; set; }
-
-    [ObservableProperty]
-    public partial string? Status { get; set; }
-
-    [ObservableProperty]
-    public partial string? Benefit { get; set; }
-
-    [ObservableProperty]
-    public partial string? CriminalCharge { get; set; }
-
-    [ObservableProperty]
-    public partial string? Education { get; set; }
-
-    [ObservableProperty]
-    public partial string? Transportation { get; set; }
-
-    [ObservableProperty]
-    public partial bool? ResumeRequired { get; set; }
-
-    [ObservableProperty]
-    public partial bool? ResumeCompleted { get; set; }
-
-    [ObservableProperty]
-    public partial bool? VideoInterviewRequired { get; set; }
-
-    [ObservableProperty]
-    public partial bool? VideoInterviewCompleted { get; set; }
-
-    [ObservableProperty]
-    public partial bool? ReleasesCompleted { get; set; }
-
-    [ObservableProperty]
-    public partial bool? OrientationCompleted { get; set; }
-
-    [ObservableProperty]
-    public partial bool? DataSheetCompleted { get; set; }
-
-    [ObservableProperty]
-    public partial bool? ElevatorSpeechCompleted { get; set; }
-
-    [ObservableProperty]
-    public partial string? Race { get; set; }
-
-    [ObservableProperty]
-    public partial string? FluentLanguages { get; set; }
-
-    [ObservableProperty]
-    public partial string? Premium { get; set; }
+    public int? Ssn { get; set; }
+    public string? CaseID { get; set; }
+    public string? Address1 { get; set; }
+    public string? Address2 { get; set; }
+    public string? Zip { get; set; }
+    public DateTime? Dob { get; set; }
+    public DateTime? StartDate { get; set; }
+    public string? DriversLicense { get; set; }
+    public string? Phone1 { get; set; }
+    public string? Phone1Identity { get; set; }
+    public string? Phone2 { get; set; }
+    public string? Phone2Identity { get; set; }
+    public string? Phone3 { get; set; }
+    public string? Phone3Identity { get; set; }
+    public string? Email { get; set; }
+    public string? EmailIdentity { get; set; }
+    public string? Email2 { get; set; }
+    public string? Email2Identity { get; set; }
+    public string? ClientNotes { get; set; }
+    public string? Conditions { get; set; }
+    public bool? Active { get; set; }
+    public string? EmploymentGoal { get; set; }
+    public int? EmployerID { get; set; }
+    public string? Status { get; set; }
+    public string? Benefit { get; set; }
+    public string? CriminalCharge { get; set; }
+    public string? Education { get; set; }
+    public string? Transportation { get; set; }
+    public bool? ResumeRequired { get; set; } = false;
+    public bool? ResumeCompleted { get; set; } = false;
+    public bool? VideoInterviewRequired { get; set; } = false;
+    public bool? VideoInterviewCompleted { get; set; } = false;
+    public bool? ReleasesCompleted { get; set; } = false;
+    public bool? OrientationCompleted { get; set; } = false;
+    public bool? DataSheetCompleted { get; set; } = false;
+    public bool? ElevatorSpeechCompleted { get; set; } = false;
+    public string? Race { get; set; }
+    public string? FluentLanguages { get; set; }
+    public string? Premium { get; set; }
 
     // =========================
     // Input Validation
@@ -187,7 +101,7 @@ public partial class CreateClientViewModel(IClientService service) : ObservableO
     public bool CanSaveMethod() {
         if (string.IsNullOrWhiteSpace(FirstName)
             || string.IsNullOrWhiteSpace(LastName)
-            || string.IsNullOrWhiteSpace(Counselor)
+            || CounselorID == null
             || string.IsNullOrWhiteSpace(City)
             || string.IsNullOrWhiteSpace(State)
             || string.IsNullOrWhiteSpace(Disability)) {
@@ -200,23 +114,23 @@ public partial class CreateClientViewModel(IClientService service) : ObservableO
     // =========================
     // CRUD Methods
     // =========================
-    public async Task<Result<Client>> CreateClientAsync() {
+    public async Task<Result<ClientDetail>> CreateClientAsync() {
         if (FirstName == null
             || LastName == null
-            || Counselor == null
+            || CounselorID == null
             || City == null
             || State == null
             || Disability == null)
-            return Result<Client>.Fail(new AppError(ErrorKind.Validation, "Missing required fields.", null));
+            return Result<ClientDetail>.Fail(new AppError(ErrorKind.Validation, "Missing required fields.", null));
 
         // Create Document folder
-        var folderName = $"Z:\\DARS Clients\\{Counselor}-{FirstName} {LastName}";
-        if (!CreateDocumentFolder(folderName)) return Result<Client>.Fail(new AppError(ErrorKind.Conflict, "Folder already exists.", null));
+        var folderName = $"Z:\\DARS Clients\\{CounselorName}-{FirstName} {LastName}";
+        if (!CreateDocumentFolder(folderName)) return Result<ClientDetail>.Fail(new AppError(ErrorKind.Conflict, "Folder already exists.", null));
 
-        var client = new CreateClientDTO {
+        var client = new NewClient {
             FirstName = FirstName,
             LastName = LastName,
-            Counselor = Counselor,
+            TTW = TTW,
             City = City,
             State = State,
             Disability = Disability,
@@ -239,9 +153,6 @@ public partial class CreateClientViewModel(IClientService service) : ObservableO
             Email2 = Email2,
             Email2Identity = Email2Identity,
             CounselorID = CounselorID,
-            CounselorEmail = CounselorEmail,
-            CounselorPhone = CounselorPhone,
-            CounselorFax = CounselorFax,
             ClientNotes = ClientNotes,
             Conditions = Conditions,
             DocumentFolder = folderName,

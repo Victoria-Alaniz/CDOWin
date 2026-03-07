@@ -1,5 +1,5 @@
 ﻿using CDO.Core.Constants;
-using CDO.Core.DTOs;
+using CDO.Core.DTOs.Employers;
 using CDO.Core.ErrorHandling;
 using CDO.Core.Interfaces;
 using CDO.Core.Models;
@@ -21,6 +21,10 @@ public class EmployerService : IEmployerService {
         return _network.GetAsync<List<Employer>>(Endpoints.Employers);
     }
 
+    public Task<List<EmployerSummary>?> GetAllEmployerSummariesAsync() {
+        return _network.GetAsync<List<EmployerSummary>>(Endpoints.EmployerSummaries);
+    }
+
     public Task<Employer?> GetEmployerAsync(int id) {
         return _network.GetAsync<Employer>(Endpoints.Employer(id));
     }
@@ -37,16 +41,16 @@ public class EmployerService : IEmployerService {
     // -----------------------------
     // PATCH Methods
     // -----------------------------
-    public async Task<Result<Employer>> UpdateEmployerAsync(int id, EmployerDTO dto) {
-        var result = await _network.UpdateAsync<EmployerDTO, Employer>(Endpoints.Employer(id), dto);
-        if (!result.IsSuccess) return Result<Employer>.Fail(TranslateError(result.Error!));
-        return Result<Employer>.Success(result.Value!);
+    public async Task<Result> UpdateEmployerAsync(int id, EmployerDTO dto) {
+        var result = await _network.UpdateAsync(Endpoints.Employer(id), dto);
+        if (!result.IsSuccess) return Result.Fail(TranslateError(result.Error!));
+        return Result.Success();
     }
 
     // -----------------------------
     // DELETE Methods
     // -----------------------------
-    public Task<Result<bool>> DeleteEmployerAsync(int id) {
+    public Task<Result> DeleteEmployerAsync(int id) {
         return _network.DeleteAsync(Endpoints.Employer(id));
     }
 

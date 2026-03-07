@@ -1,8 +1,9 @@
-﻿using CDO.Core.DTOs;
+﻿using CDO.Core.DTOs.Clients;
+using CDO.Core.DTOs.Counselors;
 using CDO.Core.ErrorHandling;
 using CDO.Core.Interfaces;
-using CDO.Core.Models;
 using CDOWin.Data;
+using CDOWin.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Dispatching;
 using System;
@@ -13,133 +14,177 @@ using System.Threading.Tasks;
 
 namespace CDOWin.ViewModels;
 
-public partial class CounselorsViewModel(DataCoordinator dataCoordinator, ICounselorService service) : ObservableObject {
+public partial class CounselorsViewModel : ObservableObject {
 
     // =========================
-    // Services / Dependencies
+    // Dependencies
     // =========================
-    private readonly ICounselorService _service = service;
-    private readonly DataCoordinator _dataCoordinator = dataCoordinator;
-    private readonly DispatcherQueue _dispatcher = DispatcherQueue.GetForCurrentThread();
+    private readonly ICounselorService _service;
+    private readonly DataCoordinator _dataCoordinator;
+    private readonly ClientSelectionService _clientSelectionService;
+    private readonly CounselorSelectionService _counselorSelectionService;
+    private readonly DispatcherQueue _dispatcher;
 
     // =========================
     // Private Backing Fields
     // =========================
-    private IReadOnlyList<Counselor> _allCounselors = [];
+    private IReadOnlyList<CounselorSummary> _cache = [];
 
     // =========================
-    // Public Property / State
+    // UI State
     // =========================
 
     [ObservableProperty]
-    public partial ObservableCollection<Counselor> Filtered { get; private set; } = [];
+    public partial ObservableCollection<CounselorSummary> Filtered { get; private set; } = [];
 
     [ObservableProperty]
-    public partial Counselor? Selected { get; set; }
+    public partial CounselorDetail? Selected { get; set; }
+
+    [ObservableProperty]
+    public partial CounselorSummary? SelectedSummary { get; set; }
+
+    [ObservableProperty]
+    public partial ObservableCollection<ClientSummary> Clients { get; private set; } = [];
 
     [ObservableProperty]
     public partial string SearchQuery { get; set; } = string.Empty;
 
     // =========================
+    // Constructor
+    // =========================
+    public CounselorsViewModel(
+        DataCoordinator dataCoordinator,
+        ICounselorService service,
+        CounselorSelectionService counselorSelectionService,
+        ClientSelectionService clientSelectionService) {
+        _service = service;
+        _dataCoordinator = dataCoordinator;
+
+        _clientSelectionService = clientSelectionService;
+        _counselorSelectionService = counselorSelectionService;
+        _dispatcher = DispatcherQueue.GetForCurrentThread();
+
+        _counselorSelectionService.CounselorSelectionRequested += OnRequestSelectedCounselorChange;
+    }
+
+    // =========================
     // Property Change Methods
     // =========================
-    partial void OnSearchQueryChanged(string value) {
-        if (_dispatcher.HasThreadAccess)
-            ApplyFilter();
-        else
-            _dispatcher.TryEnqueue(ApplyFilter);
+    partial void OnSearchQueryChanged(string value) => ApplyFilter();
+
+    private void OnRequestSelectedCounselorChange(int counselorId) {
+        if (Selected != null && Selected.Id == counselorId) return;
+        SearchQuery = string.Empty;
+        ApplyFilter();
+        _ = LoadSelectedCounselorAsync(counselorId);
     }
 
     // =========================
     // Public Methods
     // =========================
-    public List<Counselor> All() => _allCounselors.ToList();
+    public List<CounselorSummary> All() => _cache.ToList();
 
-    public List<Counselor> GetCounselors() {
-        if (_allCounselors.Count == 0)
-            LoadCounselorsAsync().GetAwaiter().GetResult();
+    public List<CounselorSummary> GetCounselors() {
+        if (_cache.Count == 0)
+            LoadCounselorSummariesAsync().GetAwaiter().GetResult();
 
-        return _allCounselors.ToList();
+        return _cache.ToList();
+    }
+
+    public void RequestClient(int clientID) {
+        AppServices.Navigation.Navigate(Views.CDOFrame.Clients);
+        _clientSelectionService.RequestSelectedClient(clientID);
     }
 
     // =========================
     // CRUD Methods
     // =========================
-    public async Task LoadCounselorsAsync() {
-        var counselors = await _dataCoordinator.GetCounselorsAsync();
+    public async Task LoadCounselorSummariesAsync(bool force = false) {
+        var counselors = await _dataCoordinator.GetCounselorsAsync(force);
         if (counselors == null) return;
 
         var snapshot = counselors.OrderBy(o => o.Name).ToList().AsReadOnly();
-        _allCounselors = snapshot;
-
-        _dispatcher.TryEnqueue(() => {
-            ApplyFilter();
-        });
+        _cache = snapshot;
+        ApplyFilter();
     }
 
-    public async Task ReloadCounselorAsync(int id) {
+    public async Task LoadSelectedCounselorAsync(int id) {
+        if (Selected != null && Selected.Id == id) return;
+
         var counselor = await _service.GetCounselorAsync(id);
-        if (counselor == null) return;
 
-        var updated = _allCounselors
-            .Select(c => c.Id == id ? counselor : c)
-            .ToList()
-            .AsReadOnly();
-
-        _allCounselors = updated;
-
-        _dispatcher.TryEnqueue(() => {
-            var index = Filtered
-            .Select((c, i) => new { c, i })
-            .FirstOrDefault(x => x.c.Id == id)?.i;
-
-            if (index != null)
-                Filtered[index.Value] = counselor;
-
+        OnUI(() => {
             Selected = counselor;
+            Clients = new ObservableCollection<ClientSummary>(counselor?.Clients ?? []);
         });
     }
 
-    public async Task<Result<Counselor>> UpdateCounselorAsync(UpdateCounselorDTO update) {
-        if (Selected == null) return Result<Counselor>.Fail(new AppError(ErrorKind.Validation, "Counselor not selected.", null));
+    public async Task ReloadCounselorAsync() {
+        if (Selected == null) return;
+        Selected = await _service.GetCounselorAsync(Selected.Id);
+    }
+
+    public async Task<Result> UpdateCounselorAsync(CounselorUpdate update) {
+        if (Selected == null) return Result.Fail(new AppError(ErrorKind.Validation, "Counselor not selected.", null));
 
         var result = await _service.UpdateCounselorAsync(Selected.Id, update);
-        if (!result.IsSuccess) return result;
+        if (result.IsSuccess) { await ReloadCounselorAsync(); }
+        return result;
+    }
 
-        // TODO: Mark data as stale in DataCoordinator to fetch new data on next update
+    public async Task<Result> DeleteSelectedCounselor() {
+        if (Selected == null)
+            return Result<bool>.Fail(new AppError(ErrorKind.Validation, "No Counselor Selected.", null, null));
 
-        await ReloadCounselorAsync(Selected.Id);
+        var id = Selected.Id;
+        var result = await _service.DeleteCounselorAsync(id);
+
+        if (result.IsSuccess) {
+            OnUI(() => {
+                Selected = null;
+                SelectedSummary = null;
+            });
+            _ = LoadCounselorSummariesAsync(force: true);
+        }
+
         return result;
     }
 
     // =========================
-    // Utility / Filtering
+    // Utility / Helpers
     // =========================
 
     private void ApplyFilter() {
         int? previousSelection = Selected?.Id;
 
         if (string.IsNullOrWhiteSpace(SearchQuery)) {
-            Filtered = new ObservableCollection<Counselor>(_allCounselors);
+            Filtered = new ObservableCollection<CounselorSummary>(_cache);
             ReSelect(previousSelection);
             return;
         }
 
         var query = SearchQuery.Trim().ToLower();
-        var result = _allCounselors.Where(c =>
+        var result = _cache.Where(c =>
         (c.Name ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+        (c.CaseLoadID.ToString() ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
         (c.SecretaryName ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
-        (c.Email ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
-        (c.SecretaryEmail ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase)
+        (c.Email ?? "").Contains(query, StringComparison.CurrentCultureIgnoreCase)
         );
 
-        Filtered = new ObservableCollection<Counselor>(result);
-        ReSelect(previousSelection);
+        OnUI(() => {
+            Filtered = new ObservableCollection<CounselorSummary>(result);
+            ReSelect(previousSelection);
+        });
+    }
+
+    private void OnUI(Action action) {
+        if (_dispatcher.HasThreadAccess) action();
+        else _dispatcher.TryEnqueue(() => action());
     }
 
     private void ReSelect(int? id) {
         if (id == null) return;
-        if (Filtered.FirstOrDefault(c => c.Id == id) is Counselor selected)
-            Selected = selected;
+        if (Filtered.FirstOrDefault(c => c.Id == id) is CounselorSummary selected)
+            SelectedSummary = selected;
     }
 }

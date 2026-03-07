@@ -18,6 +18,14 @@ public static class DialogFactory {
         return dialog;
     }
 
+    public static ContentDialog MarkInactiveDialog(XamlRoot root, string title) {
+        ContentDialog dialog = Dialog(root, title);
+        dialog.PrimaryButtonText = "Mark Inactive";
+        dialog.Title = title;
+        dialog.DefaultButton = ContentDialogButton.None;
+        return dialog;
+    }
+
     public static ContentDialog DeleteDialog(XamlRoot root, string title) {
         ContentDialog dialog = Dialog(root, title);
         dialog.PrimaryButtonText = "Delete";

@@ -33,16 +33,16 @@ public class StateService : IStateService {
     // -----------------------------
     // PATCH Methods
     // -----------------------------
-    public async Task<Result<State>> UpdateStateAsync(int id, UpdateStateDTO dto) {
-        var result = await _network.UpdateAsync<UpdateStateDTO, State>(Endpoints.State(id), dto);
-        if (!result.IsSuccess) return Result<State>.Fail(TranslateError(result.Error!));
-        return Result<State>.Success(result.Value!);
+    public async Task<Result> UpdateStateAsync(int id, UpdateStateDTO dto) {
+        var result = await _network.UpdateAsync(Endpoints.State(id), dto);
+        if (!result.IsSuccess) return Result.Fail(TranslateError(result.Error!));
+        return Result<State>.Success();
     }
 
     // -----------------------------
     // DELETE Methods
     // -----------------------------
-    public Task<Result<bool>> DeleteStateAsync(int id) {
+    public Task<Result> DeleteStateAsync(int id) {
         return _network.DeleteAsync(Endpoints.State(id));
     }
 

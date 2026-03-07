@@ -1,4 +1,4 @@
-using CDO.Core.Models;
+using CDO.Core.DTOs.Employers;
 using CDOWin.ErrorHandling;
 using CDOWin.Services;
 using CDOWin.ViewModels;
@@ -31,14 +31,14 @@ public sealed partial class EmployersPage : Page {
     // =========================
     protected override async void OnNavigatedTo(NavigationEventArgs e) {
         base.OnNavigatedTo(e);
-        await ViewModel.LoadEmployersAsync();
+        await ViewModel.LoadEmployerSummariesAsync();
     }
 
     // =========================
     // Click Handlers
     // =========================
     private async void NewEmployer_ClickAsync(object sender, Microsoft.UI.Xaml.RoutedEventArgs e) {
-        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"Create Employer");
+        var dialog = DialogFactory.NewObjectDialog(this.XamlRoot, $"Create EmployerName");
         var createEmployerVM = AppServices.CreateEmployerViewModel();
         var createEmployerPage = new CreateEmployer(createEmployerVM);
         dialog.Content = createEmployerPage;
@@ -62,12 +62,13 @@ public sealed partial class EmployersPage : Page {
             return;
         }
 
-        _ = ViewModel.LoadEmployersAsync();
+        await ViewModel.LoadEmployerSummariesAsync(force: true);
+        _ = ViewModel.LoadSelectedEmployerAsync(updateResult.Value!.Id);
     }
 
     private void ListView_ItemClick(object sender, ItemClickEventArgs e) {
-        if (e.ClickedItem is Employer employer) {
-            _ = ViewModel.ReloadEmployerAsync(employer.Id);
+        if (e.ClickedItem is EmployerSummary employer) {
+            _ = ViewModel.LoadSelectedEmployerAsync(employer.Id);
         }
     }
 }

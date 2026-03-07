@@ -7,7 +7,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:CDOWin.Controls"
-    xmlns:viewModels="using:CDOWin.ViewModels"
     mc:Ignorable="d">
 
     <Grid Width="480" RowSpacing="12" ColumnSpacing="16">
@@ -58,7 +57,7 @@
 
                 <!-- Row 1: SA Number + Start Date + End Date -->
                 <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Header="SA Number"
-                         MaxLength="15" TextChanged="TextChanged" Tag="{x:Bind local:Field.Id}"/>
+                         MaxLength="15" TextChanged="TextChanged" Tag="{x:Bind local:Field.SaNumber}"/>
 
                 <CalendarDatePicker Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"
                                     Header="Start Date" x:Name="StartDatePicker" HorizontalAlignment="Stretch"

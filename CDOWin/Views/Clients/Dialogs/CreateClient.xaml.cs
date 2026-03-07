@@ -1,3 +1,4 @@
+using CDO.Core.DTOs.Counselors;
 using CDO.Core.Models;
 using CDOWin.Extensions;
 using CDOWin.Services;
@@ -19,7 +20,7 @@ public sealed partial class CreateClient : Page {
     // Dependencies
     // =========================
     private readonly CreateClientViewModel ViewModel;
-    private readonly List<Counselor> _counselors = AppServices.CounselorsViewModel.GetCounselors();
+    private readonly List<CounselorSummary> _counselors = AppServices.CounselorsViewModel.GetCounselors();
     private readonly List<State> _states = AppServices.StatesViewModel.GetStates();
 
 
@@ -91,6 +92,18 @@ public sealed partial class CreateClient : Page {
                     expander.IsExpanded = false;
             }
         }
+    }
+
+    // =========================
+    // Administrative Field Updates
+    // =========================
+    private void AdminTextBox_TextChanged(object sender, TextChangedEventArgs e) {
+        if (sender is not TextBox textbox || textbox.Tag is not AdministrativeField field)
+            return;
+
+        var text = textbox.Text.NormalizeString();
+        if (string.IsNullOrWhiteSpace(text)) return;
+        UpdateValue(text, field);
     }
 
     // =========================
@@ -171,17 +184,17 @@ public sealed partial class CreateClient : Page {
     }
 
     private void CounselorAutoSuggest_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args) {
-        if (args.SelectedItem is Counselor selectedCounselor) {
+        if (args.SelectedItem is CounselorSummary selectedCounselor) {
             var result = _counselors.FirstOrDefault(c => c.Id == selectedCounselor.Id);
             if (result != null) {
                 UpdateSelectedCounselor(result);
-                sender.Text = result.Name; // display chosen name
+                sender.Text = result.ToString(); // display chosen Name
             }
         }
     }
 
     private void CounselorAutoSuggest_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args) {
-        if (args.ChosenSuggestion is Counselor chosenCounselor) {
+        if (args.ChosenSuggestion is CounselorSummary chosenCounselor) {
             var result = _counselors.FirstOrDefault(c => c.Id == chosenCounselor.Id);
             if (result != null) { UpdateSelectedCounselor(result); }
         } else if (!string.IsNullOrWhiteSpace(args.QueryText)) {
@@ -240,15 +253,21 @@ public sealed partial class CreateClient : Page {
     // Utility Methods
     // =========================
 
+    // Administrative Fields
+    private void UpdateValue(string value, AdministrativeField type) {
+        switch (type) {
+            case AdministrativeField.FirstName:
+                ViewModel.FirstName = value;
+                break;
+            case AdministrativeField.LastName:
+                ViewModel.LastName = value;
+                break;
+        }
+    }
+
     // Personal Fields
     private void UpdateValue(string value, PersonalField type) {
         switch (type) {
-            case PersonalField.FirstName:
-                ViewModel.FirstName = value;
-                break;
-            case PersonalField.LastName:
-                ViewModel.LastName = value;
-                break;
             case PersonalField.Languages:
                 ViewModel.FluentLanguages = value;
                 break;
@@ -318,13 +337,10 @@ public sealed partial class CreateClient : Page {
         }
     }
 
-    private void UpdateSelectedCounselor(Counselor counselor) {
+    private void UpdateSelectedCounselor(CounselorSummary counselor) {
         Debug.WriteLine(counselor.Name);
-        ViewModel.Counselor = counselor.Name;
         ViewModel.CounselorID = counselor.Id;
-        ViewModel.CounselorEmail = counselor.Email;
-        ViewModel.CounselorPhone = counselor.Phone;
-        ViewModel.CounselorFax = counselor.Fax;
+        ViewModel.CounselorName = counselor.Name;
     }
 
     // Conditions Fields
@@ -364,8 +380,7 @@ public sealed partial class CreateClient : Page {
     private int? ParseSSN(string value) {
         var sanitizedValue = value.Trim();
         if (sanitizedValue.Length <= 11) {
-            int x;
-            if (int.TryParse(value, out x)) {
+            if (int.TryParse(value, out int x)) {
                 return x;
             }
         }
