@@ -6,6 +6,7 @@ using CDOWin.ViewModels;
 using CDOWin.Views.Clients.Dialogs;
 using CDOWin.Views.Placements.Dialogs;
 using CDOWin.Views.ServiceAuthorizations.Dialogs;
+using CDOWin.Views.Shared.Dialogs;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -221,9 +222,19 @@ public sealed partial class ClientViewPage : Page {
         _ = UpdateCheckboxAsync(tag, isChecked ?? false);
     }
 
-    private void ToggleActive_Clicked(object sender, RoutedEventArgs e) {
+    private async void ToggleActive_Clicked(object sender, RoutedEventArgs e) {
         if (sender is not MenuFlyoutItem || ViewModel.Selected == null) return;
-        _ = UpdateActiveAsync(!ViewModel.Selected.Active);
+
+        if (ViewModel.Selected.Active) {
+            var dialog = DialogFactory.MarkInactiveDialog(this.XamlRoot, "Mark Client Inactive?");
+            dialog.Content = "Marking this client inactive will remove all existing reminders. This action cannot be undone.";
+
+            var result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+                _ = UpdateActiveAsync(false);
+        } else {
+            _ = UpdateActiveAsync(true);
+        }
     }
 
     private async void EditButton_Clicked(object sender, RoutedEventArgs e) {
