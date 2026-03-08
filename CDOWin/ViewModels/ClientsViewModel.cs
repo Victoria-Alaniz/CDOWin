@@ -211,7 +211,7 @@ public partial class ClientsViewModel : ObservableObject {
             .ToList();
 
         // Update filtered list
-        if(Filtered.FirstOrDefault(c => c.Id == Selected.Id) is ClientSummary client) {
+        if (Filtered.FirstOrDefault(c => c.Id == Selected.Id) is ClientSummary client) {
             var i = Filtered.IndexOf(client);
             Filtered[i] = Selected.AsSummary();
             SelectedSummary = Filtered[i];

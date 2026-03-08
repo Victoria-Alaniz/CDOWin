@@ -8,7 +8,7 @@ public class CounselorDetail {
     public int Id { get; init; }
     public required string Name { get; init; }
     public required ClientSummary[] Clients { get; init; }
-    public required SADetail[] Invoices { get; init; }
+    public required SADetail[] Sas { get; init; }
 
     // Nullable fields
     public int? CaseLoadId { get; init; }

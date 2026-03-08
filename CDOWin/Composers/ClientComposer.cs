@@ -22,7 +22,7 @@ public sealed class ClientComposer {
         // Export
         var clientExport = client.AsExport();
         var yaml = _serializer.Serialize(clientExport);
-        
+
         // Write to disk
         try {
             File.WriteAllText(filePath, yaml, Encoding.UTF8);

@@ -6,7 +6,6 @@ using CDOWin.ViewModels;
 using CDOWin.Views.Clients.Dialogs;
 using CDOWin.Views.Placements.Dialogs;
 using CDOWin.Views.ServiceAuthorizations.Dialogs;
-using CDOWin.Views.Shared.Dialogs;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
