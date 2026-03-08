@@ -21,7 +21,7 @@ public enum UpdateField {
     Wage,
     Benefits,
 
-    // SA/InvoiceDetail Specific
+    // SA/SADetail Specific
     InvoiceID,
     SANumber,
 

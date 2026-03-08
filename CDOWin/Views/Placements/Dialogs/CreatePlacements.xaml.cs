@@ -83,7 +83,7 @@ public sealed partial class CreatePlacements : Page {
     // Event Handlers
     // =========================
     private void DropDownSelected(object sender, RoutedEventArgs e) {
-        if (sender is not MenuFlyoutItem item || item.Tag is not InvoiceDetail sa)
+        if (sender is not MenuFlyoutItem item || item.Tag is not SADetail sa)
             return;
         SANumberDropDownButton.Content = sa.ServiceAuthorizationNumber;
         ViewModel.SaNumber = sa.ServiceAuthorizationNumber;

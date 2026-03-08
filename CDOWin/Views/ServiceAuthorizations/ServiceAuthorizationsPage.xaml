@@ -90,7 +90,7 @@
 
                 <!-- Content -->
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="dto:InvoiceSummary">
+                    <DataTemplate x:DataType="dto:SASummary">
                         <Grid Padding="12,8">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>

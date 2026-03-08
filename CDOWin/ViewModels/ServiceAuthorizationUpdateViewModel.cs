@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace CDOWin.ViewModels;
 
-public partial class ServiceAuthorizationUpdateViewModel(InvoiceDetail serviceAuthorization) : ObservableObject {
+public partial class ServiceAuthorizationUpdateViewModel(SADetail serviceAuthorization) : ObservableObject {
     private IServiceAuthorizationService _service = AppServices.SAService;
-    public InvoiceDetail Original = serviceAuthorization;
+    public SADetail Original = serviceAuthorization;
     public SAUpdate Updated = new();
 
     public async Task<Result> UpdateSAAsync() {

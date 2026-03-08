@@ -7,7 +7,7 @@ namespace CDO.Core.Services;
 
 public class ServiceAuthorizationService : IServiceAuthorizationService {
     private readonly INetworkService _network;
-    public List<InvoiceDetail> ServiceAuthorizations { get; private set; } = new();
+    public List<SADetail> ServiceAuthorizations { get; private set; } = new();
 
     public ServiceAuthorizationService(INetworkService network) {
         _network = network;
@@ -16,21 +16,21 @@ public class ServiceAuthorizationService : IServiceAuthorizationService {
     // -----------------------------
     // GET
     // -----------------------------
-    public Task<List<InvoiceSummary>?> GetAllServiceAuthorizationsAsync() {
-        return _network.GetAsync<List<InvoiceSummary>>(Endpoints.ServiceAuthorizations);
+    public Task<List<SASummary>?> GetAllServiceAuthorizationsAsync() {
+        return _network.GetAsync<List<SASummary>>(Endpoints.ServiceAuthorizations);
     }
 
-    public Task<InvoiceDetail?> GetServiceAuthorizationAsync(int id) {
-        return _network.GetAsync<InvoiceDetail>(Endpoints.ServiceAuthorization(id));
+    public Task<SADetail?> GetServiceAuthorizationAsync(int id) {
+        return _network.GetAsync<SADetail>(Endpoints.ServiceAuthorization(id));
     }
 
     // -----------------------------
     // POST Methods
     // -----------------------------
-    public async Task<Result<InvoiceDetail>> CreateServiceAuthorizationAsync(NewSA dto) {
-        var result = await _network.PostAsync<NewSA, InvoiceDetail>(Endpoints.ServiceAuthorizations, dto);
-        if (!result.IsSuccess) return Result<InvoiceDetail>.Fail(TranslateError(result.Error!));
-        return Result<InvoiceDetail>.Success(result.Value!);
+    public async Task<Result<SADetail>> CreateServiceAuthorizationAsync(NewSA dto) {
+        var result = await _network.PostAsync<NewSA, SADetail>(Endpoints.ServiceAuthorizations, dto);
+        if (!result.IsSuccess) return Result<SADetail>.Fail(TranslateError(result.Error!));
+        return Result<SADetail>.Success(result.Value!);
     }
 
     // -----------------------------
@@ -39,7 +39,7 @@ public class ServiceAuthorizationService : IServiceAuthorizationService {
     public async Task<Result> UpdateServiceAuthorizationAsync(int id, SAUpdate dto) {
         var result = await _network.UpdateAsync(Endpoints.ServiceAuthorization(id), dto);
         if (!result.IsSuccess) return Result.Fail(TranslateError(result.Error!));
-        return Result<InvoiceDetail>.Success();
+        return Result<SADetail>.Success();
     }
 
     // -----------------------------

@@ -20,7 +20,7 @@ public record class ClientDetail(
 
     // Child Objects
     Reminder[] Reminders,
-    InvoiceDetail[]? Invoices,
+    SADetail[]? Invoices,
     PlacementDetail[]? Placements,
 
     DateTime? StartDate,

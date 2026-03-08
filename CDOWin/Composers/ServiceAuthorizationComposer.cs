@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace CDOWin.Composers;
 
-public sealed class ServiceAuthorizationComposer(InvoiceDetail sa) {
-    private readonly InvoiceDetail _sa = sa;
+public sealed class ServiceAuthorizationComposer(SADetail sa) {
+    private readonly SADetail _sa = sa;
     private readonly ITemplateProvider _templateProvider = new TemplateProvider();
 
     public Task<Result<string>> Compose() {
         var tcs = new TaskCompletionSource<Result<string>>();
 
         if (_templateProvider.GetTemplate("Invoice.dotx") is not string path) {
-            tcs.SetResult(Result<string>.Fail(new AppError(ErrorKind.Unknown, "InvoiceDetail Template not found.")));
+            tcs.SetResult(Result<string>.Fail(new AppError(ErrorKind.Unknown, "SADetail Template not found.")));
             return tcs.Task;
         }
 

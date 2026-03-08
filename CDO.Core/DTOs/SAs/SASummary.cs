@@ -1,6 +1,6 @@
 ﻿namespace CDO.Core.DTOs.SAs;
 
-public class InvoiceSummary {
+public class SASummary {
     // SA Specific
     public int Id { get; init; }
     public required string ServiceAuthorizationNumber { get; init; }

@@ -5,7 +5,7 @@ using Word = Microsoft.Office.Interop.Word;
 namespace CDO.Core.WordInterop;
 
 public sealed class WordInteropService {
-    public void ExportServiceAuthorization(string templatePath, InvoiceDetail invoice) {
+    public void ExportServiceAuthorization(string templatePath, SADetail invoice) {
         Debug.WriteLine(templatePath);
 
         var app = new Word.Application();

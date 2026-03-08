@@ -84,7 +84,7 @@
         <!-- Item Repeater -->
         <ScrollViewer Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="12,0,12,0">
             <ItemsRepeater ItemsSource="{x:Bind ViewModel.Selected.Invoices, Mode=OneWay}">
-                <DataTemplate x:DataType="dto:InvoiceDetail">
+                <DataTemplate x:DataType="dto:SADetail">
 
                     <!-- Button -->
                     <Button Margin="0,0,0,6" Padding="10,6" Click="SA_Click" Tag="{x:Bind Id}"

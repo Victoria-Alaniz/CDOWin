@@ -8,14 +8,14 @@ public interface IServiceAuthorizationService {
     // -----------------------------
     // GET Methods
     // -----------------------------
-    public Task<List<InvoiceSummary>?> GetAllServiceAuthorizationsAsync();
+    public Task<List<SASummary>?> GetAllServiceAuthorizationsAsync();
 
-    public Task<InvoiceDetail?> GetServiceAuthorizationAsync(int id);
+    public Task<SADetail?> GetServiceAuthorizationAsync(int id);
 
     // -----------------------------
     // POST Methods
     // -----------------------------
-    public Task<Result<InvoiceDetail>> CreateServiceAuthorizationAsync(NewSA dto);
+    public Task<Result<SADetail>> CreateServiceAuthorizationAsync(NewSA dto);
 
     // -----------------------------
     // PATCH Methods

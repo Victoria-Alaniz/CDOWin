@@ -39,7 +39,7 @@ public partial class CreatePlacementViewModel(IPlacementService service, DataInv
     public string? Wages { get; set; }
     public string? Benefits { get; set; }
 
-    // SA/InvoiceDetail Specific
+    // SA/SADetail Specific
     public int? InvoiceID { get; set; }
 
     [ObservableProperty]
@@ -129,7 +129,7 @@ public partial class CreatePlacementViewModel(IPlacementService service, DataInv
             Wages = Wages,
             Benefits = Benefits,
 
-            // SA/InvoiceDetail Specific
+            // SA/SADetail Specific
             InvoiceID = InvoiceID,
             SaNumber = SaNumber,
 

@@ -68,7 +68,7 @@ public partial class CreateServiceAuthorizationsViewModel(IServiceAuthorizationS
     // =========================
     // CRUD Methods
     // =========================
-    public async Task<Result<InvoiceDetail>> CreateSAAsync() {
+    public async Task<Result<SADetail>> CreateSAAsync() {
         var invoice = new NewSA {
             ServiceAuthorizationNumber = SANumber,
             Office = Office,

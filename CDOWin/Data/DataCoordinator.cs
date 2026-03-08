@@ -56,7 +56,7 @@ public class DataCoordinator {
     public CachedList<EmployerSummary> Employers { get; } = new();
     public CachedList<PlacementSummary> Placements { get; } = new();
     public CachedList<Reminder> Reminders { get; } = new();
-    public CachedList<InvoiceSummary> SAs { get; } = new();
+    public CachedList<SASummary> SAs { get; } = new();
     public CachedList<State> States { get; } = new();
 
     // =========================
@@ -124,7 +124,7 @@ public class DataCoordinator {
         return Reminders.Data ?? [];
     }
 
-    public async Task<IReadOnlyList<InvoiceSummary>> GetSAsAsync(bool force = false) {
+    public async Task<IReadOnlyList<SASummary>> GetSAsAsync(bool force = false) {
         if (force || SAs.IsStale(SATTL)) {
             var data = await _sas.GetAllServiceAuthorizationsAsync();
             if (data != null) SAs.Update(data);

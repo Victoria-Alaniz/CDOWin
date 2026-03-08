@@ -47,7 +47,7 @@ public partial class ClientsViewModel : ObservableObject {
     public partial ClientSummary? SelectedSummary { get; set; }
 
     [ObservableProperty]
-    public partial ObservableCollection<InvoiceDetail> Invoices { get; private set; } = [];
+    public partial ObservableCollection<SADetail> Invoices { get; private set; } = [];
 
     [ObservableProperty]
     public partial ObservableCollection<PlacementDetail> Placements { get; private set; } = [];
@@ -156,13 +156,13 @@ public partial class ClientsViewModel : ObservableObject {
     // =========================
     // Utility / Filtering
     // =========================
-    private void SetupSAs(InvoiceDetail[] invoices) {
+    private void SetupSAs(SADetail[] invoices) {
         var sortedInvoices = invoices
             .OrderBy(i => i.EndDate)
             .Reverse()
             .ToList();
         OnUI(() => {
-            Invoices = new ObservableCollection<InvoiceDetail>(sortedInvoices);
+            Invoices = new ObservableCollection<SADetail>(sortedInvoices);
         });
     }
 

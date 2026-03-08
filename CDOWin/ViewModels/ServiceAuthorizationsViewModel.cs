@@ -28,20 +28,20 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
     // =========================
     // Private Backing Fields
     // =========================
-    private IReadOnlyList<InvoiceSummary> _cache = [];
+    private IReadOnlyList<SASummary> _cache = [];
 
     // =========================
     // UI State
     // =========================
 
     [ObservableProperty]
-    public partial ObservableCollection<InvoiceSummary> Filtered { get; private set; } = [];
+    public partial ObservableCollection<SASummary> Filtered { get; private set; } = [];
 
     [ObservableProperty]
-    public partial InvoiceSummary? SelectedSummary { get; set; }
+    public partial SASummary? SelectedSummary { get; set; }
 
     [ObservableProperty]
-    public partial InvoiceDetail? Selected { get; set; }
+    public partial SADetail? Selected { get; set; }
 
     [ObservableProperty]
     public partial string SearchQuery { get; set; } = string.Empty;
@@ -143,7 +143,7 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
         int? previousSelection = SelectedSummary?.Id;
         var filterDate = IsFiltered ? DateTime.Today : DateTime.MinValue;
 
-        IEnumerable<InvoiceSummary> result = _cache.Where(i => i.EndDate >= filterDate);
+        IEnumerable<SASummary> result = _cache.Where(i => i.EndDate >= filterDate);
 
         if (!string.IsNullOrWhiteSpace(SearchQuery)) {
             var query = SearchQuery.Trim().ToLower();
@@ -156,7 +156,7 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
         }
 
         OnUI(() => {
-            Filtered = new ObservableCollection<InvoiceSummary>(result);
+            Filtered = new ObservableCollection<SASummary>(result);
             ReSelect(previousSelection);
         });
     }
@@ -168,7 +168,7 @@ public partial class ServiceAuthorizationsViewModel : ObservableObject {
 
     private void ReSelect(int? id) {
         if (id == null) return;
-        if (Filtered.FirstOrDefault(i => i.Id == id) is InvoiceSummary selected)
+        if (Filtered.FirstOrDefault(i => i.Id == id) is SASummary selected)
             SelectedSummary = selected;
     }
 }

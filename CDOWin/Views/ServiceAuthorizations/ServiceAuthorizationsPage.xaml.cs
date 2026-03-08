@@ -35,7 +35,7 @@ public sealed partial class ServiceAuthorizationsPage : Page {
     // Click Handlers
     // =========================
     private void ListView_ItemClick(object sender, ItemClickEventArgs e) {
-        if (e.ClickedItem is InvoiceSummary sa) {
+        if (e.ClickedItem is SASummary sa) {
             _ = ViewModel.LoadSelectedSAAsync(sa.Id);
         }
     }

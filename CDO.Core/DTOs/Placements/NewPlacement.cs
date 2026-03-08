@@ -21,7 +21,7 @@ public class NewPlacement {
     public string? Wages { get; init; }
     public string? Benefits { get; init; }
 
-    // SA/InvoiceDetail Specific
+    // SA/SADetail Specific
     public int? InvoiceID { get; init; }
     public string? SaNumber { get; init; }
 

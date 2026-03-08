@@ -24,8 +24,8 @@ public record class PlacementDetail(
     string? Wages,
     string? Benefits,
 
-    // SA/InvoiceDetail Specific
-    int? InvoiceID,
+    // SADetail Specific
+    int? SaID,
     string? SaNumber,
 
     // ClientDetail Specific

@@ -1,6 +1,6 @@
 ﻿namespace CDO.Core.DTOs.SAs;
 
-public record class InvoiceDetail(
+public record class SADetail(
     // SA Specific
     int Id,
     string ServiceAuthorizationNumber,
